@@ -1,1 +1,1 @@
-# salable-node-sdk
+# node-sdk
