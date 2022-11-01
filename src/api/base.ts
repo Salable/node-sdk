@@ -1,4 +1,4 @@
-import { baseUrl } from "../constants";
+import { baseUrl } from '../constants';
 
 export class Base {
   private apiKey: string;
@@ -10,8 +10,8 @@ export class Base {
   request<T>(endpoint: string, options?: RequestInit): Promise<T> {
     const url = `${baseUrl}${endpoint}`;
     const headers = {
-      "Content-Type": "application/json",
-      "x-api-key": this.apiKey,
+      'Content-Type': 'application/json',
+      'x-api-key': this.apiKey,
     };
     const config = {
       ...options,

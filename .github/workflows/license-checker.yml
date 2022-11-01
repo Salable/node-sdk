@@ -1,0 +1,33 @@
+name: License Checker
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  licenseChecker:
+    name: Run License Checker
+    timeout-minutes: 15
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "lts/*"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: License Checker
+        run: npx license-checker --production --onlyAllow 'MIT;MIT-0;X11;ISC;0BSD;BSD-1-Clause;BSD-2-Clause;BSD-3-Clause;BSD-4-Clause;MPL-1.0;MPL-1.1;MPL-2.0;EPL-1.0;EPL-2.0;AFL-3.0;PSF-2.0;Apache-1.1;Apache-2.0;CDDL-1.0;CDDL-1.1;LGPL-2.0;LGPL-2.0+;LGPL-2.1;LGPL-2.1+;LGPL-3.0;LGPL3.0+;LGPL-1.0-only;LGPL-1.0-or-later;LGPL-2.0-only;LGPL-2.0-or-later;LGPL-3.0-only;LGPL-3.0-or-later' --excludePrivatePackages

@@ -1,4 +1,1 @@
-
-
-
-export const baseUrl = "https://api.salable.org"
+export const baseUrl = 'https://api.salable.org';
