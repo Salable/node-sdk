@@ -19,10 +19,10 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
         with:
-          fetch-depth: 2
+          fetch-depth: 0
 
       - name: Fetch main branch
-        run: git fetch --no-tags --depth=1 origin main
+        run: git fetch --no-tags --depth=1000 origin main
 
       - name: Setup Node
         uses: actions/setup-node@v3
