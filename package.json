@@ -18,9 +18,9 @@
     "pre-commit": "lint-staged",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "test": "jest",
-    "test:globalCoverage": "jest --coverage",
-    "test:coverage": "jest --coverage --changedSince=origin/main"
+    "test": "jest --passWithNoTests",
+    "test:globalCoverage": "jest --coverage --passWithNoTests",
+    "test:coverage": "jest --coverage --changedSince=origin/main --passWithNoTests"
   },
   "keywords": [],
   "bugs": {
