@@ -1,5 +1,5 @@
 import { baseUrl } from "../constants";
-import "isomorphic-fetch"
+import "isomorphic-fetch";
 
 export class RequestBase {
   public apiKey: string;
