@@ -20,7 +20,7 @@
     "declaration": true,
     "noImplicitReturns": false,
     "outDir": "dist",
-    "types": ["jest", "@testing-library/jest-dom"]
+    "types": ["jest"]
   },
   "include": ["src"],
   "exclude": ["node_modules", "lib", "jest.setup.ts", "dist"]

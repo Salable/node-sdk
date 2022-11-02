@@ -1,4 +1,5 @@
 import { baseUrl } from "../constants";
+import "isomorphic-fetch"
 
 export class RequestBase {
   public apiKey: string;
@@ -7,7 +8,7 @@ export class RequestBase {
     this.apiKey = apiKey;
   }
 
-  request<T>(endpoint: string, options?: RequestInit) {
+  request<T>(endpoint: string, options?: RequestInit): Promise<T> {
     const url = `${baseUrl}${endpoint}`;
     const headers = {
       "Content-Type": "application/json",
