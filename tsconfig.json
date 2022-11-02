@@ -1,15 +1,27 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "declaration": true,
-    "removeComments": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["*"]
+    },
+    "target": "es5",
+    "lib": ["dom", "esnext"],
+    "allowJs": true,
+    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "target": "es2017",
-    "sourceMap": false,
-    "outDir": "./dist",
-    "baseUrl": "./",
-    "incremental": true
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "declaration": true,
+    "noImplicitReturns": false,
+    "outDir": "dist",
+    "types": ["jest", "@testing-library/jest-dom"]
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "test", "lib", "**/*spec.ts"]
+  "include": ["src"],
+  "exclude": ["node_modules", "lib", "jest.setup.ts", "dist"]
 }
