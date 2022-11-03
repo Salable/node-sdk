@@ -1,7 +1,11 @@
-import { ICreateAdhocLicense, ILicense } from "../types";
-import { RequestBase } from "../request-base";
+import {
+  ICheckLicensesCapabilities,
+  ICreateAdhocLicense,
+  ILicense,
+} from '../types';
+import { RequestBase } from '../request-base';
 
-const resourceName = "licenses";
+const resourceName = 'licenses';
 
 export default class Licenses extends RequestBase {
   getLicenses(): Promise<ILicense[]> {
@@ -10,12 +14,15 @@ export default class Licenses extends RequestBase {
 
   createLicense(newLicense: ICreateAdhocLicense): Promise<ILicense> {
     return this.request(`/${resourceName}`, {
-      method: "POST",
+      method: 'POST',
       body: JSON.stringify(newLicense),
     });
   }
 
-  checkLicenses(productUuid: string, granteeIds: string[]): Promise<ILicense> {
+  checkLicenses(
+    productUuid: string,
+    granteeIds: string[]
+  ): Promise<ICheckLicensesCapabilities> {
     return this.request(
       `/${resourceName}/check?productUuid=${productUuid}&granteeIds=${granteeIds.toString()}`
     );

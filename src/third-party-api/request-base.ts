@@ -1,5 +1,5 @@
-import { baseUrl } from "../constants";
-import "isomorphic-fetch";
+import { baseUrl } from '../constants';
+import 'isomorphic-fetch';
 
 export class RequestBase {
   public apiKey: string;
@@ -11,8 +11,8 @@ export class RequestBase {
   request<T>(endpoint: string, options?: RequestInit): Promise<T> {
     const url = `${baseUrl}${endpoint}`;
     const headers = {
-      "Content-Type": "application/json",
-      "x-api-key": this.apiKey,
+      'Content-Type': 'application/json',
+      'x-api-key': this.apiKey,
     };
     const config = {
       ...options,
@@ -21,7 +21,7 @@ export class RequestBase {
 
     return fetch(url, config).then((response) => {
       if (response.ok) {
-        return response.json();
+        return response.json() as Promise<T>;
       }
       throw new Error(response.statusText);
     });
