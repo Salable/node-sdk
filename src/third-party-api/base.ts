@@ -1,4 +1,4 @@
-import { baseUrl } from '../constants';
+import { SALABLE_BASE_URL } from '../constants';
 import 'isomorphic-fetch';
 
 export class Base {
@@ -16,7 +16,7 @@ export class Base {
       endpoint: string,
       options?: RequestInit
     ): Promise<T> => {
-      const url = `${baseUrl}${endpoint}`;
+      const url = `${SALABLE_BASE_URL}${endpoint}`;
       const headers = {
         'Content-Type': 'application/json',
         'x-api-key': this._apiKey,

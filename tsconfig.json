@@ -20,8 +20,8 @@
     "declaration": true,
     "noImplicitReturns": false,
     "outDir": "dist",
-    "types": ["jest"]
+    "types": ["jest", "node"]
   },
-  "include": ["src"],
+  "include": ["src", "additional.d.ts"],
   "exclude": ["node_modules", "lib", "jest.setup.ts", "dist"]
 }

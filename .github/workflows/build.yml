@@ -1,4 +1,4 @@
-name: Jest tests
+name: Build
 
 on:
   push:
@@ -7,10 +7,13 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  tests:
-    name: Run Jest tests
+  build:
+    name: Build package
+    environment: Production
     timeout-minutes: 15
     runs-on: ${{ matrix.os }}
+    env:
+      SALABLE_BASE_URL: ${{ secrets.SALABLE_BASE_URL }}
     strategy:
       matrix:
         os: [ubuntu-latest]
@@ -19,10 +22,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0
-
-      - name: Fetch main branch
-        run: git fetch --no-tags --depth=1000 origin main
+          fetch-depth: 2
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -30,13 +30,7 @@ jobs:
           node-version: 16.x.x
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Jest Tests Overall
-        run: npm run test
-
-      - name: Jest Tests Code Coverage (branch)
-        run: npm run test:coverage
-
-      - name: Jest Tests Code Coverage (global)
-        run: npm run test:globalCoverage
+      - name: Build package
+        run: npm run build
