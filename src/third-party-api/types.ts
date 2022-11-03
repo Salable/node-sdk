@@ -1,4 +1,3 @@
-
 export interface ICreateAdhocLicense {
   planUuid: string;
   member: string;
@@ -16,23 +15,22 @@ export interface ILicense {
   type: string;
   productUuid: string;
   planUuid: string;
-  capabilities: ICapability[]
+  capabilities: ICapability[];
   metadata: IMetadata | null;
-  startTime: string
-  endTime: string
-  updatedAt: string
+  startTime: string;
+  endTime: string;
+  updatedAt: string;
 }
 
-
 export interface ICapability {
-  uuid: string
-  name: string
-  status: string
-  updatedAt: string
-  description: string
-  productUuid: string
+  uuid: string;
+  name: string;
+  status: string;
+  updatedAt: string;
+  description: string;
+  productUuid: string;
 }
 
 export interface IMetadata {
-  [key: string]: string
+  [key: string]: string;
 }
