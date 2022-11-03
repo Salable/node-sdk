@@ -12,6 +12,8 @@ jobs:
     environment: Production
     timeout-minutes: 15
     runs-on: ${{ matrix.os }}
+    env:
+      SALABLE_BASE_URL: ${{ secrets.SALABLE_BASE_URL }}
     strategy:
       matrix:
         os: [ubuntu-latest]
