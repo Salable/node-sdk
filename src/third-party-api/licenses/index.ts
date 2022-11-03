@@ -1,5 +1,9 @@
 import { Base } from '../base';
-import { ICreateAdhocLicense, ILicense } from '../types';
+import {
+  ICreateAdhocLicense,
+  ICheckLicensesCapabilities,
+  ILicense,
+} from '../types';
 
 const resourceName = 'licenses';
 
@@ -13,5 +17,14 @@ export default class Licenses extends Base {
       method: 'POST',
       body: JSON.stringify(newLicense),
     });
+  }
+
+  checkLicenses(
+    productUuid: string,
+    granteeIds: string[]
+  ): Promise<ICheckLicensesCapabilities> {
+    return this._request(
+      `/${resourceName}/check?productUuid=${productUuid}&granteeIds=${granteeIds.toString()}`
+    );
   }
 }
