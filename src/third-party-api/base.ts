@@ -1,7 +1,38 @@
+import { baseUrl } from '../constants';
+import 'isomorphic-fetch';
+
 export class Base {
-  public apiKey: string;
+  protected _apiKey;
+  protected _request;
 
   constructor(apiKey: string) {
-    this.apiKey = apiKey;
+    this._apiKey = apiKey;
+
+    if (new.target === Base) {
+      throw new Error('You cannot instantiate an abstract class!');
+    }
+
+    this._request = async <T>(
+      endpoint: string,
+      options?: RequestInit
+    ): Promise<T> => {
+      const url = `${baseUrl}${endpoint}`;
+      const headers = {
+        'Content-Type': 'application/json',
+        'x-api-key': this._apiKey,
+      };
+
+      const config = {
+        ...options,
+        headers,
+      };
+
+      return fetch(url, config).then((response) => {
+        if (response.ok) {
+          return response.json() as Promise<T>;
+        }
+        throw new Error(response.statusText);
+      });
+    };
   }
 }

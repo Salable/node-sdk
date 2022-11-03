@@ -1,19 +1,19 @@
+import { Base } from '../base';
 import {
-  ICheckLicensesCapabilities,
   ICreateAdhocLicense,
+  ICheckLicensesCapabilities,
   ILicense,
 } from '../types';
-import { RequestBase } from '../request-base';
 
 const resourceName = 'licenses';
 
-export default class Licenses extends RequestBase {
+export default class Licenses extends Base {
   getLicenses(): Promise<ILicense[]> {
-    return this.request(`/${resourceName}`);
+    return this._request(`/${resourceName}`);
   }
 
   createLicense(newLicense: ICreateAdhocLicense): Promise<ILicense> {
-    return this.request(`/${resourceName}`, {
+    return this._request(`/${resourceName}`, {
       method: 'POST',
       body: JSON.stringify(newLicense),
     });
@@ -23,7 +23,7 @@ export default class Licenses extends RequestBase {
     productUuid: string,
     granteeIds: string[]
   ): Promise<ICheckLicensesCapabilities> {
-    return this.request(
+    return this._request(
       `/${resourceName}/check?productUuid=${productUuid}&granteeIds=${granteeIds.toString()}`
     );
   }
