@@ -1,6 +1,6 @@
 import { Base } from './base';
 import Licenses from './licenses';
-import Subscriptions from './subcriptions';
+import Subscriptions from './subscriptions';
 
 export class ThirdPartyApi extends Base {
   public licenses: Licenses = new Licenses(this._apiKey);
