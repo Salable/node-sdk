@@ -1,3 +1,15 @@
+# [1.3.0](https://github.com/Salable/node-sdk/compare/v1.2.0...v1.3.0) (2022-11-04)
+
+
+### Bug Fixes
+
+* folder typo ([f5996b4](https://github.com/Salable/node-sdk/commit/f5996b4f322cc2c660a0c4e44edcb1f371bdf08c))
+
+
+### Features
+
+* adding sub class and get sub method ([bd729a0](https://github.com/Salable/node-sdk/commit/bd729a0eecf973056519f412d87a803a9b3df4fc))
+
 # [1.2.0](https://github.com/Salable/node-sdk/compare/v1.1.0...v1.2.0) (2022-11-03)
 
 ### Features
