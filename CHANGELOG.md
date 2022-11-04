@@ -1,10 +1,9 @@
 # [1.2.0](https://github.com/Salable/node-sdk/compare/v1.1.0...v1.2.0) (2022-11-03)
 
-
 ### Features
 
-* adding check licenses method ([0253b07](https://github.com/Salable/node-sdk/commit/0253b07f313ac1f54343b84997fd9bd5bdd15d44))
-* adding types for check capabilties ([ba95826](https://github.com/Salable/node-sdk/commit/ba9582653a67a30efccb764cdc5e003caf484473))
+- adding check licenses method ([0253b07](https://github.com/Salable/node-sdk/commit/0253b07f313ac1f54343b84997fd9bd5bdd15d44))
+- adding types for check capabilties ([ba95826](https://github.com/Salable/node-sdk/commit/ba9582653a67a30efccb764cdc5e003caf484473))
 
 # [1.1.0](https://github.com/Salable/node-sdk/compare/v1.0.0...v1.1.0) (2022-11-03)
 
