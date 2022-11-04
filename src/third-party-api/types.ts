@@ -31,6 +31,18 @@ export interface ICapability {
   productUuid: string;
 }
 
+export interface ICheckLicensesCapabilities {
+  capabilities: string[];
+  publicHash: string;
+  signature: string;
+  capsHashed: string;
+  capabilitiesEndDates: ICapabilitiesEndDates;
+}
+
+export interface ICapabilitiesEndDates {
+  [key: string]: string;
+}
+
 export interface IMetadata {
   [key: string]: string;
 }
