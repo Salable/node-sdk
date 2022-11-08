@@ -22,6 +22,6 @@
     "outDir": "dist",
     "types": ["jest", "node"]
   },
-  "include": ["src", "additional.d.ts"],
+  "include": ["src", "additional.d.ts", "global.d.ts"],
   "exclude": ["node_modules", "lib", "jest.setup.ts", "dist"]
 }
