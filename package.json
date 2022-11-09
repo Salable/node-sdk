@@ -22,7 +22,8 @@
     "test": "jest --passWithNoTests",
     "test:globalCoverage": "jest --coverage --passWithNoTests",
     "test:coverage": "jest --coverage --changedSince=origin/main --passWithNoTests",
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "preversion": "npm run build"
   },
   "keywords": [],
   "bugs": {
