@@ -61,3 +61,7 @@ export interface ICapabilitiesEndDates {
 export interface IMetadata {
   [key: string]: string;
 }
+
+export interface ICountOptions {
+  increment: number;
+}
