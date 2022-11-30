@@ -6,14 +6,14 @@ const resourceName = 'usage';
 export default class Usage extends Base {
   updateUsage(
     licenseUuid: string,
-    featureVarialbeName: string,
+    featureVariableName: string,
     countOptions: ICountOptions
   ) {
     return this._request(`/${resourceName}`, {
       method: 'PUT',
       body: JSON.stringify({
         licenseUuid,
-        featureVarialbeName,
+        featureVariableName,
         countOptions,
       }),
     });
