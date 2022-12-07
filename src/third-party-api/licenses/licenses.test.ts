@@ -37,6 +37,7 @@ describe('Licenses Unit Tests', () => {
     fetch.mockResponseOnce(JSON.stringify(licenses));
     const fetchedLicenses = await api.getLicenses();
     expect(fetchedLicenses[0].email).toBe('andrew@test.com');
+    expect(fetchedLicenses).toHaveLength(1);
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 
