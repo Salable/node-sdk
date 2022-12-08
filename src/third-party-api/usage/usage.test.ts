@@ -10,8 +10,8 @@ beforeEach(() => {
 });
 
 // TODO: Add integration testing for success and error responses
-describe('Usage Unit Tests', () => {
-  it('update usage', async () => {
+describe('Unit | ThirdPartyAPI | Usage', () => {
+  it('should update the usage record via API', async () => {
     fetch.mockResponseOnce(JSON.stringify(''), {
       status: 200,
     });
