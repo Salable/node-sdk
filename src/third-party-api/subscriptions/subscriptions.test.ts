@@ -26,14 +26,14 @@ beforeEach(() => {
 });
 
 describe('Unit | ThirdPartyAPI | Subscriptions', () => {
-  it('gets one subscription by uuid', async () => {
+  it('should get one subscription record', async () => {
     fetch.mockResponseOnce(JSON.stringify(subscription));
     const fetchedSubscription = await api.getSubscription('test-id');
     expect(fetchedSubscription.uuid).toBe('test-id');
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 
-  it('returns error if subscription plan could not be changed', async () => {
+  it('should return an error if subscription plan could not be changed', async () => {
     fetch.mockReject(() => Promise.reject('Subscription failed to change'));
 
     await expect(async () => {

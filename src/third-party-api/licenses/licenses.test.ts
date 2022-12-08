@@ -33,7 +33,7 @@ beforeEach(() => {
 });
 
 describe('Unit | ThirdPartyAPI | Licenses', () => {
-  it('gets all licenses', async () => {
+  it('should gets all licenses', async () => {
     fetch.mockResponseOnce(JSON.stringify(licenses));
     const fetchedLicenses = await api.getLicenses();
     expect(fetchedLicenses[0].email).toBe('andrew@test.com');
@@ -41,7 +41,7 @@ describe('Unit | ThirdPartyAPI | Licenses', () => {
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 
-  it('returns an error when promise rejects', async () => {
+  it('should return an error when promise rejects', async () => {
     fetch.mockReject(() => Promise.reject('API is down'));
 
     await expect(async () => {
