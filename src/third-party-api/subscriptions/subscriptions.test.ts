@@ -33,5 +33,13 @@ describe('Subscriptions Unit Tests', () => {
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 
+  it('Returns error if subscription plan could not be changed', async () => {
+    fetch.mockReject(() => Promise.reject('Subscription failed to change'));
+
+    await expect(async () => {
+      await api.changePlan('test-sub-id', 'test-new-plan-id');
+    }).rejects.toBe('Subscription failed to change');
+  });
+
   // TODO: Discuss what will be returned from change plan endpoint so test can be mocked
 });
