@@ -32,8 +32,8 @@ beforeEach(() => {
   fetch.resetMocks();
 });
 
-describe('Licenses Unit Tests', () => {
-  it('get licenses', async () => {
+describe('Unit | ThirdPartyAPI | Licenses', () => {
+  it('gets all licenses', async () => {
     fetch.mockResponseOnce(JSON.stringify(licenses));
     const fetchedLicenses = await api.getLicenses();
     expect(fetchedLicenses[0].email).toBe('andrew@test.com');
