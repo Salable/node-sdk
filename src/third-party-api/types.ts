@@ -37,6 +37,8 @@ export interface ISubscription {
   planUuid: string;
 }
 
+export type CancelWhen = 'now' | 'end';
+
 export interface ICapability {
   uuid: string;
   name: string;
