@@ -1,3 +1,11 @@
+# [1.5.0](https://github.com/Salable/node-sdk/compare/v1.4.0...v1.5.0) (2023-02-23)
+
+
+### Features
+
+* adding upgrade and downgrade subscription method ([7ebb6f2](https://github.com/Salable/node-sdk/commit/7ebb6f2b55175cc4258b03a099e4570df9d16e7d))
+* changing params for changePlan method and add test ([dfcc1f2](https://github.com/Salable/node-sdk/commit/dfcc1f298a33d8fe570421026ce3aeade831232f))
+
 # [1.4.0](https://github.com/Salable/node-sdk/compare/v1.3.0...v1.4.0) (2023-02-23)
 
 
