@@ -1,3 +1,16 @@
+# [1.4.0](https://github.com/Salable/node-sdk/compare/v1.3.0...v1.4.0) (2023-02-23)
+
+
+### Bug Fixes
+
+* fixing misspell ([d2e2eaf](https://github.com/Salable/node-sdk/commit/d2e2eaf9703a3d6d801762d2efdd751c645b6180))
+
+
+### Features
+
+* adding update usage code ([1a2956d](https://github.com/Salable/node-sdk/commit/1a2956d0a8beb87a0d85170ba13878c7ca49d29b))
+* creating usage class ([9506789](https://github.com/Salable/node-sdk/commit/95067893cbd9021e2937fd726c34ceb9e944f1fd))
+
 # [1.3.0](https://github.com/Salable/node-sdk/compare/v1.2.0...v1.3.0) (2022-11-04)
 
 
