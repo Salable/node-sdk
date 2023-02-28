@@ -30,7 +30,10 @@ jobs:
           node-version: 16.x.x
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: eslint
-        run: npm run lint
+      - name: Install docs dependencies
+        run: cd ./docs && npm ci
+
+      - name: build
+        run: cd ./docs && npm run build
