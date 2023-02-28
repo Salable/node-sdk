@@ -1,0 +1,37 @@
+name: Docs Build
+
+on:
+  push:
+    pull_request:
+      types: [opened, synchronize]
+    paths:
+      - "docs/**"
+
+jobs:
+  docs_build:
+    name: Docs Build
+    timeout-minutes: 15
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.14.x
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install docs dependencies
+        run: cd ./docs && npm ci
+
+      - name: build
+        run: cd ./docs && npm run build
