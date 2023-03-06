@@ -49,6 +49,5 @@ _Type:_ `ICountOptions`
     increment: <code>number</code>
     <br />
     <em>Amount by which you want to incement the usage.</em>
-    
   </div>
 </details>
