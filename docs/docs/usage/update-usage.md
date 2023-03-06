@@ -43,3 +43,12 @@ The variable name of the feature to be updated
 ##### countOptions (_required_)
 
 _Type:_ `ICountOptions`
+<details>
+  <summary>ICountOptions</summary>
+  <div>
+    increment: <code>number</code>
+    <br />
+    <em>Amount by which you want to incement the usage.</em>
+    
+  </div>
+</details>
