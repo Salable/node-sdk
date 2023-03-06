@@ -48,6 +48,6 @@ _Type:_ `ICountOptions`
   <div>
     increment: <code>number</code>
     <br />
-    <em>Amount by which you want to incement the usage.</em>
+    <em>Amount by which you want to increment the usage. Has to be a postive integer.</em>
   </div>
 </details>
