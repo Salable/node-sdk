@@ -1,3 +1,11 @@
+## [1.5.1](https://github.com/Salable/node-sdk/compare/v1.5.0...v1.5.1) (2023-03-06)
+
+
+### Bug Fixes
+
+* added type detailing ([2388257](https://github.com/Salable/node-sdk/commit/2388257c71c3036948b0e5b9faa7c8a5c65c6760))
+* typo mistake fixed ([bc8f562](https://github.com/Salable/node-sdk/commit/bc8f562c5bcbf42232992a18a167cee75a2ed462))
+
 # [1.5.0](https://github.com/Salable/node-sdk/compare/v1.4.0...v1.5.0) (2023-02-23)
 
 
