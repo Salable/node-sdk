@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/Salable/node-sdk/compare/v1.5.1...v1.6.0) (2023-03-06)
+
+
+### Features
+
+* old version added ([3a1c2b7](https://github.com/Salable/node-sdk/commit/3a1c2b727b93a43bcecb7a61cb6e28efced04c6f))
+
 ## [1.5.1](https://github.com/Salable/node-sdk/compare/v1.5.0...v1.5.1) (2023-03-06)
 
 
