@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/Salable/node-sdk/compare/v1.6.0...v1.6.1) (2023-03-07)
+
+
+### Bug Fixes
+
+* change the snippet for update usage ([a1c1d34](https://github.com/Salable/node-sdk/commit/a1c1d34164c3b9002a2471e6ed994987b4cfb163))
+
 # [1.6.0](https://github.com/Salable/node-sdk/compare/v1.5.1...v1.6.0) (2023-03-06)
 
 
