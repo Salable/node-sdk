@@ -14,9 +14,9 @@ const { SalableApi } = require("@Salable/node-sdk");
   const api = new SalableApi("API-KEY");
   try {
     await api.usage.updateUsage(
-      licenseUuid: "41cf33a2-136e-4959-b5c7-73889ab94eff",
-      featureVariableName: "new-feature",
-      countOptions: {
+      "41cf33a2-136e-4959-b5c7-73889ab94eff",
+      "new-feature",
+      {
         increment: 2
       }
     );
