@@ -1,9 +1,5 @@
 import { Base } from '../base';
-import {
-  ICreateAdhocLicense,
-  ICheckLicensesCapabilities,
-  ILicense,
-} from '../types';
+import { ICreateAdhocLicense, ICheckLicensesCapabilities, ILicense } from '../types';
 
 const resourceName = 'licenses';
 
@@ -19,10 +15,7 @@ export default class Licenses extends Base {
     });
   }
 
-  checkLicenses(
-    productUuid: string,
-    granteeIds: string[]
-  ): Promise<ICheckLicensesCapabilities> {
+  checkLicenses(productUuid: string, granteeIds: string[]): Promise<ICheckLicensesCapabilities> {
     return this._request(
       `/${resourceName}/check?productUuid=${productUuid}&granteeIds=${granteeIds.toString()}`
     );

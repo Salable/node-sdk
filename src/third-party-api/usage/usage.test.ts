@@ -15,7 +15,7 @@ describe('Unit | ThirdPartyAPI | Usage', () => {
     fetch.mockResponseOnce(JSON.stringify(''), {
       status: 200,
     });
-    const usage = await api.updateUsage('license-id', 'feature-name', {
+    await api.updateUsage('license-id', 'feature-name', {
       increment: 2,
     });
     expect(fetch).toHaveBeenCalledTimes(1);

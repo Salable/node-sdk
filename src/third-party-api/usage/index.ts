@@ -17,11 +17,7 @@ export default class Usage extends Base {
    * @param  {string} featureVariableName `the variable name of the feature`
    * @param {ICountOptions} countOptions
    */
-  updateUsage(
-    licenseUuid: string,
-    featureVariableName: string,
-    countOptions: ICountOptions
-  ) {
+  updateUsage(licenseUuid: string, featureVariableName: string, countOptions: ICountOptions) {
     return this._request(`/${resourceName}`, {
       method: 'PUT',
       body: JSON.stringify({
