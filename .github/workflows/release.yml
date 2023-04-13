@@ -33,4 +33,6 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          SALABLE_BASE_URL: ${{ secrets.SALABLE_BASE_URL }}
+
         run: npx semantic-release
