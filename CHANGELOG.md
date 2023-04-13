@@ -1,3 +1,10 @@
+## [1.6.2](https://github.com/Salable/node-sdk/compare/v1.6.1...v1.6.2) (2023-04-13)
+
+
+### Bug Fixes
+
+* adding env variabe to pipeline ([efdeb98](https://github.com/Salable/node-sdk/commit/efdeb98448f0fd3764f152f821f56273bb3e4826))
+
 ## [1.6.1](https://github.com/Salable/node-sdk/compare/v1.6.0...v1.6.1) (2023-03-07)
 
 
