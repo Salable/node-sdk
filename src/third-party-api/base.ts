@@ -17,6 +17,7 @@ export class Base {
       const headers = {
         'Content-Type': 'application/json',
         'x-api-key': this._apiKey,
+        ...options?.headers,
       };
 
       const config = {

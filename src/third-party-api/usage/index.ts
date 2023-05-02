@@ -1,5 +1,6 @@
 import { Base } from '../base';
 import { ICountOptions } from '../types';
+import { v4 as uuidV4 } from 'uuid';
 
 const resourceName = 'usage';
 
@@ -20,6 +21,9 @@ export default class Usage extends Base {
   updateUsage(licenseUuid: string, featureVariableName: string, countOptions: ICountOptions) {
     return this._request(`/${resourceName}`, {
       method: 'PUT',
+      headers: {
+        'unique-key': uuidV4(),
+      },
       body: JSON.stringify({
         licenseUuid,
         featureVariableName,
