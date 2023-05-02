@@ -9,9 +9,9 @@ Returns a list of all the licenses created by your Salable organization
 ## Code Sample
 
 ```typescript
-const { SalableApi } = require("@Salable/node-sdk");
+const { SalableApi } = require('@salable/node-sdk');
 (async () => {
-  const api = new SalableApi("API-KEY");
+  const api = new SalableApi('API-KEY');
   try {
     const licenses = await api.licenses.getLicenses();
   } catch (err) {
