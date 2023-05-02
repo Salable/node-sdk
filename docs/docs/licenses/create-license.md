@@ -11,12 +11,12 @@ This method will create a new adhoc license to allow Specific IDs to use your pr
 ```typescript
 const { SalableApi } = require('@salable/node-sdk');
 (async () => {
-  const api = new SalableApi("API-KEY");
+  const api = new SalableApi('API-KEY');
   try {
     const license = await api.licenses.createLicense({
-      planUuid: "41cf33a2-136e-4959-b5c7-73889ab94eff";
-      member: "tester@testing.com"
-      granteeId: "grantee-123"
+      planUuid: '41cf33a2-136e-4959-b5c7-73889ab94eff',
+      member: 'tester@testing.com',
+      granteeId: 'grantee-123',
     });
   } catch (err) {
     console.error(err);
