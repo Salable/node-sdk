@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/Salable/node-sdk/compare/v1.6.2...v1.7.0) (2023-05-02)
+
+
+### Features
+
+* adding uuid to usage headers ([30410be](https://github.com/Salable/node-sdk/commit/30410be750f5ebc2b2819e2fbbc3a52b802b1fc0))
+
 ## [1.6.2](https://github.com/Salable/node-sdk/compare/v1.6.1...v1.6.2) (2023-04-13)
 
 
