@@ -9,7 +9,7 @@ This method will create a new adhoc license to allow Specific IDs to use your pr
 ## Code Sample
 
 ```typescript
-const { SalableApi } = require('@Salable/node-sdk');
+const { SalableApi } = require('@salable/node-sdk');
 (async () => {
   const api = new SalableApi('API-KEY');
   try {

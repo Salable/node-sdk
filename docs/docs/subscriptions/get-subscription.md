@@ -9,12 +9,12 @@ Returns the details of a single subscription.
 ## Code Sample
 
 ```typescript
-const { SalableApi } = require("@Salable/node-sdk");
+const { SalableApi } = require('@salable/node-sdk');
 (async () => {
-  const api = new SalableApi("API-KEY");
+  const api = new SalableApi('API-KEY');
   try {
     const subscription = await api.subscriptions.getSubscription(
-      "41cf33a2-136e-4959-b5c7-73889ab94eff"
+      '41cf33a2-136e-4959-b5c7-73889ab94eff'
     );
   } catch (err) {
     console.error(err);

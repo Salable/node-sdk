@@ -9,17 +9,13 @@ This method updates a plan's usage
 ## Code Sample
 
 ```typescript
-const { SalableApi } = require("@Salable/node-sdk");
+const { SalableApi } = require('@salable/node-sdk');
 (async () => {
-  const api = new SalableApi("API-KEY");
+  const api = new SalableApi('API-KEY');
   try {
-    await api.usage.updateUsage(
-      "41cf33a2-136e-4959-b5c7-73889ab94eff",
-      "new-feature",
-      {
-        increment: 2
-      }
-    );
+    await api.usage.updateUsage('41cf33a2-136e-4959-b5c7-73889ab94eff', 'new-feature', {
+      increment: 2,
+    });
   } catch (err) {
     console.error(err);
   }
@@ -43,6 +39,7 @@ The variable name of the feature to be updated
 ##### countOptions (_required_)
 
 _Type:_ `ICountOptions`
+
 <details>
   <summary>ICountOptions</summary>
   <div>
