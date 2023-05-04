@@ -1,3 +1,60 @@
+# [1.7.0](https://github.com/Salable/node-sdk/compare/v1.6.2...v1.7.0) (2023-05-02)
+
+
+### Features
+
+* adding uuid to usage headers ([30410be](https://github.com/Salable/node-sdk/commit/30410be750f5ebc2b2819e2fbbc3a52b802b1fc0))
+
+## [1.6.2](https://github.com/Salable/node-sdk/compare/v1.6.1...v1.6.2) (2023-04-13)
+
+
+### Bug Fixes
+
+* adding env variabe to pipeline ([efdeb98](https://github.com/Salable/node-sdk/commit/efdeb98448f0fd3764f152f821f56273bb3e4826))
+
+## [1.6.1](https://github.com/Salable/node-sdk/compare/v1.6.0...v1.6.1) (2023-03-07)
+
+
+### Bug Fixes
+
+* change the snippet for update usage ([a1c1d34](https://github.com/Salable/node-sdk/commit/a1c1d34164c3b9002a2471e6ed994987b4cfb163))
+
+# [1.6.0](https://github.com/Salable/node-sdk/compare/v1.5.1...v1.6.0) (2023-03-06)
+
+
+### Features
+
+* old version added ([3a1c2b7](https://github.com/Salable/node-sdk/commit/3a1c2b727b93a43bcecb7a61cb6e28efced04c6f))
+
+## [1.5.1](https://github.com/Salable/node-sdk/compare/v1.5.0...v1.5.1) (2023-03-06)
+
+
+### Bug Fixes
+
+* added type detailing ([2388257](https://github.com/Salable/node-sdk/commit/2388257c71c3036948b0e5b9faa7c8a5c65c6760))
+* typo mistake fixed ([bc8f562](https://github.com/Salable/node-sdk/commit/bc8f562c5bcbf42232992a18a167cee75a2ed462))
+
+# [1.5.0](https://github.com/Salable/node-sdk/compare/v1.4.0...v1.5.0) (2023-02-23)
+
+
+### Features
+
+* adding upgrade and downgrade subscription method ([7ebb6f2](https://github.com/Salable/node-sdk/commit/7ebb6f2b55175cc4258b03a099e4570df9d16e7d))
+* changing params for changePlan method and add test ([dfcc1f2](https://github.com/Salable/node-sdk/commit/dfcc1f298a33d8fe570421026ce3aeade831232f))
+
+# [1.4.0](https://github.com/Salable/node-sdk/compare/v1.3.0...v1.4.0) (2023-02-23)
+
+
+### Bug Fixes
+
+* fixing misspell ([d2e2eaf](https://github.com/Salable/node-sdk/commit/d2e2eaf9703a3d6d801762d2efdd751c645b6180))
+
+
+### Features
+
+* adding update usage code ([1a2956d](https://github.com/Salable/node-sdk/commit/1a2956d0a8beb87a0d85170ba13878c7ca49d29b))
+* creating usage class ([9506789](https://github.com/Salable/node-sdk/commit/95067893cbd9021e2937fd726c34ceb9e944f1fd))
+
 # [1.3.0](https://github.com/Salable/node-sdk/compare/v1.2.0...v1.3.0) (2022-11-04)
 
 

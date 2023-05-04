@@ -12,14 +12,12 @@ export class Base {
       throw new Error('You cannot instantiate an abstract class!');
     }
 
-    this._request = async <T>(
-      endpoint: string,
-      options?: RequestInit
-    ): Promise<T> => {
+    this._request = async <T>(endpoint: string, options?: RequestInit): Promise<T> => {
       const url = `${SALABLE_BASE_URL}${endpoint}`;
       const headers = {
         'Content-Type': 'application/json',
         'x-api-key': this._apiKey,
+        ...options?.headers,
       };
 
       const config = {

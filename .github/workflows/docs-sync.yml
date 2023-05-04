@@ -1,0 +1,63 @@
+name: Docs Sync
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "docs/**"
+  workflow_dispatch:
+
+jobs:
+  docs_sync:
+    name: Docs Sync
+    timeout-minutes: 15
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    env:
+      GH_TOKEN: "${{ secrets.GH_TOKEN }}"
+      TARGET_DIR: "node-sdk"
+
+    steps:
+      - name: Check out ${{ env.TARGET_DIR }}
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+          path: ./${{ env.TARGET_DIR }}
+
+      - name: Check out docs
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+          repository: salable/docs
+          path: "./docs"
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: Migrate Code to docs repo
+        run: |
+          # Remove the old folders in the docs repo
+          rm -rf ./docs/${{ env.TARGET_DIR }}
+          rm -rf ./docs/${{ env.TARGET_DIR }}_versioned_docs
+          rm -rf ./docs/${{ env.TARGET_DIR }}_versioned_sidebars
+          rm -rf ./docs/${{ env.TARGET_DIR }}_versions.json
+
+          # Move in the new folders
+          mv ./${{ env.TARGET_DIR }}/docs/docs ./docs/${{ env.TARGET_DIR }}
+          mv ./${{ env.TARGET_DIR }}/docs/versioned_docs ./docs/${{ env.TARGET_DIR }}_versioned_docs
+          mv ./${{ env.TARGET_DIR }}/docs/versioned_sidebars ./docs/${{ env.TARGET_DIR }}_versioned_sidebars
+          mv ./${{ env.TARGET_DIR }}/docs/versions.json ./docs/${{ env.TARGET_DIR }}_versions.json
+
+          # Commit the changes
+          cd ./docs
+          git config user.name "Coner Murphy"
+          git config user.email "<cmurphy@adaptavist.com>"
+          git config --global credential.helper cache
+          git add ./${{ env.TARGET_DIR }}
+          git add ./${{ env.TARGET_DIR }}_versioned_docs
+          git add ./${{ env.TARGET_DIR }}_versioned_sidebars
+          git add ./${{ env.TARGET_DIR }}_versions.json
+          git status
+          git commit -m "docs: synced with ${{ env.TARGET_DIR }} documentation"
+          git push
