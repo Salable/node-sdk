@@ -22,7 +22,7 @@ export class Base {
      * @param endpoint - The endpoint being requested
      * @param options - The options for the request (body, headers, method) (optional)
      *
-     * @returns A promise which resolves to the new license
+     * @returns A promise which resolves to data from the endpoint passed or an error
      */
     this._request = async <T, K = void>(
       endpoint: string,
