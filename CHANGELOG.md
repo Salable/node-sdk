@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/Salable/node-sdk/compare/v1.7.0...v2.0.0) (2023-05-10)
+
+
+### Features
+
+* restructured the package ([c9d39c8](https://github.com/Salable/node-sdk/commit/c9d39c8406fa7e78236bec0acb6776db2c0608e9))
+
+
+### BREAKING CHANGES
+
+* Several endpoints have been renamed also the top level export has been renamed.
+
 # [1.7.0](https://github.com/Salable/node-sdk/compare/v1.6.2...v1.7.0) (2023-05-02)
 
 
