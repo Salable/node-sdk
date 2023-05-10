@@ -29,4 +29,7 @@ module.exports = {
     },
   },
   modulePathIgnorePatterns: ['./dist'],
+  globals: {
+    diagnostics: false,
+  },
 };

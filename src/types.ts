@@ -1,4 +1,20 @@
-export interface ICreateAdhocLicense {
+type INonBodyRequest = {
+  method: 'GET' | 'HEAD';
+  body?: never;
+};
+
+type IBodyRequest<T = void> = {
+  method: 'POST' | 'PUT' | 'DELETE';
+  body: T;
+};
+
+export function isRequestWithBody<T>(request: IRequestBase<T>): request is IBodyRequest<T> {
+  return (request as IBodyRequest).body !== undefined;
+}
+
+export type IRequestBase<T> = Omit<RequestInit, 'body'> & (INonBodyRequest | IBodyRequest<T>);
+
+export interface ICreateAdhocLicenseInput {
   planUuid: string;
   member: string;
   granteeId: string;
@@ -62,6 +78,17 @@ export interface IMetadata {
   [key: string]: string;
 }
 
-export interface ICountOptions {
+export interface IUsageUpdateCountOptions {
   increment: number;
+}
+
+export interface ISubscriptionUpdatePlanInput {
+  newPlanId: string;
+  subscriptionId: string;
+}
+
+export interface IUsageUpdateInput {
+  licenseUuid: string;
+  featureVariableName: string;
+  countOptions: IUsageUpdateCountOptions;
 }
