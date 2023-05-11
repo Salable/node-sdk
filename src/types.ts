@@ -5,7 +5,7 @@ type INonBodyRequest = {
 
 type IBodyRequest<T = void> = {
   method: 'POST' | 'PUT' | 'DELETE';
-  body: T;
+  body?: T;
 };
 
 export function isRequestWithBody<T>(request: IRequestBase<T>): request is IBodyRequest<T> {
@@ -91,4 +91,77 @@ export interface IUsageUpdateInput {
   licenseUuid: string;
   featureVariableName: string;
   countOptions: IUsageUpdateCountOptions;
+}
+
+export interface IPermission {
+  uuid: string;
+  value: string;
+  type: string | null;
+  description: string | null;
+  dependencies: { [k: string]: string } | null;
+  organisation: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface IRole {
+  uuid: string;
+  name: string;
+  description: string | null;
+  organisation: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface IRbacUser {
+  id: string;
+  name: string | null;
+  organisation: string;
+  roleUuid: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface ICreatePermissionInput {
+  value: string;
+  type?: string | null;
+  description?: string | null;
+  dependencies?: { [k: string]: string } | null;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
+  rbacUsers?: string[];
+  roles?: string[];
+}
+
+export interface IUpdatePermissionInput {
+  value?: string;
+  type?: string;
+  description?: string;
+  dependencies?: string[];
+}
+
+export interface ICreateRoleInput {
+  name: string;
+  description: string;
+  permissions: string[];
+}
+
+export interface IUpdateRoleInput {
+  name?: string;
+  description?: string;
+  permissions: { add?: string[]; remove?: string[] };
+}
+
+export interface ICreateRbacUserInput {
+  id: string;
+  name?: string;
+  role?: string;
+  permissions?: string[];
+}
+
+export interface IUpdateRbacUserInput {
+  id?: string;
+  name?: string;
+  role?: string;
+  permissions: { add?: string[]; remove?: string[] };
 }
