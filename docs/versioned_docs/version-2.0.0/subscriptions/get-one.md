@@ -10,7 +10,6 @@ Returns the details of a single subscription.
 
 ```typescript
 const { Salable } = require('@salable/node-sdk');
-
 (async () => {
   const salable = new Salable('API-KEY');
 

@@ -1,10 +1,10 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
-# Create License
+# Check License
 
-This method will create a new adhoc license to allow Specific IDs to use your product.
+This method returns the capabilities assigned to a granteeId or product.
 
 ## Code Sample
 
@@ -15,11 +15,10 @@ const { Salable } = require('@salable/node-sdk');
   const salable = new Salable('API-KEY');
 
   try {
-    const license = await salable.licenses.create({
-      planUuid: '41cf33a2-136e-4959-b5c7-73889ab94eff',
-      member: 'tester@testing.com',
-      granteeId: 'grantee-123',
-    });
+    const capabilitiesCheck = await salable.licenses.check('41cf33a2-136e-4959-b5c7-73889ab94eff', [
+      'grantee1',
+      'grantee2',
+    ]);
   } catch (err) {
     console.error(err);
   }
@@ -44,4 +43,4 @@ A String array of the grantee Ids you wish to check against
 
 ## Return Type
 
-Promise of Capabilities Object
+Promise of Check Capabilities Object

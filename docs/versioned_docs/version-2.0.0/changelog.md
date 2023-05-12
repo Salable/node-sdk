@@ -4,16 +4,6 @@ sidebar_position: 1
 
 # Changelog
 
-## v2.1.0
-
-### Features
-
-- Added `rbac` (`permissions`, `users`, `roles`) methods to SDK.
-
-### Other Changes
-
-- **DOCS**: Updated documentation mistakes and inaccuracies
-
 ## v2.0.0
 
 ### Breaking Changes
