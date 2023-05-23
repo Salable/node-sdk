@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/Salable/node-sdk/compare/v2.0.0...v2.1.0) (2023-05-23)
+
+
+### Features
+
+* added rbac endpoints ([87a215e](https://github.com/Salable/node-sdk/commit/87a215ee951d49c975a67380e1bb1ec6eb24b42e))
+
 # [2.0.0](https://github.com/Salable/node-sdk/compare/v1.7.0...v2.0.0) (2023-05-10)
 
 
