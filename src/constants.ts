@@ -4,4 +4,9 @@ export const RESOURCE_NAMES = {
   LICENSES: 'licenses',
   SUBSCRIPTIONS: 'subscriptions',
   USAGE: 'usage',
+  RBAC: {
+    PERMISSIONS: 'rbac/permissions',
+    ROLES: 'rbac/roles',
+    USERS: 'rbac/users',
+  },
 };

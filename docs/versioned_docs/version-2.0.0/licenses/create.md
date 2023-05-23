@@ -44,4 +44,4 @@ A String array of the grantee Ids you wish to check against
 
 ## Return Type
 
-Promise of Capabilities Object
+Promise of Check Capabilities Object
