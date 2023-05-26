@@ -87,6 +87,8 @@ export interface ISubscriptionUpdatePlanInput {
   subscriptionId: string;
 }
 
+export type CancelWhen = 'now' | 'end';
+
 export interface IUsageUpdateInput {
   licenseUuid: string;
   featureVariableName: string;

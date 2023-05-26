@@ -1,6 +1,6 @@
 import { Base } from '../base';
 import { RESOURCE_NAMES } from '../constants';
-import { ISubscription, ISubscriptionUpdatePlanInput } from '../types';
+import { CancelWhen, ISubscription, ISubscriptionUpdatePlanInput } from '../types';
 
 /**
  * Salable Node SDK Subscription Class
@@ -36,5 +36,23 @@ export default class Subscriptions extends Base {
         subscriptionId,
       },
     });
+  }
+
+  /**
+   * Cancel's a subscription
+   *
+   * @param  {string} subscriptionId The uuid of the subscription to cancel
+   * @param  {CancelWhen} when Whether you want to cancel the subscription now or end of cycle
+   *
+   * @returns {Promise<void>}
+   */
+
+  public cancel(subscriptionId: string, when: CancelWhen): Promise<void> {
+    return this._request<void>(
+      `${RESOURCE_NAMES.SUBSCRIPTIONS}/${subscriptionId}/cancel?when=${when}`,
+      {
+        method: 'PUT',
+      }
+    );
   }
 }
