@@ -45,7 +45,7 @@ export default class Plans extends Base {
 
     const flatCheckoutParams = planCheckoutFactory(queryParams);
 
-    for (const key of Object.keys(queryParams)) {
+    for (const key of Object.keys(flatCheckoutParams)) {
       const itemKey = key as PlanCheckoutKey;
       const itemValue = flatCheckoutParams[itemKey];
       if (itemValue && allowedPlanCheckoutParams.includes(itemKey))

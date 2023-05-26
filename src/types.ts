@@ -241,6 +241,26 @@ export interface IProductPricingTableInput {
   };
 }
 
+export interface IOrganisationPaymentIntegration {
+  uuid: string;
+  organisation: string;
+  integrationName: string;
+  accountName: string;
+  accountData: {
+    key: string;
+    encryptedData: string;
+  };
+  accountId: string;
+  updatedAt: string;
+}
+
+export interface IProductPricingTableResponse extends IProduct {
+  features: IFeature[];
+  currencies: ICurrency[];
+  organisationPaymentIntegration: IOrganisationPaymentIntegration;
+  plans: (IPlan & { features: IFeature[]; currencies: ICurrency[]; checkoutUrl: string })[];
+}
+
 export interface ICheckLicensesCapabilities {
   capabilities: string[];
   publicHash: string;

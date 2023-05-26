@@ -1,6 +1,30 @@
 import { Base } from '../base';
 import { RESOURCE_NAMES } from '../constants';
-import { IPlan, IProduct, IProductPricingTableInput } from '../types';
+import {
+  IPlan,
+  IProduct,
+  IProductPricingTableInput,
+  IProductPricingTableResponse,
+  PlanCheckoutKey,
+} from '../types';
+import planCheckoutFactory from '../utils/plan-checkout-factory';
+
+const allowedQueryParams = [
+  'customerCountry',
+  'customerEmail',
+  'customerPostcode',
+  'member',
+  'promoCode',
+  'allowPromoCode',
+  'marketingConsent',
+  'vatCity',
+  'vatCompanyName',
+  'vatCountry',
+  'vatNumber',
+  'vatPostcode',
+  'vatState',
+  'vatStreet',
+];
 
 /**
  * Salable Node SDK Product Class
@@ -25,55 +49,72 @@ export default class Products extends Base {
    * @param  {string} planId The uuid of the plan
    * @param  {string} queryParams The query parameters for the pricing table options
    *
-   * @returns {Promise<IPlanCheckoutResponse>}
+   * @returns {Promise<IProductPricingTableResponse>}
    */
 
-  public getPricingTable(
-    productId: string,
-    queryParams: IProductPricingTableInput
-  ): Promise<IProduct> {
+  public getPricingTable(productId: string, queryParams: IProductPricingTableInput) {
     const {
-      globalPlanOptions: { granteeId, successUrl, cancelUrl, member },
+      globalPlanOptions: { granteeId, successUrl, cancelUrl },
     } = queryParams;
 
-    const granteeIdsWithHashes = queryParams.individualPlanOptions
-      ? Object.keys(queryParams.individualPlanOptions)?.map((key) => {
-          const granteeId =
-            queryParams?.individualPlanOptions?.[key]?.granteeId ??
-            queryParams.globalPlanOptions.granteeId;
-          return `${key},${granteeId}`;
-        })
-      : [];
+    const flatCheckoutParams = planCheckoutFactory(queryParams.globalPlanOptions);
 
-    const successUrlsWithHashes = queryParams.individualPlanOptions
-      ? Object.keys(queryParams.individualPlanOptions)?.map((key) => {
-          const successUrl =
-            queryParams?.individualPlanOptions?.[key]?.successUrl ??
-            queryParams.globalPlanOptions.successUrl;
-          return `${key},${successUrl}`;
-        })
-      : [];
+    let paramsStr = '';
 
-    const cancelUrlsWithHashes = queryParams.individualPlanOptions
-      ? Object.keys(queryParams.individualPlanOptions)?.map((key) => {
-          const cancelUrl =
-            queryParams?.individualPlanOptions?.[key]?.cancelUrl ??
-            queryParams.globalPlanOptions.cancelUrl;
-          return `${key},${cancelUrl}`;
-        })
-      : [];
+    for (const key of Object.keys(flatCheckoutParams)) {
+      const itemKey = key as PlanCheckoutKey;
+      const itemValue = flatCheckoutParams[itemKey];
+      if (itemValue && allowedQueryParams.includes(itemKey)) {
+        paramsStr += `&${itemKey}=${itemValue}`;
+      }
+    }
 
-    // console.log(granteeIdsWithHashes, 'granteeIdsWithHashes');
-    // console.log(successUrlsWithHashes, 'successUrlsWithHashes');
-    // console.log(cancelUrlsWithHashes, 'cancelUrlsWithHashes');
+    const { cancelUrls, successUrls, granteeIds } = queryParams.individualPlanOptions
+      ? Object.keys(queryParams.individualPlanOptions)?.reduce<{
+          cancelUrls: string[];
+          successUrls: string[];
+          granteeIds: string[];
+        }>(
+          (acc, cur) => {
+            // acc: current value
+            // cur: current array item we're on
+            const cancelUrl =
+              queryParams?.individualPlanOptions?.[cur]?.cancelUrl ??
+              queryParams.globalPlanOptions.cancelUrl;
+
+            const successUrl =
+              queryParams?.individualPlanOptions?.[cur]?.successUrl ??
+              queryParams.globalPlanOptions.successUrl;
+
+            const granteeId =
+              queryParams?.individualPlanOptions?.[cur]?.granteeId ??
+              queryParams.globalPlanOptions.granteeId;
+
+            acc.cancelUrls.push(`${cur},${cancelUrl}`);
+            acc.successUrls.push(`${cur},${successUrl}`);
+            acc.granteeIds.push(`${cur},${granteeId}`);
+
+            return acc;
+          },
+          {
+            cancelUrls: [],
+            successUrls: [],
+            granteeIds: [],
+          }
+        )
+      : {
+          cancelUrls: [],
+          successUrls: [],
+          granteeIds: [],
+        };
 
     const query = encodeURI(
-      `globalGranteeId=${granteeId}&granteeIds=[${granteeIdsWithHashes.toString()}]&globalSuccessUrl=${successUrl}&successUrls=[${successUrlsWithHashes.toString()}]&globalCancelUrl=${cancelUrl}&cancelUrls=[${cancelUrlsWithHashes.toString()}]&member=${member}`
+      `globalGranteeId=${granteeId}&granteeIds=[${granteeIds.toString()}]&globalSuccessUrl=${successUrl}&successUrls=[${successUrls.toString()}]&globalCancelUrl=${cancelUrl}&cancelUrls=[${cancelUrls.toString()}]${paramsStr}`
     );
 
-    // TODO: Add checkoutConfig options
-
-    return this._request<IProduct>(`${RESOURCE_NAMES.PRODUCTS}/${productId}/pricingtable?${query}`);
+    return this._request<IProductPricingTableResponse>(
+      `${RESOURCE_NAMES.PRODUCTS}/${productId}/pricingtable?${query}`
+    );
   }
 
   /**
@@ -90,7 +131,7 @@ export default class Products extends Base {
 
   /**
    * Get all features for a product
-   *
+   * d
    * @param  {string} productId The uuid of the product
    *
    * @returns {Promise<IPlan[]>} An array of all the associated features
