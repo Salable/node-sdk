@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/Salable/node-sdk/compare/v2.1.0...v2.2.0) (2023-05-26)
+
+
+### Features
+
+* cancel sub ([c4c3c10](https://github.com/Salable/node-sdk/commit/c4c3c10c95f337baf2a9bd168d0be6fcbc7cfa12))
+
 # [2.1.0](https://github.com/Salable/node-sdk/compare/v2.0.0...v2.1.0) (2023-05-23)
 
 
