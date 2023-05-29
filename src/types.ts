@@ -109,6 +109,11 @@ export interface IRole {
   name: string;
   description: string | null;
   organisation: string;
+  permissions?: {
+    uuid: string;
+    value: string;
+    type: string | null;
+  }[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -117,7 +122,22 @@ export interface IRbacUser {
   id: string;
   name: string | null;
   organisation: string;
-  roleUuid: string | null;
+  role?: {
+    uuid: string;
+    name?: string;
+    description?: string;
+    permissions?: {
+      uuid: string;
+      value: string;
+      type: string | null;
+    }[];
+    createdAt: Date;
+  };
+  permissions?: {
+    uuid: string;
+    value: string;
+    type: string | null;
+  }[];
   createdAt: Date;
   updatedAt: Date;
 }
