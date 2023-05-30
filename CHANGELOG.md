@@ -1,3 +1,11 @@
+## [2.2.1](https://github.com/Salable/node-sdk/compare/v2.2.0...v2.2.1) (2023-05-30)
+
+
+### Bug Fixes
+
+* added INestedPermission and INestedRole interfaces ([c0e63a2](https://github.com/Salable/node-sdk/commit/c0e63a259fe6844a495495650e1b964407117204))
+* updated IRole and IRbacUser interfaces ([cfeadcf](https://github.com/Salable/node-sdk/commit/cfeadcf3583d4c3ec0d1eed012df455436f422f0))
+
 # [2.2.0](https://github.com/Salable/node-sdk/compare/v2.1.0...v2.2.0) (2023-05-26)
 
 
