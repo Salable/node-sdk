@@ -104,40 +104,36 @@ export interface IPermission {
   updatedAt: Date;
 }
 
+export interface INestedPermission {
+  uuid: string;
+  value: string;
+  type: string | null;
+}
+
 export interface IRole {
   uuid: string;
   name: string;
   description: string | null;
   organisation: string;
-  permissions?: {
-    uuid: string;
-    value: string;
-    type: string | null;
-  }[];
+  permissions?: INestedPermission[];
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface INestedRole {
+  uuid: string;
+  name?: string;
+  description?: string;
+  permissions?: INestedPermission[];
+  createdAt: Date;
 }
 
 export interface IRbacUser {
   id: string;
   name: string | null;
   organisation: string;
-  role?: {
-    uuid: string;
-    name?: string;
-    description?: string;
-    permissions?: {
-      uuid: string;
-      value: string;
-      type: string | null;
-    }[];
-    createdAt: Date;
-  };
-  permissions?: {
-    uuid: string;
-    value: string;
-    type: string | null;
-  }[];
+  role?: INestedRole;
+  permissions?: INestedPermission[];
   createdAt: Date;
   updatedAt: Date;
 }
