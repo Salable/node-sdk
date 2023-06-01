@@ -38,21 +38,12 @@ export class Base {
 
       const config = {
         headers,
-        method: options?.method,
-        mode: options?.mode,
-        cache: options?.cache,
-        credentials: options?.credentials,
-        redirect: options?.redirect,
-        referrer: options?.referrer,
-        referrerPolicy: options?.referrerPolicy,
-        integrity: options?.integrity,
-        keepalive: options?.keepalive,
-        signal: options?.signal,
         ...(options && isRequestWithBody<K>(options)
           ? {
+              ...options,
               body: JSON.stringify(options?.body),
             }
-          : {}),
+          : { ...options }),
       };
 
       return fetch(url, config).then((response) => {
