@@ -1,3 +1,10 @@
+## [2.3.1](https://github.com/Salable/node-sdk/compare/v2.3.0...v2.3.1) (2023-06-01)
+
+
+### Bug Fixes
+
+* added in missing details stripped from request config ([a53b669](https://github.com/Salable/node-sdk/commit/a53b6698b37a874be620ff55bcc410e3c0fe1b83))
+
 # [2.3.0](https://github.com/Salable/node-sdk/compare/v2.2.1...v2.3.0) (2023-06-01)
 
 
