@@ -40,9 +40,10 @@ export class Base {
         headers,
         ...(options && isRequestWithBody<K>(options)
           ? {
+              ...options,
               body: JSON.stringify(options?.body),
             }
-          : {}),
+          : { ...options }),
       };
 
       return fetch(url, config).then((response) => {
