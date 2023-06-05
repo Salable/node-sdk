@@ -1,3 +1,32 @@
+## [2.3.1](https://github.com/Salable/node-sdk/compare/v2.3.0...v2.3.1) (2023-06-01)
+
+
+### Bug Fixes
+
+* added in missing details stripped from request config ([a53b669](https://github.com/Salable/node-sdk/commit/a53b6698b37a874be620ff55bcc410e3c0fe1b83))
+
+# [2.3.0](https://github.com/Salable/node-sdk/compare/v2.2.1...v2.3.0) (2023-06-01)
+
+
+### Features
+
+* added url support in constructor for passing api url ([3e9c17d](https://github.com/Salable/node-sdk/commit/3e9c17d30eff74d2989efcef28eafb082969cadb))
+
+## [2.2.1](https://github.com/Salable/node-sdk/compare/v2.2.0...v2.2.1) (2023-05-30)
+
+
+### Bug Fixes
+
+* added INestedPermission and INestedRole interfaces ([c0e63a2](https://github.com/Salable/node-sdk/commit/c0e63a259fe6844a495495650e1b964407117204))
+* updated IRole and IRbacUser interfaces ([cfeadcf](https://github.com/Salable/node-sdk/commit/cfeadcf3583d4c3ec0d1eed012df455436f422f0))
+
+# [2.2.0](https://github.com/Salable/node-sdk/compare/v2.1.0...v2.2.0) (2023-05-26)
+
+
+### Features
+
+* cancel sub ([c4c3c10](https://github.com/Salable/node-sdk/commit/c4c3c10c95f337baf2a9bd168d0be6fcbc7cfa12))
+
 # [2.1.0](https://github.com/Salable/node-sdk/compare/v2.0.0...v2.1.0) (2023-05-23)
 
 

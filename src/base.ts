@@ -6,7 +6,7 @@ export class Base {
   protected _apiKey;
   protected _request;
 
-  constructor(apiKey: string) {
+  constructor(apiKey: string, apiUrl = SALABLE_BASE_URL) {
     this._apiKey = apiKey;
 
     if (new.target === Base) {
@@ -28,7 +28,7 @@ export class Base {
       endpoint: string,
       options?: IRequestBase<K>
     ): Promise<T> => {
-      const url = `${SALABLE_BASE_URL}/${endpoint}`;
+      const url = `${apiUrl}/${endpoint}`;
 
       const headers = {
         'Content-Type': 'application/json',
@@ -40,9 +40,10 @@ export class Base {
         headers,
         ...(options && isRequestWithBody<K>(options)
           ? {
+              ...options,
               body: JSON.stringify(options?.body),
             }
-          : {}),
+          : { ...options }),
       };
 
       return fetch(url, config).then((response) => {

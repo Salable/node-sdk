@@ -286,6 +286,8 @@ export interface ISubscriptionUpdatePlanInput {
   subscriptionId: string;
 }
 
+export type CancelWhen = 'now' | 'end';
+
 export interface IUsageUpdateInput {
   licenseUuid: string;
   featureVariableName: string;
@@ -303,20 +305,36 @@ export interface IPermission {
   updatedAt: Date;
 }
 
+export interface INestedPermission {
+  uuid: string;
+  value: string;
+  type: string | null;
+}
+
 export interface IRole {
   uuid: string;
   name: string;
   description: string | null;
   organisation: string;
+  permissions?: INestedPermission[];
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface INestedRole {
+  uuid: string;
+  name?: string;
+  description?: string;
+  permissions?: INestedPermission[];
+  createdAt: Date;
 }
 
 export interface IRbacUser {
   id: string;
   name: string | null;
   organisation: string;
-  roleUuid: string | null;
+  role?: INestedRole;
+  permissions?: INestedPermission[];
   createdAt: Date;
   updatedAt: Date;
 }
