@@ -204,6 +204,22 @@ export interface IProduct {
   updatedAt: string;
 }
 
+export interface IProductCapabilityResponse {
+  uuid: string;
+  name: string;
+  description?: string;
+  status: string;
+  productUuid: string;
+  updatedAt: string;
+}
+
+export interface IProductCurrencyResponse {
+  productUuid: string;
+  currencyUuid: string;
+  defaultCurrency: boolean;
+  currency: ICurrency;
+}
+
 export interface IProductPricingTableInput {
   globalPlanOptions: {
     granteeId: string;

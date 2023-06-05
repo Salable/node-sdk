@@ -3,6 +3,8 @@ import { RESOURCE_NAMES } from '../constants';
 import {
   IPlan,
   IProduct,
+  IProductCapabilityResponse,
+  IProductCurrencyResponse,
   IProductPricingTableInput,
   IProductPricingTableResponse,
   PlanCheckoutKey,
@@ -32,6 +34,15 @@ const allowedQueryParams = [
  * Contains the Salable product methods
  */
 export default class Products extends Base {
+  /**
+   *  Get all products
+   *
+   * @returns {Promise<IProduct[]>} All produdcts
+   */
+  public getAll(): Promise<IProduct[]> {
+    return this._request<IProduct[]>(RESOURCE_NAMES.PRODUCTS);
+  }
+
   /**
    * Get a single product
    *
@@ -76,8 +87,6 @@ export default class Products extends Base {
           granteeIds: string[];
         }>(
           (acc, cur) => {
-            // acc: current value
-            // cur: current array item we're on
             const cancelUrl =
               queryParams?.individualPlanOptions?.[cur]?.cancelUrl ??
               queryParams.globalPlanOptions.cancelUrl;
@@ -140,8 +149,32 @@ export default class Products extends Base {
   public getFeatures(productId: string): Promise<IProduct> {
     return this._request<IProduct>(`${RESOURCE_NAMES.PRODUCTS}/${productId}/features`);
   }
+
+  /**
+   * Get all capabilities for a product
+   *
+   * @param  {string} productId The uuid of the product
+   *
+   * @returns {Promise<IProductCapabilityResponse[]>}
+   */
+
+  public getCapabilities(productId: string) {
+    return this._request<IProductCapabilityResponse[]>(
+      `${RESOURCE_NAMES.PRODUCTS}/${productId}/capabilities`
+    );
+  }
+
+  /**
+   * Get all currencies for a product
+   *
+   * @param  {string} productId The uuid of the product
+   *
+   * @returns {Promise<IProductCurrencyResponse[]>}
+   */
+
+  public getCurrencies(productId: string) {
+    return this._request<IProductCurrencyResponse[]>(
+      `${RESOURCE_NAMES.PRODUCTS}/${productId}/currencies`
+    );
+  }
 }
-
-// for global, success, cancel,member and grantee are required,
-
-// for individual, optionally pass in grantee, success or cancel
