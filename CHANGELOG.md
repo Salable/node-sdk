@@ -1,3 +1,10 @@
+# [2.4.0](https://github.com/Salable/node-sdk/compare/v2.3.1...v2.4.0) (2023-06-05)
+
+
+### Features
+
+* adding plans class ([2e84262](https://github.com/Salable/node-sdk/commit/2e84262878aa5628449091961ea0ff074ee0a8a3))
+
 ## [2.3.1](https://github.com/Salable/node-sdk/compare/v2.3.0...v2.3.1) (2023-06-01)
 
 
