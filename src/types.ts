@@ -53,12 +53,140 @@ export interface ISubscription {
   planUuid: string;
 }
 
+export interface IPlan {
+  uuid: string;
+  name: string;
+  description?: string;
+  displayName: string;
+  status: string;
+  trialDays: null;
+  evaluation: false;
+  evalDays: number;
+  organisation: string;
+  visibility: string;
+  licenseType: string;
+  interval: string;
+  length: number;
+  active: boolean;
+  planType: string;
+  pricingType: string;
+  environment: string;
+  type: string;
+  paddlePlanId?: string;
+  productUuid: string;
+  salablePlan: boolean;
+  updatedAt: string;
+}
+
+export interface IFeature {
+  uuid: string;
+  name: string;
+  description?: string;
+  displayName: string;
+  variableName?: string;
+  status: string;
+  visibility: string;
+  valueType: string;
+  defaultValue: string;
+  showUnlimited: boolean;
+  productUuid?: string;
+  updatedAt: string;
+}
+
+export interface IPlanCheckoutParams {
+  successUrl: string;
+  cancelUrl: string;
+  granteeId: string;
+  member: string;
+  marketingConsent?: string;
+  couponCode?: string;
+  promoCode?: string;
+  allowPromoCode?: string;
+  customerEmail?: string;
+  customerCountry?: string;
+  customerPostcode?: string;
+  vatNumber?: string;
+  vatCompanyName?: string;
+  vatStreet?: string;
+  vatCity?: string;
+  vatState?: string;
+  vatCountry?: string;
+  vatPostcode?: string;
+  customMessage?: string;
+}
+
+export type PlanCheckoutKey = keyof IPlanCheckoutParams;
+
+export interface IPlanCheckoutInputParams {
+  successUrl: string;
+  cancelUrl: string;
+  granteeId: string;
+  member: string;
+  marketingConsent?: string;
+  couponCode?: string;
+  promoCode?: string;
+  allowPromoCode?: string;
+  customer?: {
+    email?: string;
+    country?: string;
+    postcode?: string;
+  };
+  vat?: {
+    number?: string;
+    companyName?: string;
+    street?: string;
+    city?: string;
+    state?: string;
+    country?: string;
+    postcode?: string;
+  };
+  customMessage?: string;
+}
+
+export interface IPlanCheckoutResponse {
+  checkoutUrl: string;
+}
+
+export interface IPlanFeatureResponse {
+  planUuid: string;
+  featureUuid: string;
+  value: string;
+  enumValueUuid?: string;
+  isUnlimited: boolean;
+  updatedAt: string;
+  feature: IFeature;
+  enumValue?: string;
+  sortOrder: number;
+}
+
+export interface IPlanCapabilityResponse {
+  planUuid: string;
+  capabilityUuid: string;
+  updatedAt: string;
+  capability: ICapability;
+}
+
+export interface IPlanCurrencyResponse {
+  planUuid: string;
+  currencyUuid: string;
+  price: number;
+  paymentIntegrationPlanId: string;
+  currency: ICurrency;
+}
+
+export interface ICurrency {
+  uuid: string;
+  shortName: string;
+  longName: string;
+  symbol: string;
+}
+
 export interface ICapability {
   uuid: string;
   name: string;
   status: string;
   updatedAt: string;
-  description: string;
+  description?: string;
   productUuid: string;
 }
 

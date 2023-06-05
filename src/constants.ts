@@ -3,6 +3,7 @@ export const SALABLE_BASE_URL = process.env.SALABLE_BASE_URL;
 export const RESOURCE_NAMES = {
   LICENSES: 'licenses',
   SUBSCRIPTIONS: 'subscriptions',
+  PLANS: 'plans',
   USAGE: 'usage',
   RBAC: {
     PERMISSIONS: 'rbac/permissions',
@@ -10,3 +11,25 @@ export const RESOURCE_NAMES = {
     USERS: 'rbac/users',
   },
 };
+
+export const allowedPlanCheckoutParams = [
+  'successUrl',
+  'cancelUrl',
+  'granteeId',
+  'member',
+  'customerCountry',
+  'customerEmail',
+  'customerPostcode',
+  'couponCode',
+  'promoCode',
+  'allowPromoCode',
+  'marketingConsent',
+  'vatCity',
+  'vatCompanyName',
+  'vatCountry',
+  'vatNumber',
+  'vatPostcode',
+  'vatState',
+  'vatStreet',
+  'customMessage',
+];
