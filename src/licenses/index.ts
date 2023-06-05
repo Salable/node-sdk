@@ -1,6 +1,6 @@
 import { Base } from '../base';
 import { RESOURCE_NAMES } from '../constants';
-import { ICheckLicensesCapabilities, ILicense, ICreateAdhocLicenseInput } from '../types';
+import { ICheckLicensesCapabilities, ILicense, ICreateAdhocLicenseInput, IStatus } from '../types';
 
 /**
  * Salable Node SDK License Class
@@ -13,8 +13,10 @@ export default class Licenses extends Base {
    *
    * @returns {Promise<ILicense[]>} All licenses present on the account
    */
-  public getAll(): Promise<ILicense[]> {
-    return this._request<ILicense[]>(RESOURCE_NAMES.LICENSES);
+  public getAll({ status }: { status?: IStatus } = {}): Promise<ILicense[]> {
+    return this._request<ILicense[]>(
+      `${RESOURCE_NAMES.LICENSES}${status ? `?status=${status}` : ''}`
+    );
   }
 
   /**

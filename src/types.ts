@@ -14,6 +14,20 @@ export function isRequestWithBody<T>(request: IRequestBase<T>): request is IBody
 
 export type IRequestBase<T> = Omit<RequestInit, 'body'> & (INonBodyRequest | IBodyRequest<T>);
 
+export type IStatus = 'ACTIVE' | 'CANCELED';
+
+export enum SubscriptionStatus {
+  active = 'ACTIVE',
+  canceled = 'CANCELED',
+  paused = 'PAUSED',
+  trialing = 'TRIALING',
+  deleted = 'DELETED',
+  pastDue = 'PAST_DUE',
+  incompleteExpired = 'INCOMPLETE_EXPIRED',
+  incomplete = 'INCOMPLETE',
+  unpaid = 'UNPAID',
+}
+
 export interface ICreateAdhocLicenseInput {
   planUuid: string;
   member: string;

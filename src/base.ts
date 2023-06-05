@@ -46,13 +46,13 @@ export class Base {
           : { ...options }),
       };
 
-      return fetch(url, config).then((response) => {
-        if (response.status < 300 && response.status >= 200) {
-          return response.json() as Promise<T>;
-        }
+      const response = await fetch(url, config);
 
+      if (response.status < 300 && response.status >= 200) {
+        return (await response.json()) as Promise<T>;
+      } else {
         throw new Error(response.statusText);
-      });
+      }
     };
   }
 }

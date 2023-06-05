@@ -2,7 +2,7 @@ name: Jest tests
 
 on:
   push:
-    branches: ["main"]
+    branches: ['main']
   pull_request:
     types: [opened, synchronize]
 
@@ -10,7 +10,11 @@ jobs:
   tests:
     name: Run Jest tests
     timeout-minutes: 15
+    environment: Production
     runs-on: ${{ matrix.os }}
+    env:
+      SALABLE_BASE_URL: ${{ secrets.SALABLE_BASE_URL }}
+      SALABLE_API_KEY: ${{ secrets.SALABLE_API_KEY }}
     strategy:
       matrix:
         os: [ubuntu-latest]

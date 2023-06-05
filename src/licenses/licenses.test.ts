@@ -1,9 +1,5 @@
 import fetch from 'jest-fetch-mock';
-import Licenses from './index';
-
-const api = new Licenses('test-key');
-
-fetch.enableMocks();
+import { Salable } from '../index';
 
 const licenses = [
   {
@@ -33,19 +29,34 @@ beforeEach(() => {
 });
 
 describe('Unit | ThirdPartyAPI | Licenses', () => {
-  it('should gets all licenses', async () => {
+  it('UNIT: should gets all licenses', async () => {
+    fetch.enableMocks();
     fetch.mockResponseOnce(JSON.stringify(licenses));
-    const fetchedLicenses = await api.getAll();
+
+    const api = new Salable('test-key');
+
+    const fetchedLicenses = await api.licenses.getAll();
     expect(fetchedLicenses[0].email).toBe('andrew@test.com');
     expect(fetchedLicenses).toHaveLength(1);
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 
-  it('should return an error when promise rejects', async () => {
+  it('UNIT: should return an error when promise rejects', async () => {
+    fetch.enableMocks();
     fetch.mockReject(() => Promise.reject('API is down'));
 
+    const api = new Salable('test-key');
+
     await expect(async () => {
-      await api.getAll();
+      await api.licenses.getAll();
     }).rejects.toBe('API is down');
+  });
+
+  it('INTEGRATION: should get all licenses, no active licenses', async () => {
+    const api = new Salable(process.env.SALABLE_API_KEY);
+
+    const data = await api.licenses.getAll();
+
+    expect(data).toEqual([]);
   });
 });

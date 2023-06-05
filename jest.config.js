@@ -10,6 +10,7 @@ module.exports = {
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
   },
+  setupFiles: ['dotenv/config'],
   collectCoverageFrom: [
     '**/*.{ts,tsx}',
     '!**/*stories.{ts,tsx}',
