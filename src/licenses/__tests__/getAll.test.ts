@@ -1,5 +1,5 @@
 import fetch from 'jest-fetch-mock';
-import { Salable } from '../index';
+import { Salable } from '../../index';
 
 const licenses = [
   {
@@ -24,13 +24,13 @@ const licenses = [
   },
 ];
 
-beforeEach(() => {
-  fetch.resetMocks();
-});
-
-describe('Unit | ThirdPartyAPI | Licenses', () => {
-  it('UNIT: should gets all licenses', async () => {
+describe('Licenses | UNIT', () => {
+  beforeEach(() => {
+    fetch.resetMocks();
     fetch.enableMocks();
+  });
+
+  it('Should gets all licenses', async () => {
     fetch.mockResponseOnce(JSON.stringify(licenses));
 
     const api = new Salable('test-key');
@@ -41,8 +41,7 @@ describe('Unit | ThirdPartyAPI | Licenses', () => {
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 
-  it('UNIT: should return an error when promise rejects', async () => {
-    fetch.enableMocks();
+  it('Should return an error when promise rejects', async () => {
     fetch.mockReject(() => Promise.reject('API is down'));
 
     const api = new Salable('test-key');
@@ -51,12 +50,30 @@ describe('Unit | ThirdPartyAPI | Licenses', () => {
       await api.licenses.getAll();
     }).rejects.toBe('API is down');
   });
+});
 
-  it('INTEGRATION: should get all licenses, no active licenses', async () => {
+describe('Licenses | INTEGRATION', () => {
+  it('Should throw a "Not Found" error when count of licenses === 0', async () => {
     const api = new Salable(process.env.SALABLE_API_KEY);
 
-    const data = await api.licenses.getAll();
+    async function handleFetch() {
+      return await api.licenses.getAll();
+    }
 
-    expect(data).toEqual([]);
+    await expect(async () => {
+      await handleFetch();
+    }).rejects.toThrow('Not Found');
+  });
+
+  it('Should throw a "Unauthorized" error when invalid API Key is used', async () => {
+    const api = new Salable('invalid-api-key');
+
+    async function handleFetch() {
+      return await api.licenses.getAll();
+    }
+
+    await expect(async () => {
+      await handleFetch();
+    }).rejects.toThrow('Unauthorized');
   });
 });
