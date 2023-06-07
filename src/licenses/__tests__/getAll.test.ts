@@ -1,5 +1,6 @@
 import fetch from 'jest-fetch-mock';
 import { Salable } from '../../index';
+import { SALABLE_API_KEY } from '@/src/constants';
 
 const licenses = [
   {
@@ -24,7 +25,7 @@ const licenses = [
   },
 ];
 
-describe('Licenses | UNIT', () => {
+describe('Licenses | getAll | UNIT', () => {
   beforeEach(() => {
     fetch.resetMocks();
     fetch.enableMocks();
@@ -52,12 +53,12 @@ describe('Licenses | UNIT', () => {
   });
 });
 
-describe('Licenses | INTEGRATION', () => {
+describe('Licenses | getAll | INTEGRATION', () => {
   it('Should throw a "Not Found" error when count of licenses === 0', async () => {
-    const api = new Salable(process.env.SALABLE_API_KEY);
+    const api = new Salable(SALABLE_API_KEY);
 
     async function handleFetch() {
-      return await api.licenses.getAll();
+      return await api.licenses.getAll({ status: 'ACTIVE' });
     }
 
     await expect(async () => {
@@ -75,5 +76,14 @@ describe('Licenses | INTEGRATION', () => {
     await expect(async () => {
       await handleFetch();
     }).rejects.toThrow('Unauthorized');
+  });
+
+  it('Should return an array of licenses when count > 0', async () => {
+    const api = new Salable(SALABLE_API_KEY);
+
+    const data = await api.licenses.getAll();
+
+    expect(Array.isArray(data)).toBeTruthy();
+    expect(data?.length).toBeGreaterThan(0);
   });
 });

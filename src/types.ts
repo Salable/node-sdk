@@ -31,7 +31,7 @@ export enum SubscriptionStatus {
 export interface ICreateAdhocLicenseInput {
   planUuid: string;
   member: string;
-  granteeId: string;
+  granteeId?: string;
 }
 
 export interface ILicense {

@@ -48,4 +48,6 @@ export default class Licenses extends Base {
       }/check?productUuid=${productUuid}&granteeIds=${granteeIds.toString()}`
     );
   }
+
+  // TODO: add delete method
 }
