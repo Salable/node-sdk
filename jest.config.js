@@ -17,7 +17,6 @@ module.exports = {
     '!**/node_modules/**',
     '!**/dist/**',
     '!**/.storybook/**',
-    '!**/index.{ts,tsx}',
     '!**/styled.ts',
     '!**/assets/**',
   ],
