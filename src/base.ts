@@ -49,12 +49,12 @@ export class Base {
       const response = await fetch(url, config);
 
       if (response.status < 300 && response.status >= 200) {
+        // eslint-disable-next-line no-console
+        console.log(response);
         if (response.body || response.status !== 204) {
           try {
             return (await response.json()) as Promise<T>;
           } catch (e) {
-            // eslint-disable-next-line no-console
-            console.error(e);
             return undefined;
           }
         }
