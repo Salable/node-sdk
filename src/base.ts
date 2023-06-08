@@ -49,15 +49,18 @@ export class Base {
       const response = await fetch(url, config);
 
       if (response.status < 300 && response.status >= 200) {
-        // eslint-disable-next-line no-console
-        console.log(response);
-        if (response.body || response.status !== 204) {
+        if (response.status === 204) {
+          return undefined;
+        }
+
+        if (response.body !== null) {
           try {
             return (await response.json()) as Promise<T>;
           } catch (e) {
             return undefined;
           }
         }
+
         return undefined;
       } else {
         throw new Error(response.statusText);
