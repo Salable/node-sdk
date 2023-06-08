@@ -52,6 +52,7 @@ export class Base {
         if (response.body || response.status !== 204) {
           return (await response.json()) as Promise<T>;
         }
+        return undefined;
       } else {
         throw new Error(response.statusText);
       }
