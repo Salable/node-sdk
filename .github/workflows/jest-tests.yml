@@ -15,6 +15,10 @@ jobs:
     env:
       SALABLE_BASE_URL: ${{ secrets.SALABLE_BASE_URL }}
       SALABLE_API_KEY: ${{ secrets.SALABLE_API_KEY }}
+      EMPTY_PRODUCT_UUID: ${{ secrets.EMPTY_PRODUCT_UUID }}
+      POPULATED_PRODUCT_UUID: ${{ secrets.POPULATED_PRODUCT_UUID }}
+      POPULATED_PLAN_UUID: ${{ secrets.POPULATED_PLAN_UUID }}
+      INVALID_PLAN_UUID: ${{ secrets.INVALID_PLAN_UUID }}
     strategy:
       matrix:
         os: [ubuntu-latest]
