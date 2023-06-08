@@ -20,6 +20,17 @@ export default class Licenses extends Base {
   }
 
   /**
+   *  Get a single license
+   *
+   * @param {string} uuid - The UUID of the license to retrieve
+   *
+   * @returns {Promise<ILicense>} The license associated with the UUID passed in
+   */
+  public getOne(uuid: string): Promise<ILicense | undefined> {
+    return this._request<ILicense>(`${RESOURCE_NAMES.LICENSES}/${uuid}`);
+  }
+
+  /**
    *  Creates a new license with the details provided
    *
    * @param {ICreateAdhocLicenseInput} licenseDetails - The details to create the new license with
@@ -45,6 +56,18 @@ export default class Licenses extends Base {
     productUuid: string,
     granteeIds: string[]
   ): Promise<ICheckLicensesCapabilities | undefined> {
+    if (!productUuid && !Array.isArray(granteeIds)) {
+      throw new Error('Bad Request: "productUuid" and "granteeIds" cannot be undefined');
+    }
+
+    if (!productUuid) {
+      throw new Error('Bad Request: "productUuid" cannot be undefined');
+    }
+
+    if (!Array.isArray(granteeIds)) {
+      throw new Error('Bad Request: Passed "granteeIds" are not valid, must be of type String[]');
+    }
+
     return this._request<ICheckLicensesCapabilities>(
       `${
         RESOURCE_NAMES.LICENSES

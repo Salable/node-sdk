@@ -1,16 +1,80 @@
-import { invalidApi } from '@/src/config';
+import { api, invalidApi } from '@/src/config';
 import { GRANTEE_ID, POPULATED_PRODUCT_UUID } from '@/src/constants';
 import { invalidApiKeyTest } from '@/src/utils/test-helper-functions';
 
 describe('Licenses | check | INTEGRATION', () => {
-  // 1. Invalid API key
   invalidApiKeyTest(async () => {
     return await invalidApi.licenses.check(POPULATED_PRODUCT_UUID, [GRANTEE_ID]);
   });
 
-  // 2. productUuid is not valid && granteeIds is valid
-  // 3. productUuid is empty && granteeIds is valid
-  // 4. productUuid is valid && granteeIds is empty
-  // 5. productUuid is not valid && granteeIds is not empty
-  // 6. productUuid is valid && granteeIds is not empty
+  it('Should throw an error when no arguments are passed to method', async () => {
+    async function handleFetch() {
+      // eslint-disable-next-line
+      // @ts-ignore
+      return await api.licenses.check();
+    }
+
+    await expect(async () => {
+      await handleFetch();
+    }).rejects.toThrow('Bad Request: "productUuid" and "granteeIds" cannot be undefined');
+  });
+
+  it('Should throw an "Not Found" error when passed "productUuid" does not exist on the account but granteeIds are valid', async () => {
+    async function handleFetch() {
+      return await api.licenses.check('invalid-product-uuid', [GRANTEE_ID]);
+    }
+
+    await expect(async () => {
+      await handleFetch();
+    }).rejects.toThrow('Not Found');
+  });
+
+  it('Should throw an error when passed "productUuid" is undefined', async () => {
+    async function handleFetch() {
+      // eslint-disable-next-line
+      // @ts-ignore
+      return await api.licenses.check();
+    }
+
+    await expect(async () => {
+      await handleFetch();
+    }).rejects.toThrow('Bad Request: "productUuid" cannot be undefined');
+  });
+
+  it('Should throw an error when passed "granteeIds" is undefined', async () => {
+    async function handleFetch() {
+      // eslint-disable-next-line
+      // @ts-ignore
+      return await api.licenses.check('product-uuid');
+    }
+
+    await expect(async () => {
+      await handleFetch();
+    }).rejects.toThrow('Bad Request: Passed "granteeIds" are not valid, must be of type String[]');
+  });
+
+  it('Should throw an error when passed "granteeIds" is not array type', async () => {
+    async function handleFetch() {
+      // eslint-disable-next-line
+      // @ts-ignore
+      return await api.licenses.check('product-uuid', 'invalid-grantee-id-type');
+    }
+
+    await expect(async () => {
+      await handleFetch();
+    }).rejects.toThrow('Bad Request: Passed "granteeIds" are not valid, must be of type String[]');
+  });
+
+  it('Should return undefined when passed "productUuid" exists on the account but granteeIds does not', async () => {
+    const data = await api.licenses.check(POPULATED_PRODUCT_UUID, ['invalid-grantee-id']);
+
+    expect(data).toBeUndefined();
+  });
+
+  it('Should return the correct data when passed valid arguments', async () => {
+    const data = await api.licenses.check(POPULATED_PRODUCT_UUID, [GRANTEE_ID]);
+
+    expect(data?.capsHashed).toEqual('Capability');
+    expect(data?.capabilities).toEqual(['Capability']);
+  });
 });
