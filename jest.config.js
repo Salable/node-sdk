@@ -29,6 +29,7 @@ module.exports = {
     },
   },
   modulePathIgnorePatterns: ['./dist'],
+  coverageProvider: 'v8',
   globals: {
     diagnostics: false,
   },
