@@ -1,5 +1,6 @@
 import { api, invalidApi } from '@/src/config';
 import { GRANTEE_ID, MEMBER_ID, POPULATED_PLAN_UUID } from '@/src/constants';
+import { ILicense } from '@/src/types';
 import { invalidApiKeyTest } from '@/src/utils/test-helper-functions';
 
 describe('Licenses | getAll | INTEGRATION', () => {
@@ -29,19 +30,21 @@ describe('Licenses | getAll | INTEGRATION', () => {
 
   // 4. When given ACTIVE status, only ACTIVE licenses are returned
   it('When given the ACTIVE status, all returned licenses should be ACTIVE', async () => {
-    // Create two active licenses
-    const createdLicenses = await Promise.all(
-      Array.from({ length: 2 }).map(async () => {
-        return await api.licenses.create({
-          member: MEMBER_ID,
-          granteeId: GRANTEE_ID,
-          planUuid: POPULATED_PLAN_UUID,
-        });
-      })
-    );
+    let createdLicenses: (ILicense | undefined)[] = [];
 
-    // Get all active licenses
     try {
+      // Create two active licenses
+      createdLicenses = await Promise.all(
+        Array.from({ length: 2 }).map(async () => {
+          return await api.licenses.create({
+            member: MEMBER_ID,
+            granteeId: GRANTEE_ID,
+            planUuid: POPULATED_PLAN_UUID,
+          });
+        })
+      );
+
+      // Get all active licenses
       const data = await api.licenses.getAll({ status: 'ACTIVE' });
 
       expect(Array.isArray(data)).toBeTruthy();

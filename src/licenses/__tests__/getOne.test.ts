@@ -10,17 +10,23 @@ describe('Licenses | getOne | INTEGRATION', () => {
 
   // 2. Valid license UUID
   it('When given a valid license UUID it should return the data for it', async () => {
-    const data = await api.licenses.create({
-      member: MEMBER_ID,
-      granteeId: GRANTEE_ID,
-      planUuid: POPULATED_PLAN_UUID,
-    });
+    let data;
 
-    const fetchedLicense = await api.licenses.getOne(data?.uuid || '');
+    try {
+      data = await api.licenses.create({
+        member: MEMBER_ID,
+        granteeId: GRANTEE_ID,
+        planUuid: POPULATED_PLAN_UUID,
+      });
 
-    expect(fetchedLicense?.status).toEqual('ACTIVE');
-    expect(fetchedLicense?.uuid).toEqual(data?.uuid);
-    expect(fetchedLicense?.endTime).toEqual(data?.endTime);
+      const fetchedLicense = await api.licenses.getOne(data?.uuid || '');
+
+      expect(fetchedLicense?.status).toEqual('ACTIVE');
+      expect(fetchedLicense?.uuid).toEqual(data?.uuid);
+      expect(fetchedLicense?.endTime).toEqual(data?.endTime);
+    } finally {
+      await api.licenses.delete(data?.uuid || '');
+    }
   });
 
   // 3. Invalid license UUID

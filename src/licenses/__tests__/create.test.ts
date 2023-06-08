@@ -21,27 +21,33 @@ describe('Licenses | create | INTEGRATION', () => {
 
   // 2. Success test -> everything passed in okay
   it('Should create a new license with the correct data type', async () => {
-    const data = await api.licenses.create({
-      member: MEMBER_ID,
-      granteeId: GRANTEE_ID,
-      planUuid: POPULATED_PLAN_UUID,
-    });
+    let data;
 
-    const date = new Date();
-    const datePlusMonth = new Date(date.setMonth(date.getMonth() + 1)).toISOString().split('T')[0];
+    try {
+      data = await api.licenses.create({
+        member: MEMBER_ID,
+        granteeId: GRANTEE_ID,
+        planUuid: POPULATED_PLAN_UUID,
+      });
 
-    expect(data).toBeTruthy();
-    expect(data?.capabilities).toEqual(POPULATED_PRODUCT_CAPABILITY);
-    expect(data?.granteeId).toEqual(GRANTEE_ID);
-    expect(data?.purchaser).toEqual(MEMBER_ID);
-    expect(data?.productUuid).toEqual(POPULATED_PRODUCT_UUID);
-    expect(data?.planUuid).toEqual(POPULATED_PLAN_UUID);
-    expect(data?.status).toEqual('ACTIVE');
-    expect(data?.paymentService).toEqual('ad-hoc');
-    expect(data?.endTime.split('T')[0]).toEqual(datePlusMonth);
+      const date = new Date();
+      const datePlusMonth = new Date(date.setMonth(date.getMonth() + 1))
+        .toISOString()
+        .split('T')[0];
 
-    // Delete the created license to tidy up test
-    await api.licenses.delete(data?.uuid || '');
+      expect(data).toBeTruthy();
+      expect(data?.capabilities).toEqual(POPULATED_PRODUCT_CAPABILITY);
+      expect(data?.granteeId).toEqual(GRANTEE_ID);
+      expect(data?.purchaser).toEqual(MEMBER_ID);
+      expect(data?.productUuid).toEqual(POPULATED_PRODUCT_UUID);
+      expect(data?.planUuid).toEqual(POPULATED_PLAN_UUID);
+      expect(data?.status).toEqual('ACTIVE');
+      expect(data?.paymentService).toEqual('ad-hoc');
+      expect(data?.endTime.split('T')[0]).toEqual(datePlusMonth);
+    } finally {
+      // Delete the created license to tidy up test
+      await api.licenses.delete(data?.uuid || '');
+    }
   });
 
   // 3. Missing planUuid
@@ -127,26 +133,32 @@ describe('Licenses | create | INTEGRATION', () => {
 
   // 7. Missing granteeId
   it('Should create a new license if granteeId is missing, value should be defaulted to member value', async () => {
-    const data = await api.licenses.create({
-      member: MEMBER_ID,
-      planUuid: POPULATED_PLAN_UUID,
-    });
+    let data;
 
-    const date = new Date();
-    const datePlusMonth = new Date(date.setMonth(date.getMonth() + 1)).toISOString().split('T')[0];
+    try {
+      data = await api.licenses.create({
+        member: MEMBER_ID,
+        planUuid: POPULATED_PLAN_UUID,
+      });
 
-    expect(data).toBeTruthy();
-    expect(data?.capabilities).toEqual(POPULATED_PRODUCT_CAPABILITY);
-    expect(data?.granteeId).toEqual(MEMBER_ID);
-    expect(data?.purchaser).toEqual(MEMBER_ID);
-    expect(data?.productUuid).toEqual(POPULATED_PRODUCT_UUID);
-    expect(data?.planUuid).toEqual(POPULATED_PLAN_UUID);
-    expect(data?.status).toEqual('ACTIVE');
-    expect(data?.paymentService).toEqual('ad-hoc');
-    expect(data?.endTime.split('T')[0]).toEqual(datePlusMonth);
+      const date = new Date();
+      const datePlusMonth = new Date(date.setMonth(date.getMonth() + 1))
+        .toISOString()
+        .split('T')[0];
 
-    // Delete the created license to tidy up test
-    await api.licenses.delete(data?.uuid || '');
+      expect(data).toBeTruthy();
+      expect(data?.capabilities).toEqual(POPULATED_PRODUCT_CAPABILITY);
+      expect(data?.granteeId).toEqual(MEMBER_ID);
+      expect(data?.purchaser).toEqual(MEMBER_ID);
+      expect(data?.productUuid).toEqual(POPULATED_PRODUCT_UUID);
+      expect(data?.planUuid).toEqual(POPULATED_PLAN_UUID);
+      expect(data?.status).toEqual('ACTIVE');
+      expect(data?.paymentService).toEqual('ad-hoc');
+      expect(data?.endTime.split('T')[0]).toEqual(datePlusMonth);
+    } finally {
+      // Delete the created license to tidy up test
+      await api.licenses.delete(data?.uuid || '');
+    }
   });
 
   // 8. Invalid granteeId

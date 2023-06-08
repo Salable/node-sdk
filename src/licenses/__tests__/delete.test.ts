@@ -10,36 +10,48 @@ describe('Licenses | delete | INTEGRATION', () => {
 
   // 2. licenseUuid is valid and ACTIVE
   it('When given a valid licenceUuid and is ACTIVE, it should be updated to CANCELED', async () => {
-    const data = await api.licenses.create({
-      member: MEMBER_ID,
-      granteeId: GRANTEE_ID,
-      planUuid: POPULATED_PLAN_UUID,
-    });
+    let data;
 
-    expect(data?.status).toEqual('ACTIVE');
+    try {
+      data = await api.licenses.create({
+        member: MEMBER_ID,
+        granteeId: GRANTEE_ID,
+        planUuid: POPULATED_PLAN_UUID,
+      });
 
-    await api.licenses.delete(data?.uuid || '');
+      expect(data?.status).toEqual('ACTIVE');
 
-    const updatedLicense = await api.licenses.getOne(data?.uuid || '');
+      await api.licenses.delete(data?.uuid || '');
 
-    expect(updatedLicense?.status).toEqual('CANCELED');
+      const updatedLicense = await api.licenses.getOne(data?.uuid || '');
+
+      expect(updatedLicense?.status).toEqual('CANCELED');
+    } finally {
+      await api.licenses.delete(data?.uuid || '');
+    }
   });
 
   // 3. licenseUuid is valid but already in status CANCELED
   it('When given a valid licenceUuid and is CANCELED, it should not fail', async () => {
-    const data = await api.licenses.create({
-      member: MEMBER_ID,
-      granteeId: GRANTEE_ID,
-      planUuid: POPULATED_PLAN_UUID,
-    });
+    let data;
 
-    await api.licenses.delete(data?.uuid || '');
+    try {
+      data = await api.licenses.create({
+        member: MEMBER_ID,
+        granteeId: GRANTEE_ID,
+        planUuid: POPULATED_PLAN_UUID,
+      });
 
-    const canceledLicense = await api.licenses.getOne(data?.uuid || '');
+      await api.licenses.delete(data?.uuid || '');
 
-    expect(canceledLicense?.status).toEqual('CANCELED');
+      const canceledLicense = await api.licenses.getOne(data?.uuid || '');
 
-    await api.licenses.delete(canceledLicense?.uuid || '');
+      expect(canceledLicense?.status).toEqual('CANCELED');
+
+      await api.licenses.delete(canceledLicense?.uuid || '');
+    } finally {
+      await api.licenses.delete(data?.uuid || '');
+    }
   });
 
   // 4. licenseUuid is invalid

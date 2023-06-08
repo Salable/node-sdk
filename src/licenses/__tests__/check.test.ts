@@ -1,5 +1,10 @@
 import { api, invalidApi } from '@/src/config';
-import { GRANTEE_ID, POPULATED_PRODUCT_UUID } from '@/src/constants';
+import {
+  GRANTEE_ID,
+  MEMBER_ID,
+  POPULATED_PLAN_UUID,
+  POPULATED_PRODUCT_UUID,
+} from '@/src/constants';
 import { invalidApiKeyTest } from '@/src/utils/test-helper-functions';
 
 describe('Licenses | check | INTEGRATION', () => {
@@ -33,7 +38,7 @@ describe('Licenses | check | INTEGRATION', () => {
     async function handleFetch() {
       // eslint-disable-next-line
       // @ts-ignore
-      return await api.licenses.check();
+      return await api.licenses.check(undefined, ['']);
     }
 
     await expect(async () => {
@@ -71,10 +76,27 @@ describe('Licenses | check | INTEGRATION', () => {
     expect(data).toBeUndefined();
   });
 
-  it('Should return the correct data when passed valid arguments', async () => {
+  it('Should return the correct data when passed valid arguments and there is an ACTIVE license', async () => {
+    let createdLicense;
+    try {
+      createdLicense = await api.licenses.create({
+        member: MEMBER_ID,
+        granteeId: GRANTEE_ID,
+        planUuid: POPULATED_PLAN_UUID,
+      });
+
+      const data = await api.licenses.check(POPULATED_PRODUCT_UUID, [GRANTEE_ID]);
+
+      expect(data?.capsHashed).toEqual('Capability');
+      expect(data?.capabilities).toEqual(['Capability']);
+    } finally {
+      await api.licenses.delete(createdLicense?.uuid || '');
+    }
+  });
+
+  it('Should return undefined when passed valid arguments but there is no ACTIVE license', async () => {
     const data = await api.licenses.check(POPULATED_PRODUCT_UUID, [GRANTEE_ID]);
 
-    expect(data?.capsHashed).toEqual('Capability');
-    expect(data?.capabilities).toEqual(['Capability']);
+    expect(data).toBeUndefined();
   });
 });
