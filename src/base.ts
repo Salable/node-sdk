@@ -49,7 +49,7 @@ export class Base {
       const response = await fetch(url, config);
 
       if (response.status < 300 && response.status >= 200) {
-        if (response.body) {
+        if (response.body || response.status !== 204) {
           return (await response.json()) as Promise<T>;
         }
       } else {
