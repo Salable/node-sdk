@@ -19,6 +19,7 @@ module.exports = {
     '!**/.storybook/**',
     '!**/styled.ts',
     '!**/assets/**',
+    '!**/additional.d.ts',
   ],
   coverageThreshold: {
     global: {
