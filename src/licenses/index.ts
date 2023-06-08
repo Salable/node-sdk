@@ -13,7 +13,7 @@ export default class Licenses extends Base {
    *
    * @returns {Promise<ILicense[]>} All licenses present on the account
    */
-  public getAll({ status }: { status?: IStatus } = {}): Promise<ILicense[]> {
+  public getAll({ status }: { status?: IStatus } = {}): Promise<ILicense[] | undefined> {
     return this._request<ILicense[]>(
       `${RESOURCE_NAMES.LICENSES}${status ? `?status=${status}` : ''}`
     );
@@ -24,9 +24,9 @@ export default class Licenses extends Base {
    *
    * @param {ICreateAdhocLicenseInput} licenseDetails - The details to create the new license with
    *
-   * @returns {Promise<ILicense>} The data for the new license
+   * @returns {Promise<ILicense >} The data for the new license
    */
-  public create(licenseDetails: ICreateAdhocLicenseInput): Promise<ILicense> {
+  public create(licenseDetails: ICreateAdhocLicenseInput): Promise<ILicense | undefined> {
     return this._request<ILicense, ICreateAdhocLicenseInput>(RESOURCE_NAMES.LICENSES, {
       method: 'POST',
       body: licenseDetails,
@@ -41,7 +41,10 @@ export default class Licenses extends Base {
    *
    * @returns {Promise<ICheckLicensesCapabilities>} The capabilities of the license passed
    */
-  public check(productUuid: string, granteeIds: string[]): Promise<ICheckLicensesCapabilities> {
+  public check(
+    productUuid: string,
+    granteeIds: string[]
+  ): Promise<ICheckLicensesCapabilities | undefined> {
     return this._request<ICheckLicensesCapabilities>(
       `${
         RESOURCE_NAMES.LICENSES
@@ -49,5 +52,16 @@ export default class Licenses extends Base {
     );
   }
 
-  // TODO: add delete method
+  /**
+   *  Delete a license
+   *
+   * @param {string} uuid - The UUID of the license to delete
+   *
+   * @returns {Promise<void>}
+   */
+  public delete(uuid: string): Promise<void> {
+    return this._request<void>(`${RESOURCE_NAMES.LICENSES}/${uuid}`, {
+      method: 'DELETE',
+    });
+  }
 }

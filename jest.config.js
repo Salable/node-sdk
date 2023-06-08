@@ -6,7 +6,7 @@ module.exports = {
     '\\.(css|less|scss)$': 'identity-obj-proxy',
     '^@/(.*)$': '<rootDir>/$1',
   },
-  testMatch: ['**/*.(spec|test).{ts,tsx}'],
+  testMatch: ['**/*.(spec|test|unit.test).{ts,tsx}'],
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
   },

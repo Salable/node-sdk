@@ -27,7 +27,7 @@ export class Base {
     this._request = async <T, K = void>(
       endpoint: string,
       options?: IRequestBase<K>
-    ): Promise<T> => {
+    ): Promise<T | undefined> => {
       const url = `${apiUrl}/${endpoint}`;
 
       const headers = {
@@ -49,7 +49,9 @@ export class Base {
       const response = await fetch(url, config);
 
       if (response.status < 300 && response.status >= 200) {
-        return (await response.json()) as Promise<T>;
+        if (response.body) {
+          return (await response.json()) as Promise<T>;
+        }
       } else {
         throw new Error(response.statusText);
       }

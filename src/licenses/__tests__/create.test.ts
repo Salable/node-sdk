@@ -1,4 +1,4 @@
-import { Salable } from '@/src';
+import { api, invalidApi } from '@/src/config';
 import {
   GRANTEE_ID,
   INVALID_PLAN_UUID,
@@ -6,31 +6,21 @@ import {
   POPULATED_PLAN_UUID,
   POPULATED_PRODUCT_CAPABILITY,
   POPULATED_PRODUCT_UUID,
-  SALABLE_API_KEY,
 } from '@/src/constants';
+import { invalidApiKeyTest } from '@/src/utils/test-helper-functions';
 
 describe('Licenses | create | INTEGRATION', () => {
   // 1. API Key is not valid
-  it('Should throw a "Unauthorized" error when invalid API Key is used', async () => {
-    const api = new Salable('invalid-api-key');
-
-    async function handleFetch() {
-      return await api.licenses.create({
-        member: '',
-        granteeId: '',
-        planUuid: '',
-      });
-    }
-
-    await expect(async () => {
-      await handleFetch();
-    }).rejects.toThrow('Unauthorized');
+  invalidApiKeyTest(async () => {
+    return await invalidApi.licenses.create({
+      member: '',
+      granteeId: '',
+      planUuid: '',
+    });
   });
 
-  // 2. Success test -> everything passed in okay -> InstanceOf ILicense
+  // 2. Success test -> everything passed in okay
   it('Should create a new license with the correct data type', async () => {
-    const api = new Salable(SALABLE_API_KEY);
-
     const data = await api.licenses.create({
       member: MEMBER_ID,
       granteeId: GRANTEE_ID,
@@ -41,22 +31,21 @@ describe('Licenses | create | INTEGRATION', () => {
     const datePlusMonth = new Date(date.setMonth(date.getMonth() + 1)).toISOString().split('T')[0];
 
     expect(data).toBeTruthy();
-    expect(data.capabilities).toEqual(POPULATED_PRODUCT_CAPABILITY);
-    expect(data.granteeId).toEqual(GRANTEE_ID);
-    expect(data.purchaser).toEqual(MEMBER_ID);
-    expect(data.productUuid).toEqual(POPULATED_PRODUCT_UUID);
-    expect(data.planUuid).toEqual(POPULATED_PLAN_UUID);
-    expect(data.status).toEqual('ACTIVE');
-    expect(data.paymentService).toEqual('ad-hoc');
-    expect(data.endTime.split('T')[0]).toEqual(datePlusMonth);
+    expect(data?.capabilities).toEqual(POPULATED_PRODUCT_CAPABILITY);
+    expect(data?.granteeId).toEqual(GRANTEE_ID);
+    expect(data?.purchaser).toEqual(MEMBER_ID);
+    expect(data?.productUuid).toEqual(POPULATED_PRODUCT_UUID);
+    expect(data?.planUuid).toEqual(POPULATED_PLAN_UUID);
+    expect(data?.status).toEqual('ACTIVE');
+    expect(data?.paymentService).toEqual('ad-hoc');
+    expect(data?.endTime.split('T')[0]).toEqual(datePlusMonth);
 
-    // TODO: Add a call to api.licenses.delete() to remove the created license
+    // Delete the created license to tidy up test
+    await api.licenses.delete(data?.uuid || '');
   });
 
   // 3. Missing planUuid
   it('Should throw an error of "Bad Gateway" when missing planUuid', async () => {
-    const api = new Salable(SALABLE_API_KEY);
-
     async function handleFetch() {
       // eslint-disable-next-line
       // @ts-ignore
@@ -73,8 +62,6 @@ describe('Licenses | create | INTEGRATION', () => {
 
   // 4. Invalid type of planUuid
   it('Should throw an error of "Bad Gateway" when an invalid type of planUuid is passed', async () => {
-    const api = new Salable(SALABLE_API_KEY);
-
     async function handleFetch() {
       return await api.licenses.create({
         member: MEMBER_ID,
@@ -92,8 +79,6 @@ describe('Licenses | create | INTEGRATION', () => {
 
   // 4. planUuid does not exist
   it('Should throw an error of "Not Found" when planUuid does not exist', async () => {
-    const api = new Salable(SALABLE_API_KEY);
-
     async function handleFetch() {
       return await api.licenses.create({
         member: MEMBER_ID,
@@ -109,8 +94,6 @@ describe('Licenses | create | INTEGRATION', () => {
 
   // 5. Missing member
   it('Should throw an error of "Bad Gateway" when missing member', async () => {
-    const api = new Salable(SALABLE_API_KEY);
-
     async function handleFetch() {
       // eslint-disable-next-line
       // @ts-ignore
@@ -127,8 +110,6 @@ describe('Licenses | create | INTEGRATION', () => {
 
   // 6. Invalid member
   it('Should throw an error of "Bad Gateway" when an invalid member is passed', async () => {
-    const api = new Salable(SALABLE_API_KEY);
-
     async function handleFetch() {
       return await api.licenses.create({
         // eslint-disable-next-line
@@ -146,8 +127,6 @@ describe('Licenses | create | INTEGRATION', () => {
 
   // 7. Missing granteeId
   it('Should create a new license if granteeId is missing, value should be defaulted to member value', async () => {
-    const api = new Salable(SALABLE_API_KEY);
-
     const data = await api.licenses.create({
       member: MEMBER_ID,
       planUuid: POPULATED_PLAN_UUID,
@@ -157,22 +136,21 @@ describe('Licenses | create | INTEGRATION', () => {
     const datePlusMonth = new Date(date.setMonth(date.getMonth() + 1)).toISOString().split('T')[0];
 
     expect(data).toBeTruthy();
-    expect(data.capabilities).toEqual(POPULATED_PRODUCT_CAPABILITY);
-    expect(data.granteeId).toEqual(MEMBER_ID);
-    expect(data.purchaser).toEqual(MEMBER_ID);
-    expect(data.productUuid).toEqual(POPULATED_PRODUCT_UUID);
-    expect(data.planUuid).toEqual(POPULATED_PLAN_UUID);
-    expect(data.status).toEqual('ACTIVE');
-    expect(data.paymentService).toEqual('ad-hoc');
-    expect(data.endTime.split('T')[0]).toEqual(datePlusMonth);
+    expect(data?.capabilities).toEqual(POPULATED_PRODUCT_CAPABILITY);
+    expect(data?.granteeId).toEqual(MEMBER_ID);
+    expect(data?.purchaser).toEqual(MEMBER_ID);
+    expect(data?.productUuid).toEqual(POPULATED_PRODUCT_UUID);
+    expect(data?.planUuid).toEqual(POPULATED_PLAN_UUID);
+    expect(data?.status).toEqual('ACTIVE');
+    expect(data?.paymentService).toEqual('ad-hoc');
+    expect(data?.endTime.split('T')[0]).toEqual(datePlusMonth);
 
-    // TODO: Add a call to api.licenses.delete() to remove the created license
+    // Delete the created license to tidy up test
+    await api.licenses.delete(data?.uuid || '');
   });
 
   // 8. Invalid granteeId
   it('Should throw an error of "Bad Gateway" when an invalid granteeID is passed', async () => {
-    const api = new Salable(SALABLE_API_KEY);
-
     async function handleFetch() {
       return await api.licenses.create({
         member: MEMBER_ID,

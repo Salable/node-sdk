@@ -24,7 +24,7 @@ export default class Plans extends Base {
    *
    * @returns {Promise<IPlan>} The data of the subscription requested
    */
-  public getOne(planId: string): Promise<IPlan> {
+  public getOne(planId: string): Promise<IPlan | undefined> {
     return this._request<IPlan>(`${RESOURCE_NAMES.PLANS}/${planId}`);
   }
 
@@ -40,7 +40,7 @@ export default class Plans extends Base {
   public getCheckoutLink(
     planId: string,
     queryParams: IPlanCheckoutInputParams
-  ): Promise<IPlanCheckoutResponse> {
+  ): Promise<IPlanCheckoutResponse | undefined> {
     const encodedParams = new URLSearchParams();
 
     const flatCheckoutParams = planCheckoutFactory(queryParams);
