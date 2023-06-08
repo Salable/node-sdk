@@ -50,7 +50,13 @@ export class Base {
 
       if (response.status < 300 && response.status >= 200) {
         if (response.body || response.status !== 204) {
-          return (await response.json()) as Promise<T>;
+          try {
+            return (await response.json()) as Promise<T>;
+          } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error(e);
+            return undefined;
+          }
         }
         return undefined;
       } else {
