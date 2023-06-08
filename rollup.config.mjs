@@ -38,7 +38,7 @@ const config = {
     typescript({
       tsconfig: 'tsconfig.json',
       tsconfigOverride: {
-        exclude: ['docs/**'],
+        exclude: ['docs/**', '**/__tests__/'],
       },
     }),
   ],
