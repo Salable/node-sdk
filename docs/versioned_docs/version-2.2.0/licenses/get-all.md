@@ -23,4 +23,4 @@ const { Salable } = require('@salable/node-sdk');
 
 ## Return Type
 
-Promise of an array of [License Object](/api/api-latest/objects/license-object)
+Promise of an array of licenses object

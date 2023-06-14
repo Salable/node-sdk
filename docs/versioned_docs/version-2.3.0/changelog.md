@@ -4,16 +4,6 @@ sidebar_position: 1
 
 # Changelog
 
-## v2.4.0
-
-### Features
-
-- Added `plans` (`getOne`, `getCheckoutLink`, `getFeatures`, `getCapabilities`, `getCurrencies`) methods to SDK.
-
-### Other Changes
-
-- **DOCS**: Updated links to resources object documentation
-
 ## v2.3.0
 
 ### Features
