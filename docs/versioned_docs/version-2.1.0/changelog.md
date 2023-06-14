@@ -4,28 +4,6 @@ sidebar_position: 1
 
 # Changelog
 
-## v2.4.0
-
-### Features
-
-- Added `plans` (`getOne`, `getCheckoutLink`, `getFeatures`, `getCapabilities`, `getCurrencies`) methods to SDK.
-
-### Other Changes
-
-- **DOCS**: Updated links to resources object documentation
-
-## v2.3.0
-
-### Features
-
-- Added URL support in constructor for passing API URL
-
-## v2.2.0
-
-### Features
-
-- Added `cancel` subscription method to SDK.
-
 ## v2.1.0
 
 ### Features
