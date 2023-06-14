@@ -1,5 +1,5 @@
 import { Base } from '../base';
-import { RESOURCE_NAMES, allowedPlanCheckoutParams } from '../constants';
+import { RESOURCE_NAMES, allowed, allowedPlanCheckoutParams } from '../constants';
 import {
   IPlan,
   IPlanCapabilityResponse,
@@ -43,7 +43,14 @@ export default class Plans extends Base {
   ): Promise<IPlanCheckoutResponse | undefined> {
     const encodedParams = new URLSearchParams();
 
+    const requiredKeys = allowed.filter((element) => element.required);
+
     const flatCheckoutParams = planCheckoutFactory(queryParams);
+
+    // every required key must be in the queryParams array
+    if (!requiredKeys.every((key) => Object.keys(flatCheckoutParams).includes(key.key))) {
+      throw new Error('Missing Required Query Params');
+    }
 
     for (const key of Object.keys(queryParams)) {
       const itemKey = key as PlanCheckoutKey;

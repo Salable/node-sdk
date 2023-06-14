@@ -52,3 +52,22 @@ export const allowedPlanCheckoutParams = [
   'vatStreet',
   'customMessage',
 ];
+
+export const allowed = [
+  {
+    key: 'successUrl',
+    required: true,
+  },
+  {
+    key: 'cancelUrl',
+    required: true,
+  },
+  {
+    key: 'granteeId',
+    required: true,
+  },
+  {
+    key: 'member',
+    required: true,
+  },
+];
