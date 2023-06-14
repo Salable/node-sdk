@@ -13,7 +13,7 @@ export default class Users extends Base {
    *
    * @returns {Promise<IRbacUser[]>} All users
    */
-  public getAll(): Promise<IRbacUser[]> {
+  public getAll(): Promise<IRbacUser[] | undefined> {
     return this._request<IRbacUser[]>(RESOURCE_NAMES.RBAC.USERS);
   }
 
@@ -24,7 +24,7 @@ export default class Users extends Base {
    *
    * @returns {Promise<IRbacUser>} The details for the user UUID passed
    */
-  public getOne(uuid: string): Promise<IRbacUser> {
+  public getOne(uuid: string): Promise<IRbacUser | undefined> {
     return this._request<IRbacUser>(`${RESOURCE_NAMES.RBAC.USERS}/${uuid}`);
   }
 
@@ -35,7 +35,7 @@ export default class Users extends Base {
    *
    * @returns {Promise<IRbacUser>} The created user
    */
-  public create(userDetails: ICreateRbacUserInput): Promise<IRbacUser> {
+  public create(userDetails: ICreateRbacUserInput): Promise<IRbacUser | undefined> {
     return this._request<IRbacUser, ICreateRbacUserInput>(RESOURCE_NAMES.RBAC.USERS, {
       method: 'POST',
       body: userDetails,
@@ -47,7 +47,7 @@ export default class Users extends Base {
    *
    * @param {string} uuid - The UUID of the user to delete
    *
-   * @returns {Promise<void>} The created user
+   * @returns {Promise<void>}
    */
   public delete(uuid: string): Promise<void> {
     return this._request<void>(`${RESOURCE_NAMES.RBAC.USERS}/${uuid}`, {
@@ -63,7 +63,7 @@ export default class Users extends Base {
    *
    * @returns {Promise<IRbacUser>} The updated user
    */
-  public update(uuid: string, userDetails: IUpdateRbacUserInput): Promise<IRbacUser> {
+  public update(uuid: string, userDetails: IUpdateRbacUserInput): Promise<IRbacUser | undefined> {
     return this._request<IRbacUser, IUpdateRbacUserInput>(`${RESOURCE_NAMES.RBAC.USERS}/${uuid}`, {
       method: 'PUT',
       body: userDetails,

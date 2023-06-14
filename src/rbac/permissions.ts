@@ -13,7 +13,7 @@ export default class Permissions extends Base {
    *
    * @returns {Promise<IPermission[]>} All permissions
    */
-  public getAll(): Promise<IPermission[]> {
+  public getAll(): Promise<IPermission[] | undefined> {
     return this._request<IPermission[]>(RESOURCE_NAMES.RBAC.PERMISSIONS);
   }
 
@@ -24,7 +24,7 @@ export default class Permissions extends Base {
    *
    * @returns {Promise<IPermission>} The details for the permission UUID passed
    */
-  public getOne(uuid: string): Promise<IPermission> {
+  public getOne(uuid: string): Promise<IPermission | undefined> {
     return this._request<IPermission>(`${RESOURCE_NAMES.RBAC.PERMISSIONS}/${uuid}`);
   }
 
@@ -35,7 +35,7 @@ export default class Permissions extends Base {
    *
    * @returns {Promise<IPermission>} The created permission
    */
-  public create(permissionDetails: ICreatePermissionInput): Promise<IPermission> {
+  public create(permissionDetails: ICreatePermissionInput): Promise<IPermission | undefined> {
     return this._request<IPermission, ICreatePermissionInput>(RESOURCE_NAMES.RBAC.PERMISSIONS, {
       method: 'POST',
       body: permissionDetails,
@@ -47,7 +47,7 @@ export default class Permissions extends Base {
    *
    * @param {string} uuid - The UUID of the permission to delete
    *
-   * @returns {Promise<void>} The created permission
+   * @returns {Promise<void>} The deleted permission
    */
   public delete(uuid: string): Promise<void> {
     return this._request<void>(`${RESOURCE_NAMES.RBAC.PERMISSIONS}/${uuid}`, {
@@ -63,7 +63,10 @@ export default class Permissions extends Base {
    *
    * @returns {Promise<IPermission>} The updated permission
    */
-  public update(uuid: string, permissionDetails: IUpdatePermissionInput): Promise<IPermission> {
+  public update(
+    uuid: string,
+    permissionDetails: IUpdatePermissionInput
+  ): Promise<IPermission | undefined> {
     return this._request<IPermission, IUpdatePermissionInput>(
       `${RESOURCE_NAMES.RBAC.PERMISSIONS}/${uuid}`,
       {

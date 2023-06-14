@@ -13,7 +13,7 @@ export default class Roles extends Base {
    *
    * @returns {Promise<IRole[]>} All roles
    */
-  public getAll(): Promise<IRole[]> {
+  public getAll(): Promise<IRole[] | undefined> {
     return this._request<IRole[]>(RESOURCE_NAMES.RBAC.ROLES);
   }
 
@@ -24,7 +24,7 @@ export default class Roles extends Base {
    *
    * @returns {Promise<IRole>} The details for the role UUID passed
    */
-  public getOne(uuid: string): Promise<IRole> {
+  public getOne(uuid: string): Promise<IRole | undefined> {
     return this._request<IRole>(`${RESOURCE_NAMES.RBAC.ROLES}/${uuid}`);
   }
 
@@ -35,7 +35,7 @@ export default class Roles extends Base {
    *
    * @returns {Promise<IRole>} The created role
    */
-  public create(roleDetails: ICreateRoleInput): Promise<IRole> {
+  public create(roleDetails: ICreateRoleInput): Promise<IRole | undefined> {
     return this._request<IRole, ICreateRoleInput>(RESOURCE_NAMES.RBAC.ROLES, {
       method: 'POST',
       body: roleDetails,
@@ -47,7 +47,7 @@ export default class Roles extends Base {
    *
    * @param {string} uuid - The UUID of the role to delete
    *
-   * @returns {Promise<void>} The created role
+   * @returns {Promise<void>}
    */
   public delete(uuid: string): Promise<void> {
     return this._request<void>(`${RESOURCE_NAMES.RBAC.ROLES}/${uuid}`, {
@@ -63,7 +63,7 @@ export default class Roles extends Base {
    *
    * @returns {Promise<IRole>} The updated role
    */
-  public update(uuid: string, roleDetails: IUpdateRoleInput): Promise<IRole> {
+  public update(uuid: string, roleDetails: IUpdateRoleInput): Promise<IRole | undefined> {
     return this._request<IRole, IUpdateRoleInput>(`${RESOURCE_NAMES.RBAC.ROLES}/${uuid}`, {
       method: 'PUT',
       body: roleDetails,

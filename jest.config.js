@@ -6,19 +6,20 @@ module.exports = {
     '\\.(css|less|scss)$': 'identity-obj-proxy',
     '^@/(.*)$': '<rootDir>/$1',
   },
-  testMatch: ['**/*.(spec|test).{ts,tsx}'],
+  testMatch: ['**/*.(spec|test|unit.test).{ts,tsx}'],
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
   },
+  setupFiles: ['dotenv/config'],
   collectCoverageFrom: [
     '**/*.{ts,tsx}',
     '!**/*stories.{ts,tsx}',
     '!**/node_modules/**',
     '!**/dist/**',
     '!**/.storybook/**',
-    '!**/index.{ts,tsx}',
     '!**/styled.ts',
     '!**/assets/**',
+    '!**/additional.d.ts',
   ],
   coverageThreshold: {
     global: {
@@ -29,6 +30,7 @@ module.exports = {
     },
   },
   modulePathIgnorePatterns: ['./dist'],
+  coverageProvider: 'v8',
   globals: {
     diagnostics: false,
   },

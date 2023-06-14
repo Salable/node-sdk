@@ -15,7 +15,7 @@ export default class Subscriptions extends Base {
    *
    * @returns {Promise<ISubscription>} The data of the subscription requested
    */
-  public getOne(subscriptionId: string): Promise<ISubscription> {
+  public getOne(subscriptionId: string): Promise<ISubscription | undefined> {
     return this._request<ISubscription>(`${RESOURCE_NAMES.SUBSCRIPTIONS}/${subscriptionId}`);
   }
 

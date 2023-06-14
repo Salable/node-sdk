@@ -1,9 +1,5 @@
 import fetch from 'jest-fetch-mock';
-import Licenses from './index';
-
-const api = new Licenses('test-key');
-
-fetch.enableMocks();
+import { api } from '@/src/config';
 
 const licenses = [
   {
@@ -28,24 +24,26 @@ const licenses = [
   },
 ];
 
-beforeEach(() => {
-  fetch.resetMocks();
-});
+describe('Licenses | getAll | UNIT', () => {
+  beforeEach(() => {
+    fetch.resetMocks();
+    fetch.enableMocks();
+  });
 
-describe('Unit | ThirdPartyAPI | Licenses', () => {
-  it('should gets all licenses', async () => {
+  it('Should gets all licenses', async () => {
     fetch.mockResponseOnce(JSON.stringify(licenses));
-    const fetchedLicenses = await api.getAll();
-    expect(fetchedLicenses[0].email).toBe('andrew@test.com');
+
+    const fetchedLicenses = await api.licenses.getAll();
+    expect(fetchedLicenses?.[0].email).toBe('andrew@test.com');
     expect(fetchedLicenses).toHaveLength(1);
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 
-  it('should return an error when promise rejects', async () => {
+  it('Should return an error when promise rejects', async () => {
     fetch.mockReject(() => Promise.reject('API is down'));
 
     await expect(async () => {
-      await api.getAll();
+      await api.licenses.getAll();
     }).rejects.toBe('API is down');
   });
 });

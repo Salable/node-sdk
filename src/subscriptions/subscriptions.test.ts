@@ -29,7 +29,7 @@ describe('Unit | ThirdPartyAPI | Subscriptions', () => {
   it('should get one subscription record', async () => {
     fetch.mockResponseOnce(JSON.stringify(subscription));
     const fetchedSubscription = await api.getOne('test-id');
-    expect(fetchedSubscription.uuid).toBe('test-id');
+    expect(fetchedSubscription?.uuid).toBe('test-id');
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 

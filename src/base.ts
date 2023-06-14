@@ -27,7 +27,7 @@ export class Base {
     this._request = async <T, K = void>(
       endpoint: string,
       options?: IRequestBase<K>
-    ): Promise<T> => {
+    ): Promise<T | undefined> => {
       const url = `${apiUrl}/${endpoint}`;
 
       const headers = {
@@ -46,13 +46,25 @@ export class Base {
           : { ...options }),
       };
 
-      return fetch(url, config).then((response) => {
-        if (response.status < 300 && response.status >= 200) {
-          return response.json() as Promise<T>;
+      const response = await fetch(url, config);
+
+      if (response.status < 300 && response.status >= 200) {
+        if (response.status === 204) {
+          return undefined;
         }
 
+        if (response.body !== null) {
+          try {
+            return (await response.json()) as Promise<T>;
+          } catch (e) {
+            return undefined;
+          }
+        }
+
+        return undefined;
+      } else {
         throw new Error(response.statusText);
-      });
+      }
     };
   }
 }
