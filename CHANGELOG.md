@@ -1,3 +1,19 @@
+# [2.5.0](https://github.com/Salable/node-sdk/compare/v2.4.0...v2.5.0) (2023-06-29)
+
+
+### Bug Fixes
+
+* renamed sidebar json file ([85e6de8](https://github.com/Salable/node-sdk/commit/85e6de80ffa658ea1ea7309e9d9c511fe7445550))
+* versioned docs changed ([7988cbb](https://github.com/Salable/node-sdk/commit/7988cbb6cb805b2eef44b123b71b03b76397b8bb))
+* versions json updated ([abd7721](https://github.com/Salable/node-sdk/commit/abd772191e6b8ff07426c68ffe733d77b1b4dd36))
+
+
+### Features
+
+* adding detail to pricing table endpoint ([d4bec6a](https://github.com/Salable/node-sdk/commit/d4bec6a45ed57aef24d649bacf7c4ca7cf6a8c05))
+* adding product routes ([486f92f](https://github.com/Salable/node-sdk/commit/486f92ff472444082a8055e09493962aeccac242))
+* additional product endpoints ([fdecaac](https://github.com/Salable/node-sdk/commit/fdecaac2f0f95a287ec40f1c3fd75f1d6fc44464))
+
 # [2.4.0](https://github.com/Salable/node-sdk/compare/v2.3.1...v2.4.0) (2023-06-05)
 
 
