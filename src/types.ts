@@ -190,6 +190,93 @@ export interface ICapability {
   productUuid: string;
 }
 
+export interface IProduct {
+  uuid: string;
+  name: string;
+  description?: string;
+  logoUrl?: string;
+  displayName: string;
+  organisation: string;
+  status: string;
+  paid: boolean;
+  organisationPaymentIntegrationUuid: string;
+  paymentIntegrationProductId?: string;
+  updatedAt: string;
+}
+
+export interface IProductCapabilityResponse {
+  uuid: string;
+  name: string;
+  description?: string;
+  status: string;
+  productUuid: string;
+  updatedAt: string;
+}
+
+export interface IProductCurrencyResponse {
+  productUuid: string;
+  currencyUuid: string;
+  defaultCurrency: boolean;
+  currency: ICurrency;
+}
+
+export interface IProductPricingTableInput {
+  globalPlanOptions: {
+    granteeId: string;
+    successUrl: string;
+    cancelUrl: string;
+    member: string;
+    contactUsLink: string;
+    marketingConsent?: string;
+    couponCode?: string;
+    promoCode?: string;
+    allowPromoCode?: string;
+    customer?: {
+      email?: string;
+      country?: string;
+      postcode?: string;
+    };
+    vat?: {
+      number?: string;
+      companyName?: string;
+      street?: string;
+      city?: string;
+      state?: string;
+      country?: string;
+      postcode?: string;
+    };
+    customMessage?: string;
+  };
+  individualPlanOptions?: {
+    [key: string]: {
+      granteeId?: string;
+      successUrl?: string;
+      cancelUrl?: string;
+      contactUsLink?: string;
+    };
+  };
+}
+
+export interface IOrganisationPaymentIntegration {
+  uuid: string;
+  organisation: string;
+  integrationName: string;
+  accountName: string;
+  accountData: {
+    key: string;
+    encryptedData: string;
+  };
+  accountId: string;
+  updatedAt: string;
+}
+
+export interface IProductPricingTableResponse extends IProduct {
+  features: IFeature[];
+  currencies: ICurrency[];
+  organisationPaymentIntegration: IOrganisationPaymentIntegration;
+  plans: (IPlan & { features: IFeature[]; currencies: ICurrency[]; checkoutUrl: string })[];
+}
+
 export interface ICheckLicensesCapabilities {
   capabilities: string[];
   publicHash: string;
