@@ -1,6 +1,12 @@
 import { Base } from '../base';
 import { RESOURCE_NAMES } from '../constants';
-import { CancelWhen, ISubscription, ISubscriptionUpdatePlanInput } from '../types';
+import {
+  CancelWhen,
+  ISubscription,
+  ISubscriptionAddSeatsBody,
+  ISubscriptionRemoveSeatsBody,
+  ISubscriptionUpdatePlanInput,
+} from '../types';
 
 /**
  * Salable Node SDK Subscription Class
@@ -52,6 +58,48 @@ export default class Subscriptions extends Base {
       `${RESOURCE_NAMES.SUBSCRIPTIONS}/${subscriptionId}/cancel?when=${when}`,
       {
         method: 'PUT',
+      }
+    );
+  }
+
+  /**
+   * Add Seats to a Subscription
+   *
+   * @param  {string} subscriptionId The uuid of the subscription
+   * @param  {number} increment the number of seats to be added
+   *
+   * @returns {Promise<void>}
+   */
+
+  public addSeats(subscriptionId: string, increment: number): Promise<void> {
+    return this._request<void, ISubscriptionAddSeatsBody>(
+      `${RESOURCE_NAMES.SUBSCRIPTIONS}/${subscriptionId}/seats`,
+      {
+        method: 'POST',
+        body: {
+          increment,
+        },
+      }
+    );
+  }
+
+  /**
+   * Remove Seats from a Subscription
+   *
+   * @param  {string} subscriptionId The uuid of the subscription
+   * @param  {number} decrement the number of seats to be removed
+   *
+   * @returns {Promise<void>}
+   */
+
+  public removeSeats(subscriptionId: string, decrement: number): Promise<void> {
+    return this._request<void, ISubscriptionRemoveSeatsBody>(
+      `${RESOURCE_NAMES.SUBSCRIPTIONS}/${subscriptionId}/seats`,
+      {
+        method: 'PUT',
+        body: {
+          decrement,
+        },
       }
     );
   }

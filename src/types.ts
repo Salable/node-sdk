@@ -302,6 +302,14 @@ export interface ISubscriptionUpdatePlanInput {
   subscriptionId: string;
 }
 
+export interface ISubscriptionAddSeatsBody {
+  increment: number;
+}
+
+export interface ISubscriptionRemoveSeatsBody {
+  decrement: number;
+}
+
 export type CancelWhen = 'now' | 'end';
 
 export interface IUsageUpdateInput {
