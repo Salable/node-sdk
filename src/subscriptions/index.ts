@@ -4,7 +4,9 @@ import {
   CancelWhen,
   ISubscription,
   ISubscriptionAddSeatsBody,
+  ISubscriptionAddSeatsParams,
   ISubscriptionRemoveSeatsBody,
+  ISubscriptionRemoveSeatsParams,
   ISubscriptionUpdatePlanInput,
 } from '../types';
 
@@ -66,18 +68,18 @@ export default class Subscriptions extends Base {
    * Add Seats to a Subscription
    *
    * @param  {string} subscriptionId The uuid of the subscription
-   * @param  {number} increment the number of seats to be added
+   * @param  {ISubscriptionAddSeatsParams} config Config to be passed in to the add seats method
    *
    * @returns {Promise<void>}
    */
 
-  public addSeats(subscriptionId: string, increment: number): Promise<void> {
+  public addSeats(subscriptionId: string, config: ISubscriptionAddSeatsParams): Promise<void> {
     return this._request<void, ISubscriptionAddSeatsBody>(
       `${RESOURCE_NAMES.SUBSCRIPTIONS}/${subscriptionId}/seats`,
       {
         method: 'POST',
         body: {
-          increment,
+          ...config,
         },
       }
     );
@@ -87,18 +89,21 @@ export default class Subscriptions extends Base {
    * Remove Seats from a Subscription
    *
    * @param  {string} subscriptionId The uuid of the subscription
-   * @param  {number} decrement the number of seats to be removed
+   * @param  {ISubscriptionRemoveSeatsParams} config Config to be passed in to the remove seats method
    *
    * @returns {Promise<void>}
    */
 
-  public removeSeats(subscriptionId: string, decrement: number): Promise<void> {
+  public removeSeats(
+    subscriptionId: string,
+    config: ISubscriptionRemoveSeatsParams
+  ): Promise<void> {
     return this._request<void, ISubscriptionRemoveSeatsBody>(
       `${RESOURCE_NAMES.SUBSCRIPTIONS}/${subscriptionId}/seats`,
       {
         method: 'PUT',
         body: {
-          decrement,
+          ...config,
         },
       }
     );
