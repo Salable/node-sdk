@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - "docs/**"
+      - 'docs/**'
   workflow_dispatch:
 
 jobs:
@@ -17,8 +17,8 @@ jobs:
       matrix:
         os: [ubuntu-latest]
     env:
-      GH_TOKEN: "${{ secrets.GH_TOKEN }}"
-      TARGET_DIR: "node-sdk"
+      GH_TOKEN: '${{ secrets.GH_TOKEN }}'
+      TARGET_DIR: 'node-sdk'
 
     steps:
       - name: Check out ${{ env.TARGET_DIR }}
@@ -32,7 +32,7 @@ jobs:
         with:
           fetch-depth: 2
           repository: salable/docs
-          path: "./docs"
+          path: './docs'
           token: ${{ secrets.GH_TOKEN }}
 
       - name: Migrate Code to docs repo
@@ -51,8 +51,8 @@ jobs:
 
           # Commit the changes
           cd ./docs
-          git config user.name "Coner Murphy"
-          git config user.email "<cmurphy@adaptavist.com>"
+          git config user.name "Salable App"
+          git config user.email "<dev@salable.app>"
           git config --global credential.helper cache
           git add ./${{ env.TARGET_DIR }}
           git add ./${{ env.TARGET_DIR }}_versioned_docs
