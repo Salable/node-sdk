@@ -1,3 +1,10 @@
+# [2.6.0](https://github.com/Salable/node-sdk/compare/v2.5.0...v2.6.0) (2023-09-18)
+
+
+### Features
+
+* methods to add & remove seats ([cd1688d](https://github.com/Salable/node-sdk/commit/cd1688d885096ea2703408fdbb3292fa1ff7e30e))
+
 # [2.5.0](https://github.com/Salable/node-sdk/compare/v2.4.0...v2.5.0) (2023-06-29)
 
 
