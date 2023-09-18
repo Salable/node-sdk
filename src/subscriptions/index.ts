@@ -1,6 +1,14 @@
 import { Base } from '../base';
 import { RESOURCE_NAMES } from '../constants';
-import { CancelWhen, ISubscription, ISubscriptionUpdatePlanInput } from '../types';
+import {
+  CancelWhen,
+  ISubscription,
+  ISubscriptionAddSeatsBody,
+  ISubscriptionAddSeatsParams,
+  ISubscriptionRemoveSeatsBody,
+  ISubscriptionRemoveSeatsParams,
+  ISubscriptionUpdatePlanInput,
+} from '../types';
 
 /**
  * Salable Node SDK Subscription Class
@@ -52,6 +60,51 @@ export default class Subscriptions extends Base {
       `${RESOURCE_NAMES.SUBSCRIPTIONS}/${subscriptionId}/cancel?when=${when}`,
       {
         method: 'PUT',
+      }
+    );
+  }
+
+  /**
+   * Add Seats to a Subscription
+   *
+   * @param  {string} subscriptionId The uuid of the subscription
+   * @param  {ISubscriptionAddSeatsParams} config Config to be passed in to the add seats method
+   *
+   * @returns {Promise<void>}
+   */
+
+  public addSeats(subscriptionId: string, config: ISubscriptionAddSeatsParams): Promise<void> {
+    return this._request<void, ISubscriptionAddSeatsBody>(
+      `${RESOURCE_NAMES.SUBSCRIPTIONS}/${subscriptionId}/seats`,
+      {
+        method: 'POST',
+        body: {
+          ...config,
+        },
+      }
+    );
+  }
+
+  /**
+   * Remove Seats from a Subscription
+   *
+   * @param  {string} subscriptionId The uuid of the subscription
+   * @param  {ISubscriptionRemoveSeatsParams} config Config to be passed in to the remove seats method
+   *
+   * @returns {Promise<void>}
+   */
+
+  public removeSeats(
+    subscriptionId: string,
+    config: ISubscriptionRemoveSeatsParams
+  ): Promise<void> {
+    return this._request<void, ISubscriptionRemoveSeatsBody>(
+      `${RESOURCE_NAMES.SUBSCRIPTIONS}/${subscriptionId}/seats`,
+      {
+        method: 'PUT',
+        body: {
+          ...config,
+        },
       }
     );
   }
