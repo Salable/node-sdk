@@ -92,7 +92,7 @@ export default class Licenses extends Base {
   /**
    *  Get License's Count
    *
-   * @param {string} subscriptionUuid - The uuid of the subscription to filter the license count too
+   * @param {string} subscriptionUuid - The uuid of the subscription to filter the license count
    * @param {Status} status - The status of the license to filter by
    *
    * @returns {Promise<ILicenseCountResponse>} The capabilities of the license passed
