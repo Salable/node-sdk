@@ -1,6 +1,14 @@
 import { Base } from '../base';
 import { RESOURCE_NAMES } from '../constants';
-import { ICheckLicensesCapabilities, ILicense, ICreateAdhocLicenseInput } from '../types';
+import {
+  ICheckLicensesCapabilities,
+  ILicense,
+  ICreateAdhocLicenseInput,
+  IUpdateLicenseInput,
+  IUpdateManyLicenseInput,
+  ILicenseCountResponse,
+  Status,
+} from '../types';
 
 /**
  * Salable Node SDK License Class
@@ -45,5 +53,59 @@ export default class Licenses extends Base {
         RESOURCE_NAMES.LICENSES
       }/check?productUuid=${productUuid}&granteeIds=${granteeIds.toString()}`
     );
+  }
+
+  /**
+   *  Update a license
+   *
+   * @param {string} licenseUuid - The UUID of the license
+   * @param {string} granteeId - The value of the new granteeId
+   *
+   * @returns {Promise<ILicense>} The data of the updated license
+   */
+  public update(licenseUuid: string, granteeId: string): Promise<ILicense> {
+    return this._request<ILicense, IUpdateLicenseInput>(
+      `${RESOURCE_NAMES.LICENSES}/${licenseUuid}`,
+      {
+        method: 'PUT',
+        body: {
+          granteeId,
+        },
+      }
+    );
+  }
+
+  /**
+   *  Update many license's
+   *
+   * @param {IUpdateManyLicenseInput[]} updateManyConfig - The config array of all the licenses you wish to update
+   *
+   * @returns {Promise<ILicense[]>} The data of the updated license
+   */
+  public updateMany(updateManyConfig: IUpdateManyLicenseInput[]): Promise<ILicense[]> {
+    return this._request<ILicense[], IUpdateManyLicenseInput[]>(`${RESOURCE_NAMES.LICENSES}`, {
+      method: 'PUT',
+      body: updateManyConfig,
+    });
+  }
+
+  /**
+   *  Get License's Count
+   *
+   * @param {string} subscriptionUuid - The uuid of the subscription to filter the license count too
+   * @param {Status} status - The status of the license to filter by
+   *
+   * @returns {Promise<ILicenseCountResponse>} The capabilities of the license passed
+   */
+
+  public getCount(subscriptionUuid?: string, status?: Status): Promise<ILicenseCountResponse> {
+    let url = `${RESOURCE_NAMES.LICENSES}/count`;
+    if (subscriptionUuid) {
+      url += `?subscriptionUuid=${subscriptionUuid}`;
+    }
+    if (status) {
+      url += `${subscriptionUuid ? '&' : '?'}status=${status}`;
+    }
+    return this._request<ILicenseCountResponse>(url);
   }
 }
