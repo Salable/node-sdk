@@ -14,10 +14,26 @@ export function isRequestWithBody<T>(request: IRequestBase<T>): request is IBody
 
 export type IRequestBase<T> = Omit<RequestInit, 'body'> & (INonBodyRequest | IBodyRequest<T>);
 
+export type Status = 'ACTIVE' | 'CANCELED';
 export interface ICreateAdhocLicenseInput {
   planUuid: string;
   member: string;
   granteeId: string;
+}
+
+export interface IUpdateLicenseInput {
+  granteeId: string;
+}
+
+export interface IUpdateManyLicenseInput {
+  granteeId: string;
+  uuid: string;
+}
+
+export interface ILicenseCountResponse {
+  count: number;
+  assigned: number;
+  unassigned: number;
 }
 
 export interface ILicense {
