@@ -1,3 +1,10 @@
+# [2.7.0](https://github.com/Salable/node-sdk/compare/v2.6.0...v2.7.0) (2023-09-21)
+
+
+### Features
+
+* new methods to license class ([9221614](https://github.com/Salable/node-sdk/commit/92216147482a2a087918995fefa36fb55ca3410a))
+
 # [2.6.0](https://github.com/Salable/node-sdk/compare/v2.5.0...v2.6.0) (2023-09-18)
 
 
