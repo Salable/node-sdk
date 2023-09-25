@@ -48,6 +48,7 @@ export class Base {
 
       return fetch(url, config).then((response) => {
         if (response.status < 300 && response.status >= 200) {
+          if (response.status === 204) return response.statusText as unknown as Promise<T>;
           return response.json() as Promise<T>;
         }
 
