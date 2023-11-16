@@ -76,11 +76,6 @@ describe('Unit | ThirdPartyAPI | Licenses', () => {
   });
 
   it('Get Licenses count: should call the request with the correct parameters', async () => {
-    const mockResponse = {
-      count: 10,
-      assigned: 5,
-      unassigned: 5,
-    };
     fetch.mockResponseOnce(JSON.stringify(mockResponse));
     const getCount = await api.getCount('xxxxx', 'ACTIVE');
     expect(requestSpyOn).toHaveBeenCalledWith(
