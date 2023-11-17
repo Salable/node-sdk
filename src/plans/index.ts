@@ -1,15 +1,16 @@
 import { Base } from '../base';
-import { RESOURCE_NAMES, allowedPlanCheckoutParams } from '../constants';
+import { RESOURCE_NAMES } from '../constants';
 import {
   IPlan,
   IPlanCapabilityResponse,
   IPlanCheckoutInputParams,
+  IPlanCheckoutParams,
   IPlanCheckoutResponse,
   IPlanCurrencyResponse,
   IPlanFeatureResponse,
   PlanCheckoutKey,
 } from '../types';
-import planCheckoutFactory from '../utils/plan-checkout-factory';
+import defaultParametersCheckoutFactory from '../utils/default-parameters-checkout-factory';
 
 /**
  * Salable Node SDK Plan Class
@@ -43,13 +44,22 @@ export default class Plans extends Base {
   ): Promise<IPlanCheckoutResponse> {
     const encodedParams = new URLSearchParams();
 
-    const flatCheckoutParams = planCheckoutFactory(queryParams);
+    const flatCheckoutDefaultParams = defaultParametersCheckoutFactory(queryParams);
+    const flatParams: IPlanCheckoutParams = Object.assign(
+      {
+        granteeId: queryParams.granteeId,
+        member: queryParams.member,
+        successUrl: queryParams.successUrl,
+        cancelUrl: queryParams.cancelUrl,
+        contactUsLink: queryParams.contactUsLink,
+      },
+      flatCheckoutDefaultParams
+    );
 
-    for (const key of Object.keys(flatCheckoutParams)) {
+    for (const key of Object.keys(flatParams)) {
       const itemKey = key as PlanCheckoutKey;
-      const itemValue = flatCheckoutParams[itemKey];
-      if (itemValue && allowedPlanCheckoutParams.includes(itemKey))
-        encodedParams.set(itemKey, itemValue);
+      const itemValue = flatParams[itemKey];
+      if (itemValue) encodedParams.set(itemKey, itemValue);
     }
 
     return this._request<IPlanCheckoutResponse>(

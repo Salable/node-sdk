@@ -109,18 +109,22 @@ export interface IFeature {
   updatedAt: string;
 }
 
-export interface IPlanCheckoutParams {
-  successUrl: string;
-  cancelUrl: string;
-  granteeId: string;
+export interface ICheckoutDefaultParams {
   member: string;
   marketingConsent?: string;
   couponCode?: string;
   promoCode?: string;
   allowPromoCode?: string;
+  customMessage?: string;
+}
+
+export interface ICheckoutCustomerParams {
   customerEmail?: string;
   customerCountry?: string;
   customerPostcode?: string;
+}
+
+export interface ICheckoutVatParams {
   vatNumber?: string;
   vatCompanyName?: string;
   vatStreet?: string;
@@ -128,14 +132,35 @@ export interface IPlanCheckoutParams {
   vatState?: string;
   vatCountry?: string;
   vatPostcode?: string;
-  customMessage?: string;
+}
+
+export interface IPlanCheckoutParams
+  extends ICheckoutDefaultParams,
+    ICheckoutCustomerParams,
+    ICheckoutVatParams {
+  successUrl: string;
+  cancelUrl: string;
+  contactUsLink?: string;
+  granteeId: string;
+}
+
+export interface IPricingTableParams
+  extends ICheckoutDefaultParams,
+    ICheckoutCustomerParams,
+    ICheckoutVatParams {
+  globalSuccessUrl: string;
+  globalCancelUrl: string;
+  globalGranteeId: string;
+  contactUsLink?: string;
 }
 
 export type PlanCheckoutKey = keyof IPlanCheckoutParams;
+export type PricingTableCheckoutKey = keyof IPricingTableParams;
 
 export interface IPlanCheckoutInputParams {
   successUrl: string;
   cancelUrl: string;
+  contactUsLink?: string;
   granteeId: string;
   member: string;
   marketingConsent?: string;
@@ -157,6 +182,28 @@ export interface IPlanCheckoutInputParams {
     postcode?: string;
   };
   customMessage?: string;
+}
+
+export interface IDefaultCheckoutInputParams {
+  marketingConsent?: string;
+  couponCode?: string;
+  promoCode?: string;
+  allowPromoCode?: string;
+  customMessage?: string;
+  customer?: {
+    email?: string;
+    country?: string;
+    postcode?: string;
+  };
+  vat?: {
+    number?: string;
+    companyName?: string;
+    street?: string;
+    city?: string;
+    state?: string;
+    country?: string;
+    postcode?: string;
+  };
 }
 
 export interface IPlanCheckoutResponse {
