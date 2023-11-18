@@ -283,7 +283,7 @@ export interface IProductCurrencyResponse {
   currency: ICurrency;
 }
 
-export interface IProductPricingTableInput {
+export interface IPricingTableInput {
   globalPlanOptions: {
     granteeId: string;
     successUrl: string;
