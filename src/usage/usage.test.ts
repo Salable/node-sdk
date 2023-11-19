@@ -1,17 +1,26 @@
 import Usage from './index';
+import fetch from 'jest-fetch-mock';
 
-// TODO: Add integration testing for success and error responses
+fetch.enableMocks();
+const mockResponse = '';
+const api = new Usage('test-key');
+
 describe('Unit | ThirdPartyAPI | Usage', () => {
   it('should update the usage record via API', async () => {
-    const mockFetch = jest.fn().mockResolvedValue({ json: () => null, status: 200 });
-
-    global.fetch = mockFetch;
-
-    const api = new Usage('test-key');
+    fetch.mockResponseOnce(JSON.stringify(mockResponse));
     await api.update('license-id', 'feature-name', {
       increment: 2,
     });
 
-    expect(mockFetch).toHaveBeenCalledTimes(1);
+    expect(fetch).toHaveBeenCalledTimes(1);
+  });
+  it('should return an error when promise rejects', async () => {
+    fetch.mockReject(() => Promise.reject('API is down'));
+
+    await expect(async () => {
+      await api.update('license-id', 'feature-name', {
+        increment: 2,
+      });
+    }).rejects.toBe('API is down');
   });
 });
