@@ -1,36 +1,62 @@
 import fetch from 'jest-fetch-mock';
-import { ISubscription } from '../types';
 import Subscriptions from './index';
+import { BaseRequest } from '@/src/base';
 
 const api = new Subscriptions('test-key');
+const requestSpyOn = jest.spyOn(api as unknown as { _request: BaseRequest }, '_request');
 
 fetch.enableMocks();
 
-const subscription: ISubscription = {
-  uuid: 'test-id',
-  paymentIntegrationSubscriptionId: 'payment-int-id',
-  productUuid: 'product-id',
-  type: 'stripe',
-  email: 'test@gmail.com',
-  organisation: 'test-org',
-  status: 'ACTIVE',
-  createdAt: new Date().toString(),
-  updatedAt: new Date().toString(),
-  expiryDate: new Date().toString(),
-  licenseUuid: 'test-license-id',
-  planUuid: 'test-plan-id',
-};
+const mockResponse = { mockProperty: 'example' };
 
 beforeEach(() => {
   fetch.resetMocks();
 });
 
 describe('Unit | ThirdPartyAPI | Subscriptions', () => {
-  it('should get one subscription record', async () => {
-    fetch.mockResponseOnce(JSON.stringify(subscription));
-    const fetchedSubscription = await api.getOne('test-id');
-    expect(fetchedSubscription.uuid).toBe('test-id');
-    expect(fetch).toHaveBeenCalledTimes(1);
+  it('Get a subscription: should return the response unchanged', async () => {
+    fetch.mockResponseOnce(JSON.stringify(mockResponse));
+    const fetchedSubscription = await api.getOne('xxxxx');
+    expect(fetchedSubscription).toStrictEqual(mockResponse);
+    expect(requestSpyOn).toHaveBeenCalledWith('subscriptions/xxxxx');
+  });
+
+  it("Update a subscription's plan: should return the response unchanged", async () => {
+    fetch.mockResponseOnce(JSON.stringify(mockResponse));
+    const fetchedSubscription = await api.updatePlan('aaaaa', 'xxxxx');
+    expect(fetchedSubscription).toStrictEqual(mockResponse);
+    expect(requestSpyOn).toHaveBeenCalledWith('subscriptions/xxxxx/updateplan/aaaaa', {
+      method: 'PUT',
+    });
+  });
+
+  it('Cancel a subscription: should call the endpoint with correct parameters', async () => {
+    fetch.mockResponseOnce(JSON.stringify(mockResponse));
+    const fetchedSubscription = await api.cancel('xxxxx', 'end');
+    expect(fetchedSubscription).toStrictEqual(mockResponse);
+    expect(requestSpyOn).toHaveBeenCalledWith('subscriptions/xxxxx/cancel?when=end', {
+      method: 'PUT',
+    });
+  });
+
+  it('Add seats to a subscription: should call the endpoint with correct body and return the response unchanged', async () => {
+    fetch.mockResponseOnce(JSON.stringify(mockResponse));
+    const fetchedSubscription = await api.addSeats('xxxxx', { increment: 5 });
+    expect(fetchedSubscription).toStrictEqual(mockResponse);
+    expect(requestSpyOn).toHaveBeenCalledWith('subscriptions/xxxxx/seats', {
+      method: 'POST',
+      body: { increment: 5 },
+    });
+  });
+
+  it('Remove seats from a subscription: should call the endpoint with correct body and return the response unchanged', async () => {
+    fetch.mockResponseOnce(JSON.stringify(mockResponse));
+    const fetchedSubscription = await api.removeSeats('xxxxx', { decrement: 5 });
+    expect(fetchedSubscription).toStrictEqual(mockResponse);
+    expect(requestSpyOn).toHaveBeenCalledWith('subscriptions/xxxxx/seats', {
+      method: 'PUT',
+      body: { decrement: 5 },
+    });
   });
 
   it('should return an error if subscription plan could not be changed', async () => {

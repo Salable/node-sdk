@@ -37,13 +37,12 @@ export default class Subscriptions extends Base {
    */
 
   public updatePlan(newPlanId: string, subscriptionId: string): Promise<void> {
-    return this._request<void, ISubscriptionUpdatePlanInput>(RESOURCE_NAMES.SUBSCRIPTIONS, {
-      method: 'PUT',
-      body: {
-        newPlanId,
-        subscriptionId,
-      },
-    });
+    return this._request<void, ISubscriptionUpdatePlanInput>(
+      `${RESOURCE_NAMES.SUBSCRIPTIONS}/${subscriptionId}/updateplan/${newPlanId}`,
+      {
+        method: 'PUT',
+      }
+    );
   }
 
   /**
