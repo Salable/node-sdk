@@ -5,7 +5,7 @@ import Products from './products';
 import Rbac from './rbac';
 import Subscriptions from './subscriptions';
 import Usage from './usage';
-import PricingTables from '@/src/pricing-tables';
+import PricingTables from './pricing-tables';
 
 export class Salable extends Base {
   public licenses: Licenses = new Licenses(this._apiKey);
