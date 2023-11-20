@@ -4,6 +4,7 @@ export const RESOURCE_NAMES = {
   LICENSES: 'licenses',
   SUBSCRIPTIONS: 'subscriptions',
   PLANS: 'plans',
+  PRICING_TABLES: 'pricing-tables',
   PRODUCTS: 'products',
   USAGE: 'usage',
   RBAC: {
