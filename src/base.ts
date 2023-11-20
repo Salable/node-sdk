@@ -2,9 +2,11 @@ import { SALABLE_BASE_URL } from './constants';
 import 'isomorphic-fetch';
 import { IRequestBase, isRequestWithBody } from './types';
 
+export type BaseRequest = <T, K = void>(endpoint: string, options?: IRequestBase<K>) => Promise<T>;
+
 export class Base {
   protected _apiKey;
-  protected _request;
+  protected _request: BaseRequest;
 
   constructor(apiKey: string, apiUrl = SALABLE_BASE_URL) {
     this._apiKey = apiKey;
