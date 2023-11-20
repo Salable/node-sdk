@@ -8,6 +8,9 @@ import {
   IUpdateManyLicenseInput,
   ILicenseCountResponse,
   Status,
+  LicenseCancelManyBody,
+  LicenseGetByPurchaserOptions,
+  LicenseGetUsage,
 } from '../types';
 
 /**
@@ -23,6 +26,60 @@ export default class Licenses extends Base {
    */
   public getAll(): Promise<ILicense[]> {
     return this._request<ILicense[]>(RESOURCE_NAMES.LICENSES);
+  }
+
+  /**
+   *  Get one license
+   *  @param {string} licenseUuid - The UUID of the license
+   *
+   * @returns {ILicense}
+   */
+  public getOne(licenseUuid: string): Promise<ILicense> {
+    return this._request<ILicense>(`${RESOURCE_NAMES.LICENSES}/${licenseUuid}`);
+  }
+
+  /**
+   *  Get licenses for purchaser
+   *  @param {string} purchaser - The purchaser of the licenses
+   *  @param {string} productUuid - The UUID of the product that the licenses are on
+   *  @param {LicenseGetByPurchaserOptions} options - (Optional) extra options for filtering or additional data
+   *
+   * @returns {ILicense[]}
+   */
+  public getForPurchaser(
+    purchaser: string,
+    productUuid: string,
+    options?: LicenseGetByPurchaserOptions
+  ): Promise<ILicense> {
+    let params = '';
+    if (options && Object.keys(options).length) {
+      if (options.cancelLink) params += '&expand=cancelLink';
+      if (options.status) params += `&status=${options.status}`;
+    }
+    params = encodeURI(params);
+    return this._request<ILicense>(
+      `${RESOURCE_NAMES.LICENSES}/purchaser?purchaser=${purchaser}&productUuid=${productUuid}${params}`
+    );
+  }
+
+  /**
+   *  Get licenses for granteeId
+   *  @param {string} granteeId - The granteeId for the licenses
+   *
+   * @returns {ILicense[]}
+   */
+  public getForGranteeId(granteeId: string): Promise<ILicense[]> {
+    return this._request<ILicense[]>(`${RESOURCE_NAMES.LICENSES}/granteeId/${granteeId}`);
+  }
+
+  /**
+   *  Get usage on license
+   *  @param {string} granteeId - The granteeId for the licenses
+   *
+   * @returns {ILicense[]}
+   */
+  public getUsage(licenseUuid: string): Promise<LicenseGetUsage[]> {
+    return this._request<LicenseGetUsage[]>(`${RESOURCE_NAMES.LICENSES}/${licenseUuid}/usage`);
   }
 
   /**
@@ -68,11 +125,36 @@ export default class Licenses extends Base {
       `${RESOURCE_NAMES.LICENSES}/${licenseUuid}`,
       {
         method: 'PUT',
-        body: {
-          granteeId,
-        },
+        body: { granteeId },
       }
     );
+  }
+
+  /**
+   *  Cancel a license
+   *
+   * @param {string} licenseUuid - The UUID of the license
+   *
+   * @returns {Promise<void>}
+   */
+  public cancel(licenseUuid: string) {
+    return this._request<void>(`${RESOURCE_NAMES.LICENSES}/${licenseUuid}`, {
+      method: 'DELETE',
+    });
+  }
+
+  /**
+   *  Cancel many licenses
+   *
+   * @param {string[]} licenseUuids - Array of license uuids to be canceled
+   *
+   * @returns {Promise<void>}
+   */
+  public cancelMany(licenseUuids: string[]) {
+    return this._request<void, LicenseCancelManyBody>(`${RESOURCE_NAMES.LICENSES}`, {
+      method: 'POST',
+      body: { uuids: licenseUuids },
+    });
   }
 
   /**
