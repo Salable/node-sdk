@@ -1,5 +1,5 @@
 import fetch from 'jest-fetch-mock';
-import { BaseRequest } from '@/src/base';
+import { BaseRequest } from '../base';
 import PricingTables from './index';
 
 const api = new PricingTables('test-key');
