@@ -1,6 +1,6 @@
 import fetch from 'jest-fetch-mock';
 import Licenses from './index';
-import { BaseRequest } from '@/src/base';
+import { BaseRequest } from '../base';
 
 const api = new Licenses('test-key');
 const requestSpyOn = jest.spyOn(api as unknown as { _request: BaseRequest }, '_request');
