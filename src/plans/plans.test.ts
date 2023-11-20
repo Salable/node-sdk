@@ -7,9 +7,7 @@ const requestSpyOn = jest.spyOn(api as unknown as { _request: BaseRequest }, '_r
 
 fetch.enableMocks();
 
-const mockResponse = {
-  mockProperty: 'example',
-};
+const mockResponse = { mockProperty: 'example' };
 
 beforeEach(() => {
   fetch.resetMocks();
@@ -30,10 +28,29 @@ describe('Unit | ThirdPartyAPI | Plans', () => {
       member: 'orgId_1',
       successUrl: 'successUrl',
       cancelUrl: 'cancelUrl',
+      couponCode: 'SALE50',
+      promoCode: 'SALE50',
+      customMessage: 'Custom Message',
+      allowPromoCode: 'true',
+      marketingConsent: 'true',
+      vat: {
+        companyName: 'Company',
+        city: 'City',
+        number: '10',
+        postcode: 'NR1 1RN',
+        state: 'State',
+        street: 'Street',
+        country: 'GB',
+      },
+      customer: {
+        email: 'customer@email.com',
+        postcode: 'NR1 1RN',
+        country: 'GB',
+      },
     });
     expect(fetchedCheckoutLink).toStrictEqual(mockResponse);
     expect(requestSpyOn).toHaveBeenCalledWith(
-      `plans/xxxxx/checkoutlink?granteeId=userId_1&member=orgId_1&successUrl=successUrl&cancelUrl=cancelUrl`
+      `plans/xxxxx/checkoutlink?granteeId=userId_1&member=orgId_1&successUrl=successUrl&cancelUrl=cancelUrl&marketingConsent=true&couponCode=SALE50&promoCode=SALE50&allowPromoCode=true&customMessage=Custom+Message&customerEmail=customer%40email.com&customerCountry=GB&customerPostcode=NR1+1RN&vatCompanyName=Company&vatCity=City&vatNumber=10&vatPostcode=NR1+1RN&vatState=State&vatStreet=Street&vatCountry=GB`
     );
   });
 

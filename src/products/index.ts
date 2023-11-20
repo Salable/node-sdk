@@ -7,26 +7,9 @@ import {
   IProductCurrencyResponse,
   IProductPricingTableInput,
   IProductPricingTableResponse,
-  PlanCheckoutKey,
+  PricingTableCheckoutKey,
 } from '../types';
-import planCheckoutFactory from '../utils/plan-checkout-factory';
-
-const allowedQueryParams = [
-  'customerCountry',
-  'customerEmail',
-  'customerPostcode',
-  'member',
-  'promoCode',
-  'allowPromoCode',
-  'marketingConsent',
-  'vatCity',
-  'vatCompanyName',
-  'vatCountry',
-  'vatNumber',
-  'vatPostcode',
-  'vatState',
-  'vatStreet',
-];
+import defaultParametersCheckoutFactory from '../utils/default-parameters-checkout-factory';
 
 /**
  * Salable Node SDK Product Class
@@ -65,61 +48,49 @@ export default class Products extends Base {
 
   public getPricingTable(productId: string, queryParams: IProductPricingTableInput) {
     const {
-      globalPlanOptions: { granteeId, successUrl, cancelUrl },
+      globalPlanOptions: { granteeId, successUrl, cancelUrl, contactUsLink, member, ...rest },
+      individualPlanOptions,
     } = queryParams;
 
-    const flatCheckoutParams = planCheckoutFactory(queryParams.globalPlanOptions);
-
+    const flatCheckoutDefaultParams = defaultParametersCheckoutFactory(rest);
+    const flatCheckoutParams = Object.assign(
+      {
+        globalGranteeId: granteeId,
+        globalSuccessUrl: successUrl,
+        globalCancelUrl: cancelUrl,
+        contactUsLink,
+        member,
+      },
+      flatCheckoutDefaultParams
+    );
     let paramsStr = '';
-
+    let query = '';
     for (const key of Object.keys(flatCheckoutParams)) {
-      const itemKey = key as PlanCheckoutKey;
+      const itemKey = key as PricingTableCheckoutKey;
       const itemValue = flatCheckoutParams[itemKey];
-      if (itemValue && allowedQueryParams.includes(itemKey)) {
-        paramsStr += `&${itemKey}=${itemValue}`;
-      }
+      if (itemValue) paramsStr += `&${itemKey}=${itemValue}`;
     }
 
-    const { cancelUrls, successUrls, granteeIds } = queryParams.individualPlanOptions
-      ? Object.keys(queryParams.individualPlanOptions)?.reduce<{
-          cancelUrls: string[];
-          successUrls: string[];
-          granteeIds: string[];
-        }>(
-          (acc, cur) => {
-            const cancelUrl =
-              queryParams?.individualPlanOptions?.[cur]?.cancelUrl ??
-              queryParams.globalPlanOptions.cancelUrl;
-
-            const successUrl =
-              queryParams?.individualPlanOptions?.[cur]?.successUrl ??
-              queryParams.globalPlanOptions.successUrl;
-
-            const granteeId =
-              queryParams?.individualPlanOptions?.[cur]?.granteeId ??
-              queryParams.globalPlanOptions.granteeId;
-
-            acc.cancelUrls.push(`${cur},${cancelUrl}`);
-            acc.successUrls.push(`${cur},${successUrl}`);
-            acc.granteeIds.push(`${cur},${granteeId}`);
-
-            return acc;
-          },
-          {
-            cancelUrls: [],
-            successUrls: [],
-            granteeIds: [],
-          }
-        )
-      : {
-          cancelUrls: [],
-          successUrls: [],
-          granteeIds: [],
-        };
-
-    const query = encodeURI(
-      `globalGranteeId=${granteeId}&granteeIds=[${granteeIds.toString()}]&globalSuccessUrl=${successUrl}&successUrls=[${successUrls.toString()}]&globalCancelUrl=${cancelUrl}&cancelUrls=[${cancelUrls.toString()}]${paramsStr}`
-    );
+    if (individualPlanOptions) {
+      let granteeIds = '';
+      let cancelUrls = '';
+      let successUrls = '';
+      for (const key of Object.keys(individualPlanOptions)) {
+        if (individualPlanOptions[key].granteeId) {
+          granteeIds += `${key},${individualPlanOptions[key].granteeId as string}`;
+        }
+        if (individualPlanOptions[key].cancelUrl) {
+          cancelUrls += `${key},${individualPlanOptions[key].cancelUrl as string}`;
+        }
+        if (individualPlanOptions[key].successUrl) {
+          successUrls += `${key},${individualPlanOptions[key].successUrl as string}`;
+        }
+      }
+      if (granteeIds) paramsStr += `&granteeIds=${granteeIds}`;
+      if (cancelUrls) paramsStr += `&cancelUrls=${cancelUrls}`;
+      if (successUrls) paramsStr += `&successUrls=${successUrls}`;
+    }
+    query = encodeURI(paramsStr);
 
     return this._request<IProductPricingTableResponse>(
       `${RESOURCE_NAMES.PRODUCTS}/${productId}/pricingtable?${query}`
