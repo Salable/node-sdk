@@ -8,6 +8,7 @@ import {
   ISubscriptionRemoveSeatsBody,
   ISubscriptionRemoveSeatsParams,
   ISubscriptionUpdatePlanInput,
+  SubscriptionsChangePlanBody,
 } from '../types';
 
 /**
@@ -28,7 +29,7 @@ export default class Subscriptions extends Base {
   }
 
   /**
-   * Update a subscription's plan
+   * Update a subscription's plan (DEPRECATED)
    *
    * @param  {string} newPlanId The uuid of the new plan
    * @param  {string} subscriptionId The uuid of the subscription
@@ -41,6 +42,24 @@ export default class Subscriptions extends Base {
       `${RESOURCE_NAMES.SUBSCRIPTIONS}/${subscriptionId}/updateplan/${newPlanId}`,
       {
         method: 'PUT',
+      }
+    );
+  }
+
+  /**
+   *  Change a subscription's plan
+   *
+   * @param {SubscriptionsChangePlanBody} - Change subscription plan options
+   *
+   * @returns {Promise<void>}
+   */
+
+  public changePlan(subscriptionId: string, config: SubscriptionsChangePlanBody): Promise<void> {
+    return this._request<void, SubscriptionsChangePlanBody>(
+      `${RESOURCE_NAMES.SUBSCRIPTIONS}/${subscriptionId}/change-plan`,
+      {
+        method: 'PUT',
+        body: config,
       }
     );
   }
@@ -77,9 +96,7 @@ export default class Subscriptions extends Base {
       `${RESOURCE_NAMES.SUBSCRIPTIONS}/${subscriptionId}/seats`,
       {
         method: 'POST',
-        body: {
-          ...config,
-        },
+        body: config,
       }
     );
   }
@@ -101,9 +118,7 @@ export default class Subscriptions extends Base {
       `${RESOURCE_NAMES.SUBSCRIPTIONS}/${subscriptionId}/seats`,
       {
         method: 'PUT',
-        body: {
-          ...config,
-        },
+        body: config,
       }
     );
   }

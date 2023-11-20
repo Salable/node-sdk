@@ -69,6 +69,13 @@ export interface ISubscription {
   planUuid: string;
 }
 
+export type Proration = 'create_proration' | 'none' | 'invoice';
+
+export type SubscriptionsChangePlanBody = {
+  planUuid: string;
+  proration?: Proration;
+};
+
 export interface IPlan {
   uuid: string;
   name: string;

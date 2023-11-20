@@ -30,6 +30,22 @@ describe('Unit | ThirdPartyAPI | Subscriptions', () => {
     });
   });
 
+  it("Change a subscription's plan: should return the response unchanged", async () => {
+    fetch.mockResponseOnce(JSON.stringify(mockResponse));
+    const fetchedSubscription = await api.changePlan('xxxxx', {
+      planUuid: 'aaaaa',
+      proration: 'invoice',
+    });
+    expect(fetchedSubscription).toStrictEqual(mockResponse);
+    expect(requestSpyOn).toHaveBeenCalledWith('subscriptions/xxxxx/change-plan', {
+      method: 'PUT',
+      body: {
+        planUuid: 'aaaaa',
+        proration: 'invoice',
+      },
+    });
+  });
+
   it('Cancel a subscription: should call the endpoint with correct parameters', async () => {
     fetch.mockResponseOnce(JSON.stringify(mockResponse));
     const fetchedSubscription = await api.cancel('xxxxx', 'end');
