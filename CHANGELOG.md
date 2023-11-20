@@ -1,3 +1,19 @@
+# [2.8.0](https://github.com/Salable/node-sdk/compare/v2.7.0...v2.8.0) (2023-11-20)
+
+
+### Bug Fixes
+
+* imports to base ([f805466](https://github.com/Salable/node-sdk/commit/f805466b40c5e09d4c7b19859f3de1b222870924))
+* update path to base in plans test ([acb80aa](https://github.com/Salable/node-sdk/commit/acb80aaa0ddb2ba5ccd208e8368ad0278706e898))
+* updated import path on base ([a453718](https://github.com/Salable/node-sdk/commit/a453718db88bc9cc187865619633b1547e4f4e6d))
+
+
+### Features
+
+* pricing tables ([eacef35](https://github.com/Salable/node-sdk/commit/eacef35e8bc466e92f34c8c2348aedf9051c1f3c))
+* pricing tables ([60459d0](https://github.com/Salable/node-sdk/commit/60459d04ff2029e8555bec885ae55d5e21a003b6))
+* subscriptions change plan endpoint ([7dffdf3](https://github.com/Salable/node-sdk/commit/7dffdf3c900a1f3118d55a648e9ab9a2f8a0d88d))
+
 # [2.7.0](https://github.com/Salable/node-sdk/compare/v2.6.0...v2.7.0) (2023-09-21)
 
 

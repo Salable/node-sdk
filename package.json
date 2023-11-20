@@ -1,6 +1,6 @@
 {
   "name": "@salable/node-sdk",
-  "version": "2.7.0",
+  "version": "2.8.0",
   "description": "Node.js SDK to interact with Salable APIs",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
