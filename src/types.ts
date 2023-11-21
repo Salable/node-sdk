@@ -69,7 +69,7 @@ export interface ISubscription {
   planUuid: string;
 }
 
-export type Proration = 'create_proration' | 'none' | 'invoice';
+export type Proration = 'create_prorations' | 'none' | 'always_invoice';
 
 export type SubscriptionsChangePlanBody = {
   planUuid: string;
@@ -290,7 +290,7 @@ export interface IProductCurrencyResponse {
   currency: ICurrency;
 }
 
-export interface IPricingTableInput {
+export type PricingTableParameters = {
   globalPlanOptions: {
     granteeId: string;
     successUrl: string;
@@ -322,10 +322,9 @@ export interface IPricingTableInput {
       granteeId?: string;
       successUrl?: string;
       cancelUrl?: string;
-      contactUsLink?: string;
     };
   };
-}
+};
 
 export interface IOrganisationPaymentIntegration {
   uuid: string;

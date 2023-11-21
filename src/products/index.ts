@@ -5,7 +5,7 @@ import {
   IProduct,
   IProductCapabilityResponse,
   IProductCurrencyResponse,
-  IPricingTableInput,
+  PricingTableParameters,
   IProductPricingTableResponse,
   PricingTableCheckoutKey,
 } from '../types';
@@ -46,7 +46,7 @@ export default class Products extends Base {
    * @returns {Promise<IProductPricingTableResponse>}
    */
 
-  public getPricingTable(productId: string, queryParams: IPricingTableInput) {
+  public getPricingTable(productId: string, queryParams: PricingTableParameters) {
     const {
       globalPlanOptions: { granteeId, successUrl, cancelUrl, contactUsLink, member, ...rest },
       individualPlanOptions,

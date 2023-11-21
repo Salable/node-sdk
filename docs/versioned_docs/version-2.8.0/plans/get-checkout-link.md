@@ -1,26 +1,25 @@
 ---
-sidebar_position: 3
+sidebar_position: 2
 ---
 
-# Get Pricing Table for a Product
+# Get Checkout Link
 
-Returns all necessary data on a Product to be able to display a pricing table. Every active plan on the product will be added to the table in the sort order of free plans, paid plans price and then coming soon plans.
+Returns the checkout link for a plan. This endpoint will only work for paid Plans.
 
 ## Code Sample
 
 ```typescript
 const { Salable } = require('@salable/node-sdk');
+
 (async () => {
   const salable = new Salable('API-KEY');
 
   try {
-    const pricingTable = await salable.products.getPricingTable('product-uuid', {
-      globalPlanOptions: {
-        granteeId: 'userId_1',
-        member: 'orgId_1',
-        cancelUrl: 'https://example.com/cancel',
-        successUrl: 'https://example.com/success',
-      },
+    const checkoutLink = await api.plans.getCheckoutLink('41cf33a2-136e-4959-b5c7-73889ab94eff', {
+      cancelUrl: 'https://example.com/cancel',
+      successUrl: 'https://example.com/success',
+      granteeId: 'grantee-123',
+      member: 'member-123',
     });
   } catch (err) {
     console.error(err);
@@ -30,23 +29,17 @@ const { Salable } = require('@salable/node-sdk');
 
 ## Parameters
 
-### productUuid (_required_)
+##### planId (_required_)
 
 _Type:_ `string`
 
-Product `uuid` of the product to build the pricing table from
+Plan `uuid` of the plan you wish to retrieve
 
----
+##### queryParams (_required_)
 
-### queryParams (_required_)
-
-_Type:_ `PricingTableParameters`
+_Type:_ `IPlanCheckoutInputParams`
 
 Query parameters to be passed in to the checkout config
-
-#### globalPlanOptions
-
-Parameters set in globalPlanOptions will be used for all plans in the pricing table by default.
 
 |   **Parameter**   |                                                                                                                                                                                                                                                                                                                                                              **Description**                                                                                                                                                                                                                                                                                                                                                               | **Required** |
 | :---------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------: |
@@ -70,39 +63,6 @@ Parameters set in globalPlanOptions will be used for all plans in the pricing ta
 |   vat.postcode    |                                                                                                                                                                                                                                                                                                                                       Prefill the checkout form with the customer's postcode for VAT                                                                                                                                                                                                                                                                                                                                       |      ❌      |
 |   customMessage   |                                                                                                                                                                                                                                                                                                                                                  Add a message to show in Paddle checkout                                                                                                                                                                                                                                                                                                                                                  |      ❌      |
 
-#### individualPlanOptions
+## Return Type
 
-Parameters set in globalPlanOptions can be overridden on a per-plan basis by using the individualPlanOptions property. To do this set a key in the individualPlanOptions object to the uuid of the plan you want to override. Only successUrl, cancelUrl and granteeId can be set on a per-plan basis.
-
-| **Parameter** |                           **Description**                            | **Required** |
-| :-----------: | :------------------------------------------------------------------: | :----------: |
-|  successUrl   | The URL to send users if they have successfully completed a purchase |      ❌      |
-|   cancelUrl   |          The URL to send users to if the transaction fails.          |      ❌      |
-|   granteeId   |                  Value to use as granteeId on Plan                   |      ❌      |
-
-##### Code sample using individualPlanOptions
-
-```typescript
-const { Salable } = require('@salable/node-sdk');
-(async () => {
-  const salable = new Salable('API-KEY');
-
-  try {
-    const pricingTable = await salable.products.getPricingTable('product-uuid', {
-      globalPlanOptions: {
-        granteeId: 'userId_1',
-        member: 'orgId_1',
-        cancelUrl: 'https://example.com/cancel',
-        successUrl: 'https://example.com/success',
-      },
-      individualPlanOptions: {
-        'plan-uuid': {
-          granteeId: 'userId_2',
-        },
-      },
-    });
-  } catch (err) {
-    console.error(err);
-  }
-})();
-```
+`string`

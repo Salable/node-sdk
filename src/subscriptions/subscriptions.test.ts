@@ -34,14 +34,14 @@ describe('Unit | ThirdPartyAPI | Subscriptions', () => {
     fetch.mockResponseOnce(JSON.stringify(mockResponse));
     const fetchedSubscription = await api.changePlan('xxxxx', {
       planUuid: 'aaaaa',
-      proration: 'invoice',
+      proration: 'always_invoice',
     });
     expect(fetchedSubscription).toStrictEqual(mockResponse);
     expect(requestSpyOn).toHaveBeenCalledWith('subscriptions/xxxxx/change-plan', {
       method: 'PUT',
       body: {
         planUuid: 'aaaaa',
-        proration: 'invoice',
+        proration: 'always_invoice',
       },
     });
   });

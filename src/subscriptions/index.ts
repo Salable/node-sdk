@@ -49,14 +49,15 @@ export default class Subscriptions extends Base {
   /**
    *  Change a subscription's plan
    *
+   * @param {subscriptionUuid} - Subscription uuid
    * @param {SubscriptionsChangePlanBody} - Change subscription plan options
    *
    * @returns {Promise<void>}
    */
 
-  public changePlan(subscriptionId: string, config: SubscriptionsChangePlanBody): Promise<void> {
+  public changePlan(subscriptionUuid: string, config: SubscriptionsChangePlanBody): Promise<void> {
     return this._request<void, SubscriptionsChangePlanBody>(
-      `${RESOURCE_NAMES.SUBSCRIPTIONS}/${subscriptionId}/change-plan`,
+      `${RESOURCE_NAMES.SUBSCRIPTIONS}/${subscriptionUuid}/change-plan`,
       {
         method: 'PUT',
         body: config,

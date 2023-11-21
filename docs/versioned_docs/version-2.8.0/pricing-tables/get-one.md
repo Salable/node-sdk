@@ -2,9 +2,9 @@
 sidebar_position: 3
 ---
 
-# Get Pricing Table for a Product
+# Get One Pricing Table
 
-Returns all necessary data on a Product to be able to display a pricing table. Every active plan on the product will be added to the table in the sort order of free plans, paid plans price and then coming soon plans.
+Returns all necessary data on a display a pricing table.
 
 ## Code Sample
 
@@ -14,7 +14,7 @@ const { Salable } = require('@salable/node-sdk');
   const salable = new Salable('API-KEY');
 
   try {
-    const pricingTable = await salable.products.getPricingTable('product-uuid', {
+    const pricingTable = await salable.pricingTables.getOne('pricing-table-uuid', {
       globalPlanOptions: {
         granteeId: 'userId_1',
         member: 'orgId_1',
@@ -30,11 +30,11 @@ const { Salable } = require('@salable/node-sdk');
 
 ## Parameters
 
-### productUuid (_required_)
+### pricingTableUuid (_required_)
 
 _Type:_ `string`
 
-Product `uuid` of the product to build the pricing table from
+Pricing Table `uuid`
 
 ---
 
@@ -88,7 +88,7 @@ const { Salable } = require('@salable/node-sdk');
   const salable = new Salable('API-KEY');
 
   try {
-    const pricingTable = await salable.products.getPricingTable('product-uuid', {
+    const pricingTable = await salable.pricingTables.getOne('pricing-table-uuid', {
       globalPlanOptions: {
         granteeId: 'userId_1',
         member: 'orgId_1',
