@@ -4,11 +4,11 @@ sidebar_position: 2
 
 # Changelog
 
-## v2.6.0
+## v2.7.0
 
-### Subscriptions
+### Licenses
 
-- Added `addSeats` & `removeSeats` subscription methods to SDK.
+- Added `update`, `updateMany` & `getCount` licenses methods to SDK.
 
 ## v2.5.0
 
