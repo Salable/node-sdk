@@ -47,4 +47,4 @@ The value of the new granteeId
 
 ## Return Type
 
-Promise array of all the updated [licenses object](/api/api-latest/objects/license-object)
+Promise array of all the updated [licenses object](https://docs.salable.app/api#tag/Licenses/operation/getLicenseByUuid)

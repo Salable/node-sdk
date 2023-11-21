@@ -43,4 +43,4 @@ A String array of the grantee Ids you wish to check against
 
 ## Return Type
 
-Promise array of [License Check Object](/api/api-latest/objects/license-check-object)
+Promise array of [License Check Object](https://docs.salable.app/api#tag/Licenses/operation/getLicenseCheck)

@@ -32,4 +32,4 @@ Plan `uuid` of the plan you wish to retrieve
 
 ## Return Type
 
-Returns a Promise array of [Plan Capability Object](/api/api-latest/objects/plan-capability-object)
+Returns a Promise array of [Plan Capability Object](https://docs.salable.app/api#tag/Plans/operation/getPlanCapabilities)

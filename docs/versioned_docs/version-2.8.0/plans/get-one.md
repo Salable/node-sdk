@@ -32,4 +32,4 @@ Plan `uuid` of the plan you wish to retrieve
 
 ## Return Type
 
-Promise of a [plan object](/api/api-latest/objects/plan-object)
+Promise of a [plan object](https://docs.salable.app/api#tag/Plans/operation/getPlanByUuid)

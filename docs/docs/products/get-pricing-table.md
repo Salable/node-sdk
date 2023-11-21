@@ -106,3 +106,7 @@ const { Salable } = require('@salable/node-sdk');
   }
 })();
 ```
+
+## Return Type
+
+Promise of [Product Pricing Table](https://docs.salable.app/api#tag/Products/operation/getProductPricingTable)

@@ -23,4 +23,4 @@ const { Salable } = require('@salable/node-sdk');
 
 ## Return Type
 
-Promise of an array of a [Feature Object](/api/api-latest/objects/feature-object)
+Promise of an array of a [Feature Object](https://docs.salable.app/api#tag/Products/operation/getProductFeatures)

@@ -23,4 +23,4 @@ const { Salable } = require('@salable/node-sdk');
 
 ## Return Type
 
-Promise of an array of a [Capability Object](/api/api-latest/objects/capability-object)
+Promise of an array of a [Capability Object](https://docs.salable.app/api#tag/Products/operation/getProductCapabilities)

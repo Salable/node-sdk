@@ -23,4 +23,4 @@ const { Salable } = require('@salable/node-sdk');
 
 ## Return Type
 
-Promise of an array of a [Product Currency Object](/api/api-latest/objects/product-currency-object)
+Promise of an array of a [Product Currency Object](https://docs.salable.app/api#tag/Products/operation/getProductCurrencies)

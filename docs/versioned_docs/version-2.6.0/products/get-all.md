@@ -23,4 +23,4 @@ const { Salable } = require('@salable/node-sdk');
 
 ## Return Type
 
-Promise of an array of [Product Object](/api/api-latest/objects/product-object)
+Promise of an array of [Product Object](https://docs.salable.app/api#tag/Products/operation/getProductByUuid)
