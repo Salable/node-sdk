@@ -10,12 +10,6 @@ sidebar_position: 2
 
 - Added `update`, `updateMany` & `getCount` licenses methods to SDK.
 
-## v2.6.0
-
-### Subscriptions
-
-- Added `addSeats` & `removeSeats` subscription methods to SDK.
-
 ## v2.5.0
 
 ### Features
