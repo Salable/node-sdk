@@ -290,7 +290,7 @@ export interface IProductCurrencyResponse {
   currency: ICurrency;
 }
 
-export interface IPricingTableInput {
+export type PricingTableParameters = {
   globalPlanOptions: {
     granteeId: string;
     successUrl: string;
@@ -322,10 +322,9 @@ export interface IPricingTableInput {
       granteeId?: string;
       successUrl?: string;
       cancelUrl?: string;
-      contactUsLink?: string;
     };
   };
-}
+};
 
 export interface IOrganisationPaymentIntegration {
   uuid: string;
