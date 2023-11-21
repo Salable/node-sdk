@@ -4,6 +4,16 @@ sidebar_position: 2
 
 # Changelog
 
+## v2.8.0
+
+### Subscriptions
+
+- Added `changePlan` subscriptions method to SDK.
+
+### Pricing Tables
+
+- Added `getOne` pricing tables method to SDK.
+
 ## v2.7.0
 
 ### Licenses
