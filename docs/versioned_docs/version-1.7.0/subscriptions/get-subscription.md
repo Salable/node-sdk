@@ -32,4 +32,4 @@ Subscription `uuid` of the subscription you wish to retrieve
 
 ## Return Type
 
-Promise of a subscription object
+For more information about this request see our api documentation on [Subscription Object](https://docs.salable.app/api#tag/Subscriptions/operation/getSubscriptionByUuid)

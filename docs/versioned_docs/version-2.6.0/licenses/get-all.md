@@ -23,4 +23,4 @@ const { Salable } = require('@salable/node-sdk');
 
 ## Return Type
 
-Promise of an array of [License Object](https://docs.salable.app/api#tag/Licenses/operation/getLicenseByUuid)
+For more information about this request see our api documentation on [License Object](https://docs.salable.app/api#tag/Licenses/operation/getLicenseByUuid)

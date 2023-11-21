@@ -23,4 +23,4 @@ const { Salable } = require('@salable/node-sdk');
 
 ## Return Type
 
-Promise of [Product Pricing Table](https://docs.salable.app/api#tag/Products/operation/getProductPricingTable)
+For more information about this request see our api documentation on [Product Pricing Table](https://docs.salable.app/api#tag/Products/operation/getProductPricingTable)
