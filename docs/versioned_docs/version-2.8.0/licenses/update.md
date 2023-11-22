@@ -40,4 +40,4 @@ The value of the new granteeId
 
 ## Return Type
 
-Promise of the updated [license object](/api/api-latest/objects/license-object)
+For more information about this request see our api documentation on [license object](https://docs.salable.app/api#tag/Licenses/operation/getLicenseByUuid)

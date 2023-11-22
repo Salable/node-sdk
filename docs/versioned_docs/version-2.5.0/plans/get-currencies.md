@@ -32,4 +32,4 @@ Plan `uuid` of the plan you wish to retrieve
 
 ## Return Type
 
-Returns a Promise array of [Plan Currency Object](/api/api-latest/objects/plan-currency-object)
+For more information about this request see our api documentation on [Plan Currency Object](https://docs.salable.app/api#tag/Plans/operation/getPlanCurrencies)
