@@ -11,18 +11,19 @@ const mockResponse = { mockProperty: 'example' };
 
 beforeEach(() => {
   fetch.resetMocks();
+  fetch.mockResponse(JSON.stringify(mockResponse), {
+    headers: { 'Content-Type': 'application/json' },
+  });
 });
 
 describe('Unit | ThirdPartyAPI | Plans', () => {
   it('Get a plan: should return the response unchanged', async () => {
-    fetch.mockResponseOnce(JSON.stringify(mockResponse));
     const fetchedPlan = await api.getOne('xxxxx');
     expect(fetchedPlan).toStrictEqual(mockResponse);
     expect(requestSpyOn).toHaveBeenCalledWith('plans/xxxxx');
   });
 
   it('Get a checkout link: should return the response unchanged', async () => {
-    fetch.mockResponseOnce(JSON.stringify(mockResponse));
     const fetchedCheckoutLink = await api.getCheckoutLink('xxxxx', {
       granteeId: 'userId_1',
       member: 'orgId_1',
@@ -55,21 +56,18 @@ describe('Unit | ThirdPartyAPI | Plans', () => {
   });
 
   it('Get features: should return the response unchanged', async () => {
-    fetch.mockResponseOnce(JSON.stringify(mockResponse));
     const fetchedPlan = await api.getFeatures('xxxxx');
     expect(fetchedPlan).toStrictEqual(mockResponse);
     expect(requestSpyOn).toHaveBeenCalledWith('plans/xxxxx/features');
   });
 
   it('Get capabilities: should return the response unchanged', async () => {
-    fetch.mockResponseOnce(JSON.stringify(mockResponse));
     const fetchedPlan = await api.getCapabilities('xxxxx');
     expect(fetchedPlan).toStrictEqual(mockResponse);
     expect(requestSpyOn).toHaveBeenCalledWith('plans/xxxxx/capabilities');
   });
 
   it('Get currencies: should return the response unchanged', async () => {
-    fetch.mockResponseOnce(JSON.stringify(mockResponse));
     const fetchedPlan = await api.getCurrencies('xxxxx');
     expect(fetchedPlan).toStrictEqual(mockResponse);
     expect(requestSpyOn).toHaveBeenCalledWith('plans/xxxxx/currencies');

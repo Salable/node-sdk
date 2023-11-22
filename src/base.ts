@@ -1,8 +1,31 @@
 import { SALABLE_BASE_URL } from './constants';
 import 'isomorphic-fetch';
 import { IRequestBase, isRequestWithBody } from './types';
+import {
+  ResponseError,
+  SalableResponseError,
+  SalableUnknownError,
+  SalableValidationError,
+  ValidationError,
+} from '@/src/exceptions/salable-error';
 
 export type BaseRequest = <T, K = void>(endpoint: string, options?: IRequestBase<K>) => Promise<T>;
+export enum ErrorCodes {
+  unauthorised = 'S1000',
+  notFound = 'S1001',
+  badRequest = 'S1002',
+  validation = 'S1003',
+  unhandled = 'S1004',
+  unknown = 'S1005',
+}
+
+function getErrorCodeFromStatus(status: number) {
+  if (status === 404) return ErrorCodes.notFound;
+  if (status === 401) return ErrorCodes.unauthorised;
+  if (status >= 400 && status < 500) return ErrorCodes.badRequest;
+  if (status >= 500) return ErrorCodes.unhandled;
+  throw new SalableUnknownError('Salable SDK error. Unknown status code');
+}
 
 export class Base {
   protected _apiKey;
@@ -45,16 +68,37 @@ export class Base {
               ...options,
               body: JSON.stringify(options?.body),
             }
-          : { ...options }),
+          : options),
       };
 
-      return fetch(url, config).then((response) => {
-        if (response.status < 300 && response.status >= 200) {
-          return response.json() as Promise<T>;
-        }
+      const response = await fetch(url, config);
+      let errorResponse;
 
-        throw new Error(response.statusText);
-      });
+      try {
+        if (response.status >= 200 && response.status < 300) {
+          if (response.headers.get('Content-Type') !== 'application/json') return null as T;
+          return (await response.json()) as Promise<T>;
+        }
+        errorResponse = (await response.json()) as Record<string, unknown>;
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e);
+        throw new SalableUnknownError();
+      }
+
+      if (errorResponse.validationErrors) {
+        throw new SalableValidationError(
+          ErrorCodes.validation,
+          response.status,
+          errorResponse as ValidationError
+        );
+      }
+
+      throw new SalableResponseError(
+        getErrorCodeFromStatus(response.status),
+        response.status,
+        errorResponse as ResponseError
+      );
     };
   }
 }
