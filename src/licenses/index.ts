@@ -26,16 +26,6 @@ export default class Licenses extends Base {
   }
 
   /**
-   *  Get one license
-   *  @param {string} licenseUuid - The UUID of the license
-   *
-   * @returns {ILicense}
-   */
-  public getOne(licenseUuid: string): Promise<ILicense> {
-    return this._request<ILicense>(`${RESOURCE_NAMES.LICENSES}/${licenseUuid}`);
-  }
-
-  /**
    *  Creates a new license with the details provided
    *
    * @param {ICreateAdhocLicenseInput} licenseDetails - The details to create the new license with
