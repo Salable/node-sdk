@@ -11,46 +11,43 @@ const mockResponse = { mockProperty: 'example' };
 
 beforeEach(() => {
   fetch.resetMocks();
+  fetch.mockResponse(JSON.stringify(mockResponse), {
+    headers: { 'Content-Type': 'application/json' },
+  });
 });
 
 describe('Unit | ThirdPartyAPI | Products', () => {
   it('Get all products: should return the response unchanged', async () => {
-    fetch.mockResponseOnce(JSON.stringify(mockResponse));
     const fetchedPlan = await api.getAll();
     expect(fetchedPlan).toStrictEqual(mockResponse);
     expect(requestSpyOn).toHaveBeenCalledWith('products');
   });
 
   it('Get one product: should return the response unchanged', async () => {
-    fetch.mockResponseOnce(JSON.stringify(mockResponse));
     const fetchedPlan = await api.getOne('xxxxx');
     expect(fetchedPlan).toStrictEqual(mockResponse);
     expect(requestSpyOn).toHaveBeenCalledWith('products/xxxxx');
   });
 
   it('Get product plans: should return the response unchanged', async () => {
-    fetch.mockResponseOnce(JSON.stringify(mockResponse));
     const fetchedPlan = await api.getPlans('xxxxx');
     expect(fetchedPlan).toStrictEqual(mockResponse);
     expect(requestSpyOn).toHaveBeenCalledWith('products/xxxxx/plans');
   });
 
   it('Get product currencies: should return the response unchanged', async () => {
-    fetch.mockResponseOnce(JSON.stringify(mockResponse));
     const fetchedPlan = await api.getCurrencies('xxxxx');
     expect(fetchedPlan).toStrictEqual(mockResponse);
     expect(requestSpyOn).toHaveBeenCalledWith('products/xxxxx/currencies');
   });
 
   it('Get product capabilities: should return the response unchanged', async () => {
-    fetch.mockResponseOnce(JSON.stringify(mockResponse));
     const fetchedPlan = await api.getCapabilities('xxxxx');
     expect(fetchedPlan).toStrictEqual(mockResponse);
     expect(requestSpyOn).toHaveBeenCalledWith('products/xxxxx/capabilities');
   });
 
   it('Get product basic pricing table: should set the global and individual plan options correctly and return the response unchanged', async () => {
-    fetch.mockResponseOnce(JSON.stringify(mockResponse));
     const fetchedPlan = await api.getPricingTable('xxxxx', {
       globalPlanOptions: {
         successUrl: 'aaaaa',

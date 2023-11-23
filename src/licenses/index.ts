@@ -68,9 +68,7 @@ export default class Licenses extends Base {
       `${RESOURCE_NAMES.LICENSES}/${licenseUuid}`,
       {
         method: 'PUT',
-        body: {
-          granteeId,
-        },
+        body: { granteeId },
       }
     );
   }
