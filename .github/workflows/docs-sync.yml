@@ -22,13 +22,13 @@ jobs:
 
     steps:
       - name: Check out ${{ env.TARGET_DIR }}
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 2
           path: ./${{ env.TARGET_DIR }}
 
       - name: Check out docs
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 2
           repository: salable/docs
