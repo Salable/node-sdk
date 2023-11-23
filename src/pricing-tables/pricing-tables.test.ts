@@ -11,6 +11,9 @@ const mockResponse = { mockProperty: 'example' };
 
 beforeEach(() => {
   fetch.resetMocks();
+  fetch.mockResponse(JSON.stringify(mockResponse), {
+    headers: { 'Content-Type': 'application/json' },
+  });
 });
 
 describe('Unit | ThirdPartyAPI | Products', () => {
@@ -50,7 +53,6 @@ describe('Unit | ThirdPartyAPI | Products', () => {
     },
   };
   it('Get product basic pricing table: should set the global and individual plan options correctly and return the response unchanged', async () => {
-    fetch.mockResponseOnce(JSON.stringify(mockResponse));
     const fetchedPricingTable = await api.getOne('xxxxx', data);
     expect(fetchedPricingTable).toStrictEqual(mockResponse);
     expect(requestSpyOn).toHaveBeenCalledWith(

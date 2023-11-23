@@ -11,18 +11,19 @@ const mockResponse = { mockProperty: 'example' };
 
 beforeEach(() => {
   fetch.resetMocks();
+  fetch.mockResponse(JSON.stringify(mockResponse), {
+    headers: { 'Content-Type': 'application/json' },
+  });
 });
 
 describe('Unit | ThirdPartyAPI | Subscriptions', () => {
   it('Get a subscription: should return the response unchanged', async () => {
-    fetch.mockResponseOnce(JSON.stringify(mockResponse));
     const fetchedSubscription = await api.getOne('xxxxx');
     expect(fetchedSubscription).toStrictEqual(mockResponse);
     expect(requestSpyOn).toHaveBeenCalledWith('subscriptions/xxxxx');
   });
 
   it("Update a subscription's plan: should return the response unchanged", async () => {
-    fetch.mockResponseOnce(JSON.stringify(mockResponse));
     const fetchedSubscription = await api.updatePlan('aaaaa', 'xxxxx');
     expect(fetchedSubscription).toStrictEqual(mockResponse);
     expect(requestSpyOn).toHaveBeenCalledWith('subscriptions/xxxxx/updateplan/aaaaa', {
@@ -31,23 +32,21 @@ describe('Unit | ThirdPartyAPI | Subscriptions', () => {
   });
 
   it("Change a subscription's plan: should return the response unchanged", async () => {
-    fetch.mockResponseOnce(JSON.stringify(mockResponse));
     const fetchedSubscription = await api.changePlan('xxxxx', {
       planUuid: 'aaaaa',
-      proration: 'invoice',
+      proration: 'always_invoice',
     });
     expect(fetchedSubscription).toStrictEqual(mockResponse);
     expect(requestSpyOn).toHaveBeenCalledWith('subscriptions/xxxxx/change-plan', {
       method: 'PUT',
       body: {
         planUuid: 'aaaaa',
-        proration: 'invoice',
+        proration: 'always_invoice',
       },
     });
   });
 
   it('Cancel a subscription: should call the endpoint with correct parameters', async () => {
-    fetch.mockResponseOnce(JSON.stringify(mockResponse));
     const fetchedSubscription = await api.cancel('xxxxx', 'end');
     expect(fetchedSubscription).toStrictEqual(mockResponse);
     expect(requestSpyOn).toHaveBeenCalledWith('subscriptions/xxxxx/cancel?when=end', {
@@ -56,7 +55,6 @@ describe('Unit | ThirdPartyAPI | Subscriptions', () => {
   });
 
   it('Add seats to a subscription: should call the endpoint with correct body and return the response unchanged', async () => {
-    fetch.mockResponseOnce(JSON.stringify(mockResponse));
     const fetchedSubscription = await api.addSeats('xxxxx', { increment: 5 });
     expect(fetchedSubscription).toStrictEqual(mockResponse);
     expect(requestSpyOn).toHaveBeenCalledWith('subscriptions/xxxxx/seats', {
@@ -66,7 +64,6 @@ describe('Unit | ThirdPartyAPI | Subscriptions', () => {
   });
 
   it('Remove seats from a subscription: should call the endpoint with correct body and return the response unchanged', async () => {
-    fetch.mockResponseOnce(JSON.stringify(mockResponse));
     const fetchedSubscription = await api.removeSeats('xxxxx', { decrement: 5 });
     expect(fetchedSubscription).toStrictEqual(mockResponse);
     expect(requestSpyOn).toHaveBeenCalledWith('subscriptions/xxxxx/seats', {

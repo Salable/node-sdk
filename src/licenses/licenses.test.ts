@@ -7,22 +7,48 @@ const requestSpyOn = jest.spyOn(api as unknown as { _request: BaseRequest }, '_r
 
 fetch.enableMocks();
 
-const mockResponse = {
-  mockProperty: 'example',
-};
+const mockResponse = { mockProperty: 'example' };
 
 beforeEach(() => {
   fetch.resetMocks();
+  fetch.mockResponse(JSON.stringify(mockResponse), {
+    headers: { 'Content-Type': 'application/json' },
+  });
 });
 
 describe('Unit | ThirdPartyAPI | Licenses', () => {
+  it('Get all licenses: should return the response unchanged', async () => {
+    const fetchedLicenses = await api.getAll();
+    expect(fetchedLicenses).toStrictEqual(mockResponse);
+    expect(requestSpyOn).toHaveBeenCalledWith('licenses');
+  });
+
+  describe('Check capabilities', () => {
+    describe('Success cases', () => {
+      it('Check capabilities: should return the response unchanged', async () => {
+        const fetchedLicenses = await api.check('xxxxx', ['aaaaa', 'bbbbb']);
+        expect(fetchedLicenses).toStrictEqual(mockResponse);
+        expect(requestSpyOn).toHaveBeenCalledWith(
+          'licenses/check?productUuid=xxxxx&granteeIds=aaaaa,bbbbb'
+        );
+      });
+      it('Check capabilities: should return empty response with the response unchanged', async () => {
+        fetch.mockResponse('');
+        const fetchedLicenses = await api.check('xxxxx', ['aaaaa']);
+        expect(fetchedLicenses).toStrictEqual(null);
+        expect(requestSpyOn).toHaveBeenCalledWith(
+          'licenses/check?productUuid=xxxxx&granteeIds=aaaaa'
+        );
+      });
+    });
+  });
+
   it('Create License: should call the request with the correct parameters and return response unchanged', async () => {
     const createParams = {
       planUuid: 'xxxxx',
       member: 'orgId_1',
       granteeId: 'userId_1',
     };
-    fetch.mockResponseOnce(JSON.stringify(mockResponse));
     const createLicense = await api.create(createParams);
     expect(requestSpyOn).toHaveBeenCalledWith('licenses', {
       method: 'POST',
@@ -31,29 +57,19 @@ describe('Unit | ThirdPartyAPI | Licenses', () => {
     expect(createLicense).toStrictEqual(mockResponse);
   });
 
-  it('Get all licenses: should return the response unchanged', async () => {
-    fetch.mockResponseOnce(JSON.stringify(mockResponse));
-    const fetchedLicenses = await api.getAll();
-    expect(fetchedLicenses).toStrictEqual(mockResponse);
-    expect(requestSpyOn).toHaveBeenCalledWith('licenses');
-  });
-
   it('Get one license: should return the response unchanged', async () => {
-    fetch.mockResponseOnce(JSON.stringify(mockResponse));
     const fetchedLicenses = await api.getOne('xxxxx');
     expect(fetchedLicenses).toStrictEqual(mockResponse);
     expect(requestSpyOn).toHaveBeenCalledWith('licenses/xxxxx');
   });
 
   it('Check capabilities: should return the response unchanged', async () => {
-    fetch.mockResponseOnce(JSON.stringify(mockResponse));
     const fetchedLicenses = await api.check('xxxxx', ['xxxxx']);
     expect(fetchedLicenses).toStrictEqual(mockResponse);
     expect(requestSpyOn).toHaveBeenCalledWith('licenses');
   });
 
   it('Get Licenses count: should call the request with the correct parameters', async () => {
-    fetch.mockResponseOnce(JSON.stringify(mockResponse));
     const getCount = await api.getCount('xxxxx', 'ACTIVE');
     expect(requestSpyOn).toHaveBeenCalledWith(
       'licenses/count?subscriptionUuid=xxxxx&status=ACTIVE'
@@ -62,7 +78,6 @@ describe('Unit | ThirdPartyAPI | Licenses', () => {
   });
 
   it('Get licenses for purchaser: should return the response unchanged', async () => {
-    fetch.mockResponseOnce(JSON.stringify(mockResponse));
     const fetchedLicenses = await api.getForPurchaser('userId_1', 'xxxxx', {
       status: 'ACTIVE',
       cancelLink: true,
@@ -74,21 +89,18 @@ describe('Unit | ThirdPartyAPI | Licenses', () => {
   });
 
   it('Get licenses for granteeId: should return the response unchanged', async () => {
-    fetch.mockResponseOnce(JSON.stringify(mockResponse));
     const fetchedLicenses = await api.getForGranteeId('userId_1');
     expect(fetchedLicenses).toStrictEqual(mockResponse);
     expect(requestSpyOn).toHaveBeenCalledWith('licenses/granteeId/userId_1');
   });
 
   it('Get usage on license: should return the response unchanged', async () => {
-    fetch.mockResponseOnce(JSON.stringify(mockResponse));
     const fetchedLicenses = await api.getUsage('xxxxx');
     expect(fetchedLicenses).toStrictEqual(mockResponse);
     expect(requestSpyOn).toHaveBeenCalledWith('licenses/xxxxx/usage');
   });
 
   it('Update License: should call the request with the correct parameters and return response unchanged', async () => {
-    fetch.mockResponseOnce(JSON.stringify(mockResponse));
     const updateLicense = await api.update('xxxxx', 'userId_2');
     expect(requestSpyOn).toHaveBeenCalledWith('licenses/xxxxx', {
       method: 'PUT',
@@ -108,7 +120,6 @@ describe('Unit | ThirdPartyAPI | Licenses', () => {
         granteeId: 'userId_2',
       },
     ];
-    fetch.mockResponseOnce(JSON.stringify(mockResponse));
     const updateManyLicenses = await api.updateMany(updateParams);
     expect(requestSpyOn).toHaveBeenCalledWith('licenses', {
       method: 'PUT',

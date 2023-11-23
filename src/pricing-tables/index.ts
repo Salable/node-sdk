@@ -1,7 +1,7 @@
 import { Base } from '../base';
 import { RESOURCE_NAMES } from '../constants';
 import {
-  IPricingTableInput,
+  PricingTableParameters,
   IProductPricingTableResponse,
   PricingTableCheckoutKey,
 } from '../types';
@@ -21,7 +21,7 @@ export default class PricingTables extends Base {
    * @returns {Promise<IProduct>} The data of the product requested
    */
 
-  public getOne(pricingTableId: string, queryParams: IPricingTableInput) {
+  public getOne(pricingTableId: string, queryParams: PricingTableParameters) {
     const {
       globalPlanOptions: { granteeId, successUrl, cancelUrl, contactUsLink, member, ...rest },
       individualPlanOptions,
