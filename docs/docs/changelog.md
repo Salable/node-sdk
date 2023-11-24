@@ -4,6 +4,15 @@ sidebar_position: 2
 
 # Changelog
 
+## v3.0.0
+
+### Error handling
+
+- Added new Error classes `SalableResponseError`, `SalableValidationError` and `SalableUnknownError`
+- New error codes
+
+More information on [error handling](./errors.md)
+
 ## v2.8.0
 
 ### Subscriptions
