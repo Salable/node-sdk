@@ -390,6 +390,22 @@ export interface IUsageUpdateInput {
   countOptions: IUsageUpdateCountOptions;
 }
 
+export type LicenseCancelManyBody = {
+  uuids: string[];
+};
+
+export type LicenseGetByPurchaserOptions = {
+  status?: Status;
+  cancelLink?: boolean;
+};
+
+export type LicenseGetUsage = {
+  licenseUuid: string;
+  featureUuid: string;
+  planUuid: string;
+  unitCount: number;
+};
+
 export interface IPermission {
   uuid: string;
   value: string;

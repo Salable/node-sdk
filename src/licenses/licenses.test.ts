@@ -57,6 +57,63 @@ describe('Unit | ThirdPartyAPI | Licenses', () => {
     expect(createLicense).toStrictEqual(mockResponse);
   });
 
+  it('Create Many Licenses: should call the request with the correct parameters and return response unchanged', async () => {
+    const createParams = {
+      planUuid: 'xxxxx',
+      member: 'orgId_1',
+      granteeId: 'userId_1',
+    };
+    const createLicenses = await api.create([createParams, createParams]);
+    expect(requestSpyOn).toHaveBeenCalledWith('licenses', {
+      method: 'POST',
+      body: [createParams, createParams],
+    });
+    expect(createLicenses).toStrictEqual(mockResponse);
+  });
+
+  it('Get one license: should return the response unchanged', async () => {
+    const fetchedLicenses = await api.getOne('xxxxx');
+    expect(fetchedLicenses).toStrictEqual(mockResponse);
+    expect(requestSpyOn).toHaveBeenCalledWith('licenses/xxxxx');
+  });
+
+  it('Check capabilities: should return the response unchanged', async () => {
+    const fetchedLicenses = await api.check('xxxxx', ['xxxxx']);
+    expect(fetchedLicenses).toStrictEqual(mockResponse);
+    expect(requestSpyOn).toHaveBeenCalledWith('licenses');
+  });
+
+  it('Get Licenses count: should call the request with the correct parameters', async () => {
+    const getCount = await api.getCount('xxxxx', 'ACTIVE');
+    expect(requestSpyOn).toHaveBeenCalledWith(
+      'licenses/count?subscriptionUuid=xxxxx&status=ACTIVE'
+    );
+    expect(getCount).toStrictEqual(mockResponse);
+  });
+
+  it('Get licenses for purchaser: should return the response unchanged', async () => {
+    const fetchedLicenses = await api.getForPurchaser('userId_1', 'xxxxx', {
+      status: 'ACTIVE',
+      cancelLink: true,
+    });
+    expect(fetchedLicenses).toStrictEqual(mockResponse);
+    expect(requestSpyOn).toHaveBeenCalledWith(
+      'licenses/purchaser?purchaser=userId_1&productUuid=xxxxx&expand=cancelLink&status=ACTIVE'
+    );
+  });
+
+  it('Get licenses for granteeId: should return the response unchanged', async () => {
+    const fetchedLicenses = await api.getForGranteeId('userId_1');
+    expect(fetchedLicenses).toStrictEqual(mockResponse);
+    expect(requestSpyOn).toHaveBeenCalledWith('licenses/granteeId/userId_1');
+  });
+
+  it('Get usage on license: should return the response unchanged', async () => {
+    const fetchedLicenses = await api.getUsage('xxxxx');
+    expect(fetchedLicenses).toStrictEqual(mockResponse);
+    expect(requestSpyOn).toHaveBeenCalledWith('licenses/xxxxx/usage');
+  });
+
   it('Update License: should call the request with the correct parameters and return response unchanged', async () => {
     const updateLicense = await api.update('xxxxx', 'userId_2');
     expect(requestSpyOn).toHaveBeenCalledWith('licenses/xxxxx', {
@@ -85,12 +142,25 @@ describe('Unit | ThirdPartyAPI | Licenses', () => {
     expect(updateManyLicenses).toStrictEqual(mockResponse);
   });
 
-  it('Get Licenses count: should call the request with the correct parameters', async () => {
-    const getCount = await api.getCount('xxxxx', 'ACTIVE');
-    expect(requestSpyOn).toHaveBeenCalledWith(
-      'licenses/count?subscriptionUuid=xxxxx&status=ACTIVE'
-    );
-    expect(getCount).toStrictEqual(mockResponse);
+  it('Cancel one license: should return the response unchanged', async () => {
+    fetch.mockResponseOnce('', {
+      headers: { 'Content-Type': 'text/plain' },
+    });
+    const fetchedLicenses = await api.cancel('xxxxx');
+    expect(fetchedLicenses).toStrictEqual('');
+    expect(requestSpyOn).toHaveBeenCalledWith('licenses/xxxxx', { method: 'DELETE' });
+  });
+
+  it('Cancel many licenses: should return the response unchanged', async () => {
+    fetch.mockResponseOnce('', {
+      headers: { 'Content-Type': 'text/plain' },
+    });
+    const cancelLicenses = await api.cancelMany(['xxxxx', 'aaaaa']);
+    expect(cancelLicenses).toStrictEqual('');
+    expect(requestSpyOn).toHaveBeenCalledWith('licenses', {
+      method: 'POST',
+      body: { uuids: ['xxxxx', 'aaaaa'] },
+    });
   });
 
   it('should return an error when promise rejects', async () => {

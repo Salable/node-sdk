@@ -8,6 +8,9 @@ import {
   IUpdateManyLicenseInput,
   ILicenseCountResponse,
   Status,
+  LicenseCancelManyBody,
+  LicenseGetByPurchaserOptions,
+  LicenseGetUsage,
 } from '../types';
 
 /**
@@ -26,17 +29,77 @@ export default class Licenses extends Base {
   }
 
   /**
-   *  Creates a new license with the details provided
+   *  Get one license
+   *  @param {string} licenseUuid - The UUID of the license
    *
-   * @param {ICreateAdhocLicenseInput} licenseDetails - The details to create the new license with
-   *
-   * @returns {Promise<ILicense>} The data for the new license
+   * @returns {ILicense}
    */
-  public create(licenseDetails: ICreateAdhocLicenseInput): Promise<ILicense> {
-    return this._request<ILicense, ICreateAdhocLicenseInput>(RESOURCE_NAMES.LICENSES, {
-      method: 'POST',
-      body: licenseDetails,
-    });
+  public getOne(licenseUuid: string): Promise<ILicense> {
+    return this._request<ILicense>(`${RESOURCE_NAMES.LICENSES}/${licenseUuid}`);
+  }
+
+  /**
+   *  Get licenses for purchaser
+   *  @param {string} purchaser - The purchaser of the licenses
+   *  @param {string} productUuid - The UUID of the product that the licenses are on
+   *  @param {LicenseGetByPurchaserOptions} options - (Optional) extra options for filtering or additional data
+   *
+   * @returns {ILicense[]}
+   */
+  public getForPurchaser(
+    purchaser: string,
+    productUuid: string,
+    options?: LicenseGetByPurchaserOptions
+  ): Promise<ILicense[]> {
+    let params = '';
+    if (options) {
+      if (options.cancelLink) params += '&expand=cancelLink';
+      if (options.status) params += `&status=${options.status}`;
+    }
+    params = encodeURI(params);
+    return this._request<ILicense[]>(
+      `${RESOURCE_NAMES.LICENSES}/purchaser?purchaser=${purchaser}&productUuid=${productUuid}${params}`
+    );
+  }
+
+  /**
+   *  Get licenses for granteeId
+   *  @param {string} granteeId - The granteeId for the licenses
+   *
+   * @returns {ILicense[]}
+   */
+  public getForGranteeId(granteeId: string): Promise<ILicense[]> {
+    return this._request<ILicense[]>(`${RESOURCE_NAMES.LICENSES}/granteeId/${granteeId}`);
+  }
+
+  /**
+   *  Get usage on license
+   *  @param {string} granteeId - The granteeId for the licenses
+   *
+   * @returns {ILicense[]}
+   */
+  public getUsage(licenseUuid: string): Promise<LicenseGetUsage[]> {
+    return this._request<LicenseGetUsage[]>(`${RESOURCE_NAMES.LICENSES}/${licenseUuid}/usage`);
+  }
+
+  /**
+   *  Get License's Count
+   *
+   * @param {string} subscriptionUuid - The uuid of the subscription to filter the license count
+   * @param {Status} status - The status of the license to filter by
+   *
+   * @returns {Promise<ILicenseCountResponse>} The capabilities of the license passed
+   */
+
+  public getCount(subscriptionUuid?: string, status?: Status): Promise<ILicenseCountResponse> {
+    let url = `${RESOURCE_NAMES.LICENSES}/count`;
+    if (subscriptionUuid) {
+      url += `?subscriptionUuid=${subscriptionUuid}`;
+    }
+    if (status) {
+      url += `${subscriptionUuid ? '&' : '?'}status=${status}`;
+    }
+    return this._request<ILicenseCountResponse>(url);
   }
 
   /**
@@ -52,6 +115,28 @@ export default class Licenses extends Base {
       `${
         RESOURCE_NAMES.LICENSES
       }/check?productUuid=${productUuid}&granteeIds=${granteeIds.toString()}`
+    );
+  }
+
+  /**
+   *  Creates a single license or many licenses with the details provided
+   *
+   * @param {ICreateAdhocLicenseInput | ICreateAdhocLicenseInput[]} licenseDetails - The details to create the new license with
+   *
+   * @returns {Promise<ILicense | ILicense[]>} The data for the new license or licenses created
+   */
+
+  public create(licenseDetails: ICreateAdhocLicenseInput): Promise<ILicense>;
+  public create(licenseDetails: ICreateAdhocLicenseInput[]): Promise<ILicense[]>;
+  public create(
+    licenseDetails: ICreateAdhocLicenseInput | ICreateAdhocLicenseInput[]
+  ): Promise<ILicense | ILicense[]> {
+    return this._request<ILicense, ICreateAdhocLicenseInput | ICreateAdhocLicenseInput[]>(
+      RESOURCE_NAMES.LICENSES,
+      {
+        method: 'POST',
+        body: licenseDetails,
+      }
     );
   }
 
@@ -88,22 +173,29 @@ export default class Licenses extends Base {
   }
 
   /**
-   *  Get License's Count
+   *  Cancel a license
    *
-   * @param {string} subscriptionUuid - The uuid of the subscription to filter the license count
-   * @param {Status} status - The status of the license to filter by
+   * @param {string} licenseUuid - The UUID of the license
    *
-   * @returns {Promise<ILicenseCountResponse>} The capabilities of the license passed
+   * @returns {Promise<void>}
    */
+  public cancel(licenseUuid: string) {
+    return this._request<void>(`${RESOURCE_NAMES.LICENSES}/${licenseUuid}`, {
+      method: 'DELETE',
+    });
+  }
 
-  public getCount(subscriptionUuid?: string, status?: Status): Promise<ILicenseCountResponse> {
-    let url = `${RESOURCE_NAMES.LICENSES}/count`;
-    if (subscriptionUuid) {
-      url += `?subscriptionUuid=${subscriptionUuid}`;
-    }
-    if (status) {
-      url += `${subscriptionUuid ? '&' : '?'}status=${status}`;
-    }
-    return this._request<ILicenseCountResponse>(url);
+  /**
+   *  Cancel many licenses
+   *
+   * @param {string[]} licenseUuids - Array of license uuids to be canceled
+   *
+   * @returns {Promise<void>}
+   */
+  public cancelMany(licenseUuids: string[]) {
+    return this._request<void, LicenseCancelManyBody>(`${RESOURCE_NAMES.LICENSES}`, {
+      method: 'POST',
+      body: { uuids: licenseUuids },
+    });
   }
 }
