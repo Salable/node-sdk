@@ -12,7 +12,7 @@ Returns the capabilities of a single plan.
 const { Salable } = require('@salable/node-sdk');
 
 (async () => {
-  const salable = new Salable('API-KEY');
+  const salable = new Salable('{API-KEY}');
 
   try {
     const plan = await salable.plans.getCapabilities('41cf33a2-136e-4959-b5c7-73889ab94eff');

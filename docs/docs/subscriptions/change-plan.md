@@ -12,7 +12,7 @@ Change a subscription to a new plan. Proration behaviour can optionally be set.
 const { Salable } = require('@salable/node-sdk');
 
 (async () => {
-  const salable = new Salable('API-KEY');
+  const salable = new Salable('{API-KEY}');
 
   try {
     const changeSubscriptionPlan = await salable.subscriptions.changePlan('subscription-uuid', {

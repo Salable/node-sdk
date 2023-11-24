@@ -12,7 +12,7 @@ Cancels a subscription.
 const { Salable } = require('@salable/node-sdk');
 
 (async () => {
-  const salable = new Salable('API-KEY');
+  const salable = new Salable('{API-KEY}');
 
   try {
     const subscription = await salable.subscriptions.cancel(
