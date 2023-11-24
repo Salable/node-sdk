@@ -2,6 +2,7 @@ import { SALABLE_BASE_URL } from './constants';
 import 'isomorphic-fetch';
 import { IRequestBase, isRequestWithBody } from './types';
 import {
+  ErrorCodes,
   ResponseError,
   SalableResponseError,
   SalableUnknownError,
@@ -10,14 +11,6 @@ import {
 } from '@/src/exceptions/salable-error';
 
 export type BaseRequest = <T, K = void>(endpoint: string, options?: IRequestBase<K>) => Promise<T>;
-export enum ErrorCodes {
-  unauthorised = 'S1000',
-  notFound = 'S1001',
-  badRequest = 'S1002',
-  validation = 'S1003',
-  unhandled = 'S1004',
-  unknown = 'S1005',
-}
 
 function getErrorCodeFromStatus(status: number) {
   if (status === 404) return ErrorCodes.notFound;
@@ -76,14 +69,20 @@ export class Base {
 
       try {
         if (response.status >= 200 && response.status < 300) {
-          if (response.headers.get('Content-Type') !== 'application/json') return null as T;
+          if (response.headers.get('Content-Type') !== 'application/json') return '' as T;
           return (await response.json()) as Promise<T>;
         }
-        errorResponse = (await response.json()) as Record<string, unknown>;
+        if (response.headers.get('Content-Type') === 'application/json') {
+          errorResponse = (await response.json()) as Record<string, unknown>;
+        }
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
         throw new SalableUnknownError();
+      }
+
+      if (!errorResponse) {
+        throw new SalableResponseError(getErrorCodeFromStatus(response.status), response.status);
       }
 
       if (errorResponse.validationErrors) {
