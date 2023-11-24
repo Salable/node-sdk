@@ -50,14 +50,14 @@ export default class Licenses extends Base {
     purchaser: string,
     productUuid: string,
     options?: LicenseGetByPurchaserOptions
-  ): Promise<ILicense> {
+  ): Promise<ILicense[]> {
     let params = '';
-    if (options && Object.keys(options).length) {
+    if (options) {
       if (options.cancelLink) params += '&expand=cancelLink';
       if (options.status) params += `&status=${options.status}`;
     }
     params = encodeURI(params);
-    return this._request<ILicense>(
+    return this._request<ILicense[]>(
       `${RESOURCE_NAMES.LICENSES}/purchaser?purchaser=${purchaser}&productUuid=${productUuid}${params}`
     );
   }
@@ -83,17 +83,23 @@ export default class Licenses extends Base {
   }
 
   /**
-   *  Creates a new license with the details provided
+   *  Get License's Count
    *
-   * @param {ICreateAdhocLicenseInput} licenseDetails - The details to create the new license with
+   * @param {string} subscriptionUuid - The uuid of the subscription to filter the license count
+   * @param {Status} status - The status of the license to filter by
    *
-   * @returns {Promise<ILicense>} The data for the new license
+   * @returns {Promise<ILicenseCountResponse>} The capabilities of the license passed
    */
-  public create(licenseDetails: ICreateAdhocLicenseInput): Promise<ILicense> {
-    return this._request<ILicense, ICreateAdhocLicenseInput>(RESOURCE_NAMES.LICENSES, {
-      method: 'POST',
-      body: licenseDetails,
-    });
+
+  public getCount(subscriptionUuid?: string, status?: Status): Promise<ILicenseCountResponse> {
+    let url = `${RESOURCE_NAMES.LICENSES}/count`;
+    if (subscriptionUuid) {
+      url += `?subscriptionUuid=${subscriptionUuid}`;
+    }
+    if (status) {
+      url += `${subscriptionUuid ? '&' : '?'}status=${status}`;
+    }
+    return this._request<ILicenseCountResponse>(url);
   }
 
   /**
@@ -113,6 +119,20 @@ export default class Licenses extends Base {
   }
 
   /**
+   *  Creates a new license with the details provided
+   *
+   * @param {ICreateAdhocLicenseInput} licenseDetails - The details to create the new license with
+   *
+   * @returns {Promise<ILicense>} The data for the new license
+   */
+  public create(licenseDetails: ICreateAdhocLicenseInput): Promise<ILicense> {
+    return this._request<ILicense, ICreateAdhocLicenseInput>(RESOURCE_NAMES.LICENSES, {
+      method: 'POST',
+      body: licenseDetails,
+    });
+  }
+
+  /**
    *  Update a license
    *
    * @param {string} licenseUuid - The UUID of the license
@@ -128,6 +148,20 @@ export default class Licenses extends Base {
         body: { granteeId },
       }
     );
+  }
+
+  /**
+   *  Update many license's
+   *
+   * @param {IUpdateManyLicenseInput[]} updateManyConfig - The config array of all the licenses you wish to update
+   *
+   * @returns {Promise<ILicense[]>} The data of the updated license
+   */
+  public updateMany(updateManyConfig: IUpdateManyLicenseInput[]): Promise<ILicense[]> {
+    return this._request<ILicense[], IUpdateManyLicenseInput[]>(`${RESOURCE_NAMES.LICENSES}`, {
+      method: 'PUT',
+      body: updateManyConfig,
+    });
   }
 
   /**
@@ -155,39 +189,5 @@ export default class Licenses extends Base {
       method: 'POST',
       body: { uuids: licenseUuids },
     });
-  }
-
-  /**
-   *  Update many license's
-   *
-   * @param {IUpdateManyLicenseInput[]} updateManyConfig - The config array of all the licenses you wish to update
-   *
-   * @returns {Promise<ILicense[]>} The data of the updated license
-   */
-  public updateMany(updateManyConfig: IUpdateManyLicenseInput[]): Promise<ILicense[]> {
-    return this._request<ILicense[], IUpdateManyLicenseInput[]>(`${RESOURCE_NAMES.LICENSES}`, {
-      method: 'PUT',
-      body: updateManyConfig,
-    });
-  }
-
-  /**
-   *  Get License's Count
-   *
-   * @param {string} subscriptionUuid - The uuid of the subscription to filter the license count
-   * @param {Status} status - The status of the license to filter by
-   *
-   * @returns {Promise<ILicenseCountResponse>} The capabilities of the license passed
-   */
-
-  public getCount(subscriptionUuid?: string, status?: Status): Promise<ILicenseCountResponse> {
-    let url = `${RESOURCE_NAMES.LICENSES}/count`;
-    if (subscriptionUuid) {
-      url += `?subscriptionUuid=${subscriptionUuid}`;
-    }
-    if (status) {
-      url += `${subscriptionUuid ? '&' : '?'}status=${status}`;
-    }
-    return this._request<ILicenseCountResponse>(url);
   }
 }
