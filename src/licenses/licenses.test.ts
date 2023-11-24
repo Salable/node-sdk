@@ -143,16 +143,20 @@ describe('Unit | ThirdPartyAPI | Licenses', () => {
   });
 
   it('Cancel one license: should return the response unchanged', async () => {
-    fetch.mockResponseOnce(JSON.stringify(mockResponse));
+    fetch.mockResponseOnce('', {
+      headers: { 'Content-Type': 'text/plain' },
+    });
     const fetchedLicenses = await api.cancel('xxxxx');
-    expect(fetchedLicenses).toStrictEqual(mockResponse);
+    expect(fetchedLicenses).toStrictEqual('');
     expect(requestSpyOn).toHaveBeenCalledWith('licenses/xxxxx', { method: 'DELETE' });
   });
 
   it('Cancel many licenses: should return the response unchanged', async () => {
-    fetch.mockResponseOnce(JSON.stringify(mockResponse));
+    fetch.mockResponseOnce('', {
+      headers: { 'Content-Type': 'text/plain' },
+    });
     const cancelLicenses = await api.cancelMany(['xxxxx', 'aaaaa']);
-    expect(cancelLicenses).toStrictEqual(mockResponse);
+    expect(cancelLicenses).toStrictEqual('');
     expect(requestSpyOn).toHaveBeenCalledWith('licenses', {
       method: 'POST',
       body: { uuids: ['xxxxx', 'aaaaa'] },
