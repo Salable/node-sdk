@@ -8,7 +8,7 @@ sidebar_position: 9
 
 Salable throws different kinds of errors. The following lists the exception types, and their documented data fields:
 
-#### `SalableResponseError`
+### `SalableResponseError`
 
 The Salable node SDK throws a `SalableResponseError` exception if the error is a known error.
 
@@ -18,7 +18,7 @@ The Salable node SDK throws a `SalableResponseError` exception if the error is a
 | `status` | The status code of the error            |
 | `data`   | Error message associated with the error |
 
-#### `SalableValidationError`
+### `SalableValidationError`
 
 The Salable node SDK throws a `SalableValidationError` exception if the error is related validating data on the request.
 
@@ -28,7 +28,7 @@ The Salable node SDK throws a `SalableValidationError` exception if the error is
 | `status` | The status code of the error  |
 | `data`   | An array of `ValidationError` |
 
-#### `SalableUnknownError`
+### `SalableUnknownError`
 
 The Salable node SDK throws a `SalableUnknownError` exception if the error unknown.
 
