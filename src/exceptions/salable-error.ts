@@ -1,4 +1,11 @@
-import { ErrorCodes } from '@/src/base';
+export enum ErrorCodes {
+  unauthorised = 'S1000',
+  notFound = 'S1001',
+  badRequest = 'S1002',
+  validation = 'S1003',
+  unhandled = 'S1004',
+  unknown = 'S1005',
+}
 
 export type ValidationErrorMessage = {
   property: string;
@@ -16,9 +23,9 @@ export type ResponseError = {
 export class SalableError extends Error {
   status: number;
   code: string;
-  data: Record<string, unknown> | null;
+  data?: Record<string, unknown> | null;
 
-  constructor(code: ErrorCodes, status: number, data: Record<string, unknown> | null) {
+  constructor(code: ErrorCodes, status: number, data?: Record<string, unknown> | null) {
     super(JSON.stringify({ data }));
     this.code = code;
     this.data = data;
@@ -27,7 +34,7 @@ export class SalableError extends Error {
 }
 
 export class SalableResponseError extends SalableError {
-  constructor(code: ErrorCodes, status: number, data: ResponseError) {
+  constructor(code: ErrorCodes, status: number, data?: ResponseError) {
     super(code, status, data);
     Object.setPrototypeOf(this, SalableResponseError.prototype);
   }
