@@ -1,3 +1,10 @@
+## [3.0.1](https://github.com/Salable/node-sdk/compare/v3.0.0...v3.0.1) (2023-11-24)
+
+
+### Bug Fixes
+
+* improved error handling with more tests ([ece82fe](https://github.com/Salable/node-sdk/commit/ece82fe663a1929359fd1a9a030ceb0c1b014c21))
+
 # [3.0.0](https://github.com/Salable/node-sdk/compare/v2.8.0...v3.0.0) (2023-11-23)
 
 
