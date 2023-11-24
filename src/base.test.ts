@@ -68,11 +68,14 @@ describe('Unit | Base functionality', () => {
     });
 
     it('Unknown error', async () => {
-      jest
-        .spyOn(global, 'fetch')
-        .mockImplementation(
-          jest.fn(() => Promise.resolve({ json: () => Promise.reject('Error') })) as jest.Mock
-        );
+      jest.spyOn(global, 'fetch').mockImplementation(
+        jest.fn(() =>
+          Promise.resolve({
+            headers: { get: () => 'application/json' },
+            json: () => Promise.reject('Error'),
+          })
+        ) as jest.Mock
+      );
       await expect(api.getAll()).rejects.toThrow(SalableUnknownError);
     });
   });
