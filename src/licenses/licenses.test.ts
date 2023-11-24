@@ -57,6 +57,20 @@ describe('Unit | ThirdPartyAPI | Licenses', () => {
     expect(createLicense).toStrictEqual(mockResponse);
   });
 
+  it('Create Many Licenses: should call the request with the correct parameters and return response unchanged', async () => {
+    const createParams = {
+      planUuid: 'xxxxx',
+      member: 'orgId_1',
+      granteeId: 'userId_1',
+    };
+    const createLicenses = await api.create([createParams, createParams]);
+    expect(requestSpyOn).toHaveBeenCalledWith('licenses', {
+      method: 'POST',
+      body: [createParams, createParams],
+    });
+    expect(createLicenses).toStrictEqual(mockResponse);
+  });
+
   it('Get one license: should return the response unchanged', async () => {
     const fetchedLicenses = await api.getOne('xxxxx');
     expect(fetchedLicenses).toStrictEqual(mockResponse);

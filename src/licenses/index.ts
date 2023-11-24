@@ -119,17 +119,25 @@ export default class Licenses extends Base {
   }
 
   /**
-   *  Creates a new license with the details provided
+   *  Creates a single license or many licenses with the details provided
    *
-   * @param {ICreateAdhocLicenseInput} licenseDetails - The details to create the new license with
+   * @param {ICreateAdhocLicenseInput | ICreateAdhocLicenseInput[]} licenseDetails - The details to create the new license with
    *
-   * @returns {Promise<ILicense>} The data for the new license
+   * @returns {Promise<ILicense | ILicense[]>} The data for the new license or licenses created
    */
-  public create(licenseDetails: ICreateAdhocLicenseInput): Promise<ILicense> {
-    return this._request<ILicense, ICreateAdhocLicenseInput>(RESOURCE_NAMES.LICENSES, {
-      method: 'POST',
-      body: licenseDetails,
-    });
+
+  public create(licenseDetails: ICreateAdhocLicenseInput): Promise<ILicense>;
+  public create(licenseDetails: ICreateAdhocLicenseInput[]): Promise<ILicense[]>;
+  public create(
+    licenseDetails: ICreateAdhocLicenseInput | ICreateAdhocLicenseInput[]
+  ): Promise<ILicense | ILicense[]> {
+    return this._request<ILicense, ICreateAdhocLicenseInput | ICreateAdhocLicenseInput[]>(
+      RESOURCE_NAMES.LICENSES,
+      {
+        method: 'POST',
+        body: licenseDetails,
+      }
+    );
   }
 
   /**
