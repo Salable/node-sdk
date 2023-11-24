@@ -32,4 +32,4 @@ Product `uuid` of the product you wish to retrieve
 
 ## Return Type
 
-Promise of a [product object](/api/api-latest/objects/product-object)
+For more information about this request see our api documentation on [product object](https://docs.salable.app/api#tag/Products/operation/getProductByUuid)

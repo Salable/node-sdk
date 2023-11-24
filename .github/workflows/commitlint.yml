@@ -2,7 +2,7 @@ name: commitlint
 
 on:
   push:
-    branches: ["main"]
+    branches: ['main']
   pull_request:
     types: [opened, synchronize]
 
@@ -19,7 +19,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 0
 
       - name: Fetch main branch
         run: git fetch --no-tags --depth=1 origin main
