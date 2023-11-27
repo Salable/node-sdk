@@ -1,3 +1,10 @@
+# [3.2.0](https://github.com/Salable/node-sdk/compare/v3.1.0...v3.2.0) (2023-11-27)
+
+
+### Features
+
+* added grace as an optional parameter to license check ([39105e8](https://github.com/Salable/node-sdk/commit/39105e806c7dfc4ddbafc0e825e19a8628532457))
+
 # [3.1.0](https://github.com/Salable/node-sdk/compare/v3.0.1...v3.1.0) (2023-11-24)
 
 
