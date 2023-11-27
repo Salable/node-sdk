@@ -107,15 +107,18 @@ export default class Licenses extends Base {
    *
    * @param {string} productUuid - The UUID of the product to check the license against
    * @param {string[]} granteeIds - The grantee IDs to check the license for
+   * @param {number} grace - The number of days to extend the end dates of capabilities
    *
    * @returns {Promise<ICheckLicensesCapabilities>} The capabilities of the license passed
    */
-  public check(productUuid: string, granteeIds: string[]): Promise<ICheckLicensesCapabilities> {
-    return this._request<ICheckLicensesCapabilities>(
-      `${
-        RESOURCE_NAMES.LICENSES
-      }/check?productUuid=${productUuid}&granteeIds=${granteeIds.toString()}`
-    );
+  public check(
+    productUuid: string,
+    granteeIds: string[],
+    grace?: number
+  ): Promise<ICheckLicensesCapabilities> {
+    let params = `productUuid=${productUuid}&granteeIds=${granteeIds.toString()}`;
+    if (grace) params += `&grace=${grace}`;
+    return this._request<ICheckLicensesCapabilities>(`${RESOURCE_NAMES.LICENSES}/check?${params}`);
   }
 
   /**

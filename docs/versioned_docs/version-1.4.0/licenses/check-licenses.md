@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Check License
 
-This method returns the capabilities assigned to a granteeId or product.
+This method returns the capabilities assigned to a group of granteeIds.
 
 ## Code Sample
 

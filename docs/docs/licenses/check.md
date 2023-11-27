@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Check License
 
-This method returns the capabilities assigned to a granteeId or product.
+This method returns the capabilities assigned to a group of granteeIds.
 
 ## Code Sample
 
@@ -15,9 +15,9 @@ const { Salable } = require('@salable/node-sdk');
   const salable = new Salable('{{API-KEY}}');
 
   try {
-    const capabilitiesCheck = await salable.licenses.check('41cf33a2-136e-4959-b5c7-73889ab94eff', [
-      'grantee1',
-      'grantee2',
+    const capabilitiesCheck = await salable.licenses.check('{{PLAN_UUID}}', [
+      'userId_1',
+      'userId_2',
     ]);
   } catch (err) {
     console.error(err);
@@ -40,6 +40,14 @@ Product `uuid` of the capabilities you wish to check
 _Type:_ `string[]`
 
 A String array of the grantee Ids you wish to check against
+
+---
+
+##### grace
+
+_Type:_ `number`
+
+The number of days to extend the end dates of capabilities
 
 ## Return Type
 
