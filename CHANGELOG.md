@@ -1,20 +1,23 @@
-# [3.0.0](https://github.com/Salable/node-sdk/compare/v2.8.0...v3.0.0) (2023-11-23)
-
+## [3.0.1](https://github.com/Salable/node-sdk/compare/v3.0.0...v3.0.1) (2023-11-24)
 
 ### Bug Fixes
 
-* new error classes to handle empty body responses ([eeeaf49](https://github.com/Salable/node-sdk/commit/eeeaf49132892a59a0d062b2928f0713e7102301))
-* updated commitlint action to use actions/checkout@v3 ([a712c5a](https://github.com/Salable/node-sdk/commit/a712c5a3223cc3987957766e6116d7320bdff767))
+- improved error handling with more tests ([ece82fe](https://github.com/Salable/node-sdk/commit/ece82fe663a1929359fd1a9a030ceb0c1b014c21))
 
+# [3.0.0](https://github.com/Salable/node-sdk/compare/v2.8.0...v3.0.0) (2023-11-23)
+
+### Bug Fixes
+
+- new error classes to handle empty body responses ([eeeaf49](https://github.com/Salable/node-sdk/commit/eeeaf49132892a59a0d062b2928f0713e7102301))
+- updated commitlint action to use actions/checkout@v3 ([a712c5a](https://github.com/Salable/node-sdk/commit/a712c5a3223cc3987957766e6116d7320bdff767))
 
 ### Performance Improvements
 
-* **error classes:** throw different error classes in different scenarios ([952d0cd](https://github.com/Salable/node-sdk/commit/952d0cd5227d0b285caa7a34fd79839ec764f134))
-
+- **error classes:** throw different error classes in different scenarios ([952d0cd](https://github.com/Salable/node-sdk/commit/952d0cd5227d0b285caa7a34fd79839ec764f134))
 
 ### BREAKING CHANGES
 
-* **error classes:** throw different error classes in different scenarios
+- **error classes:** throw different error classes in different scenarios
 
 # [2.8.0](https://github.com/Salable/node-sdk/compare/v2.7.0...v2.8.0) (2023-11-20)
 
