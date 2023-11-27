@@ -15,7 +15,7 @@ const { SalableApi } = require("@Salable/node-sdk");
   try {
     const license = await api.licenses.createLicense({
       planUuid: "41cf33a2-136e-4959-b5c7-73889ab94eff";
-      member: "tester@testing.com"
+      member: "orgId_1234"
       granteeId: "grantee-123"
     });
   } catch (err) {
@@ -34,11 +34,19 @@ Product `uuid` of the capabilities you wish to check
 
 ---
 
-##### granteeIds (_required_)
+##### member (_required_)
 
-_Type:_ `string[]`
+_Type:_ `string`
 
-A String array of the grantee Ids you wish to check against
+The ID of the member who will manage the license
+
+---
+
+##### granteeId (_required_)
+
+_Type:_ `string` or `null`
+
+The grantee ID for the license
 
 ## Return Type
 

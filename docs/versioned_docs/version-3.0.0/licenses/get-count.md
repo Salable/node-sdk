@@ -12,7 +12,7 @@ This method returns aggregate count number of Licenses. Optional filters can be 
 const { Salable } = require('@salable/node-sdk');
 
 (async () => {
-  const salable = new Salable('API-KEY');
+  const salable = new Salable('{{API-KEY}}');
 
   try {
     const licenseCount = await api.licenses.getCount('subscription-uuid', 'ACTIVE');

@@ -11,7 +11,7 @@ Update the subscription to a new plan.
 ```typescript
 const { Salable } = require('@salable/node-sdk');
 (async () => {
-  const salable = new Salable('API-KEY');
+  const salable = new Salable('{{API-KEY}}');
 
   try {
     const subscription = await salable.subscriptions.updatePlan(

@@ -12,7 +12,7 @@ This method will update an existing user
 const { Salable } = require('@salable/node-sdk');
 
 (async () => {
-  const salable = new Salable('API-KEY');
+  const salable = new Salable('{{API-KEY}}');
 
   try {
     const user = await salable.rbac.users.update('41cf33a2-136e-4959-b5c7-73889ab94eff', {

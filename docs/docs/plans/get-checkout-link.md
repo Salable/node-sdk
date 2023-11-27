@@ -12,13 +12,13 @@ Returns the checkout link for a plan. This endpoint will only work for paid Plan
 const { Salable } = require('@salable/node-sdk');
 
 (async () => {
-  const salable = new Salable('API-KEY');
+  const salable = new Salable('{{API-KEY}}');
 
   try {
     const checkoutLink = await api.plans.getCheckoutLink('41cf33a2-136e-4959-b5c7-73889ab94eff', {
       cancelUrl: 'https://example.com/cancel',
       successUrl: 'https://example.com/success',
-      granteeId: 'grantee-123',
+      granteeId: 'userId-1234',
       member: 'member-123',
     });
   } catch (err) {
