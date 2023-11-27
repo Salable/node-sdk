@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Check License
 
-This method returns the capabilities assigned to a granteeId or product.
+This method returns the capabilities assigned to a group of granteeIds.
 
 ## Code Sample
 
@@ -40,6 +40,14 @@ Product `uuid` of the capabilities you wish to check
 _Type:_ `string[]`
 
 A String array of the grantee Ids you wish to check against
+
+---
+
+##### grace
+
+_Type:_ `number`
+
+The number of days to extend the end dates of capabilities
 
 ## Return Type
 

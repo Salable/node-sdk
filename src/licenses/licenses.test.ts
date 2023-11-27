@@ -25,11 +25,11 @@ describe('Unit | ThirdPartyAPI | Licenses', () => {
 
   describe('Check capabilities', () => {
     describe('Success cases', () => {
-      it('Check capabilities: should return the response unchanged', async () => {
-        const fetchedLicenses = await api.check('xxxxx', ['aaaaa', 'bbbbb']);
+      it('Check capabilities: should apply a grace period and return the response unchanged', async () => {
+        const fetchedLicenses = await api.check('xxxxx', ['aaaaa', 'bbbbb'], 10);
         expect(fetchedLicenses).toStrictEqual(mockResponse);
         expect(requestSpyOn).toHaveBeenCalledWith(
-          'licenses/check?productUuid=xxxxx&granteeIds=aaaaa,bbbbb'
+          'licenses/check?productUuid=xxxxx&granteeIds=aaaaa,bbbbb&grace=10'
         );
       });
       it('Check capabilities: should return empty response with the response unchanged', async () => {
