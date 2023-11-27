@@ -1,3 +1,17 @@
+# [3.1.0](https://github.com/Salable/node-sdk/compare/v3.0.1...v3.1.0) (2023-11-24)
+
+
+### Bug Fixes
+
+* updated getByGranteeId response type comment ([143a3a8](https://github.com/Salable/node-sdk/commit/143a3a883339aa8992cfecb74ba807c6e16e3705))
+
+
+### Features
+
+* create licenses updated to be able to create many licenses ([d0b7f43](https://github.com/Salable/node-sdk/commit/d0b7f4382e38fd7d774bf5eef7e4ac25f80a3978))
+* create licenses updated to be able to create many licenses ([9b43b3a](https://github.com/Salable/node-sdk/commit/9b43b3a69be7d9e529766e0e465647dce93dcf7a))
+* licenses endpoints up to date ([e0972da](https://github.com/Salable/node-sdk/commit/e0972dacceea6d9723b2969ba5d9e5948bcea133))
+
 ## [3.0.1](https://github.com/Salable/node-sdk/compare/v3.0.0...v3.0.1) (2023-11-24)
 
 ### Bug Fixes
