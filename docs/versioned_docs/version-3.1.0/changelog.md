@@ -4,6 +4,12 @@ sidebar_position: 2
 
 # Changelog
 
+## v3.1.0
+
+### Licenses
+
+- Added optional `grace` parameter to License `check` method.
+
 ## v3.0.0
 
 ### Error handling
