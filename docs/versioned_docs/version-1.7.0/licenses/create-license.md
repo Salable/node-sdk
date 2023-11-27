@@ -14,7 +14,7 @@ const { SalableApi } = require('@salable/node-sdk');
   const api = new SalableApi('API-KEY');
   try {
     const license = await api.licenses.createLicense({
-      planUuid: '{PLAN_UUID}',
+      planUuid: '{{PLAN_UUID}}',
       member: 'orgId_1234',
       granteeId: 'userId-1234',
     });
