@@ -1,0 +1,26 @@
+---
+sidebar_position: 1
+---
+
+# Overview
+
+Salable is designed to be a flexible tool to allow you to integrate your app with your chosen payment provider easily. The advantage of using Salable is that you can more easily make changes to your pricing structures, and you can offer more options to your customers. Instead of having to go to many places to get the flexibility you need, you can do it all through Salable.
+
+Our Node SDK exposes HTTP endpoints that accept requests with JSON arguments and return JSON responses. Authentication is done via the API key passed to the `Salable` class.
+
+```ts
+const { Salable } = require('@salable/node-sdk');
+
+const salable = new Salable('{API-KEY}');
+```
+
+> NOTE: If you'd like to use test mode, make sure to use an API key generated in test mode (prefixed with `test_`).
+
+To get up and running, you need to work through the following steps.
+
+- Set up a Salable Account and Organization
+- Connect either Stripe or Paddle to Salable (You can skip this for a free product)
+- Build your products and plans
+- Generate your API key
+- Install the Node SDK to your project
+- Make your first SDK call
