@@ -12,7 +12,7 @@ This method will create a new user
 const { Salable } = require('@salable/node-sdk');
 
 (async () => {
-  const salable = new Salable('{API-KEY}');
+  const salable = new Salable('{{API-KEY}}');
 
   try {
     const user = await salable.rbac.users.create({

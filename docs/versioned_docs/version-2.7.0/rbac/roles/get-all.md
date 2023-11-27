@@ -12,7 +12,7 @@ This method returns all roles
 const { Salable } = require('@salable/node-sdk');
 
 (async () => {
-  const salable = new Salable('{API-KEY}');
+  const salable = new Salable('{{API-KEY}}');
 
   try {
     const roles = await salable.rbac.roles.getAll();
