@@ -15,7 +15,7 @@ const { Salable } = require('@salable/node-sdk');
   const salable = new Salable('{{API-KEY}}');
 
   try {
-    const updatedLicense = await api.licenses.update('license-uuid', 'new-grantee-id');
+    const updatedLicense = await api.licenses.update('{{LICENSE_UUID}}', 'userId_2');
   } catch (err) {
     console.error(err);
   }
@@ -34,9 +34,9 @@ The `uuid` of the license to be updated
 
 ##### granteeId (_required_)
 
-_Type:_ `string`
+_Type:_ `string` or `null`
 
-The value of the new granteeId
+The value of the new granteeId. To un-assign the license set the `granteeId` to `null`.
 
 ## Return Type
 

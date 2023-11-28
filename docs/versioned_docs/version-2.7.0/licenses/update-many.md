@@ -16,8 +16,8 @@ const { Salable } = require('@salable/node-sdk');
 
   try {
     const newLicenses = await salable.licenses.updateMany([
-      { granteeId: 'grantee-1', uuid: 'license-id' },
-      { granteeId: 'grantee-2', uuid: 'another-license-id' },
+      { granteeId: 'userId_1', uuid: '{{LICENSE_UUID}}' },
+      { granteeId: 'userId_2', uuid: '{{LICENSE_UUID}}' },
     ]);
   } catch (err) {
     console.error(err);
@@ -41,9 +41,9 @@ The `uuid` of the license to be updated
 
 #### granteeId (_required_)
 
-_Type:_ `string`
+_Type:_ `string` or `null`
 
-The value of the new granteeId
+The value of the new granteeId. To un-assign a license set the `granteeId` to `null`.
 
 ## Return Type
 
