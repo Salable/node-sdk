@@ -24,7 +24,7 @@ const { SalableApi } = require('@Salable/node-sdk');
 
 ## Parameters
 
-##### subscriptionUuid (_required_)
+##### subscriptionId (_required_)
 
 _Type:_ `string`
 

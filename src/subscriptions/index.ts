@@ -20,12 +20,12 @@ export default class Subscriptions extends Base {
   /**
    * Get a single subscription
    *
-   * @param  {string} subscriptionUuid The uuid of the subscription
+   * @param  {string} subscriptionId The uuid of the subscription
    *
    * @returns {Promise<ISubscription>} The data of the subscription requested
    */
-  public getOne(subscriptionUuid: string): Promise<ISubscription> {
-    return this._request<ISubscription>(`${RESOURCE_NAMES.SUBSCRIPTIONS}/${subscriptionUuid}`);
+  public getOne(subscriptionId: string): Promise<ISubscription> {
+    return this._request<ISubscription>(`${RESOURCE_NAMES.SUBSCRIPTIONS}/${subscriptionId}`);
   }
 
   /**

@@ -26,7 +26,7 @@ const { Salable } = require('@salable/node-sdk');
 
 ## Parameters
 
-##### subscriptionUuid (_required_)
+##### subscriptionId (_required_)
 
 _Type:_ `string`
 
