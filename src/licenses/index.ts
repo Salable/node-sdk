@@ -74,7 +74,7 @@ export default class Licenses extends Base {
 
   /**
    *  Get usage on license
-   *  @param {string} granteeId - The granteeId for the licenses
+   *  @param {string} licenseUuid - The uuid of the license
    *
    * @returns {ILicense[]}
    */
