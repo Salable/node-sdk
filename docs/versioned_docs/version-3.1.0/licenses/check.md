@@ -41,14 +41,6 @@ _Type:_ `string[]`
 
 A String array of the grantee Ids you wish to check against
 
----
-
-##### grace
-
-_Type:_ `number`
-
-The number of days to extend the end dates of capabilities
-
 ## Return Type
 
 For more information about this request see our api documentation on [License Check Object](https://docs.salable.app/api#tag/Licenses/operation/getLicenseCheck)
