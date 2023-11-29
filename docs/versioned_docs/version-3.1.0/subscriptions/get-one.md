@@ -15,7 +15,7 @@ const { Salable } = require('@salable/node-sdk');
   const salable = new Salable('{API-KEY}');
 
   try {
-    const subscription = await salable.subscriptions.getOne('41cf33a2-136e-4959-b5c7-73889ab94eff');
+    const subscription = await salable.subscriptions.getOne('{{SUBSCRIPTION_UUID}}');
   } catch (err) {
     console.error(err);
   }
@@ -24,11 +24,11 @@ const { Salable } = require('@salable/node-sdk');
 
 ## Parameters
 
-##### subscriptionId (_required_)
+##### subscriptionUuid (_required_)
 
 _Type:_ `string`
 
-Subscription `uuid` of the subscription you wish to retrieve
+Subscription `uuid`
 
 ## Return Type
 

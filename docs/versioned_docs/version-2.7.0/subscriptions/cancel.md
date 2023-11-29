@@ -27,11 +27,11 @@ const { Salable } = require('@salable/node-sdk');
 
 ## Parameters
 
-##### subscriptionId (_required_)
+##### subscriptionUuid (_required_)
 
 _Type:_ `string`
 
-Subscription `uuid` of the subscription you wish to retrieve
+Subscription `uuid`
 
 ##### when (_required_)
 
