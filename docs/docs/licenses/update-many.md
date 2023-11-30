@@ -9,20 +9,14 @@ This method updates many Licenses with the values passed into the body of the re
 ## Code Sample
 
 ```typescript
-const { Salable } = require('@salable/node-sdk');
+import { Salable } from '@salable/node-sdk';
 
-(async () => {
-  const salable = new Salable('{{API-KEY}}');
+const salable = new Salable('{{API_KEY}}');
 
-  try {
-    const updatedLicenses = await salable.licenses.updateMany([
-      { granteeId: 'userId_1', uuid: '{{LICENSE_UUID_ONE}}' },
-      { granteeId: 'userId_2', uuid: '{{LICENSE_UUID_TWO}}' },
-    ]);
-  } catch (err) {
-    console.error(err);
-  }
-})();
+const updatedLicenses = await salable.licenses.updateMany([
+  { granteeId: 'userId_1', uuid: '{{LICENSE_UUID_ONE}}' },
+  { granteeId: 'userId_2', uuid: '{{LICENSE_UUID_TWO}}' },
+]);
 ```
 
 ## Parameters

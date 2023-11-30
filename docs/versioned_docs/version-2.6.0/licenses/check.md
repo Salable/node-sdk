@@ -9,17 +9,13 @@ This method returns the capabilities assigned to a group of granteeIds.
 ## Code Sample
 
 ```typescript
-const { Salable } = require('@salable/node-sdk');
+import { Salable } from '@salable/node-sdk';
 
-(async () => {
-  const salable = new Salable('{{API-KEY}}');
+const salable = new Salable('{{API_KEY}}');
 
-  try {
-    const check = await salable.licenses.check('{{PRODUCT_UUID}}', ['userId_1', 'userId_2']);
-  } catch (err) {
-    console.error(err);
-  }
-})();
+await salable.licenses.cancelMany(['{{LICENSE_UUID_ONE}}', '{{LICENSE_UUID_TWO}}']);
+```
+
 ```
 
 ## Parameters
@@ -41,3 +37,4 @@ A String array of the grantee Ids you wish to check against
 ## Return Type
 
 For more information about this request see our API documentation on [License Check Object](https://docs.salable.app/api#tag/Licenses/operation/getLicenseCheck)
+```

@@ -9,17 +9,11 @@ This method returns aggregate count number of Licenses. Optional filters can be 
 ## Code Sample
 
 ```typescript
-const { Salable } = require('@salable/node-sdk');
+import { Salable } from '@salable/node-sdk';
 
-(async () => {
-  const salable = new Salable('{{API-KEY}}');
+const salable = new Salable('{{API_KEY}}');
 
-  try {
-    const licenseCount = await api.licenses.getCount('{{SUBSCRIPTION_UUID}}');
-  } catch (err) {
-    console.error(err);
-  }
-})();
+const licenseCount = await api.licenses.getCount('{{SUBSCRIPTION_UUID}}');
 ```
 
 ## Parameters

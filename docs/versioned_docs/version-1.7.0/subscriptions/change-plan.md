@@ -10,17 +10,13 @@ Update the subscription to a new plan.
 
 ```typescript
 const { SalableApi } = require('@salable/node-sdk');
-(async () => {
-  const api = new SalableApi('API-KEY');
-  try {
-    const subscription = await api.subscriptions.changePlan(
-      '41cf33a2-136e-4959-b5c7-73889ab94eff',
-      '2dc7b9ab-e3bc-4151-9443-07ddffd7350d'
-    );
-  } catch (err) {
-    console.error(err);
-  }
-})();
+
+const api = new SalableApi('API-KEY');
+
+const subscription = await api.subscriptions.changePlan(
+  '41cf33a2-136e-4959-b5c7-73889ab94eff',
+  '2dc7b9ab-e3bc-4151-9443-07ddffd7350d'
+);
 ```
 
 ## Parameters

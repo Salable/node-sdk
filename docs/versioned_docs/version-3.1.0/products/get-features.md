@@ -9,16 +9,11 @@ Returns a list of all the features associated with a product
 ## Code Sample
 
 ```typescript
-const { Salable } = require('@salable/node-sdk');
-(async () => {
-  const salable = new Salable('{API-KEY}');
+import { Salable } from '@salable/node-sdk';
 
-  try {
-    const features = await salable.products.getFeatures();
-  } catch (err) {
-    console.error(err);
-  }
-})();
+const salable = new Salable('{API-KEY}');
+
+const features = await salable.products.getFeatures();
 ```
 
 ## Return Type

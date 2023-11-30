@@ -10,18 +10,14 @@ This method will create a new ad hoc license to allow Specific IDs to use your p
 
 ```typescript
 const { SalableApi } = require('@salable/node-sdk');
-(async () => {
-  const api = new SalableApi('API-KEY');
-  try {
-    const license = await api.licenses.createLicense({
-      planUuid: '{{PLAN_UUID}}',
-      member: 'orgId_1234',
-      granteeId: 'userId-1234',
-    });
-  } catch (err) {
-    console.error(err);
-  }
-})();
+
+const api = new SalableApi('API-KEY');
+
+const license = await api.licenses.createLicense({
+  planUuid: '{{PLAN_UUID}}',
+  member: 'orgId_1234',
+  granteeId: 'userId-1234',
+});
 ```
 
 ## Parameters

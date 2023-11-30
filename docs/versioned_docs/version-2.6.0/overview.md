@@ -9,9 +9,9 @@ Salable is designed to be a flexible tool to allow you to integrate your app wit
 Our Node SDK exposes HTTP endpoints that accept requests with JSON arguments and return JSON responses. Authentication is done via the API key passed to the `Salable` class.
 
 ```ts
-const { Salable } = require('@salable/node-sdk');
+import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API-KEY}}');
+const salable = new Salable('{{API_KEY}}');
 ```
 
 > NOTE: If you'd like to use test mode, make sure to use an API key generated in test mode (prefixed with `test_`).

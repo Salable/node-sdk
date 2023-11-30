@@ -9,16 +9,11 @@ Returns all necessary data on a Product to be able to display a pricing table.
 ## Code Sample
 
 ```typescript
-const { Salable } = require('@salable/node-sdk');
-(async () => {
-  const salable = new Salable('{{API-KEY}}');
+import { Salable } from '@salable/node-sdk';
 
-  try {
-    const products = await salable.products.getAll();
-  } catch (err) {
-    console.error(err);
-  }
-})();
+const salable = new Salable('{{API_KEY}}');
+
+const products = await salable.products.getAll();
 ```
 
 ## Return Type

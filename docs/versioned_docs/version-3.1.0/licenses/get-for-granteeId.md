@@ -9,16 +9,11 @@ Returns licenses for a grantee ID
 ## Code Sample
 
 ```typescript
-const { Salable } = require('@salable/node-sdk');
-(async () => {
-  const salable = new Salable('{{API-KEY}}');
+import { Salable } from '@salable/node-sdk';
 
-  try {
-    const licenses = await salable.licenses.getForGranteeId('userId_1');
-  } catch (err) {
-    console.error(err);
-  }
-})();
+const salable = new Salable('{{API_KEY}}');
+
+const licenses = await salable.licenses.getForGranteeId('userId_1');
 ```
 
 ## Parameters

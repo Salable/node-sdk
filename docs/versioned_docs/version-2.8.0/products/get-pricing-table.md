@@ -9,23 +9,18 @@ Returns all necessary data on a Product to be able to display a pricing table. E
 ## Code Sample
 
 ```typescript
-const { Salable } = require('@salable/node-sdk');
-(async () => {
-  const salable = new Salable('{{API-KEY}}');
+import { Salable } from '@salable/node-sdk';
 
-  try {
-    const pricingTable = await salable.products.getPricingTable('product-uuid', {
-      globalPlanOptions: {
-        granteeId: 'userId_1',
-        member: 'orgId_1',
-        cancelUrl: 'https://example.com/cancel',
-        successUrl: 'https://example.com/success',
-      },
-    });
-  } catch (err) {
-    console.error(err);
-  }
-})();
+const salable = new Salable('{{API_KEY}}');
+
+const pricingTable = await salable.products.getPricingTable('product-uuid', {
+  globalPlanOptions: {
+    granteeId: 'userId_1',
+    member: 'orgId_1',
+    cancelUrl: 'https://example.com/cancel',
+    successUrl: 'https://example.com/success',
+  },
+});
 ```
 
 ## Parameters
@@ -83,26 +78,21 @@ Parameters set in globalPlanOptions can be overridden on a per-plan basis by usi
 ##### Code sample using individualPlanOptions
 
 ```typescript
-const { Salable } = require('@salable/node-sdk');
-(async () => {
-  const salable = new Salable('{{API-KEY}}');
+import { Salable } from '@salable/node-sdk';
 
-  try {
-    const pricingTable = await salable.products.getPricingTable('product-uuid', {
-      globalPlanOptions: {
-        granteeId: 'userId_1',
-        member: 'orgId_1',
-        cancelUrl: 'https://example.com/cancel',
-        successUrl: 'https://example.com/success',
-      },
-      individualPlanOptions: {
-        'plan-uuid': {
-          granteeId: 'userId_2',
-        },
-      },
-    });
-  } catch (err) {
-    console.error(err);
-  }
-})();
+const salable = new Salable('{{API_KEY}}');
+
+const pricingTable = await salable.products.getPricingTable('product-uuid', {
+  globalPlanOptions: {
+    granteeId: 'userId_1',
+    member: 'orgId_1',
+    cancelUrl: 'https://example.com/cancel',
+    successUrl: 'https://example.com/success',
+  },
+  individualPlanOptions: {
+    'plan-uuid': {
+      granteeId: 'userId_2',
+    },
+  },
+});
 ```
