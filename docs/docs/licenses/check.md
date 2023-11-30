@@ -48,4 +48,4 @@ The number of days to extend the end dates of capabilities
 
 ## Return Type
 
-For more information about this request see our api documentation on [License Check Object](https://docs.salable.app/api#tag/Licenses/operation/getLicenseCheck)
+For more information about this request see our API documentation on [License Check Object](https://docs.salable.app/api#tag/Licenses/operation/getLicenseCheck)

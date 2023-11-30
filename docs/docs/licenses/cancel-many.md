@@ -32,4 +32,4 @@ Uuids of the Licenses to be canceled
 
 ## Return Type
 
-For more information about this request see our api documentation on [cancel many Licenses](https://docs.salable.app/api#tag/Licenses/operation/cancelLicenses)
+For more information about this request see our API documentation on [cancel many Licenses](https://docs.salable.app/api#tag/Licenses/operation/cancelLicenses)

@@ -45,5 +45,5 @@ The Salable node SDK throws a `SalableUnknownError` exception if the error unkno
 | `S1001` | Object was not found         |
 | `S1002` | Bad request                  |
 | `S1003` | Validation error             |
-| `S1004` | Unknown error in Salable api |
+| `S1004` | Unknown error in Salable API |
 | `S1005` | Unknown error in Salable SDK |
