@@ -14,11 +14,11 @@ This method will create one or many a new adhoc licenses.
 const { Salable } = require('@salable/node-sdk');
 
 (async () => {
-  const salable = new Salable('{API-KEY}');
+  const salable = new Salable('{{API-KEY}}');
 
   try {
     const license = await salable.licenses.create({
-      planUuid: '{PLAN_UUID}',
+      planUuid: '{{PLAN_UUID}}',
       member: 'orgId_1234',
       granteeId: 'userId-1',
     });
@@ -34,17 +34,17 @@ const { Salable } = require('@salable/node-sdk');
 const { Salable } = require('@salable/node-sdk');
 
 (async () => {
-  const salable = new Salable('{API-KEY}');
+  const salable = new Salable('{{API-KEY}}');
 
   try {
     const license = await salable.licenses.create([
       {
-        planUuid: '{PLAN_UUID}',
+        planUuid: '{{PLAN_UUID}}',
         member: 'orgId_1234',
         granteeId: 'userId-1',
       },
       {
-        planUuid: '{PLAN_UUID}',
+        planUuid: '{{PLAN_UUID}}',
         member: 'orgId_1234',
         granteeId: 'userId-2',
       },

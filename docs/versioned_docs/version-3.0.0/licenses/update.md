@@ -15,7 +15,7 @@ const { Salable } = require('@salable/node-sdk');
   const salable = new Salable('{{API-KEY}}');
 
   try {
-    const updatedLicense = await api.licenses.update('{{LICENSE_UUID}}', 'userId_2');
+    const update = await api.licenses.update('{{LICENSE_UUID}}', 'userId_2');
   } catch (err) {
     console.error(err);
   }

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 11
 ---
 
 # Cancel many Licenses
@@ -15,7 +15,7 @@ const { Salable } = require('@salable/node-sdk');
   const salable = new Salable('{{API-KEY}}');
 
   try {
-    const license = await salable.licenses.cancelMany(['{{LICENSE_UUID}}', '{{LICENSE_UUID}}']);
+    await salable.licenses.cancelMany(['{{LICENSE_UUID_ONE}}', '{{LICENSE_UUID_TWO}}']);
   } catch (err) {
     console.error(err);
   }

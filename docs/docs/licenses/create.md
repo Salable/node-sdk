@@ -18,7 +18,7 @@ const { Salable } = require('@salable/node-sdk');
 
   try {
     const license = await salable.licenses.create({
-      planUuid: '{{{PLAN_UUID}}}',
+      planUuid: '{{PLAN_UUID}}',
       member: 'orgId_1234',
       granteeId: 'userId-1',
     });

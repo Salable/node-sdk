@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 9
 ---
 
 # Update Many Licenses
@@ -12,12 +12,12 @@ This method updates many Licenses with the values passed into the body of the re
 const { Salable } = require('@salable/node-sdk');
 
 (async () => {
-  const salable = new Salable('{API-KEY}');
+  const salable = new Salable('{{API-KEY}}');
 
   try {
-    const newLicenses = await salable.licenses.updateMany([
-      { granteeId: 'userId_1', uuid: '{{LICENSE_UUID}}' },
-      { granteeId: 'userId_2', uuid: '{{LICENSE_UUID}}' },
+    const updateLicenses = await salable.licenses.updateMany([
+      { granteeId: 'userId_1', uuid: '{{LICENSE_UUID_ONE}}' },
+      { granteeId: 'userId_2', uuid: '{{LICENSE_UUID_TWO}}' },
     ]);
   } catch (err) {
     console.error(err);

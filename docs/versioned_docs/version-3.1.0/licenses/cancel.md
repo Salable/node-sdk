@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 10
 ---
 
 # Cancel License
@@ -15,7 +15,7 @@ const { Salable } = require('@salable/node-sdk');
   const salable = new Salable('{{API-KEY}}');
 
   try {
-    const license = await salable.licenses.cancel('{{LICENSE_UUID}}');
+    await salable.licenses.cancel('{{LICENSE_UUID}}');
   } catch (err) {
     console.error(err);
   }

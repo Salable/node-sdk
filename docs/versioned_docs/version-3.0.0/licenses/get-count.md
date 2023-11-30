@@ -15,7 +15,7 @@ const { Salable } = require('@salable/node-sdk');
   const salable = new Salable('{{API-KEY}}');
 
   try {
-    const licenseCount = await api.licenses.getCount('subscription-uuid', 'ACTIVE');
+    const licenseCount = await api.licenses.getCount('{{SUBSCRIPTION_UUID}}');
   } catch (err) {
     console.error(err);
   }

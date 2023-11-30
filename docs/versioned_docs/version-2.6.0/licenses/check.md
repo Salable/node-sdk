@@ -15,10 +15,7 @@ const { Salable } = require('@salable/node-sdk');
   const salable = new Salable('{{API-KEY}}');
 
   try {
-    const capabilitiesCheck = await salable.licenses.check('{{PLAN_UUID}}', [
-      'userId_1',
-      'userId_2',
-    ]);
+    const check = await salable.licenses.check('{{PRODUCT_UUID}}', ['userId_1', 'userId_2']);
   } catch (err) {
     console.error(err);
   }

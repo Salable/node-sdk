@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 2
 ---
 
 # Get One License
@@ -14,7 +14,7 @@ const { Salable } = require('@salable/node-sdk');
   const salable = new Salable('{{API-KEY}}');
 
   try {
-    const licenses = await salable.licenses.getOne('{{LICENSE_UUID}}');
+    const license = await salable.licenses.getOne('{{LICENSE_UUID}}');
   } catch (err) {
     console.error(err);
   }
