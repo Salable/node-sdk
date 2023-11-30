@@ -31,13 +31,13 @@ const { Salable } = require('@salable/node-sdk');
 
 _Type:_ `string`
 
-Plan `uuid` of the new plan you wish to update to
+The `uuid` of the new Plan the Subscription will be moved to
 
 ##### subscriptionId (_required_)
 
 _Type:_ `string`
 
-The `uuid` of the Subscription to be returned of the subscription you wish to update
+The `uuid` of the Subscription to be updated
 
 ## Return Type
 
