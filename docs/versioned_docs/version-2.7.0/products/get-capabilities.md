@@ -23,4 +23,4 @@ const { Salable } = require('@salable/node-sdk');
 
 ## Return Type
 
-For more information about this request see our api documentation on [Capability Object](https://docs.salable.app/api#tag/Products/operation/getProductCapabilities)
+For more information about this request see our API documentation on [Capability Object](https://docs.salable.app/api#tag/Products/operation/getProductCapabilities)

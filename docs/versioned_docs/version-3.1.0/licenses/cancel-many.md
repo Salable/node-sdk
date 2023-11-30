@@ -1,10 +1,10 @@
 ---
-sidebar_position: 1
+sidebar_position: 11
 ---
 
 # Cancel many Licenses
 
-This method will cancel many adhoc Licenses
+This method will cancel many ad hoc Licenses
 
 ## Code Sample
 
@@ -15,7 +15,7 @@ const { Salable } = require('@salable/node-sdk');
   const salable = new Salable('{{API-KEY}}');
 
   try {
-    const license = await salable.licenses.cancelMany(['{{LICENSE_UUID}}', '{{LICENSE_UUID}}']);
+    await salable.licenses.cancelMany(['{{LICENSE_UUID_ONE}}', '{{LICENSE_UUID_TWO}}']);
   } catch (err) {
     console.error(err);
   }
@@ -28,8 +28,8 @@ const { Salable } = require('@salable/node-sdk');
 
 _Type:_ `string[]`
 
-Uuids of the Licenses to be canceled
+`uuid` array of the Licenses to be canceled
 
 ## Return Type
 
-For more information about this request see our api documentation on [cancel many Licenses](https://docs.salable.app/api#tag/Licenses/operation/cancelLicenses)
+For more information about this request see our API documentation on [cancel many Licenses](https://docs.salable.app/api#tag/Licenses/operation/cancelLicenses)

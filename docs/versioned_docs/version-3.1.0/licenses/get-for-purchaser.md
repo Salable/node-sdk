@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 5
 ---
 
 # Get Licenses for a Purchaser
@@ -45,4 +45,4 @@ _Type:_ `LicenseGetByPurchaserOptions`
 
 ## Return Type
 
-For more information about this request see our api documentation on [License Object](https://docs.salable.app/api#tag/Licenses/operation/getLicenseByUuid)
+For more information about this request see our API documentation on [License Object](https://docs.salable.app/api#tag/Licenses/operation/getLicenseByUuid)

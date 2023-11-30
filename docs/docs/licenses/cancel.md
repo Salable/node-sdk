@@ -1,10 +1,10 @@
 ---
-sidebar_position: 1
+sidebar_position: 10
 ---
 
 # Cancel License
 
-This method will cancel an adhoc License
+This method will cancel an ad hoc License
 
 ## Code Sample
 
@@ -15,7 +15,7 @@ const { Salable } = require('@salable/node-sdk');
   const salable = new Salable('{{API-KEY}}');
 
   try {
-    const license = await salable.licenses.cancel('{{LICENSE_UUID}}');
+    await salable.licenses.cancel('{{LICENSE_UUID}}');
   } catch (err) {
     console.error(err);
   }
@@ -32,4 +32,4 @@ _Type:_ `string`
 
 ## Return Type
 
-For more information about this request see our api documentation on [cancel License](https://docs.salable.app/api#tag/Licenses/operation/cancelLicense)
+For more information about this request see our API documentation on [cancel License](https://docs.salable.app/api#tag/Licenses/operation/cancelLicense)
