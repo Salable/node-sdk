@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Create License
 
-This method will create one or many a new adhoc licenses.
+This method will create one or many a new ad hoc licenses.
 
 ## Code Sample
 

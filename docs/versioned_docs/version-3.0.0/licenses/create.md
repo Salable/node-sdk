@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Create License
 
-This method will create a new adhoc license to allow Specific IDs to use your product.
+This method will create a new ad hoc license to allow Specific IDs to use your product.
 
 ## Code Sample
 

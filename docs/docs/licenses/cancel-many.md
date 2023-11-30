@@ -4,7 +4,7 @@ sidebar_position: 11
 
 # Cancel many Licenses
 
-This method will cancel many adhoc Licenses
+This method will cancel many ad hoc Licenses
 
 ## Code Sample
 

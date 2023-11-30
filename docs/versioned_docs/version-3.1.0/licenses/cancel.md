@@ -4,7 +4,7 @@ sidebar_position: 10
 
 # Cancel License
 
-This method will cancel an adhoc License
+This method will cancel an ad hoc License
 
 ## Code Sample
 
