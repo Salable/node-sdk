@@ -30,8 +30,7 @@ Plan `uuid` of the new plan you wish to update to
 ##### subscriptionId (_required_)
 
 _Type:_ `string`
-
-Subscription `uuid` of the subscription you wish to update
+The `uuid` of the subscription you wish to update
 
 ## Return Type
 

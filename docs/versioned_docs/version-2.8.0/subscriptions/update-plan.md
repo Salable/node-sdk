@@ -31,7 +31,7 @@ Plan `uuid` of the new plan you wish to update to
 
 _Type:_ `string`
 
-Subscription `uuid` of the subscription you wish to update
+The `uuid` of the Subscription to be returned of the subscription you wish to update
 
 ## Return Type
 

@@ -22,7 +22,7 @@ const subscription = await salable.subscriptions.getOne('{{SUBSCRIPTION_UUID}}')
 
 _Type:_ `string`
 
-Subscription `uuid`
+The `uuid` of the Subscription to be returned
 
 ## Return Type
 
