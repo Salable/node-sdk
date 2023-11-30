@@ -28,7 +28,7 @@ const { Salable } = require('@salable/node-sdk');
 
 _Type:_ `string[]`
 
-Uuids of the Licenses to be canceled
+`uuid` array of the Licenses to be canceled
 
 ## Return Type
 
