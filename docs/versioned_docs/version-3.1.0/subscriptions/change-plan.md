@@ -20,7 +20,7 @@ const changeSubscriptionPlan = await salable.subscriptions.changePlan('subscript
 
 ## Parameters
 
-##### subscriptionId (_required_)
+##### subscriptionUuid (_required_)
 
 _Type:_ `string`
 
