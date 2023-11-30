@@ -25,7 +25,7 @@ const subscription = await salable.subscriptions.updatePlan(
 
 _Type:_ `string`
 
-The `uuid` of the Plan the Subscription is moving to
+Plan `uuid` of the new plan you wish to update to
 
 ##### subscriptionId (_required_)
 

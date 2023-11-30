@@ -24,7 +24,7 @@ const subscription = await api.subscriptions.getSubscription(
 
 _Type:_ `string`
 
-Subscription `uuid` of the subscription you wish to retrieve
+The `uuid` of the Subscription to be returned
 
 ## Return Type
 

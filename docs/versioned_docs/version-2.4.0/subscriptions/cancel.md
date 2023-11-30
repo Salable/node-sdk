@@ -25,7 +25,7 @@ const subscription = await salable.subscriptions.cancel(
 
 _Type:_ `string`
 
-Subscription `uuid` of the subscription you wish to retrieve
+The `uuid` of the Subscription to be canceled
 
 ##### when (_required_)
 

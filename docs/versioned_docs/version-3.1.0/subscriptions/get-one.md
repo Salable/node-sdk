@@ -13,7 +13,7 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{API-KEY}');
 
-const subscription = await salable.subscriptions.getOne('41cf33a2-136e-4959-b5c7-73889ab94eff');
+const subscription = await salable.subscriptions.getOne('{{SUBSCRIPTION_UUID}}');
 ```
 
 ## Parameters
@@ -22,7 +22,7 @@ const subscription = await salable.subscriptions.getOne('41cf33a2-136e-4959-b5c7
 
 _Type:_ `string`
 
-Subscription `uuid` of the subscription you wish to retrieve
+The `uuid` of the Subscription to be returned
 
 ## Return Type
 

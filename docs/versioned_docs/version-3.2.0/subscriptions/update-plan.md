@@ -33,7 +33,7 @@ const { Salable } = require('@salable/node-sdk');
 
 _Type:_ `string`
 
-The `uuid` of the Plan the Subscription is moving to
+The `uuid` of the new Plan the Subscription will be moved to
 
 ##### subscriptionId (_required_)
 
@@ -43,4 +43,4 @@ The `uuid` of the Subscription that is being moved
 
 ## Return Type
 
-For more information about this request see our api documentation on [Subscription Object](https://docs.salable.app/api#tag/Subscriptions/operation/getSubscriptionByUuid)
+For more information about this request see our API documentation on [Subscription Object](https://docs.salable.app/api#tag/Subscriptions/operation/getSubscriptionByUuid)
