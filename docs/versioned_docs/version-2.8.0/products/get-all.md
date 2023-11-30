@@ -9,18 +9,13 @@ Returns a list of all the products created by your Salable organization
 ## Code Sample
 
 ```typescript
-const { Salable } = require('@salable/node-sdk');
-(async () => {
-  const salable = new Salable('{{API-KEY}}');
+import { Salable } from '@salable/node-sdk';
 
-  try {
-    const products = await salable.products.getAll();
-  } catch (err) {
-    console.error(err);
-  }
-})();
+const salable = new Salable('{{API_KEY}}');
+
+const products = await salable.products.getAll();
 ```
 
 ## Return Type
 
-For more information about this request see our api documentation on [Product Object](https://docs.salable.app/api#tag/Products/operation/getProductByUuid)
+For more information about this request see our API documentation on [Product Object](https://docs.salable.app/api#tag/Products/operation/getProductByUuid)

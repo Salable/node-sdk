@@ -4,11 +4,17 @@ sidebar_position: 2
 
 # Changelog
 
+## v3.2.0
+
+### Licenses
+
+- Added `getOne`, `getForPurchaser`, `getForGranteeId`, `getUsage` & `getCount` licenses methods to SDK.
+
 ## v3.1.0
 
 ### Licenses
 
-- Added optional `grace` parameter to License `check` method.
+- Added `getOne`, `getForPurchaser`, `getForGranteeId`, `getUsage` & `getCount` licenses methods to SDK.
 
 ## v3.0.0
 

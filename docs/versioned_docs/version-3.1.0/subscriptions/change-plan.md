@@ -9,19 +9,13 @@ Change a subscription to a new plan. Proration behaviour can optionally be set.
 ## Code Sample
 
 ```typescript
-const { Salable } = require('@salable/node-sdk');
+import { Salable } from '@salable/node-sdk';
 
-(async () => {
-  const salable = new Salable('{API-KEY}');
+const salable = new Salable('{API-KEY}');
 
-  try {
-    const changeSubscriptionPlan = await salable.subscriptions.changePlan('subscription-uuid', {
-      planUuid: 'plan-uuid',
-    });
-  } catch (err) {
-    console.error(err);
-  }
-})();
+const changeSubscriptionPlan = await salable.subscriptions.changePlan('subscription-uuid', {
+  planUuid: 'plan-uuid',
+});
 ```
 
 ## Parameters
@@ -43,4 +37,4 @@ _Type:_ `SubscriptionsChangePlanBody`
 
 ## Return Type
 
-For more information about this request see our api documentation on [Subscription Object](https://docs.salable.app/api#tag/Subscriptions/operation/getSubscriptionByUuid)
+For more information about this request see our API documentation on [Subscription Object](https://docs.salable.app/api#tag/Subscriptions/operation/getSubscriptionByUuid)

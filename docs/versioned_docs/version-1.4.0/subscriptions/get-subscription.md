@@ -10,16 +10,12 @@ Returns the details of a single subscription.
 
 ```typescript
 const { SalableApi } = require('@Salable/node-sdk');
-(async () => {
-  const api = new SalableApi('API-KEY');
-  try {
-    const subscription = await api.subscriptions.getSubscription(
-      '41cf33a2-136e-4959-b5c7-73889ab94eff'
-    );
-  } catch (err) {
-    console.error(err);
-  }
-})();
+
+const api = new SalableApi('API-KEY');
+
+const subscription = await api.subscriptions.getSubscription(
+  '41cf33a2-136e-4959-b5c7-73889ab94eff'
+);
 ```
 
 ## Parameters
@@ -32,4 +28,4 @@ Subscription `uuid`
 
 ## Return Type
 
-For more information about this request see our api documentation on [Subscription Object](https://docs.salable.app/api#tag/Subscriptions/operation/getSubscriptionByUuid)
+For more information about this request see our API documentation on [Subscription Object](https://docs.salable.app/api#tag/Subscriptions/operation/getSubscriptionByUuid)

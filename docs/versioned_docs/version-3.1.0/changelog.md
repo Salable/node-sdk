@@ -8,7 +8,7 @@ sidebar_position: 2
 
 ### Licenses
 
-- Added optional `grace` parameter to License `check` method.
+- Added `getOne`, `getForPurchaser`, `getForGranteeId`, `getUsage` & `getCount` licenses methods to SDK.
 
 ## v3.0.0
 

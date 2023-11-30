@@ -9,16 +9,11 @@ Returns the details of a single subscription.
 ## Code Sample
 
 ```typescript
-const { Salable } = require('@salable/node-sdk');
-(async () => {
-  const salable = new Salable('{{API-KEY}}');
+import { Salable } from '@salable/node-sdk';
 
-  try {
-    const subscription = await salable.subscriptions.getOne('{{SUBSCRIPTION_UUID}}');
-  } catch (err) {
-    console.error(err);
-  }
-})();
+const salable = new Salable('{{API_KEY}}');
+
+const subscription = await salable.subscriptions.getOne('{{SUBSCRIPTION_UUID}}');
 ```
 
 ## Parameters
@@ -31,4 +26,4 @@ Subscription `uuid`
 
 ## Return Type
 
-For more information about this request see our api documentation on [Subscription Object](https://docs.salable.app/api#tag/Subscriptions/operation/getSubscriptionByUuid)
+For more information about this request see our API documentation on [Subscription Object](https://docs.salable.app/api#tag/Subscriptions/operation/getSubscriptionByUuid)

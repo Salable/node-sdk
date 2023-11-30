@@ -1,28 +1,19 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 # Check License
 
-This method returns the capabilities assigned to a group of granteeIds.
+Retrieves the capabilities the grantee(s) have access to.
 
 ## Code Sample
 
 ```typescript
-const { Salable } = require('@salable/node-sdk');
+import { Salable } from '@salable/node-sdk';
 
-(async () => {
-  const salable = new Salable('{{API-KEY}}');
+const salable = new Salable('{{API_KEY}}');
 
-  try {
-    const capabilitiesCheck = await salable.licenses.check('{{PLAN_UUID}}', [
-      'userId_1',
-      'userId_2',
-    ]);
-  } catch (err) {
-    console.error(err);
-  }
-})();
+const check = await salable.licenses.check('{{PRODUCT_UUID}}', ['userId_1', 'userId_2']);
 ```
 
 ## Parameters
@@ -31,7 +22,7 @@ const { Salable } = require('@salable/node-sdk');
 
 _Type:_ `string`
 
-Product `uuid` of the capabilities you wish to check
+Product `uuid`
 
 ---
 
@@ -51,4 +42,4 @@ The number of days to extend the end dates of capabilities
 
 ## Return Type
 
-For more information about this request see our api documentation on [License Check Object](https://docs.salable.app/api#tag/Licenses/operation/getLicenseCheck)
+For more information about this request see our API documentation on [License Check Object](https://docs.salable.app/api#tag/Licenses/operation/getLicenseCheck)

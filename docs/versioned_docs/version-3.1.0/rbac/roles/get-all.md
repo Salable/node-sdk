@@ -9,17 +9,11 @@ This method returns all roles
 ## Code Sample
 
 ```typescript
-const { Salable } = require('@salable/node-sdk');
+import { Salable } from '@salable/node-sdk';
 
-(async () => {
-  const salable = new Salable('{API-KEY}');
+const salable = new Salable('{API-KEY}');
 
-  try {
-    const roles = await salable.rbac.roles.getAll();
-  } catch (err) {
-    console.error(err);
-  }
-})();
+const roles = await salable.rbac.roles.getAll();
 ```
 
 ## Return Type

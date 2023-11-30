@@ -4,24 +4,20 @@ sidebar_position: 1
 
 # Create License
 
-This method will create a new adhoc license to allow Specific IDs to use your product.
+This method will create a new ad hoc license to allow Specific IDs to use your product.
 
 ## Code Sample
 
 ```typescript
 const { SalableApi } = require('@salable/node-sdk');
-(async () => {
-  const api = new SalableApi('API-KEY');
-  try {
-    const license = await api.licenses.createLicense({
-      planUuid: '{{PLAN_UUID}}',
-      member: 'orgId_1234',
-      granteeId: 'userId-1234',
-    });
-  } catch (err) {
-    console.error(err);
-  }
-})();
+
+const api = new SalableApi('API-KEY');
+
+const license = await api.licenses.createLicense({
+  planUuid: '{{PLAN_UUID}}',
+  member: 'orgId_1234',
+  granteeId: 'userId-1234',
+});
 ```
 
 ## Parameters
@@ -50,4 +46,4 @@ The grantee ID for the license
 
 ## Return Type
 
-For more information about this request see our api documentation on [License Check Object](https://docs.salable.app/api#tag/Licenses/operation/getLicenseCheck)
+For more information about this request see our API documentation on [License Check Object](https://docs.salable.app/api#tag/Licenses/operation/getLicenseCheck)

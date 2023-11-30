@@ -9,18 +9,13 @@ Returns a list of all the currencies associated with a product
 ## Code Sample
 
 ```typescript
-const { Salable } = require('@salable/node-sdk');
-(async () => {
-  const salable = new Salable('{{API-KEY}}');
+import { Salable } from '@salable/node-sdk';
 
-  try {
-    const currencies = await salable.products.getCurrencies();
-  } catch (err) {
-    console.error(err);
-  }
-})();
+const salable = new Salable('{{API_KEY}}');
+
+const currencies = await salable.products.getCurrencies();
 ```
 
 ## Return Type
 
-For more information about this request see our api documentation on [Product Currency Object](https://docs.salable.app/api#tag/Products/operation/getProductCurrencies)
+For more information about this request see our API documentation on [Product Currency Object](https://docs.salable.app/api#tag/Products/operation/getProductCurrencies)

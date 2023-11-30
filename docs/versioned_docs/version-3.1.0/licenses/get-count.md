@@ -1,30 +1,24 @@
 ---
-sidebar_position: 6
+sidebar_position: 7
 ---
 
 # Get Licenses Count
 
-This method returns aggregate count number of Licenses. Optional filters can be applied through query parameters.
+This method returns aggregate count number of Licenses.
 
 ## Code Sample
 
 ```typescript
-const { Salable } = require('@salable/node-sdk');
+import { Salable } from '@salable/node-sdk';
 
-(async () => {
-  const salable = new Salable('{API-KEY}');
+const salable = new Salable('{{API_KEY}}');
 
-  try {
-    const licenseCount = await api.licenses.getCount('subscription-uuid', 'ACTIVE');
-  } catch (err) {
-    console.error(err);
-  }
-})();
+const licenseCount = await api.licenses.getCount('{{SUBSCRIPTION_UUID}}');
 ```
 
 ## Parameters
 
-#### subscriptionUuid
+#### subscriptionUuid (_required_)
 
 _Type:_ `string`
 
@@ -38,10 +32,4 @@ The `status` of the license to filter by
 
 ## Return Type
 
-```json
-{
-  "count": 10,
-  "assigned": 7,
-  "unassigned": 3
-}
-```
+For more information about this request see our API documentation on [License count](https://docs.salable.app/api#tag/Licenses/operation/getLicensesCount)
