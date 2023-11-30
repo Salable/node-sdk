@@ -11,7 +11,7 @@ Returns usage count on a License
 ```typescript
 const { Salable } = require('@salable/node-sdk');
 (async () => {
-  const salable = new Salable('{{API-KEY}}');
+  const salable = new Salable('{{API_KEY}}');
 
   try {
     const licenses = await salable.licenses.getUsage('{{LICENSE_UUID}}');

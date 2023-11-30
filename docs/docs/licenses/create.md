@@ -14,7 +14,7 @@ This method will create one or many a new ad hoc licenses.
 const { Salable } = require('@salable/node-sdk');
 
 (async () => {
-  const salable = new Salable('{{API-KEY}}');
+  const salable = new Salable('{{API_KEY}}');
 
   try {
     const license = await salable.licenses.create({
@@ -34,7 +34,7 @@ const { Salable } = require('@salable/node-sdk');
 const { Salable } = require('@salable/node-sdk');
 
 (async () => {
-  const salable = new Salable('{{API-KEY}}');
+  const salable = new Salable('{{API_KEY}}');
 
   try {
     const license = await salable.licenses.create([

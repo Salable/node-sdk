@@ -12,7 +12,7 @@ This method updates many Licenses with the values passed into the body of the re
 const { Salable } = require('@salable/node-sdk');
 
 (async () => {
-  const salable = new Salable('{{API-KEY}}');
+  const salable = new Salable('{{API_KEY}}');
 
   try {
     const updatedLicenses = await salable.licenses.updateMany([

@@ -12,7 +12,7 @@ Retrieves the capabilities the grantee(s) have access to.
 const { Salable } = require('@salable/node-sdk');
 
 (async () => {
-  const salable = new Salable('{{API-KEY}}');
+  const salable = new Salable('{{API_KEY}}');
 
   try {
     const check = await salable.licenses.check('{{PRODUCT_UUID}}', ['userId_1', 'userId_2']);

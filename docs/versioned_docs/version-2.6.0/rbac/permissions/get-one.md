@@ -12,7 +12,7 @@ Returns the details of a single permission.
 const { Salable } = require('@salable/node-sdk');
 
 (async () => {
-  const salable = new Salable('{{API-KEY}}');
+  const salable = new Salable('{{API_KEY}}');
 
   try {
     const permission = await salable.rbac.permissions.getOne(

@@ -12,7 +12,7 @@ This method will create a new ad hoc license to allow Specific IDs to use your p
 const { Salable } = require('@salable/node-sdk');
 
 (async () => {
-  const salable = new Salable('{{API-KEY}}');
+  const salable = new Salable('{{API_KEY}}');
 
   try {
     const license = await salable.licenses.create({

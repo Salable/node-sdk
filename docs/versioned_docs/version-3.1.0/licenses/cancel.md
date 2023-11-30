@@ -12,7 +12,7 @@ This method will cancel an ad hoc License
 const { Salable } = require('@salable/node-sdk');
 
 (async () => {
-  const salable = new Salable('{{API-KEY}}');
+  const salable = new Salable('{{API_KEY}}');
 
   try {
     await salable.licenses.cancel('{{LICENSE_UUID}}');

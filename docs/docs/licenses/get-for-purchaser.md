@@ -11,7 +11,7 @@ Returns licenses for a purchaser on a product
 ```typescript
 const { Salable } = require('@salable/node-sdk');
 (async () => {
-  const salable = new Salable('{{API-KEY}}');
+  const salable = new Salable('{{API_KEY}}');
 
   try {
     const licenses = await salable.licenses.getForPurchaser('orgId_1', '{{PRODUCT_UUID}}');

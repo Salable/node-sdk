@@ -12,7 +12,7 @@ This method updates specific Licenses with the values passed into the body of th
 const { Salable } = require('@salable/node-sdk');
 
 (async () => {
-  const salable = new Salable('{{API-KEY}}');
+  const salable = new Salable('{{API_KEY}}');
 
   try {
     const updatedLicense = await salable.licenses.updateMany([ await api.licenses.update('{{LICENSE_UUID}}', 'userId_2');

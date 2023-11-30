@@ -11,7 +11,7 @@ Returns a list of all the products created by your Salable organization
 ```typescript
 const { Salable } = require('@salable/node-sdk');
 (async () => {
-  const salable = new Salable('{{API-KEY}}');
+  const salable = new Salable('{{API_KEY}}');
 
   try {
     const products = await salable.products.getAll();

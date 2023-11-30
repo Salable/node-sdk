@@ -12,7 +12,7 @@ Adds seats to a subscription
 const { Salable } = require('@salable/node-sdk');
 
 (async () => {
-  const salable = new Salable('{{API-KEY}}');
+  const salable = new Salable('{{API_KEY}}');
 
   try {
     const subscription = await salable.subscriptions.addSeats(
