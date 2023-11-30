@@ -2,9 +2,9 @@
 sidebar_position: 2
 ---
 
-# Change A Subscription's Plan
+# Change a Subscription's Plan
 
-Change a subscription to a new plan. Proration behaviour can optionally be set.
+Move a Subscription to a new Plan. Proration behaviour can optionally be set.
 
 ## Code Sample
 
@@ -13,8 +13,8 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}');
 
-const changeSubscriptionPlan = await salable.subscriptions.changePlan('subscription-uuid', {
-  planUuid: 'plan-uuid',
+const changeSubscriptionPlan = await salable.subscriptions.changePlan('{{SUBSCRIPTION_UUID}}', {
+  planUuid: '{{PLAN_UUID}}',
 });
 ```
 
@@ -26,7 +26,7 @@ _Type:_ `string`
 
 Subscription `uuid`
 
-### config (_required_)
+##### config (_required_)
 
 _Type:_ `SubscriptionsChangePlanBody`
 
