@@ -18,10 +18,7 @@ const { SalableApi } = require("@Salable/node-sdk");
       member: "orgId_1234"
       granteeId: "grantee-123"
     });
-  } catch (err) {
-    console.error(err);
-  }
-})();
+
 ```
 
 ## Parameters

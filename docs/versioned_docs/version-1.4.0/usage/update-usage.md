@@ -20,10 +20,7 @@ const { SalableApi } = require("@Salable/node-sdk");
         increment: 2
       }
     );
-  } catch (err) {
-    console.error(err);
-  }
-})();
+
 ```
 
 ## Parameters
@@ -43,6 +40,7 @@ The variable name of the feature to be updated
 ##### countOptions (_required_)
 
 _Type:_ `ICountOptions`
+
 <details>
   <summary>ICountOptions</summary>
   <div>

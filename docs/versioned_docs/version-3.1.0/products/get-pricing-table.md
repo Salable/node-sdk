@@ -9,7 +9,7 @@ Returns all necessary data on a Product to be able to display a pricing table. E
 ## Code Sample
 
 ```typescript
-const { Salable } = require('@salable/node-sdk');
+import { Salable } from '@salable/node-sdk';
 (async () => {
   const salable = new Salable('{API-KEY}');
 
@@ -22,10 +22,7 @@ const { Salable } = require('@salable/node-sdk');
         successUrl: 'https://example.com/success',
       },
     });
-  } catch (err) {
-    console.error(err);
-  }
-})();
+
 ```
 
 ## Parameters
@@ -83,7 +80,7 @@ Parameters set in globalPlanOptions can be overridden on a per-plan basis by usi
 ##### Code sample using individualPlanOptions
 
 ```typescript
-const { Salable } = require('@salable/node-sdk');
+import { Salable } from '@salable/node-sdk';
 (async () => {
   const salable = new Salable('{API-KEY}');
 
@@ -101,10 +98,7 @@ const { Salable } = require('@salable/node-sdk');
         },
       },
     });
-  } catch (err) {
-    console.error(err);
-  }
-})();
+
 ```
 
 ## Return Type

@@ -17,10 +17,7 @@ const { SalableApi } = require('@salable/node-sdk');
       '41cf33a2-136e-4959-b5c7-73889ab94eff',
       '2dc7b9ab-e3bc-4151-9443-07ddffd7350d'
     );
-  } catch (err) {
-    console.error(err);
-  }
-})();
+
 ```
 
 ## Parameters

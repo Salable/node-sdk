@@ -9,7 +9,7 @@ This method will update an existing role
 ## Code Sample
 
 ```typescript
-const { Salable } = require('@salable/node-sdk');
+import { Salable } from '@salable/node-sdk';
 
 (async () => {
   const salable = new Salable('{API-KEY}');
@@ -23,10 +23,7 @@ const { Salable } = require('@salable/node-sdk');
         remove: ['41cf33a2-136e-4959-b5c7-73889ab94eff'],
       },
     });
-  } catch (err) {
-    console.error(err);
-  }
-})();
+
 ```
 
 ## Parameters

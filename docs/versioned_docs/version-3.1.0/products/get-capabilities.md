@@ -9,16 +9,13 @@ Returns a list of all the capabilities associated with a product
 ## Code Sample
 
 ```typescript
-const { Salable } = require('@salable/node-sdk');
+import { Salable } from '@salable/node-sdk';
 (async () => {
   const salable = new Salable('{API-KEY}');
 
   try {
     const currencies = await salable.products.getCapabilities();
-  } catch (err) {
-    console.error(err);
-  }
-})();
+
 ```
 
 ## Return Type

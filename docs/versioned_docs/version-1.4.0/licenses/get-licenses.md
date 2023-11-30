@@ -14,10 +14,7 @@ const { SalableApi } = require('@Salable/node-sdk');
   const api = new SalableApi('API-KEY');
   try {
     const licenses = await api.licenses.getLicenses();
-  } catch (err) {
-    console.error(err);
-  }
-})();
+
 ```
 
 ## Return Type
