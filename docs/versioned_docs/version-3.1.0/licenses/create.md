@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Create License
 
-This method will create one or many a new adhoc licenses.
+This method will create one or many a new ad hoc licenses.
 
 ## Code Sample
 
@@ -14,11 +14,11 @@ This method will create one or many a new adhoc licenses.
 const { Salable } = require('@salable/node-sdk');
 
 (async () => {
-  const salable = new Salable('{API-KEY}');
+  const salable = new Salable('{{API-KEY}}');
 
   try {
     const license = await salable.licenses.create({
-      planUuid: '{PLAN_UUID}',
+      planUuid: '{{PLAN_UUID}}',
       member: 'orgId_1234',
       granteeId: 'userId-1',
     });
@@ -34,17 +34,17 @@ const { Salable } = require('@salable/node-sdk');
 const { Salable } = require('@salable/node-sdk');
 
 (async () => {
-  const salable = new Salable('{API-KEY}');
+  const salable = new Salable('{{API-KEY}}');
 
   try {
     const license = await salable.licenses.create([
       {
-        planUuid: '{PLAN_UUID}',
+        planUuid: '{{PLAN_UUID}}',
         member: 'orgId_1234',
         granteeId: 'userId-1',
       },
       {
-        planUuid: '{PLAN_UUID}',
+        planUuid: '{{PLAN_UUID}}',
         member: 'orgId_1234',
         granteeId: 'userId-2',
       },
@@ -81,4 +81,4 @@ The grantee ID for the license
 
 ## Return Type
 
-For more information about this request see our api documentation on [License Object](https://docs.salable.app/api#tag/Licenses/operation/getLicenseByUuid)
+For more information about this request see our API documentation on [License Object](https://docs.salable.app/api#tag/Licenses/operation/getLicenseByUuid)

@@ -32,4 +32,4 @@ Plan `uuid` of the plan you wish to retrieve
 
 ## Return Type
 
-For more information about this request see our api documentation on [plan object](https://docs.salable.app/api#tag/Plans/operation/getPlanByUuid)
+For more information about this request see our API documentation on [plan object](https://docs.salable.app/api#tag/Plans/operation/getPlanByUuid)

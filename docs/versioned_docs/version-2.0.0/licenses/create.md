@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Create License
 
-This method will create a new adhoc license to allow Specific IDs to use your product.
+This method will create a new ad hoc license to allow Specific IDs to use your product.
 
 ## Code Sample
 
@@ -52,4 +52,4 @@ The grantee ID for the license
 
 ## Return Type
 
-For more information about this request see our api documentation on [License Check Object](https://docs.salable.app/api#tag/Licenses/operation/getLicenseCheck)
+For more information about this request see our API documentation on [License Check Object](https://docs.salable.app/api#tag/Licenses/operation/getLicenseCheck)
