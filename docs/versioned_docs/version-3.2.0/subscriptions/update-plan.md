@@ -2,7 +2,9 @@
 sidebar_position: 2
 ---
 
-# Update A Subscription's Plan
+# Update a Subscription's Plan (DEPRECATED)
+
+This method is deprecated. Please use the [Change Plan](./change-plan.md) method.
 
 Update the subscription to a new plan.
 
@@ -31,13 +33,13 @@ const { Salable } = require('@salable/node-sdk');
 
 _Type:_ `string`
 
-Plan `uuid` of the new plan you wish to update to
+The `uuid` of the Plan the Subscription is moving to
 
 ##### subscriptionId (_required_)
 
 _Type:_ `string`
 
-Subscription `uuid` of the subscription you wish to update
+The `uuid` of the Subscription that is being moved
 
 ## Return Type
 
