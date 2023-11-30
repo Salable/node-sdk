@@ -32,4 +32,4 @@ _Type:_ `string`
 
 ## Return Type
 
-For more information about this request see our api documentation on [cancel License](https://docs.salable.app/api#tag/Licenses/operation/cancelLicense)
+For more information about this request see our API documentation on [cancel License](https://docs.salable.app/api#tag/Licenses/operation/cancelLicense)

@@ -47,4 +47,4 @@ The value of the new granteeId. To un-assign a license set the `granteeId` to `n
 
 ## Return Type
 
-For more information about this request see our api documentation on [licenses object](https://docs.salable.app/api#tag/Licenses/operation/getLicenseByUuid)
+For more information about this request see our API documentation on [licenses object](https://docs.salable.app/api#tag/Licenses/operation/getLicenseByUuid)
