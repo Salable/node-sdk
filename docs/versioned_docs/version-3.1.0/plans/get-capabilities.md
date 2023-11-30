@@ -11,12 +11,9 @@ Returns the capabilities of a single plan.
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-(async () => {
-  const salable = new Salable('{API-KEY}');
+const salable = new Salable('{API-KEY}');
 
-  try {
-    const plan = await salable.plans.getCapabilities('41cf33a2-136e-4959-b5c7-73889ab94eff');
-
+const plan = await salable.plans.getCapabilities('41cf33a2-136e-4959-b5c7-73889ab94eff');
 ```
 
 ## Parameters

@@ -10,12 +10,10 @@ Returns a list of all the products created by your Salable organization
 
 ```typescript
 import { Salable } from '@salable/node-sdk';
-(async () => {
-  const salable = new Salable('{API-KEY}');
 
-  try {
-    const products = await salable.products.getAll();
+const salable = new Salable('{API-KEY}');
 
+const products = await salable.products.getAll();
 ```
 
 ## Return Type

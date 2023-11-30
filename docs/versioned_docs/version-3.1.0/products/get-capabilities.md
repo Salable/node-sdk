@@ -10,12 +10,10 @@ Returns a list of all the capabilities associated with a product
 
 ```typescript
 import { Salable } from '@salable/node-sdk';
-(async () => {
-  const salable = new Salable('{API-KEY}');
 
-  try {
-    const currencies = await salable.products.getCapabilities();
+const salable = new Salable('{API-KEY}');
 
+const currencies = await salable.products.getCapabilities();
 ```
 
 ## Return Type

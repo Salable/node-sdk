@@ -10,11 +10,10 @@ Returns a list of all the licenses created by your Salable organization
 
 ```typescript
 const { SalableApi } = require('@salable/node-sdk');
-(async () => {
-  const api = new SalableApi('API-KEY');
-  try {
-    const licenses = await api.licenses.getLicenses();
 
+const api = new SalableApi('API-KEY');
+
+const licenses = await api.licenses.getLicenses();
 ```
 
 ## Return Type

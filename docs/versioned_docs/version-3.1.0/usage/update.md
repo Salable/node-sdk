@@ -11,14 +11,11 @@ This method updates a plan's usage
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-(async () => {
-  const salable = new Salable('{API-KEY}');
+const salable = new Salable('{API-KEY}');
 
-  try {
-    await salable.usage.update('41cf33a2-136e-4959-b5c7-73889ab94eff', 'new-feature', {
-      increment: 2,
-    });
-
+await salable.usage.update('41cf33a2-136e-4959-b5c7-73889ab94eff', 'new-feature', {
+  increment: 2,
+});
 ```
 
 ## Parameters

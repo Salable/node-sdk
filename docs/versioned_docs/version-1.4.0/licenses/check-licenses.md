@@ -9,15 +9,14 @@ This method returns the capabilities assigned to a group of granteeIds.
 ## Code Sample
 
 ```typescript
-const { SalableApi } = require('@Salable/node-sdk');
-(async () => {
-  const api = new SalableApi('API-KEY');
-  try {
-    const capabilitiesCheck = await api.licenses.checkLicenses(
-      '41cf33a2-136e-4959-b5c7-73889ab94eff',
-      ['grantee1', 'grantee2']
-    );
+import { SalableApi } from '@Salable/node-sdk';
 
+const api = new SalableApi('API-KEY');
+
+const capabilitiesCheck = await api.licenses.checkLicenses('41cf33a2-136e-4959-b5c7-73889ab94eff', [
+  'grantee1',
+  'grantee2',
+]);
 ```
 
 ## Parameters

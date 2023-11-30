@@ -11,22 +11,16 @@ This method will update an existing permission
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-(async () => {
-  const salable = new Salable('{API-KEY}');
+const salable = new Salable('{API-KEY}');
 
-  try {
-    const permission = await salable.rbac.permissions.update(
-      '41cf33a2-136e-4959-b5c7-73889ab94eff',
-      {
-        value: 'some-value',
-        type: 'some-type',
-        description: 'some-description',
-        dependencies: {
-          key: 'some-value',
-        },
-      }
-    );
-
+const permission = await salable.rbac.permissions.update('41cf33a2-136e-4959-b5c7-73889ab94eff', {
+  value: 'some-value',
+  type: 'some-type',
+  description: 'some-description',
+  dependencies: {
+    key: 'some-value',
+  },
+});
 ```
 
 ## Parameters

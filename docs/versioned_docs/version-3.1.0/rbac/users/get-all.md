@@ -11,12 +11,9 @@ This method returns all users
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-(async () => {
-  const salable = new Salable('{API-KEY}');
+const salable = new Salable('{API-KEY}');
 
-  try {
-    const users = await salable.rbac.users.getAll();
-
+const users = await salable.rbac.users.getAll();
 ```
 
 ## Return Type

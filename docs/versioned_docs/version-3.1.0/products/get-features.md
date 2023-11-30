@@ -10,12 +10,10 @@ Returns a list of all the features associated with a product
 
 ```typescript
 import { Salable } from '@salable/node-sdk';
-(async () => {
-  const salable = new Salable('{API-KEY}');
 
-  try {
-    const features = await salable.products.getFeatures();
+const salable = new Salable('{API-KEY}');
 
+const features = await salable.products.getFeatures();
 ```
 
 ## Return Type

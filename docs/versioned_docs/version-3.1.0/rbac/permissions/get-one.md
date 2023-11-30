@@ -11,14 +11,9 @@ Returns the details of a single permission.
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-(async () => {
-  const salable = new Salable('{API-KEY}');
+const salable = new Salable('{API-KEY}');
 
-  try {
-    const permission = await salable.rbac.permissions.getOne(
-      '41cf33a2-136e-4959-b5c7-73889ab94eff'
-    );
-
+const permission = await salable.rbac.permissions.getOne('41cf33a2-136e-4959-b5c7-73889ab94eff');
 ```
 
 ## Parameters

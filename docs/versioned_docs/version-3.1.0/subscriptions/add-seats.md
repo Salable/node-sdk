@@ -11,17 +11,11 @@ Adds seats to a subscription
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-(async () => {
-  const salable = new Salable('{API-KEY}');
+const salable = new Salable('{API-KEY}');
 
-  try {
-    const subscription = await salable.subscriptions.addSeats(
-      '41cf33a2-136e-4959-b5c7-73889ab94eff',
-      {
-        increment: 2,
-      }
-    );
-
+const subscription = await salable.subscriptions.addSeats('41cf33a2-136e-4959-b5c7-73889ab94eff', {
+  increment: 2,
+});
 ```
 
 ## Parameters

@@ -10,13 +10,12 @@ This method updates a plan's usage
 
 ```typescript
 const { SalableApi } = require('@salable/node-sdk');
-(async () => {
-  const api = new SalableApi('API-KEY');
-  try {
-    await api.usage.updateUsage('41cf33a2-136e-4959-b5c7-73889ab94eff', 'new-feature', {
-      increment: 2,
-    });
 
+const api = new SalableApi('API-KEY');
+
+await api.usage.updateUsage('41cf33a2-136e-4959-b5c7-73889ab94eff', 'new-feature', {
+  increment: 2,
+});
 ```
 
 ## Parameters

@@ -10,19 +10,17 @@ Returns all necessary data on a display a pricing table.
 
 ```typescript
 import { Salable } from '@salable/node-sdk';
-(async () => {
-  const salable = new Salable('{API-KEY}');
 
-  try {
-    const pricingTable = await salable.pricingTables.getOne('pricing-table-uuid', {
-      globalPlanOptions: {
-        granteeId: 'userId_1',
-        member: 'orgId_1',
-        cancelUrl: 'https://example.com/cancel',
-        successUrl: 'https://example.com/success',
-      },
-    });
+const salable = new Salable('{API-KEY}');
 
+const pricingTable = await salable.pricingTables.getOne('pricing-table-uuid', {
+  globalPlanOptions: {
+    granteeId: 'userId_1',
+    member: 'orgId_1',
+    cancelUrl: 'https://example.com/cancel',
+    successUrl: 'https://example.com/success',
+  },
+});
 ```
 
 ## Parameters
@@ -81,22 +79,20 @@ Parameters set in globalPlanOptions can be overridden on a per-plan basis by usi
 
 ```typescript
 import { Salable } from '@salable/node-sdk';
-(async () => {
-  const salable = new Salable('{API-KEY}');
 
-  try {
-    const pricingTable = await salable.pricingTables.getOne('pricing-table-uuid', {
-      globalPlanOptions: {
-        granteeId: 'userId_1',
-        member: 'orgId_1',
-        cancelUrl: 'https://example.com/cancel',
-        successUrl: 'https://example.com/success',
-      },
-      individualPlanOptions: {
-        'plan-uuid': {
-          granteeId: 'userId_2',
-        },
-      },
-    });
+const salable = new Salable('{API-KEY}');
 
+const pricingTable = await salable.pricingTables.getOne('pricing-table-uuid', {
+  globalPlanOptions: {
+    granteeId: 'userId_1',
+    member: 'orgId_1',
+    cancelUrl: 'https://example.com/cancel',
+    successUrl: 'https://example.com/success',
+  },
+  individualPlanOptions: {
+    'plan-uuid': {
+      granteeId: 'userId_2',
+    },
+  },
+});
 ```

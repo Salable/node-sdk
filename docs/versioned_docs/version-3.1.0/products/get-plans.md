@@ -10,12 +10,10 @@ Returns a list of all the plans associated with a product
 
 ```typescript
 import { Salable } from '@salable/node-sdk';
-(async () => {
-  const salable = new Salable('{API-KEY}');
 
-  try {
-    const plans = await salable.products.getPlans();
+const salable = new Salable('{API-KEY}');
 
+const plans = await salable.products.getPlans();
 ```
 
 ## Return Type
