@@ -9,7 +9,7 @@ Returns a list of all the licenses created by your Salable organization
 ## Code Sample
 
 ```typescript
-import { SalableApi } from '@Salable/node-sdk';
+const { SalableApi } = require('@Salable/node-sdk');
 
 const api = new SalableApi('API-KEY');
 

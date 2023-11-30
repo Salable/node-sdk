@@ -9,7 +9,7 @@ This method returns the capabilities assigned to a group of granteeIds.
 ## Code Sample
 
 ```typescript
-import { SalableApi } from '@Salable/node-sdk';
+const { SalableApi } = require('@Salable/node-sdk');
 
 const api = new SalableApi('API-KEY');
 

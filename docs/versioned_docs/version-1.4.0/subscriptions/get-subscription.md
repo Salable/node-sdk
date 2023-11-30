@@ -9,7 +9,7 @@ Returns the details of a single subscription.
 ## Code Sample
 
 ```typescript
-import { SalableApi } from '@Salable/node-sdk';
+const { SalableApi } = require('@Salable/node-sdk');
 
 const api = new SalableApi('API-KEY');
 
