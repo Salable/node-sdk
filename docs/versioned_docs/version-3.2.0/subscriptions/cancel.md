@@ -37,7 +37,10 @@ The `uuid` of the Subscription to be canceled of the subscription you wish to re
 
 _Type:_ `end` | `now`
 
-Whether you want to cancel the subscription now or end of cycle
+| When | Description                                                              |
+| ---- | ------------------------------------------------------------------------ |
+| now  | Immediately cancels the Subscription                                     |
+| end  | Cancels the Subscription at the end of the Subscription's billing period |
 
 ## Return Type
 
