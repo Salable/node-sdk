@@ -25,12 +25,13 @@ const subscription = await api.subscriptions.changePlan(
 
 _Type:_ `string`
 
-The `uuid` of the new Plan the Subscription will be moved to
+The `uuid` of the Plan the Subscription is moving to
 
 ##### subscriptionId (_required_)
 
 _Type:_ `string`
-The `uuid` of the subscription you wish to update
+
+The `uuid` of the Subscription that is being moved
 
 ## Return Type
 

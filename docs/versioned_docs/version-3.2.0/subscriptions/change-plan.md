@@ -2,9 +2,9 @@
 sidebar_position: 2
 ---
 
-# Change A Subscription's Plan
+# Change a Subscription's Plan
 
-Change a subscription to a new plan. Proration behaviour can optionally be set.
+Move a Subscription to a new Plan. Proration behaviour can optionally be set.
 
 ## Code Sample
 
@@ -15,7 +15,7 @@ const { Salable } = require('@salable/node-sdk');
   const salable = new Salable('{{API-KEY}}');
 
   try {
-    const changeSubscriptionPlan = await salable.subscriptions.changePlan('subscription-uuid', {
+    const changeSubscriptionPlan = await salable.subscriptions.changePlan('{{SUBSCRIPTION_UUID}}', {
       planUuid: 'plan-uuid',
     });
   } catch (err) {
@@ -30,16 +30,16 @@ const { Salable } = require('@salable/node-sdk');
 
 _Type:_ `string`
 
-Subscription `uuid`
+The `uuid` of the Subscription that is being moved
 
-### config (_required_)
+##### config (_required_)
 
 _Type:_ `SubscriptionsChangePlanBody`
 
-| **Parameter** |                  **Description**                   |                                                                                                     **Notes**                                                                                                      | **Required** |
-| :-----------: | :------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------: |
-|   planUuid    | The uuid of the Plan the Subscription is moving to |                                                                                                                                                                                                                    |      ✅      |
-|   proration   |                Proration behaviour                 | `create_prorations`: Will cause proration invoice items to be created when applicable (default). `none`: Disable creating prorations in this request. `always_invoice`: Always invoice immediately for prorations. |      ❌      |
+| **Parameter** |                   **Description**                    |                                                                                                     **Notes**                                                                                                      | **Required** |
+| :-----------: | :--------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------: |
+|   planUuid    | The `uuid` of the Plan the Subscription is moving to |                                                                                                                                                                                                                    |      ✅      |
+|   proration   |                 Proration behaviour                  | `create_prorations`: Will cause proration invoice items to be created when applicable (default). `none`: Disable creating prorations in this request. `always_invoice`: Always invoice immediately for prorations. |      ❌      |
 
 ## Return Type
 

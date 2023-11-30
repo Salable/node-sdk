@@ -2,7 +2,9 @@
 sidebar_position: 2
 ---
 
-# Update A Subscription's Plan
+# Update a Subscription's Plan (DEPRECATED)
+
+This method is deprecated. Please use the [Change Plan](./change-plan.md) method.
 
 Update the subscription to a new plan.
 
@@ -37,7 +39,7 @@ The `uuid` of the new Plan the Subscription will be moved to
 
 _Type:_ `string`
 
-The `uuid` of the Subscription to be updated
+The `uuid` of the Subscription that is being moved
 
 ## Return Type
 

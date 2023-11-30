@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Update A Subscription's Plan
+# Update a Subscription's Plan
 
 Update the subscription to a new plan.
 
@@ -14,8 +14,8 @@ import { Salable } from '@salable/node-sdk';
 const salable = new Salable('{{API_KEY}}');
 
 const subscription = await salable.subscriptions.updatePlan(
-  '41cf33a2-136e-4959-b5c7-73889ab94eff',
-  '2dc7b9ab-e3bc-4151-9443-07ddffd7350d'
+  '{{PLAN_UUID}}',
+  '{{SUBSCRIPTION_UUID}}'
 );
 ```
 
@@ -31,7 +31,7 @@ The `uuid` of the new Plan the Subscription will be moved to
 
 _Type:_ `string`
 
-The `uuid` of the Subscription to be updated
+The `uuid` of the Subscription that is being moved
 
 ## Return Type
 
