@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Cancel a Subscription
 
-Cancels a subscription.
+Cancels a Subscription with options for when the Subscription cancels.
 
 ## Code Sample
 
@@ -32,7 +32,3 @@ _Type:_ `end` | `now`
 | ---- | ------------------------------------------------------------------------ |
 | now  | Immediately cancels the Subscription                                     |
 | end  | Cancels the Subscription at the end of the Subscription's billing period |
-
-## Return Type
-
-void
