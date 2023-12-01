@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Get Capabilities
 
-Returns the capabilities of a single plan.
+Returns a list of all the Capabilities associated with a Plan
 
 ## Code Sample
 
@@ -13,7 +13,7 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}');
 
-const plan = await salable.plans.getCapabilities('41cf33a2-136e-4959-b5c7-73889ab94eff');
+const plan = await salable.plans.getCapabilities('{{PLAN_UUID}}');
 ```
 
 ## Parameters
@@ -22,7 +22,7 @@ const plan = await salable.plans.getCapabilities('41cf33a2-136e-4959-b5c7-73889a
 
 _Type:_ `string`
 
-Plan `uuid` of the plan you wish to retrieve
+The `uuid` of the Plan to return the Features from
 
 ## Return Type
 
