@@ -14,7 +14,7 @@ const { Salable } = require('@salable/node-sdk');
   const salable = new Salable('{{API-KEY}}');
 
   try {
-    const pricingTable = await salable.products.getPricingTable('product-uuid', {
+    const pricingTable = await salable.products.getPricingTable('{{PRODUCT_UUID}}', {
       globalPlanOptions: {
         granteeId: 'userId_1',
         member: 'orgId_1',
@@ -30,23 +30,23 @@ const { Salable } = require('@salable/node-sdk');
 
 ## Parameters
 
-### productUuid (_required_)
+##### productUuid (_required_)
 
 _Type:_ `string`
 
-Product `uuid` of the product to build the pricing table from
+The `uuid` of the Product to build the pricing table from
 
 ---
 
-### queryParams (_required_)
+##### queryParams (_required_)
 
 _Type:_ `PricingTableParameters`
 
 Query parameters to be passed in to the checkout config
 
-#### globalPlanOptions
+**globalPlanOptions**
 
-Parameters set in globalPlanOptions will be used for all plans in the pricing table by default.
+Parameters set in `globalPlanOptions` will be used for all plans in the pricing table by default.
 
 |   **Parameter**   |                                                                                                                                                                                                                                                                                                                                                              **Description**                                                                                                                                                                                                                                                                                                                                                               | **Required** |
 | :---------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------: |
@@ -70,9 +70,9 @@ Parameters set in globalPlanOptions will be used for all plans in the pricing ta
 |   vat.postcode    |                                                                                                                                                                                                                                                                                                                                       Prefill the checkout form with the customer's postcode for VAT                                                                                                                                                                                                                                                                                                                                       |      ❌      |
 |   customMessage   |                                                                                                                                                                                                                                                                                                                                                  Add a message to show in Paddle checkout                                                                                                                                                                                                                                                                                                                                                  |      ❌      |
 
-#### individualPlanOptions
+**individualPlanOptions**
 
-Parameters set in globalPlanOptions can be overridden on a per-plan basis by using the individualPlanOptions property. To do this set a key in the individualPlanOptions object to the uuid of the plan you want to override. Only successUrl, cancelUrl and granteeId can be set on a per-plan basis.
+Parameters set in `globalPlanOptions` can be overridden on a per-plan basis by using the `individualPlanOptions` property. To do this set a key in the `individualPlanOptions` object to the uuid of the plan you want to override. Only successUrl, cancelUrl and granteeId can be set on a per-plan basis.
 
 | **Parameter** |                           **Description**                            | **Required** |
 | :-----------: | :------------------------------------------------------------------: | :----------: |
@@ -88,7 +88,7 @@ const { Salable } = require('@salable/node-sdk');
   const salable = new Salable('{{API-KEY}}');
 
   try {
-    const pricingTable = await salable.products.getPricingTable('product-uuid', {
+    const pricingTable = await salable.products.getPricingTable('{{PRODUCT_UUID}}', {
       globalPlanOptions: {
         granteeId: 'userId_1',
         member: 'orgId_1',

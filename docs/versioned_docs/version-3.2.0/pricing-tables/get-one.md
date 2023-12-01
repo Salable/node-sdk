@@ -38,15 +38,15 @@ Pricing Table `uuid`
 
 ---
 
-### queryParams (_required_)
+##### queryParams (_required_)
 
 _Type:_ `PricingTableParameters`
 
 Query parameters to be passed in to the checkout config
 
-#### globalPlanOptions
+**globalPlanOptions**
 
-Parameters set in globalPlanOptions will be used for all plans in the pricing table by default.
+Parameters set in `globalPlanOptions` will be used for all plans in the pricing table by default.
 
 |   **Parameter**   |                                                                                                                                                                                                                                                                                                                                                              **Description**                                                                                                                                                                                                                                                                                                                                                               | **Required** |
 | :---------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------: |
@@ -70,9 +70,9 @@ Parameters set in globalPlanOptions will be used for all plans in the pricing ta
 |   vat.postcode    |                                                                                                                                                                                                                                                                                                                                       Prefill the checkout form with the customer's postcode for VAT                                                                                                                                                                                                                                                                                                                                       |      ❌      |
 |   customMessage   |                                                                                                                                                                                                                                                                                                                                                  Add a message to show in Paddle checkout                                                                                                                                                                                                                                                                                                                                                  |      ❌      |
 
-#### individualPlanOptions
+**individualPlanOptions**
 
-Parameters set in globalPlanOptions can be overridden on a per-plan basis by using the individualPlanOptions property. To do this set a key in the individualPlanOptions object to the uuid of the plan you want to override. Only successUrl, cancelUrl and granteeId can be set on a per-plan basis.
+Parameters set in `globalPlanOptions` can be overridden on a per-plan basis by using the `individualPlanOptions` property. To do this set a key in the `individualPlanOptions` object to the uuid of the plan you want to override. Only successUrl, cancelUrl and granteeId can be set on a per-plan basis.
 
 | **Parameter** |                           **Description**                            | **Required** |
 | :-----------: | :------------------------------------------------------------------: | :----------: |
