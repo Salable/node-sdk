@@ -9,20 +9,14 @@ Cancels a subscription.
 ## Code Sample
 
 ```typescript
-const { Salable } = require('@salable/node-sdk');
+import { Salable } from '@salable/node-sdk';
 
-(async () => {
-  const salable = new Salable('{{API-KEY}}');
+const salable = new Salable('{{API_KEY}}');
 
-  try {
-    const subscription = await salable.subscriptions.cancel(
-      '41cf33a2-136e-4959-b5c7-73889ab94eff',
-      'end'
-    );
-  } catch (err) {
-    console.error(err);
-  }
-})();
+const subscription = await salable.subscriptions.cancel(
+  '41cf33a2-136e-4959-b5c7-73889ab94eff',
+  'end'
+);
 ```
 
 ## Parameters
@@ -31,7 +25,7 @@ const { Salable } = require('@salable/node-sdk');
 
 _Type:_ `string`
 
-The `uuid` of the Subscription to be canceled of the subscription you wish to retrieve
+The `uuid` of the Subscription to be canceled
 
 ##### when (_required_)
 

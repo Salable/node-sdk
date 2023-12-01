@@ -1,25 +1,19 @@
 ---
-sidebar_position: 1
+sidebar_position: 11
 ---
 
 # Cancel many Licenses
 
-This method will cancel many adhoc Licenses
+This method will cancel many ad hoc Licenses
 
 ## Code Sample
 
 ```typescript
-const { Salable } = require('@salable/node-sdk');
+import { Salable } from '@salable/node-sdk';
 
-(async () => {
-  const salable = new Salable('{{API-KEY}}');
+const salable = new Salable('{{API_KEY}}');
 
-  try {
-    const license = await salable.licenses.cancelMany(['{{LICENSE_UUID}}', '{{LICENSE_UUID}}']);
-  } catch (err) {
-    console.error(err);
-  }
-})();
+await salable.licenses.cancelMany(['{{LICENSE_UUID_ONE}}', '{{LICENSE_UUID_TWO}}']);
 ```
 
 ## Parameters
@@ -28,7 +22,7 @@ const { Salable } = require('@salable/node-sdk');
 
 _Type:_ `string[]`
 
-Uuids of the Licenses to be canceled
+`uuid` array of the Licenses to be canceled
 
 ## Return Type
 

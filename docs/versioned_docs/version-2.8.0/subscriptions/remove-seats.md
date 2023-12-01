@@ -23,7 +23,7 @@ const subscription = await salable.subscriptions.removeSeats(
 
 ## Parameters
 
-### subscriptionId (_required_)
+##### subscriptionId (_required_)
 
 _Type:_ `string`
 
