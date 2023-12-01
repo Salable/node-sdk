@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Update Usage
 
-This method updates a plan's usage
+Increments usage count on a License
 
 ## Code Sample
 
@@ -13,7 +13,7 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}');
 
-await salable.usage.update('41cf33a2-136e-4959-b5c7-73889ab94eff', 'new-feature', {
+await salable.usage.update('{{LICENSE_UUID}}', '{{FEATURE_VARIABLE_NAME}}', {
   increment: 2,
 });
 ```
@@ -24,7 +24,7 @@ await salable.usage.update('41cf33a2-136e-4959-b5c7-73889ab94eff', 'new-feature'
 
 _Type:_ `string`
 
-License `uuid` of the license you wish to update
+The `uuid` of the License to update the usage on
 
 ##### featureVariableName (_required_)
 
@@ -36,11 +36,6 @@ The variable name of the feature to be updated
 
 _Type:_ `ICountOptions`
 
-<details>
-  <summary>ICountOptions</summary>
-  <div>
-    increment: <code>number</code>
-    <br />
-    <em>Amount by which you want to increment the usage. Has to be a postive integer.</em>
-  </div>
-</details>
+| Option    | Description                          |
+| --------- | ------------------------------------ |
+| increment | The number to increment the count by |
