@@ -13,11 +13,11 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{API-KEY}');
 
-const checkoutLink = await api.plans.getCheckoutLink('41cf33a2-136e-4959-b5c7-73889ab94eff', {
+const checkoutLink = await api.plans.getCheckoutLink('{{PLAN_UUID}}', {
   cancelUrl: 'https://example.com/cancel',
   successUrl: 'https://example.com/success',
-  granteeId: 'userId-1234',
-  member: 'member-123',
+  granteeId: 'userId-1',
+  member: 'orgId_1',
 });
 ```
 
@@ -27,7 +27,7 @@ const checkoutLink = await api.plans.getCheckoutLink('41cf33a2-136e-4959-b5c7-73
 
 _Type:_ `string`
 
-Plan `uuid` of the plan you wish to retrieve
+The `uuid` of the Plan to get the checkout link from
 
 ##### queryParams (_required_)
 
@@ -59,4 +59,4 @@ Query parameters to be passed in to the checkout config
 
 ## Return Type
 
-`string`
+For more information about this request see our API documentation on [Plan checkout link](https://docs.salable.app/api#tag/Plans/operation/getPlanCheckoutLink)
