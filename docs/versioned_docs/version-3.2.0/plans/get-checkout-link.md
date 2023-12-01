@@ -33,7 +33,7 @@ const { Salable } = require('@salable/node-sdk');
 
 _Type:_ `string`
 
-Plan `uuid` of the plan you wish to retrieve
+The `uuid` of the Plan to return the Currencies from
 
 ##### queryParams (_required_)
 
