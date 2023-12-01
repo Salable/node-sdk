@@ -15,7 +15,7 @@ const { Salable } = require('@salable/node-sdk');
   const salable = new Salable('{{API-KEY}}');
 
   try {
-    const product = await salable.products.getOne('41cf33a2-136e-4959-b5c7-73889ab94eff');
+    const product = await salable.products.getOne('{{PRODUCT_UUID}}');
   } catch (err) {
     console.error(err);
   }
@@ -28,7 +28,7 @@ const { Salable } = require('@salable/node-sdk');
 
 _Type:_ `string`
 
-Product `uuid` of the product you wish to retrieve
+The `uuid` of the Product to be returned
 
 ## Return Type
 
