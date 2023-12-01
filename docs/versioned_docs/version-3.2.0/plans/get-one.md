@@ -15,7 +15,7 @@ const { Salable } = require('@salable/node-sdk');
   const salable = new Salable('{{API-KEY}}');
 
   try {
-    const plan = await salable.plans.getOne('41cf33a2-136e-4959-b5c7-73889ab94eff');
+    const plan = await salable.plans.getOne('{{PLAN_UUID}}');
   } catch (err) {
     console.error(err);
   }
