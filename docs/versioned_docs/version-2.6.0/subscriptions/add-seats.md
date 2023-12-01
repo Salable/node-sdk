@@ -13,7 +13,7 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}');
 
-const subscription = await salable.subscriptions.addSeats('{{SUBSCRIPTION_UUID}}', {
+await salable.subscriptions.addSeats('{{SUBSCRIPTION_UUID}}', {
   increment: 2,
 });
 ```
@@ -24,7 +24,7 @@ const subscription = await salable.subscriptions.addSeats('{{SUBSCRIPTION_UUID}}
 
 _Type:_ `string`
 
-The `uuid` of the Subscription where seats will be added
+The `uuid` of the Subscription where the seats will be added
 
 ##### config (_required_)
 
