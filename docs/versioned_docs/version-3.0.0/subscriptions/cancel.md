@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Cancel a Subscription
 
-Cancels a Subscription with options for when the Subscription cancels.
+Cancels a Subscription with options for when it terminates.
 
 ## Code Sample
 
@@ -28,7 +28,7 @@ The `uuid` of the Subscription to be canceled
 
 _Type:_ `end` | `now`
 
-| When | Description                                                              |
-| ---- | ------------------------------------------------------------------------ |
-| now  | Immediately cancels the Subscription                                     |
-| end  | Cancels the Subscription at the end of the Subscription's billing period |
+| When | Description                                                |
+| ---- | ---------------------------------------------------------- |
+| now  | Immediately cancels the Subscription                       |
+| end  | Cancels the Subscription at the end of it's billing period |
