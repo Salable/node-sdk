@@ -33,7 +33,9 @@ describe('Unit | ThirdPartyAPI | Licenses', () => {
         );
       });
       it('Check capabilities: should return empty response with the response unchanged', async () => {
-        fetch.mockResponse('');
+        fetch.mockResponse('', {
+          headers: { 'Content-Type': 'text/plain' },
+        });
         const fetchedLicenses = await api.check('xxxxx', ['aaaaa']);
         expect(fetchedLicenses).toStrictEqual('');
         expect(requestSpyOn).toHaveBeenCalledWith(
