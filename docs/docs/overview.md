@@ -19,8 +19,8 @@ const salable = new Salable('{{API_KEY}}');
 To get up and running, you need to work through the following steps.
 
 - Set up a Salable Account and Organization
-- Connect either Stripe or Paddle to Salable (You can skip this for a free product)
-- Build your products and plans
 - Generate your API key
+- Connect Stripe to Salable (You can skip this for a free product)
+- Build your products and plans
 - Install the Node SDK to your project
 - Make your first SDK call

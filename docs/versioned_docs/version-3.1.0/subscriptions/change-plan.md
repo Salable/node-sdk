@@ -11,7 +11,7 @@ Move a Subscription to a new Plan. Proration behaviour can optionally be set.
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{API-KEY}');
+const salable = new Salable('{{API_KEY}}');
 
 const changeSubscriptionPlan = await salable.subscriptions.changePlan('{{SUBSCRIPTION_UUID}}', {
   planUuid: '{{PLAN_UUID}}',

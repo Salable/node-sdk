@@ -11,7 +11,7 @@ This method will create a new permission
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{API-KEY}');
+const salable = new Salable('{{API_KEY}}');
 
 const permission = await salable.rbac.permissions.create({
   value: 'some-value',

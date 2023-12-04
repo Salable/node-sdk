@@ -11,7 +11,7 @@ Returns the details of a single product.
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{API-KEY}');
+const salable = new Salable('{{API_KEY}}');
 
 const product = await salable.products.getOne('{{PRODUCT_UUID}}');
 ```

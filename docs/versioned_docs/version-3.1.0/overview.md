@@ -11,7 +11,7 @@ Our Node SDK exposes HTTP endpoints that accept requests with JSON arguments and
 ```ts
 import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{API-KEY}');
+const salable = new Salable('{{API_KEY}}');
 ```
 
 > NOTE: If you'd like to use test mode, make sure to use an API key generated in test mode (prefixed with `test_`).

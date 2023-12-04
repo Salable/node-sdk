@@ -11,7 +11,7 @@ Remove seats from a Subscription. Seats can only be removed if they are unassign
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{API-KEY}');
+const salable = new Salable('{{API_KEY}}');
 
 await salable.subscriptions.removeSeats('{{SUBSCRIPTION_UUID}}', { decrement: 2 });
 ```

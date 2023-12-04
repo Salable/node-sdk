@@ -11,7 +11,7 @@ This method will create a new role
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{API-KEY}');
+const salable = new Salable('{{API_KEY}}');
 
 const role = await salable.rbac.roles.create({
   name: 'some-name',
