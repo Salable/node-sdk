@@ -4,49 +4,32 @@ sidebar_position: 4
 
 # Add Subscription Seats
 
-Adds seats to a subscription
+Adds seats to a Subscription. Once created, the seats will be unassigned. To assign the seats use the [update many](../licenses/update-many.md) method of the SDK and set the `granteeId` of each seat.
 
 ## Code Sample
 
 ```typescript
-const { Salable } = require('@salable/node-sdk');
+import { Salable } from '@salable/node-sdk';
 
-(async () => {
-  const salable = new Salable('{{API-KEY}}');
+const salable = new Salable('{{API_KEY}}');
 
-  try {
-    const subscription = await salable.subscriptions.addSeats(
-      '41cf33a2-136e-4959-b5c7-73889ab94eff',
-      {
-        increment: 2,
-      }
-    );
-  } catch (err) {
-    console.error(err);
-  }
-})();
+await salable.subscriptions.addSeats('{{SUBSCRIPTION_UUID}}', {
+  increment: 2,
+});
 ```
 
 ## Parameters
 
-### subscriptionId (_required_)
+##### subscriptionId (_required_)
 
 _Type:_ `string`
 
-Subscription `uuid` of the subscription you wish to retrieve
+The `uuid` of the Subscription where the seats will be added
 
-### config (_required_)
+##### config (_required_)
 
 _Type:_ `ISubscriptionAddSeatsParams`
 
-All config options which can be passed in to this method
-
-#### increment (_required_)
-
-_Type:_ `number`
-
-The number of seats you wish to add
-
-## Return Type
-
-void
+| Option    | Description                       |
+| --------- | --------------------------------- |
+| increment | The number of seats to be created |

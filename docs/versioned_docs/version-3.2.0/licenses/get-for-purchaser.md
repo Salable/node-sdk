@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 5
 ---
 
 # Get Licenses for a Purchaser
@@ -9,16 +9,11 @@ Returns licenses for a purchaser on a product
 ## Code Sample
 
 ```typescript
-const { Salable } = require('@salable/node-sdk');
-(async () => {
-  const salable = new Salable('{{API-KEY}}');
+import { Salable } from '@salable/node-sdk';
 
-  try {
-    const licenses = await salable.licenses.getForPurchaser('orgId_1', '{{PRODUCT_UUID}}');
-  } catch (err) {
-    console.error(err);
-  }
-})();
+const salable = new Salable('{{API_KEY}}');
+
+const licenses = await salable.licenses.getForPurchaser('orgId_1', '{{PRODUCT_UUID}}');
 ```
 
 ## Parameters
