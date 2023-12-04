@@ -29,7 +29,7 @@ const pricingTable = await salable.products.getPricingTable('{{PRODUCT_UUID}}', 
 
 _Type:_ `string`
 
-The `uuid` of the Product to build the pricing table from
+The `uuid` of the Product to build the pricing table for
 
 ---
 
