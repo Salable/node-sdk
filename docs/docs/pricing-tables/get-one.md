@@ -8,6 +8,9 @@ Returns all necessary data on a display a pricing table.
 
 ## Code Sample
 
+<details open>
+<summary>Example with required properties set</summary>
+
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
@@ -23,6 +26,79 @@ const pricingTable = await salable.pricingTables.getOne('{{PRICING_TABLE_UUID}}'
 });
 ```
 
+</details>
+
+<details>
+<summary>Example with individual plan properties set</summary>
+
+```typescript
+import { Salable } from '@salable/node-sdk';
+
+const salable = new Salable('{{API_KEY}}');
+
+const pricingTable = await salable.pricingTables.getOne('{{PRICING_TABLE_UUID}}', {
+  globalPlanOptions: {
+    granteeId: 'userId_1',
+    member: 'orgId_1',
+    cancelUrl: 'https://example.com/cancel',
+    successUrl: 'https://example.com/success',
+  },
+  individualPlanOptions: {
+    '{{PLAN_UUID}}': {
+      granteeId: 'userId_2',
+    },
+  },
+});
+```
+
+</details>
+
+<details>
+<summary>Example with customer details set</summary>
+
+```typescript
+import { Salable } from '@salable/node-sdk';
+
+const salable = new Salable('{{API_KEY}}');
+
+const pricingTable = await salable.pricingTables.getOne('{{PRICING_TABLE_UUID}}', {
+  globalPlanOptions: {
+    granteeId: 'userId_1',
+    member: 'orgId_1',
+    cancelUrl: 'https://example.com/cancel',
+    successUrl: 'https://example.com/success',
+    customer: {
+      email: 'person@company.com',
+    },
+  },
+});
+```
+
+</details>
+
+<details>
+<summary>Example with vat details set (Paddle only)</summary>
+
+```typescript
+import { Salable } from '@salable/node-sdk';
+
+const salable = new Salable('{{API_KEY}}');
+
+const pricingTable = await salable.pricingTables.getOne('{{PRICING_TABLE_UUID}}', {
+  globalPlanOptions: {
+    granteeId: 'userId_1',
+    member: 'orgId_1',
+    cancelUrl: 'https://example.com/cancel',
+    successUrl: 'https://example.com/success',
+    vat: {
+      companyName: 'Company Name',
+    },
+  },
+});
+```
+
+</details>
+
 ## Parameters
 
 ##### pricingTableUuid (_required_)
@@ -37,7 +113,7 @@ The `uuid` of the Pricing Table to build
 
 _Type:_ `PricingTableParameters`
 
-Query parameters to be passed in to the checkout config
+Below is the list of properties than can be used in the `queryParams` argument.
 
 **globalPlanOptions**  
 The `globalPlanOptions` are default parameters that apply to all plans listed in the pricing table. These settings apply to each plan unless overridden by `individualPlanOptions`.
@@ -78,28 +154,6 @@ You can use `individualPlanOptions` to override `globalPlanOptions` for any plan
 | successUrl    | The URL to send users if they have successfully completed a purchase |      ❌      |
 | cancelUrl     | The URL to send users to if the transaction fails.                   |      ❌      |
 | granteeId     | Value to use as granteeId on Plan                                    |      ❌      |
-
-##### Code sample using individualPlanOptions
-
-```typescript
-import { Salable } from '@salable/node-sdk';
-
-const salable = new Salable('{{API_KEY}}');
-
-const pricingTable = await salable.pricingTables.getOne('{{PRICING_TABLE_UUID}}', {
-  globalPlanOptions: {
-    granteeId: 'userId_1',
-    member: 'orgId_1',
-    cancelUrl: 'https://example.com/cancel',
-    successUrl: 'https://example.com/success',
-  },
-  individualPlanOptions: {
-    '{{PLAN_UUID}}': {
-      granteeId: 'userId_2',
-    },
-  },
-});
-```
 
 ## Return Type
 

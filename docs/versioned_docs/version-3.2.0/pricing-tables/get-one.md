@@ -37,7 +37,7 @@ The `uuid` of the Pricing Table to build
 
 _Type:_ `PricingTableParameters`
 
-Query parameters to be passed in to the checkout config
+Below is the list of properties than can be used in the `queryParams` argument.
 
 **globalPlanOptions**  
 The `globalPlanOptions` are default parameters that apply to all plans listed in the pricing table. These settings apply to each plan unless overridden by `individualPlanOptions`.
