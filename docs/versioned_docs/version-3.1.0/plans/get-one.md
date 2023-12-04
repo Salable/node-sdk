@@ -11,7 +11,7 @@ Returns the details of a single plan.
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{API-KEY}');
+const salable = new Salable('{{API_KEY}}');
 
 const plan = await salable.plans.getOne('{{PLAN_UUID}}');
 ```

@@ -11,7 +11,7 @@ Returns all necessary data on a Product to be able to display a pricing table. E
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{API-KEY}');
+const salable = new Salable('{{API_KEY}}');
 
 const pricingTable = await salable.products.getPricingTable('{{PRODUCT_UUID}}', {
   globalPlanOptions: {
@@ -84,7 +84,7 @@ You can use `individualPlanOptions` to override `globalPlanOptions` for any plan
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{API-KEY}');
+const salable = new Salable('{{API_KEY}}');
 
 const pricingTable = await salable.products.getPricingTable('{{PRODUCT_UUID}}', {
   globalPlanOptions: {

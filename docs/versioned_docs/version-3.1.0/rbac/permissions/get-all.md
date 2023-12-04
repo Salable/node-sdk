@@ -11,7 +11,7 @@ This method returns all permissions
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{API-KEY}');
+const salable = new Salable('{{API_KEY}}');
 
 const permissions = await salable.rbac.permissions.getAll();
 ```

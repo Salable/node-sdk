@@ -11,7 +11,7 @@ This method will create a new user
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{API-KEY}');
+const salable = new Salable('{{API_KEY}}');
 
 const user = await salable.rbac.users.create({
   id: 'some-id',

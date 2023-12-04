@@ -11,7 +11,7 @@ Returns the details of a single subscription.
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{API-KEY}');
+const salable = new Salable('{{API_KEY}}');
 
 const subscription = await salable.subscriptions.getOne('{{SUBSCRIPTION_UUID}}');
 ```

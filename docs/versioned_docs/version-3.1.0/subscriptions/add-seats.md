@@ -11,7 +11,7 @@ Adds seats to a Subscription. Initially the seats will be unassigned. To assign 
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{API-KEY}');
+const salable = new Salable('{{API_KEY}}');
 
 await salable.subscriptions.addSeats('{{SUBSCRIPTION_UUID}}', { increment: 2 });
 ```

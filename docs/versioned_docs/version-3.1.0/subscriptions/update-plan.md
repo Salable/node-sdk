@@ -11,7 +11,7 @@ Update the subscription to a new plan.
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{API-KEY}');
+const salable = new Salable('{{API_KEY}}');
 
 const subscription = await salable.subscriptions.updatePlan(
   '{{PLAN_UUID}}',

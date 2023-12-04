@@ -11,7 +11,7 @@ Cancels a Subscription with options for when it terminates.
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{API-KEY}');
+const salable = new Salable('{{API_KEY}}');
 
 const subscription = await salable.subscriptions.cancel('{{SUBSCRIPTION_UUID}}', 'end');
 ```

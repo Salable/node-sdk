@@ -86,7 +86,7 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}');
 
-const pricingTable = await salable.pricingTables.getOne('pricing-table-uuid', {
+const pricingTable = await salable.pricingTables.getOne('{{PRICING_TABLE_UUID}}', {
   globalPlanOptions: {
     granteeId: 'userId_1',
     member: 'orgId_1',

@@ -11,7 +11,7 @@ Returns the checkout link for a plan. This endpoint will only work for paid Plan
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{API-KEY}');
+const salable = new Salable('{{API_KEY}}');
 
 const checkoutLink = await api.plans.getCheckoutLink('{{PLAN_UUID}}', {
   cancelUrl: 'https://example.com/cancel',

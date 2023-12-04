@@ -11,7 +11,7 @@ Returns a list of all the currencies associated with a product
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{API-KEY}');
+const salable = new Salable('{{API_KEY}}');
 
 const currencies = await salable.products.getCurrencies();
 ```
