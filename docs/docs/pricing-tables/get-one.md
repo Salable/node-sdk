@@ -100,3 +100,7 @@ const pricingTable = await salable.pricingTables.getOne('{{PRICING_TABLE_UUID}}'
   },
 });
 ```
+
+## Return Type
+
+For more information about this request see our API documentation on [Pricing Table](https://docs.salable.app/api#tag/Pricing-Tables/operation/getPricingTableByUuid)
