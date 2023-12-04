@@ -13,9 +13,7 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}');
 
-await salable.subscriptions.removeSeats('{{SUBSCRIPTION_UUID}}', {
-  decrement: 2,
-});
+await salable.subscriptions.removeSeats('{{SUBSCRIPTION_UUID}}', { decrement: 2 });
 ```
 
 ## Parameters
@@ -24,7 +22,7 @@ await salable.subscriptions.removeSeats('{{SUBSCRIPTION_UUID}}', {
 
 _Type:_ `string`
 
-The `uuid` of the Subscription where the seats will be removed
+The `uuid` of the Subscription the seats will be removed from
 
 ##### config (_required_)
 
