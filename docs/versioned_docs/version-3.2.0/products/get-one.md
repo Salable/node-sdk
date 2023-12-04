@@ -9,17 +9,11 @@ Returns the details of a single product.
 ## Code Sample
 
 ```typescript
-const { Salable } = require('@salable/node-sdk');
+import { Salable } from '@salable/node-sdk';
 
-(async () => {
-  const salable = new Salable('{{API-KEY}}');
+const salable = new Salable('{{API_KEY}}');
 
-  try {
-    const product = await salable.products.getOne('41cf33a2-136e-4959-b5c7-73889ab94eff');
-  } catch (err) {
-    console.error(err);
-  }
-})();
+const product = await salable.products.getOne('{{PRODUCT_UUID}}');
 ```
 
 ## Parameters
@@ -28,7 +22,7 @@ const { Salable } = require('@salable/node-sdk');
 
 _Type:_ `string`
 
-Product `uuid` of the product you wish to retrieve
+The `uuid` of the Product to be returned
 
 ## Return Type
 

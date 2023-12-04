@@ -9,19 +9,13 @@ Increments usage count on a License
 ## Code Sample
 
 ```typescript
-const { Salable } = require('@salable/node-sdk');
+import { Salable } from '@salable/node-sdk';
 
-(async () => {
-  const salable = new Salable('{{API-KEY}}');
+const salable = new Salable('{{API_KEY}}');
 
-  try {
-    await salable.usage.update('{{LICENSE_UUID}}', '{{FEATURE_VARIABLE_NAME}}', {
-      increment: 2,
-    });
-  } catch (err) {
-    console.error(err);
-  }
-})();
+await salable.usage.update('{{LICENSE_UUID}}', '{{FEATURE_VARIABLE_NAME}}', {
+  increment: 2,
+});
 ```
 
 ## Parameters
