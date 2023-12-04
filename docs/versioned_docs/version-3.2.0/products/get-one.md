@@ -9,17 +9,11 @@ Returns the details of a single product.
 ## Code Sample
 
 ```typescript
-const { Salable } = require('@salable/node-sdk');
+import { Salable } from '@salable/node-sdk';
 
-(async () => {
-  const salable = new Salable('{{API-KEY}}');
+const salable = new Salable('{{API_KEY}}');
 
-  try {
-    const product = await salable.products.getOne('{{PRODUCT_UUID}}');
-  } catch (err) {
-    console.error(err);
-  }
-})();
+const product = await salable.products.getOne('{{PRODUCT_UUID}}');
 ```
 
 ## Parameters

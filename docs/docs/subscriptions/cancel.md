@@ -1,10 +1,10 @@
 ---
-sidebar_position: 3
+sidebar_position: 6
 ---
 
 # Cancel a Subscription
 
-Cancels a subscription.
+Cancels a Subscription with options for when it terminates.
 
 ## Code Sample
 
@@ -13,10 +13,7 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}');
 
-const subscription = await salable.subscriptions.cancel(
-  '41cf33a2-136e-4959-b5c7-73889ab94eff',
-  'end'
-);
+await salable.subscriptions.cancel('{{SUBSCRIPTION_UUID}}', 'end');
 ```
 
 ## Parameters
@@ -31,8 +28,11 @@ The `uuid` of the Subscription to be canceled
 
 _Type:_ `end` | `now`
 
-Whether you want to cancel the subscription now or end of cycle
+| When | Description                                                |
+| ---- | ---------------------------------------------------------- |
+| now  | Immediately cancels the Subscription                       |
+| end  | Cancels the Subscription at the end of it's billing period |
 
 ## Return Type
 
-void
+Return void

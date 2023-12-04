@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 2
 ---
 
 # Get One License
@@ -9,16 +9,11 @@ Returns a single license
 ## Code Sample
 
 ```typescript
-const { Salable } = require('@salable/node-sdk');
-(async () => {
-  const salable = new Salable('{{API-KEY}}');
+import { Salable } from '@salable/node-sdk';
 
-  try {
-    const licenses = await salable.licenses.getOne('{{LICENSE_UUID}}');
-  } catch (err) {
-    console.error(err);
-  }
-})();
+const salable = new Salable('{{API_KEY}}');
+
+const license = await salable.licenses.getOne('{{LICENSE_UUID}}');
 ```
 
 ## Return Type
