@@ -22,7 +22,7 @@ const plan = await salable.plans.getCurrencies('41cf33a2-136e-4959-b5c7-73889ab9
 
 _Type:_ `string`
 
-Plan `uuid` of the plan you wish to retrieve
+The `uuid` of the Plan to return the Currencies from
 
 ## Return Type
 
