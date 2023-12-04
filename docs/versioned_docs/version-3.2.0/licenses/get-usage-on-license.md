@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 6
 ---
 
 # Get usage on a License
@@ -9,16 +9,11 @@ Returns usage count on a License
 ## Code Sample
 
 ```typescript
-const { Salable } = require('@salable/node-sdk');
-(async () => {
-  const salable = new Salable('{{API-KEY}}');
+import { Salable } from '@salable/node-sdk';
 
-  try {
-    const licenses = await salable.licenses.getUsage('{{LICENSE_UUID}}');
-  } catch (err) {
-    console.error(err);
-  }
-})();
+const salable = new Salable('{{API_KEY}}');
+
+const licenses = await salable.licenses.getUsage('{{LICENSE_UUID}}');
 ```
 
 ## Parameters

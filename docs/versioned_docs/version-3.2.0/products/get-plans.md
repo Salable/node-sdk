@@ -9,16 +9,11 @@ Returns a list of all the plans associated with a product
 ## Code Sample
 
 ```typescript
-const { Salable } = require('@salable/node-sdk');
-(async () => {
-  const salable = new Salable('{{API-KEY}}');
+import { Salable } from '@salable/node-sdk';
 
-  try {
-    const plans = await salable.products.getPlans();
-  } catch (err) {
-    console.error(err);
-  }
-})();
+const salable = new Salable('{{API_KEY}}');
+
+const plans = await salable.products.getPlans();
 ```
 
 ## Return Type
