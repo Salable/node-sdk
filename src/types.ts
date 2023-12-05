@@ -266,7 +266,7 @@ export interface ICapability {
 export interface IProduct {
   uuid: string;
   name: string;
-  description: string | null;
+  description?: string;
   logoUrl?: string;
   displayName: string;
   organisation: string;
