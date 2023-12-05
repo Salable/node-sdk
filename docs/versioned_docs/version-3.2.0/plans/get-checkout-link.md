@@ -10,9 +10,6 @@ Returns the checkout link for a plan. This endpoint will only work for paid Plan
 
 #### Required parameters
 
-<details open>
-<summary>Example with required properties set</summary>
-
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
@@ -26,12 +23,7 @@ const checkoutLink = await api.plans.getCheckoutLink('{{PLAN_UUID}}', {
 });
 ```
 
-</details>
-
 #### Customer details
-
-<details open>
-<summary>Example with customer details set</summary>
 
 ```typescript
 import { Salable } from '@salable/node-sdk';
@@ -49,12 +41,7 @@ const checkoutLink = await api.plans.getCheckoutLink('{{PLAN_UUID}}', {
 });
 ```
 
-</details>
-
 #### VAT (Paddle only)
-
-<details open>
-<summary>Example with vat details set</summary>
 
 ```typescript
 import { Salable } from '@salable/node-sdk';
@@ -77,8 +64,6 @@ const checkoutLink = await api.plans.getCheckoutLink('{{PLAN_UUID}}', {
   },
 });
 ```
-
-</details>
 
 ## Parameters
 
