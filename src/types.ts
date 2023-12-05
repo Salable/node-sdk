@@ -52,7 +52,11 @@ export interface ILicense {
   startTime: string;
   endTime: string;
   updatedAt: string;
+  flags: Flags | null;
+  isTest: boolean;
 }
+
+export type Flags = Record<string, boolean | string | number>;
 
 export interface ISubscription {
   uuid: string;
@@ -67,6 +71,7 @@ export interface ISubscription {
   expiryDate: string;
   licenseUuid: string;
   planUuid: string;
+  isTest: boolean;
 }
 
 export type Proration = 'create_prorations' | 'none' | 'always_invoice';
@@ -99,6 +104,8 @@ export interface IPlan {
   productUuid: string;
   salablePlan: boolean;
   updatedAt: string;
+  isTest: boolean;
+  flags: Flags | null;
 }
 
 export interface IFeature {
@@ -263,7 +270,7 @@ export interface ICapability {
 export interface IProduct {
   uuid: string;
   name: string;
-  description?: string;
+  description: string | null;
   logoUrl?: string;
   displayName: string;
   organisation: string;
@@ -272,6 +279,20 @@ export interface IProduct {
   organisationPaymentIntegrationUuid: string;
   paymentIntegrationProductId?: string;
   updatedAt: string;
+  isTest: boolean;
+  // uuid: '37bd3de5-b2d6-4ce3-9327-7b5ca040edcb',
+  // name: 'Paid Product 07-05 2.0',
+  // description: '',
+  // logoUrl: null,
+  // displayName: 'Paid Product 07-05 2.0',
+  // organisation: 'org_2V6lhX45FKEvAB2z8K3Mom0gyvH',
+  // status: 'ACTIVE',
+  // paid: true,
+  // organisationPaymentIntegrationUuid: '9351d007-0a2b-4ca6-8fc6-f8b22f0974b7',
+  // paymentIntegrationProductId: 'prod_OxkDQO1WgKy3MS',
+  // appType: 'custom',
+  // updatedAt: '2023-11-07T12:50:08.897Z',
+  // isTest: false
 }
 
 export interface IProductCapabilityResponse {
@@ -337,6 +358,7 @@ export interface IOrganisationPaymentIntegration {
   };
   accountId: string;
   updatedAt: string;
+  isTest: boolean;
 }
 
 export interface IProductPricingTableResponse extends IProduct {
