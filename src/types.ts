@@ -52,6 +52,7 @@ export interface ILicense {
   startTime: string;
   endTime: string;
   updatedAt: string;
+  isTest: boolean;
 }
 
 export interface ISubscription {
@@ -67,6 +68,7 @@ export interface ISubscription {
   expiryDate: string;
   licenseUuid: string;
   planUuid: string;
+  isTest: boolean;
 }
 
 export type Proration = 'create_prorations' | 'none' | 'always_invoice';
@@ -99,6 +101,7 @@ export interface IPlan {
   productUuid: string;
   salablePlan: boolean;
   updatedAt: string;
+  isTest: boolean;
 }
 
 export interface IFeature {
@@ -272,6 +275,7 @@ export interface IProduct {
   organisationPaymentIntegrationUuid: string;
   paymentIntegrationProductId?: string;
   updatedAt: string;
+  isTest: boolean;
 }
 
 export interface IProductCapabilityResponse {
@@ -337,6 +341,7 @@ export interface IOrganisationPaymentIntegration {
   };
   accountId: string;
   updatedAt: string;
+  isTest: boolean;
 }
 
 export interface IProductPricingTableResponse extends IProduct {
