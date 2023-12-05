@@ -10,9 +10,6 @@ Returns all necessary data on a Product to be able to display a pricing table. E
 
 #### Required parameters
 
-<details open>
-<summary>Example with required properties set</summary>
-
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
@@ -28,12 +25,7 @@ const pricingTable = await salable.product.getPricingTable('{{PRODUCT_UUID}}', {
 });
 ```
 
-</details>
-
 #### Individual plans
-
-<details open>
-<summary>Example with individual plan properties set</summary>
 
 ```typescript
 import { Salable } from '@salable/node-sdk';
@@ -57,12 +49,7 @@ const pricingTable = await salable.product.getPricingTable('{{PRODUCT_UUID}}', {
 });
 ```
 
-</details>
-
 #### Customer details
-
-<details open>
-<summary>Example with customer details set</summary>
 
 ```typescript
 import { Salable } from '@salable/node-sdk';
@@ -82,12 +69,7 @@ const pricingTable = await salable.product.getPricingTable('{{PRODUCT_UUID}}', {
 });
 ```
 
-</details>
-
 #### VAT (Paddle only)
-
-<details open>
-<summary>Example with vat details set</summary>
 
 ```typescript
 import { Salable } from '@salable/node-sdk';
@@ -112,8 +94,6 @@ const pricingTable = await salable.product.getPricingTable('{{PRODUCT_UUID}}', {
   },
 });
 ```
-
-</details>
 
 ## Parameters
 

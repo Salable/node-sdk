@@ -10,9 +10,6 @@ Returns all necessary data on a display a pricing table.
 
 #### Required parameters
 
-<details open>
-<summary>Example with required properties set</summary>
-
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
@@ -28,12 +25,7 @@ const pricingTable = await salable.pricingTables.getOne('{{PRICING_TABLE_UUID}}'
 });
 ```
 
-</details>
-
 #### Individual plans
-
-<details open>
-<summary>Example with individual plan properties set</summary>
 
 ```typescript
 import { Salable } from '@salable/node-sdk';
@@ -57,12 +49,7 @@ const pricingTable = await salable.pricingTables.getOne('{{PRICING_TABLE_UUID}}'
 });
 ```
 
-</details>
-
 #### Customer details
-
-<details open>
-<summary>Example with customer details set</summary>
 
 ```typescript
 import { Salable } from '@salable/node-sdk';
@@ -82,12 +69,7 @@ const pricingTable = await salable.pricingTables.getOne('{{PRICING_TABLE_UUID}}'
 });
 ```
 
-</details>
-
 #### VAT (Paddle only)
-
-<details open>
-<summary>Example with vat details set</summary>
 
 ```typescript
 import { Salable } from '@salable/node-sdk';
@@ -112,8 +94,6 @@ const pricingTable = await salable.pricingTables.getOne('{{PRICING_TABLE_UUID}}'
   },
 });
 ```
-
-</details>
 
 ## Parameters
 
