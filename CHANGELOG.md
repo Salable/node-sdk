@@ -1,3 +1,10 @@
+## [3.2.1](https://github.com/Salable/node-sdk/compare/v3.2.0...v3.2.1) (2023-12-05)
+
+
+### Bug Fixes
+
+* added isTest to the response types ([46ba143](https://github.com/Salable/node-sdk/commit/46ba14365b7393b43a4d0417ecf6785d60633bc6))
+
 # [3.2.0](https://github.com/Salable/node-sdk/compare/v3.1.0...v3.2.0) (2023-11-27)
 
 
