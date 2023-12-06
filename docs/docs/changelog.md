@@ -4,6 +4,12 @@ sidebar_position: 2
 
 # Changelog
 
+## v3.2.1
+
+### Types
+
+Updated `ILicense`, `ISubscription`, `IPlan`, `IProduct`, `IOrganisationPaymentIntegration` to include `isTest: boolean`
+
 ## v3.2.0
 
 ### Licenses
