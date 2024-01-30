@@ -59,8 +59,8 @@ export default class Plans extends Base {
 
     for (const key of Object.keys(flatParams)) {
       const itemKey = key as PlanCheckoutKey;
-      const itemValue = flatParams[itemKey];
-      if (itemValue) encodedParams.set(itemKey, String(itemValue));
+      const itemValue = String(flatParams[itemKey]);
+      if (itemValue) encodedParams.set(itemKey, itemValue);
     }
 
     return this._request<IPlanCheckoutResponse>(
