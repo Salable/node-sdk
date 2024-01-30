@@ -11,9 +11,9 @@ Increments usage count on a License
 ```typescript
 const { SalableApi } = require('@salable/node-sdk');
 
-const api = new SalableApi('API-KEY');
+const salable = new SalableApi('API-KEY');
 
-await api.usage.updateUsage('41cf33a2-136e-4959-b5c7-73889ab94eff', 'new-feature', {
+await salable.usage.updateUsage('41cf33a2-136e-4959-b5c7-73889ab94eff', 'new-feature', {
   increment: 2,
 });
 ```
