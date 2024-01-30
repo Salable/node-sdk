@@ -126,6 +126,7 @@ export interface ICheckoutDefaultParams {
   promoCode?: string;
   allowPromoCode?: string;
   customMessage?: string;
+  currency?: SupportedCurrencies;
 }
 
 export interface ICheckoutCustomerParams {
@@ -152,6 +153,7 @@ export interface IPlanCheckoutParams
   cancelUrl: string;
   contactUsLink?: string;
   granteeId: string;
+  quantity?: number;
 }
 
 export interface IPricingTableParams
@@ -166,6 +168,7 @@ export interface IPricingTableParams
 
 export type PlanCheckoutKey = keyof IPlanCheckoutParams;
 export type PricingTableCheckoutKey = keyof IPricingTableParams;
+export type SupportedCurrencies = 'USD' | 'EUR' | 'GBP';
 
 export interface IPlanCheckoutInputParams {
   successUrl: string;
@@ -177,6 +180,8 @@ export interface IPlanCheckoutInputParams {
   couponCode?: string;
   promoCode?: string;
   allowPromoCode?: string;
+  quantity?: number;
+  currency?: SupportedCurrencies;
   customer?: {
     email?: string;
     country?: string;
@@ -200,6 +205,7 @@ export interface IDefaultCheckoutInputParams {
   promoCode?: string;
   allowPromoCode?: string;
   customMessage?: string;
+  currency?: SupportedCurrencies;
   customer?: {
     email?: string;
     country?: string;
@@ -305,6 +311,7 @@ export type PricingTableParameters = {
     couponCode?: string;
     promoCode?: string;
     allowPromoCode?: string;
+    currency?: SupportedCurrencies;
     customer?: {
       email?: string;
       country?: string;

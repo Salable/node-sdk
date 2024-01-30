@@ -1,6 +1,7 @@
 import fetch from 'jest-fetch-mock';
 import { BaseRequest } from '../base';
 import PricingTables from './index';
+import { PricingTableParameters } from '@/src/types';
 
 const api = new PricingTables('test-key');
 const requestSpyOn = jest.spyOn(api as unknown as { _request: BaseRequest }, '_request');
@@ -16,8 +17,8 @@ beforeEach(() => {
   });
 });
 
-describe('Unit | ThirdPartyAPI | Products', () => {
-  const data = {
+describe('Unit | ThirdPartyAPI | Pricing Tables', () => {
+  const data: PricingTableParameters = {
     globalPlanOptions: {
       successUrl: 'aaaaa',
       cancelUrl: 'aaaaa',
@@ -29,6 +30,7 @@ describe('Unit | ThirdPartyAPI | Products', () => {
       customMessage: 'Custom Message',
       allowPromoCode: 'true',
       marketingConsent: 'true',
+      currency: 'USD',
       vat: {
         companyName: 'Company',
         city: 'City',
@@ -56,7 +58,7 @@ describe('Unit | ThirdPartyAPI | Products', () => {
     const fetchedPricingTable = await api.getOne('xxxxx', data);
     expect(fetchedPricingTable).toStrictEqual(mockResponse);
     expect(requestSpyOn).toHaveBeenCalledWith(
-      'pricing-tables/xxxxx?&globalGranteeId=userId_1&globalSuccessUrl=aaaaa&globalCancelUrl=aaaaa&contactUsLink=aaaaa&member=orgId_1&marketingConsent=true&couponCode=SALE50&promoCode=SALE50&allowPromoCode=true&customMessage=Custom%20Message&customerEmail=customer@email.com&customerCountry=GB&customerPostcode=NR1%201RN&vatCompanyName=Company&vatCity=City&vatNumber=10&vatPostcode=NR1%201RN&vatState=State&vatStreet=Street&vatCountry=GB&granteeIds=planUuid123,userId_2&cancelUrls=planUuid123,bbbbb&successUrls=planUuid123,bbbbb'
+      'pricing-tables/xxxxx?&globalGranteeId=userId_1&globalSuccessUrl=aaaaa&globalCancelUrl=aaaaa&contactUsLink=aaaaa&member=orgId_1&marketingConsent=true&couponCode=SALE50&promoCode=SALE50&allowPromoCode=true&customMessage=Custom%20Message&currency=USD&customerEmail=customer@email.com&customerCountry=GB&customerPostcode=NR1%201RN&vatCompanyName=Company&vatCity=City&vatNumber=10&vatPostcode=NR1%201RN&vatState=State&vatStreet=Street&vatCountry=GB&granteeIds=planUuid123,userId_2&cancelUrls=planUuid123,bbbbb&successUrls=planUuid123,bbbbb'
     );
   });
 

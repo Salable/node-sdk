@@ -1,4 +1,9 @@
-import { ICheckoutCustomerParams, ICheckoutVatParams, IDefaultCheckoutInputParams } from '../types';
+import {
+  ICheckoutCustomerParams,
+  ICheckoutVatParams,
+  IDefaultCheckoutInputParams,
+  SupportedCurrencies,
+} from '../types';
 
 export interface ICheckoutDefaultParameters extends ICheckoutCustomerParams, ICheckoutVatParams {
   marketingConsent?: string;
@@ -6,6 +11,7 @@ export interface ICheckoutDefaultParameters extends ICheckoutCustomerParams, ICh
   promoCode?: string;
   allowPromoCode?: string;
   customMessage?: string;
+  currency?: SupportedCurrencies;
 }
 
 const defaultParametersCheckoutFactory = (
@@ -18,6 +24,7 @@ const defaultParametersCheckoutFactory = (
     promoCode: queryParams.promoCode,
     allowPromoCode: queryParams.allowPromoCode,
     customMessage: queryParams.customMessage,
+    currency: queryParams.currency,
   };
   if (customer) {
     params = Object.assign(params, {

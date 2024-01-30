@@ -52,6 +52,7 @@ export default class Plans extends Base {
         successUrl: queryParams.successUrl,
         cancelUrl: queryParams.cancelUrl,
         contactUsLink: queryParams.contactUsLink,
+        quantity: queryParams.quantity,
       },
       flatCheckoutDefaultParams
     );
@@ -59,7 +60,7 @@ export default class Plans extends Base {
     for (const key of Object.keys(flatParams)) {
       const itemKey = key as PlanCheckoutKey;
       const itemValue = flatParams[itemKey];
-      if (itemValue) encodedParams.set(itemKey, itemValue);
+      if (itemValue) encodedParams.set(itemKey, String(itemValue));
     }
 
     return this._request<IPlanCheckoutResponse>(

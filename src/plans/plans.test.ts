@@ -34,6 +34,8 @@ describe('Unit | ThirdPartyAPI | Plans', () => {
       customMessage: 'Custom Message',
       allowPromoCode: 'true',
       marketingConsent: 'true',
+      currency: 'GBP',
+      quantity: 10,
       vat: {
         companyName: 'Company',
         city: 'City',
@@ -51,7 +53,7 @@ describe('Unit | ThirdPartyAPI | Plans', () => {
     });
     expect(fetchedCheckoutLink).toStrictEqual(mockResponse);
     expect(requestSpyOn).toHaveBeenCalledWith(
-      `plans/xxxxx/checkoutlink?granteeId=userId_1&member=orgId_1&successUrl=successUrl&cancelUrl=cancelUrl&marketingConsent=true&couponCode=SALE50&promoCode=SALE50&allowPromoCode=true&customMessage=Custom+Message&customerEmail=customer%40email.com&customerCountry=GB&customerPostcode=NR1+1RN&vatCompanyName=Company&vatCity=City&vatNumber=10&vatPostcode=NR1+1RN&vatState=State&vatStreet=Street&vatCountry=GB`
+      `plans/xxxxx/checkoutlink?granteeId=userId_1&member=orgId_1&successUrl=successUrl&cancelUrl=cancelUrl&marketingConsent=true&couponCode=SALE50&promoCode=SALE50&allowPromoCode=true&customMessage=Custom+Message&customerEmail=customer%40email.com&customerCountry=GB&customerPostcode=NR1+1RN&vatCompanyName=Company&vatCity=City&vatNumber=10&vatPostcode=NR1+1RN&vatState=State&vatStreet=Street&vatCountry=GB&quantity=10&currency=GBP`
     );
   });
 
