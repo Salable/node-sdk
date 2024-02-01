@@ -1,3 +1,15 @@
+# [3.3.0](https://github.com/Salable/node-sdk/compare/v3.2.1...v3.3.0) (2024-02-01)
+
+
+### Bug Fixes
+
+* fixed licenses cancelMany method ([3cf5fe7](https://github.com/Salable/node-sdk/commit/3cf5fe7c052befd466f94c034214d4dec5043700))
+
+
+### Features
+
+* currency and quantity parameters added checkout link and pricing table methods ([f822750](https://github.com/Salable/node-sdk/commit/f82275015c83fac69df2b0ab7b6b681821334c24))
+
 ## [3.2.1](https://github.com/Salable/node-sdk/compare/v3.2.0...v3.2.1) (2023-12-05)
 
 
