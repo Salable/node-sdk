@@ -11,9 +11,9 @@ Update the subscription to a new plan.
 ```typescript
 const { SalableApi } = require('@salable/node-sdk');
 
-const api = new SalableApi('API-KEY');
+const salable = new SalableApi('API-KEY');
 
-const subscription = await api.subscriptions.changePlan(
+const subscription = await salable.subscriptions.changePlan(
   '41cf33a2-136e-4959-b5c7-73889ab94eff',
   '2dc7b9ab-e3bc-4151-9443-07ddffd7350d'
 );
