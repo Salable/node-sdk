@@ -48,7 +48,7 @@ describe('Unit | ThirdPartyAPI | Products', () => {
   });
 
   it('Get product basic pricing table: should set the global and individual plan options correctly and return the response unchanged', async () => {
-    const fetchedPlan = await api.getPricingTable('xxxxx', {
+    const fetchedPricingTable = await api.getPricingTable('xxxxx', {
       globalPlanOptions: {
         successUrl: 'aaaaa',
         cancelUrl: 'aaaaa',
@@ -60,6 +60,7 @@ describe('Unit | ThirdPartyAPI | Products', () => {
         customMessage: 'Custom Message',
         allowPromoCode: 'true',
         marketingConsent: 'true',
+        currency: 'USD',
         vat: {
           companyName: 'Company',
           city: 'City',
@@ -83,9 +84,9 @@ describe('Unit | ThirdPartyAPI | Products', () => {
         },
       },
     });
-    expect(fetchedPlan).toStrictEqual(mockResponse);
+    expect(fetchedPricingTable).toStrictEqual(mockResponse);
     expect(requestSpyOn).toHaveBeenCalledWith(
-      'products/xxxxx/pricingtable?&globalGranteeId=userId_1&globalSuccessUrl=aaaaa&globalCancelUrl=aaaaa&contactUsLink=aaaaa&member=orgId_1&marketingConsent=true&couponCode=SALE50&promoCode=SALE50&allowPromoCode=true&customMessage=Custom%20Message&customerEmail=customer@email.com&customerCountry=GB&customerPostcode=NR1%201RN&vatCompanyName=Company&vatCity=City&vatNumber=10&vatPostcode=NR1%201RN&vatState=State&vatStreet=Street&vatCountry=GB&granteeIds=planUuid123,userId_2&cancelUrls=planUuid123,bbbbb&successUrls=planUuid123,bbbbb'
+      'products/xxxxx/pricingtable?&globalGranteeId=userId_1&globalSuccessUrl=aaaaa&globalCancelUrl=aaaaa&contactUsLink=aaaaa&member=orgId_1&marketingConsent=true&couponCode=SALE50&promoCode=SALE50&allowPromoCode=true&customMessage=Custom%20Message&currency=USD&customerEmail=customer@email.com&customerCountry=GB&customerPostcode=NR1%201RN&vatCompanyName=Company&vatCity=City&vatNumber=10&vatPostcode=NR1%201RN&vatState=State&vatStreet=Street&vatCountry=GB&granteeIds=planUuid123,userId_2&cancelUrls=planUuid123,bbbbb&successUrls=planUuid123,bbbbb'
     );
   });
 

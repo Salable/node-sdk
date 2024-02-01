@@ -120,3 +120,6 @@ yarn-debug.log*
 yarn-error.log*
 
 **/build
+
+# Testing package js file
+test.mjs

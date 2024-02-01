@@ -196,7 +196,7 @@ export default class Licenses extends Base {
    * @returns {Promise<void>}
    */
   public cancelMany(licenseUuids: string[]) {
-    return this._request<void, LicenseCancelManyBody>(`${RESOURCE_NAMES.LICENSES}`, {
+    return this._request<void, LicenseCancelManyBody>(`${RESOURCE_NAMES.LICENSES}/cancel`, {
       method: 'POST',
       body: { uuids: licenseUuids },
     });

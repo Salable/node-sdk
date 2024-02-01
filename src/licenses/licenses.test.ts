@@ -159,7 +159,7 @@ describe('Unit | ThirdPartyAPI | Licenses', () => {
     });
     const cancelLicenses = await api.cancelMany(['xxxxx', 'aaaaa']);
     expect(cancelLicenses).toStrictEqual('');
-    expect(requestSpyOn).toHaveBeenCalledWith('licenses', {
+    expect(requestSpyOn).toHaveBeenCalledWith('licenses/cancel', {
       method: 'POST',
       body: { uuids: ['xxxxx', 'aaaaa'] },
     });
