@@ -23,12 +23,23 @@ describe('Unit | ThirdPartyAPI | Subscriptions', () => {
     expect(requestSpyOn).toHaveBeenCalledWith('subscriptions/xxxxx');
   });
 
-  it("Update a subscription's plan: should return the response unchanged", async () => {
-    const fetchedSubscription = await api.updatePlan('aaaaa', 'xxxxx');
+  it('Get all subscriptions: with no parameters set it should return the response unchanged', async () => {
+    const fetchedSubscription = await api.getAll();
     expect(fetchedSubscription).toStrictEqual(mockResponse);
-    expect(requestSpyOn).toHaveBeenCalledWith('subscriptions/xxxxx/updateplan/aaaaa', {
-      method: 'PUT',
+    expect(requestSpyOn).toHaveBeenCalledWith('subscriptions');
+  });
+
+  it('Get all subscriptions: with all parameters set it should return the response unchanged', async () => {
+    const fetchedSubscription = await api.getAll({
+      cursor: 'xxxxx',
+      take: 25,
+      email: 'test@example.com',
+      status: 'active',
     });
+    expect(fetchedSubscription).toStrictEqual(mockResponse);
+    expect(requestSpyOn).toHaveBeenCalledWith(
+      'subscriptions?take=25&cursor=xxxxx&email=test@example.com&status=active'
+    );
   });
 
   it("Change a subscription's plan: should return the response unchanged", async () => {
@@ -72,12 +83,19 @@ describe('Unit | ThirdPartyAPI | Subscriptions', () => {
     });
   });
 
-  it('should return an error if subscription plan could not be changed', async () => {
-    fetch.mockReject(() => Promise.reject('Subscription failed to change'));
+  it('Get all invoices for a subscription: should call the endpoint with no parameters set and return the response unchanged', async () => {
+    const fetchedSubscription = await api.getInvoices('xxxxx');
+    expect(fetchedSubscription).toStrictEqual(mockResponse);
+    expect(requestSpyOn).toHaveBeenCalledWith('subscriptions/xxxxx/invoices');
+  });
 
-    await expect(async () => {
-      await api.updatePlan('test-sub-id', 'test-new-plan-id');
-    }).rejects.toBe('Subscription failed to change');
+  it('Get all invoices for a subscription: should call the endpoint with all parameters set and return the response unchanged', async () => {
+    const fetchedSubscription = await api.getInvoices('xxxxx', {
+      cursor: 'aaaaa',
+      take: 25,
+    });
+    expect(fetchedSubscription).toStrictEqual(mockResponse);
+    expect(requestSpyOn).toHaveBeenCalledWith('subscriptions/xxxxx/invoices?take=25&cursor=aaaaa');
   });
 
   // TODO: Discuss what will be returned from change plan endpoint so test can be mocked

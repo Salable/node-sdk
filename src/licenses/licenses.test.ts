@@ -17,10 +17,23 @@ beforeEach(() => {
 });
 
 describe('Unit | ThirdPartyAPI | Licenses', () => {
-  it('Get all licenses: should return the response unchanged', async () => {
+  it('Get all licenses: should return the response unchanged with no parameters set', async () => {
     const fetchedLicenses = await api.getAll();
     expect(fetchedLicenses).toStrictEqual(mockResponse);
     expect(requestSpyOn).toHaveBeenCalledWith('licenses');
+  });
+
+  it('Get all licenses: should return the response unchanged with all parameters set', async () => {
+    const fetchedLicenses = await api.getAll({
+      take: 10,
+      subscriptionUuid: 'aaaaa',
+      cursor: 'xxxxx',
+      status: 'active',
+    });
+    expect(fetchedLicenses).toStrictEqual(mockResponse);
+    expect(requestSpyOn).toHaveBeenCalledWith(
+      'licenses?cursor=xxxxx&subscriptionUuid=aaaaa&status=active&take=10'
+    );
   });
 
   describe('Check capabilities', () => {

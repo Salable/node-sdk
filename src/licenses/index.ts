@@ -11,6 +11,8 @@ import {
   LicenseCancelManyBody,
   LicenseGetByPurchaserOptions,
   LicenseGetUsage,
+  GetAllLicensesArg,
+  GetAllLicensesResponse,
 } from '../types';
 
 /**
@@ -22,10 +24,19 @@ export default class Licenses extends Base {
   /**
    *  Get all licenses
    *
-   * @returns {Promise<ILicense[]>} All licenses present on the account
+   * @returns {Promise<GetAllLicensesResponse>} Cursor paginated results for all licenses on an organisation
    */
-  public getAll(): Promise<ILicense[]> {
-    return this._request<ILicense[]>(RESOURCE_NAMES.LICENSES);
+  public getAll(options?: GetAllLicensesArg): Promise<GetAllLicensesResponse> {
+    let params = '';
+    if (options) {
+      const paramsArr: string[] = [];
+      if (options.cursor) paramsArr.push(`cursor=${options.cursor}`);
+      if (options.subscriptionUuid) paramsArr.push(`subscriptionUuid=${options.subscriptionUuid}`);
+      if (options.status) params += paramsArr.push(`status=${options.status}`);
+      if (options.take) params += paramsArr.push(`take=${options.take}`);
+      params = `?${paramsArr.join('&')}`;
+    }
+    return this._request<GetAllLicensesResponse>(`${RESOURCE_NAMES.LICENSES}${params}`);
   }
 
   /**

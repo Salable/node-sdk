@@ -1,3 +1,5 @@
+import Stripe from 'stripe';
+
 type INonBodyRequest = {
   method: 'GET' | 'HEAD';
   body?: never;
@@ -76,6 +78,10 @@ export type Proration = 'create_prorations' | 'none' | 'always_invoice';
 export type SubscriptionsChangePlanBody = {
   planUuid: string;
   proration?: Proration;
+};
+
+export type GetSubscriptionInvoicesResponse = CursorPaginationResponse & {
+  data: Stripe.Invoice[];
 };
 
 export interface IPlan {
@@ -416,6 +422,25 @@ export type LicenseGetUsage = {
   featureUuid: string;
   planUuid: string;
   unitCount: number;
+};
+
+export type CursorPaginationResponse = {
+  first: string;
+  last: string;
+};
+
+export type GetAllLicensesResponse = CursorPaginationResponse & {
+  data: ILicense[];
+};
+
+export type CursorPaginationArgs = {
+  take?: number;
+  cursor?: string;
+};
+
+export type GetAllLicensesArg = CursorPaginationArgs & {
+  subscriptionUuid?: string;
+  status?: string;
 };
 
 export interface IPermission {

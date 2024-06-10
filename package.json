@@ -68,6 +68,7 @@
   },
   "dependencies": {
     "@sentry/node": "^7.81.1",
+    "stripe": "^15.10.0",
     "uuid": "^9.0.0"
   }
 }

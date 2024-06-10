@@ -2,12 +2,14 @@ import { Base } from '../base';
 import { RESOURCE_NAMES } from '../constants';
 import {
   CancelWhen,
+  CursorPaginationArgs,
+  CursorPaginationResponse,
+  GetSubscriptionInvoicesResponse,
   ISubscription,
   ISubscriptionAddSeatsBody,
   ISubscriptionAddSeatsParams,
   ISubscriptionRemoveSeatsBody,
   ISubscriptionRemoveSeatsParams,
-  ISubscriptionUpdatePlanInput,
   SubscriptionsChangePlanBody,
 } from '../types';
 
@@ -16,6 +18,15 @@ import {
  *
  * Contains the Salable subscription methods
  */
+
+type GetAllSubscriptionsArgs = CursorPaginationArgs & {
+  email?: string;
+  status?: string;
+};
+
+type GetAllSubscriptionsResponse = CursorPaginationResponse & {
+  data: ISubscription[];
+};
 export default class Subscriptions extends Base {
   /**
    * Get a single subscription
@@ -29,28 +40,31 @@ export default class Subscriptions extends Base {
   }
 
   /**
-   * Update a subscription's plan (DEPRECATED)
+   * Get all subscriptions for an organisation (cursor pagination)
    *
-   * @param  {string} newPlanId The uuid of the new plan
-   * @param  {string} subscriptionId The uuid of the subscription
+   * @param  {GetAllSubscriptionsArgs} options optional config for cursor based pagination
    *
-   * @returns {Promise<void>}
+   * @returns {Promise<GetSubscriptionInvoicesResponse>}
    */
 
-  public updatePlan(newPlanId: string, subscriptionId: string): Promise<void> {
-    return this._request<void, ISubscriptionUpdatePlanInput>(
-      `${RESOURCE_NAMES.SUBSCRIPTIONS}/${subscriptionId}/updateplan/${newPlanId}`,
-      {
-        method: 'PUT',
-      }
-    );
+  public getAll(options?: GetAllSubscriptionsArgs): Promise<GetAllSubscriptionsResponse> {
+    let params = '';
+    if (options) {
+      const paramsArr: string[] = [];
+      if (options.take) paramsArr.push(`take=${options.take}`);
+      if (options.cursor) paramsArr.push(`cursor=${options.cursor}`);
+      if (options.email) paramsArr.push(`email=${options.email}`);
+      if (options.status) paramsArr.push(`status=${options.status}`);
+      params = `?${paramsArr.join('&')}`;
+    }
+    return this._request<GetAllSubscriptionsResponse>(`${RESOURCE_NAMES.SUBSCRIPTIONS}${params}`);
   }
 
   /**
    *  Change a subscription's plan
    *
-   * @param {subscriptionUuid} - Subscription uuid
-   * @param {SubscriptionsChangePlanBody} - Change subscription plan options
+   * @param {subscriptionUuid} subscriptionUuid - Subscription uuid
+   * @param {SubscriptionsChangePlanBody} config - Change subscription plan options
    *
    * @returns {Promise<void>}
    */
@@ -121,6 +135,31 @@ export default class Subscriptions extends Base {
         method: 'PUT',
         body: config,
       }
+    );
+  }
+
+  /**
+   * Get all invoices for a subscription (cursor pagination)
+   *
+   * @param  {string} subscriptionUuid The uuid of the subscription
+   * @param  {CursorPaginationArgs} options optional config for cursor based pagination
+   *
+   * @returns {Promise<GetSubscriptionInvoicesResponse>}
+   */
+
+  public getInvoices(
+    subscriptionUuid: string,
+    options?: CursorPaginationArgs
+  ): Promise<GetSubscriptionInvoicesResponse> {
+    let params = '';
+    if (options) {
+      const paramsArr: string[] = [];
+      if (options.take) paramsArr.push(`take=${options.take}`);
+      if (options.cursor) paramsArr.push(`cursor=${options.cursor}`);
+      params = `?${paramsArr.join('&')}`;
+    }
+    return this._request<GetSubscriptionInvoicesResponse>(
+      `${RESOURCE_NAMES.SUBSCRIPTIONS}/${subscriptionUuid}/invoices${params}`
     );
   }
 }
