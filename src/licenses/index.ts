@@ -12,6 +12,7 @@ import {
   LicenseGetByPurchaserOptions,
   LicenseGetUsage,
 } from '../types';
+import jsrsasign from 'jsrsasign';
 
 /**
  * Salable Node SDK License Class
@@ -119,6 +120,22 @@ export default class Licenses extends Base {
     let params = `productUuid=${productUuid}&granteeIds=${granteeIds.toString()}`;
     if (grace) params += `&grace=${grace}`;
     return this._request<ICheckLicensesCapabilities>(`${RESOURCE_NAMES.LICENSES}/check?${params}`);
+  }
+
+  /**
+   *  Verifies a license check
+   *
+   * @param {string} publicKeyPem - The public key belonging to your organisation in PEM format
+   * @param {string} signature - The signature returned from a license check
+   * @param {string} payload - The capabilities returned from a license check
+   *
+   * @returns {boolean} The result of the verification
+   */
+  public verifyLicenseCheck(publicKeyPem: string, signature: string, payload: string): boolean {
+    const signatureObject = new jsrsasign.KJUR.crypto.Signature({ alg: 'SHA256withECDSA' });
+    signatureObject.init(publicKeyPem);
+    signatureObject.updateString(payload);
+    return signatureObject.verify(signature);
   }
 
   /**
