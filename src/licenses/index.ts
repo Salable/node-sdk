@@ -11,6 +11,7 @@ import {
   LicenseCancelManyBody,
   LicenseGetByPurchaserOptions,
   LicenseGetUsage,
+  ICheckLicensesCapabilitiesV2,
 } from '../types';
 
 /**
@@ -119,6 +120,28 @@ export default class Licenses extends Base {
     let params = `productUuid=${productUuid}&granteeIds=${granteeIds.toString()}`;
     if (grace) params += `&grace=${grace}`;
     return this._request<ICheckLicensesCapabilities>(`${RESOURCE_NAMES.LICENSES}/check?${params}`);
+  }
+
+  /**
+   *  Checks a license's capabilities (Version 2)
+   *
+   * @param {string} productUuid - The UUID of the product to check the license against
+   * @param {string[]} granteeIds - The grantee IDs to check the license for
+   * @param {number} grace - The number of days to extend the end dates of capabilities
+   *
+   * @returns {Promise<ICheckLicensesCapabilitiesV2>} The capabilities of the license passed
+   */
+  public checkV2(
+    productUuid: string,
+    granteeIds: string[],
+    grace?: number
+  ): Promise<ICheckLicensesCapabilitiesV2> {
+    let params = `productUuid=${productUuid}&granteeIds=${granteeIds.toString()}`;
+    if (grace) params += `&grace=${grace}`;
+    return this._request<ICheckLicensesCapabilitiesV2>(
+      `${RESOURCE_NAMES.LICENSES}/check?${params}`,
+      { headers: { version: 'v2' }, method: 'GET' }
+    );
   }
 
   /**
