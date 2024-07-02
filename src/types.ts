@@ -366,6 +366,11 @@ export interface ICheckLicensesCapabilities {
   capabilitiesEndDates: ICapabilitiesEndDates;
 }
 
+export interface ICheckLicensesCapabilitiesV2 {
+  capabilities: { capability: string; expiry: Date }[];
+  signature: string;
+}
+
 export interface ICapabilitiesEndDates {
   [key: string]: string;
 }

@@ -45,6 +45,30 @@ describe('Unit | ThirdPartyAPI | Licenses', () => {
     });
   });
 
+  describe('Check capabilities V2', () => {
+    describe('Success cases', () => {
+      it('Check capabilities V2: should apply a grace period and return the response unchanged', async () => {
+        const fetchedLicenses = await api.checkV2('xxxxx', ['aaaaa', 'bbbbb'], 10);
+        expect(fetchedLicenses).toStrictEqual(mockResponse);
+        expect(requestSpyOn).toHaveBeenCalledWith(
+          'licenses/check?productUuid=xxxxx&granteeIds=aaaaa,bbbbb&grace=10',
+          { headers: { version: 'v2' }, method: 'GET' }
+        );
+      });
+      it('Check capabilities: should return empty response with the response unchanged', async () => {
+        fetch.mockResponse('', {
+          headers: { 'Content-Type': 'text/plain' },
+        });
+        const fetchedLicenses = await api.checkV2('xxxxx', ['aaaaa']);
+        expect(fetchedLicenses).toStrictEqual('');
+        expect(requestSpyOn).toHaveBeenCalledWith(
+          'licenses/check?productUuid=xxxxx&granteeIds=aaaaa',
+          { headers: { version: 'v2' }, method: 'GET' }
+        );
+      });
+    });
+  });
+
   it('Create License: should call the request with the correct parameters and return response unchanged', async () => {
     const createParams = {
       planUuid: 'xxxxx',
