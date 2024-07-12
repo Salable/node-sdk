@@ -165,6 +165,35 @@ describe('Unit | ThirdPartyAPI | Licenses', () => {
     });
   });
 
+  it('Verify License Check: should verify license check signatures', () => {
+    const testPublicKeyPem = `-----BEGIN PUBLIC KEY-----
+    MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAEV1+PJVMtma9+3xPstLA5Xo9U6kr9JzHv
+    Q5d9m0bFI9Xojy2tSHGAgyxM/O+yM7xPcnKBlg0VGly6ZvWNHeSvcA==
+    -----END PUBLIC KEY-----`;
+    const testLicenseCheckData = [
+      { capability: 'One', expiry: '2024-06-28T20:20:00.592Z' },
+      { capability: 'Two', expiry: '2024-06-28T20:20:00.594Z' },
+      { capability: 'Three', expiry: '2024-06-28T20:20:00.594Z' },
+    ];
+    const testSignature =
+      '304402201a4dcfcab2ee296586668d8b3df7023c412a789deb9db77bbf87cffbdceed2e50220485b9974ac2a0b038888a4cd954a70b96d0bb3ff4102199744b6806159f27452';
+    const testIncorrectSignature = 'bad-signature';
+
+    const falseLicenseCheck = api.verifyLicenseCheck(
+      testPublicKeyPem,
+      testIncorrectSignature,
+      JSON.stringify(testLicenseCheckData)
+    );
+    const trueLicenseCheck = api.verifyLicenseCheck(
+      testPublicKeyPem,
+      testSignature,
+      JSON.stringify(testLicenseCheckData)
+    );
+
+    expect(falseLicenseCheck).toEqual(false);
+    expect(trueLicenseCheck).toEqual(true);
+  });
+
   it('should return an error when promise rejects', async () => {
     fetch.mockReject(() => Promise.reject('API is down'));
 
