@@ -1,3 +1,10 @@
+# [3.4.0](https://github.com/Salable/node-sdk/compare/v3.3.0...v3.4.0) (2024-07-12)
+
+
+### Features
+
+* **SD-168:** added verify-signature method ([c8b4a42](https://github.com/Salable/node-sdk/commit/c8b4a42a83fa72e6884adcfac96cefbddaf0dc20))
+
 # [3.3.0](https://github.com/Salable/node-sdk/compare/v3.2.1...v3.3.0) (2024-02-01)
 
 
