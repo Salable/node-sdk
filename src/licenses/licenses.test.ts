@@ -166,17 +166,16 @@ describe('Unit | ThirdPartyAPI | Licenses', () => {
   });
 
   it('Verify License Check: should verify license check signatures', () => {
-    const testPublicKeyPem = `-----BEGIN PUBLIC KEY-----
-    MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAEV1+PJVMtma9+3xPstLA5Xo9U6kr9JzHv
-    Q5d9m0bFI9Xojy2tSHGAgyxM/O+yM7xPcnKBlg0VGly6ZvWNHeSvcA==
-    -----END PUBLIC KEY-----`;
+    const testPublicKeyPem = `-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAES7jvFxC50Fe2hHd3Sn7Q8TvnxuSZ\nV8HvRHGDvFacOiESAqg3uroeNTgoT7lD4BwQ+fFsn7zig5hwncoTsrCPbw==\n-----END PUBLIC KEY-----`;
     const testLicenseCheckData = [
-      { capability: 'One', expiry: '2024-06-28T20:20:00.592Z' },
-      { capability: 'Two', expiry: '2024-06-28T20:20:00.594Z' },
-      { capability: 'Three', expiry: '2024-06-28T20:20:00.594Z' },
+      { capability: 'One', expiry: '2024-08-14T13:15:49.310Z' },
+      { capability: 'Two', expiry: '2024-08-14T13:15:49.310Z' },
+      { capability: 'free_plan_name', expiry: '2024-08-14T13:32:29.313Z' },
+      { capability: 'Three', expiry: '2024-08-14T13:32:29.313Z' },
+      { capability: 'Four', expiry: '2024-08-14T13:32:29.313Z' },
     ];
     const testSignature =
-      '304402201a4dcfcab2ee296586668d8b3df7023c412a789deb9db77bbf87cffbdceed2e50220485b9974ac2a0b038888a4cd954a70b96d0bb3ff4102199744b6806159f27452';
+      '3045022100b210aa29519f3146afe7a0d343a6b7ec5e47a1ac0de9686e2ec4cf0081e159c402206ecf98ad4d1d339c59f7ff3b4744d1f377747702c6253f7904ef6589191a2254';
     const testIncorrectSignature = 'bad-signature';
 
     const falseLicenseCheck = api.verifyLicenseCheck(
