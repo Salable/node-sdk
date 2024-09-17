@@ -10,7 +10,6 @@ import {
   Status,
   LicenseCancelManyBody,
   LicenseGetByPurchaserOptions,
-  LicenseGetUsage,
 } from '../types';
 import jsrsasign from 'jsrsasign';
 
@@ -47,11 +46,15 @@ export default class Licenses extends Base {
    *
    * @returns {ILicense[]}
    */
-  public getForPurchaser(
-    purchaser: string,
-    productUuid: string,
-    options?: LicenseGetByPurchaserOptions
-  ): Promise<ILicense[]> {
+  public getForPurchaser({
+    purchaser,
+    productUuid,
+    options,
+  }: {
+    purchaser: string;
+    productUuid: string;
+    options?: LicenseGetByPurchaserOptions;
+  }): Promise<ILicense[]> {
     let params = '';
     if (options) {
       if (options.cancelLink) params += '&expand=cancelLink';
@@ -74,16 +77,6 @@ export default class Licenses extends Base {
   }
 
   /**
-   *  Get usage on license
-   *  @param {string} licenseUuid - The uuid of the license
-   *
-   * @returns {ILicense[]}
-   */
-  public getUsage(licenseUuid: string): Promise<LicenseGetUsage[]> {
-    return this._request<LicenseGetUsage[]>(`${RESOURCE_NAMES.LICENSES}/${licenseUuid}/usage`);
-  }
-
-  /**
    *  Get License's Count
    *
    * @param {string} subscriptionUuid - The uuid of the subscription to filter the license count
@@ -92,7 +85,13 @@ export default class Licenses extends Base {
    * @returns {Promise<ILicenseCountResponse>} The capabilities of the license passed
    */
 
-  public getCount(subscriptionUuid?: string, status?: Status): Promise<ILicenseCountResponse> {
+  public getCount({
+    subscriptionUuid,
+    status,
+  }: {
+    subscriptionUuid?: string;
+    status?: Status;
+  }): Promise<ILicenseCountResponse> {
     let url = `${RESOURCE_NAMES.LICENSES}/count`;
     if (subscriptionUuid) {
       url += `?subscriptionUuid=${subscriptionUuid}`;
@@ -112,11 +111,15 @@ export default class Licenses extends Base {
    *
    * @returns {Promise<ICheckLicensesCapabilities>} The capabilities of the license passed
    */
-  public check(
-    productUuid: string,
-    granteeIds: string[],
-    grace?: number
-  ): Promise<ICheckLicensesCapabilities> {
+  public check({
+    productUuid,
+    granteeIds,
+    grace,
+  }: {
+    productUuid: string;
+    granteeIds: string[];
+    grace?: number;
+  }): Promise<ICheckLicensesCapabilities> {
     let params = `productUuid=${productUuid}&granteeIds=${granteeIds.toString()}`;
     if (grace) params += `&grace=${grace}`;
     return this._request<ICheckLicensesCapabilities>(`${RESOURCE_NAMES.LICENSES}/check?${params}`);
@@ -131,7 +134,15 @@ export default class Licenses extends Base {
    *
    * @returns {boolean} The result of the verification
    */
-  public verifyLicenseCheck(publicKeyPem: string, signature: string, payload: string): boolean {
+  public verifyLicenseCheck({
+    publicKeyPem,
+    signature,
+    payload,
+  }: {
+    publicKeyPem: string;
+    signature: string;
+    payload: string;
+  }): boolean {
     const signatureObject = new jsrsasign.KJUR.crypto.Signature({ alg: 'SHA256withECDSA' });
     signatureObject.init(publicKeyPem);
     signatureObject.updateString(payload);
@@ -168,7 +179,7 @@ export default class Licenses extends Base {
    *
    * @returns {Promise<ILicense>} The data of the updated license
    */
-  public update(licenseUuid: string, granteeId: string): Promise<ILicense> {
+  public update(licenseUuid: string, { granteeId }: { granteeId: string }): Promise<ILicense> {
     return this._request<ILicense, IUpdateLicenseInput>(
       `${RESOURCE_NAMES.LICENSES}/${licenseUuid}`,
       {

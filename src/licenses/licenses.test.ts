@@ -26,7 +26,11 @@ describe('Unit | ThirdPartyAPI | Licenses', () => {
   describe('Check capabilities', () => {
     describe('Success cases', () => {
       it('Check capabilities: should apply a grace period and return the response unchanged', async () => {
-        const fetchedLicenses = await api.check('xxxxx', ['aaaaa', 'bbbbb'], 10);
+        const fetchedLicenses = await api.check({
+          productUuid: 'xxxxx',
+          granteeIds: ['aaaaa', 'bbbbb'],
+          grace: 10,
+        });
         expect(fetchedLicenses).toStrictEqual(mockResponse);
         expect(requestSpyOn).toHaveBeenCalledWith(
           'licenses/check?productUuid=xxxxx&granteeIds=aaaaa,bbbbb&grace=10'
@@ -36,7 +40,7 @@ describe('Unit | ThirdPartyAPI | Licenses', () => {
         fetch.mockResponse('', {
           headers: { 'Content-Type': 'text/plain' },
         });
-        const fetchedLicenses = await api.check('xxxxx', ['aaaaa']);
+        const fetchedLicenses = await api.check({ productUuid: 'xxxxx', granteeIds: ['aaaaa'] });
         expect(fetchedLicenses).toStrictEqual('');
         expect(requestSpyOn).toHaveBeenCalledWith(
           'licenses/check?productUuid=xxxxx&granteeIds=aaaaa'
@@ -80,13 +84,13 @@ describe('Unit | ThirdPartyAPI | Licenses', () => {
   });
 
   it('Check capabilities: should return the response unchanged', async () => {
-    const fetchedLicenses = await api.check('xxxxx', ['xxxxx']);
+    const fetchedLicenses = await api.check({ productUuid: 'xxxxx', granteeIds: ['xxxxx'] });
     expect(fetchedLicenses).toStrictEqual(mockResponse);
     expect(requestSpyOn).toHaveBeenCalledWith('licenses');
   });
 
   it('Get Licenses count: should call the request with the correct parameters', async () => {
-    const getCount = await api.getCount('xxxxx', 'ACTIVE');
+    const getCount = await api.getCount({ subscriptionUuid: 'xxxxx', status: 'ACTIVE' });
     expect(requestSpyOn).toHaveBeenCalledWith(
       'licenses/count?subscriptionUuid=xxxxx&status=ACTIVE'
     );
@@ -94,9 +98,13 @@ describe('Unit | ThirdPartyAPI | Licenses', () => {
   });
 
   it('Get licenses for purchaser: should return the response unchanged', async () => {
-    const fetchedLicenses = await api.getForPurchaser('userId_1', 'xxxxx', {
-      status: 'ACTIVE',
-      cancelLink: true,
+    const fetchedLicenses = await api.getForPurchaser({
+      purchaser: 'userId_1',
+      productUuid: 'xxxxx',
+      options: {
+        status: 'ACTIVE',
+        cancelLink: true,
+      },
     });
     expect(fetchedLicenses).toStrictEqual(mockResponse);
     expect(requestSpyOn).toHaveBeenCalledWith(
@@ -110,14 +118,8 @@ describe('Unit | ThirdPartyAPI | Licenses', () => {
     expect(requestSpyOn).toHaveBeenCalledWith('licenses/granteeId/userId_1');
   });
 
-  it('Get usage on license: should return the response unchanged', async () => {
-    const fetchedLicenses = await api.getUsage('xxxxx');
-    expect(fetchedLicenses).toStrictEqual(mockResponse);
-    expect(requestSpyOn).toHaveBeenCalledWith('licenses/xxxxx/usage');
-  });
-
   it('Update License: should call the request with the correct parameters and return response unchanged', async () => {
-    const updateLicense = await api.update('xxxxx', 'userId_2');
+    const updateLicense = await api.update('xxxxx', { granteeId: 'userId_2' });
     expect(requestSpyOn).toHaveBeenCalledWith('licenses/xxxxx', {
       method: 'PUT',
       body: { granteeId: 'userId_2' },
@@ -179,16 +181,16 @@ describe('Unit | ThirdPartyAPI | Licenses', () => {
       '304402201a4dcfcab2ee296586668d8b3df7023c412a789deb9db77bbf87cffbdceed2e50220485b9974ac2a0b038888a4cd954a70b96d0bb3ff4102199744b6806159f27452';
     const testIncorrectSignature = 'bad-signature';
 
-    const falseLicenseCheck = api.verifyLicenseCheck(
-      testPublicKeyPem,
-      testIncorrectSignature,
-      JSON.stringify(testLicenseCheckData)
-    );
-    const trueLicenseCheck = api.verifyLicenseCheck(
-      testPublicKeyPem,
-      testSignature,
-      JSON.stringify(testLicenseCheckData)
-    );
+    const falseLicenseCheck = api.verifyLicenseCheck({
+      publicKeyPem: testPublicKeyPem,
+      signature: testIncorrectSignature,
+      payload: JSON.stringify(testLicenseCheckData),
+    });
+    const trueLicenseCheck = api.verifyLicenseCheck({
+      publicKeyPem: testPublicKeyPem,
+      signature: testSignature,
+      payload: JSON.stringify(testLicenseCheckData),
+    });
 
     expect(falseLicenseCheck).toEqual(false);
     expect(trueLicenseCheck).toEqual(true);
