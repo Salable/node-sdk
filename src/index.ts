@@ -1,18 +1,47 @@
-import { Base } from './base';
-import Licenses from './licenses';
-import Plans from './plans';
-import Products from './products';
-import Rbac from './rbac';
-import Subscriptions from './subscriptions';
-import Usage from './usage';
-import PricingTables from './pricing-tables';
+import { ErrorCodes, ResponseError, SalableResponseError, SalableUnknownError, SalableValidationError, ValidationError } from "./exceptions/salable-error";
 
-export class Salable extends Base {
-  public licenses: Licenses = new Licenses(this._apiKey);
-  public subscriptions: Subscriptions = new Subscriptions(this._apiKey);
-  public products: Products = new Products(this._apiKey);
-  public plans: Plans = new Plans(this._apiKey);
-  public pricingTables: PricingTables = new PricingTables(this._apiKey);
-  public usage: Usage = new Usage(this._apiKey);
-  public rbac: Rbac = new Rbac(this._apiKey);
+export const Version = {
+  V1: 'v1',
+  V2: 'v2',
+} as const
+
+type Version = typeof Version[keyof typeof Version];
+
+export type ApiFetch = (apiKey: string, version: string) => (input: string | URL | Request, init: RequestInit | undefined) => Promise<Record<string, unknown>>;
+export type ApiResponse = (input: string | URL | Request, init: RequestInit | undefined) => Promise<Record<string, unknown>>;
+
+export const initRequest: ApiFetch = (apiKey, version) => async (input, init) => {
+  let response;
+  let data;
+  try {
+    response = await fetch(input, { ...init, headers: { 'Content-Type': 'application/json', ...init?.headers, 'x-api-key': apiKey, version } });
+    data = await response.json() as Record<string, unknown>;
+  } catch (error) {
+    if (error instanceof TypeError) throw new Error('Unable to complete fetch operation');
+    if (error instanceof SyntaxError) throw new Error('Unable to parse data');
+    throw new SalableUnknownError();
+  }
+
+  if (response.ok) return data;
+
+  switch (response.status) {
+    case 400:
+      throw new SalableValidationError(ErrorCodes.validation, response.status, data as ValidationError);
+    case 401:
+      throw new SalableResponseError(ErrorCodes.unauthenticated, response.status, data as ResponseError);
+    case 403:
+      throw new SalableResponseError(ErrorCodes.unauthorised, response.status, data as ResponseError);
+    case 500:
+      throw new SalableResponseError(ErrorCodes.unhandled, response.status, data as ResponseError);
+    default:
+      throw new SalableUnknownError();
+  }
+}
+
+class Salable<V extends Version> {
+  constructor(apiKey: string, version: V) {
+    const request: (input: string | URL | Request, init: RequestInit | undefined) => Promise<Record<string, unknown>> = initRequest(apiKey, version); // initRequest returns a function which is simply fetch wrapped in a try/catch
+
+    // the resources are initialised here
+  }
 }
