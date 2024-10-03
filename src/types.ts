@@ -15,10 +15,30 @@ export function isRequestWithBody<T>(request: IRequestBase<T>): request is IBody
 export type IRequestBase<T> = Omit<RequestInit, 'body'> & (INonBodyRequest | IBodyRequest<T>);
 
 export type Status = 'ACTIVE' | 'CANCELED';
+export type LicenseStatus = 'ACTIVE' | 'CANCELED' | 'EVALUATION' | 'SCHEDULED' | 'TRIALING' | 'INACTIVE';
 export interface ICreateAdhocLicenseInput {
   planUuid: string;
   member: string;
-  granteeId: string;
+  granteeId?: string;
+  status?: 'ACTIVE' | 'TRIALING';
+  endTime?: Date;
+}
+
+export interface IGetPurchasersLicensesInput {
+  purchaser: string,
+  productUuid: string,
+  options?: LicenseGetByPurchaserOptions
+}
+
+export interface ICheckLicenseInput {
+  productUuid: string,
+  granteeIds: string[],
+  grace?: number
+}
+
+export interface IGetLicenseCountInput {
+  subscriptionUuid: string, 
+  status: LicenseStatus
 }
 
 export interface IUpdateLicenseInput {
@@ -147,8 +167,8 @@ export interface ICheckoutVatParams {
 
 export interface IPlanCheckoutParams
   extends ICheckoutDefaultParams,
-    ICheckoutCustomerParams,
-    ICheckoutVatParams {
+  ICheckoutCustomerParams,
+  ICheckoutVatParams {
   successUrl: string;
   cancelUrl: string;
   contactUsLink?: string;
@@ -158,8 +178,8 @@ export interface IPlanCheckoutParams
 
 export interface IPricingTableParams
   extends ICheckoutDefaultParams,
-    ICheckoutCustomerParams,
-    ICheckoutVatParams {
+  ICheckoutCustomerParams,
+  ICheckoutVatParams {
   globalSuccessUrl: string;
   globalCancelUrl: string;
   globalGranteeId: string;
