@@ -304,7 +304,7 @@ export interface IProduct {
   isTest: boolean;
 }
 
-export interface IProductCapabilityResponse {
+export interface IProductCapability {
   uuid: string;
   name: string;
   description?: string;
@@ -313,7 +313,7 @@ export interface IProductCapabilityResponse {
   updatedAt: string;
 }
 
-export interface IProductCurrencyResponse {
+export interface IProductCurrency {
   productUuid: string;
   currencyUuid: string;
   defaultCurrency: boolean;
@@ -371,7 +371,7 @@ export interface IOrganisationPaymentIntegration {
   isTest: boolean;
 }
 
-export interface IProductPricingTableResponse extends IProduct {
+export interface IProductPricingTable extends IProduct {
   features: IFeature[];
   currencies: ICurrency[];
   organisationPaymentIntegration: IOrganisationPaymentIntegration;
