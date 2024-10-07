@@ -200,7 +200,7 @@ export type PlanCheckoutKey = keyof IPlanCheckoutParams;
 export type PricingTableCheckoutKey = keyof IPricingTableParams;
 export type SupportedCurrencies = 'USD' | 'EUR' | 'GBP';
 
-export interface IPlanCheckoutInputParams {
+export interface PlanCheckoutInputParams {
   successUrl: string;
   cancelUrl: string;
   contactUsLink?: string;
@@ -252,11 +252,11 @@ export interface IDefaultCheckoutInputParams {
   };
 }
 
-export interface IPlanCheckoutResponse {
+export interface PlanCheckout {
   checkoutUrl: string;
 }
 
-export interface IPlanFeatureResponse {
+export interface PlanFeature {
   planUuid: string;
   featureUuid: string;
   value: string;
@@ -268,14 +268,14 @@ export interface IPlanFeatureResponse {
   sortOrder: number;
 }
 
-export interface IPlanCapabilityResponse {
+export interface PlanCapability {
   planUuid: string;
   capabilityUuid: string;
   updatedAt: string;
   capability: ICapability;
 }
 
-export interface IPlanCurrencyResponse {
+export interface PlanCurrency {
   planUuid: string;
   currencyUuid: string;
   price: number;
