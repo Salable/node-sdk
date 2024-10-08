@@ -1,5 +1,5 @@
 import { ApiRequest, TVersion, Version } from "..";
-import { CheckLicenseInput, CheckLicensesCapabilities, CreateAdhocLicenseInput, GetAllLicensesResponse, GetLicenseCountInput, GetLicenseOptions, GetPurchasersLicensesInput, License, GetLicenseCountResponse, UpdateManyLicenseInput } from "@/src/types";
+import { CheckLicenseInput, CheckLicensesCapabilitiesResponse, CreateAdhocLicenseInput, GetAllLicensesResponse, GetLicenseCountInput, GetLicenseOptions, GetPurchasersLicensesInput, License, GetLicenseCountResponse, UpdateManyLicenseInput } from "@/src/types";
 import { v2LicenseMethods } from "./v2";
 
 // TODO: drop the I from the interfaces
@@ -7,6 +7,7 @@ export type LicenseVersions = {
   [Version.V2]: {
     /**
     *  Get all licenses
+    * 
     * @param {GetLicenseOptions} options
     * @param {GetLicenseOptions} options.status - The status of the licenses, can be one of: "ACTIVE" "CANCELED" "EVALUATION" "SCHEDULED" "TRIALING" "INACTIVE"
 The status of the licenses.
@@ -14,44 +15,49 @@ The status of the licenses.
     * @param {GetLicenseOptions} options.take - Default: "20"
 The number of records to take before or after cursor. A positive or negative in the range of -100 to 100. Use a number below 0 to take the previous records before the cursor.
     * @param {GetLicenseOptions} options.subscriptionUuid - Filters licenses by their subscription. Useful for returning licenses on a per seat subscription.
-    * @returns {Promise<GetAllLicensesOutput>} All licenses present on the account
+    * 
+    * @returns {Promise<GetAllLicensesResponse>} All licenses present on the account
     */
     getAll: (options?: GetLicenseOptions) => Promise<GetAllLicensesResponse>,
     /**
      *  Get one license
+     * 
      *  @param {string} licenseUuid - The UUID of the license
      *  @param {{ expand: string[] }} options
      *  @param {{ expand: string[] }} options.expand - Specify the resource fields to expand as comma separated values eg `expand=subscription,plan`
      *
-     * @returns {License}
+     * @returns { Promise<License>}
      */
     getOne: (licenseUuid: string, options?: { expand: string[] }) => Promise<License>,
     /**
      *  Get License's Count
+     * 
      *  @param {GetLicenseCountInput} options
      *  @param {GetLicenseCountInput} options.subscriptionUuid - The UUID of the subscription
      *  @param {GetLicenseCountInput} options.status - The status of the licenses, can be one of: "ACTIVE" "CANCELED" "EVALUATION" "SCHEDULED" "TRIALING" "INACTIVE"
      *
-     * @returns {ILicenseCountResponse}
+     * @returns {Promise<GetLicenseCountResponse>}
      */
     getCount: ({ subscriptionUuid, status }: GetLicenseCountInput) => Promise<GetLicenseCountResponse>,
     /**
     *  Get Purchasers Licenses
+    * 
     *  @param {GetPurchasersLicensesInput} purchaserData
     *  @param {GetPurchasersLicensesInput} purchaserData.purchaser - The purchaser of the licenses
     *  @param {GetPurchasersLicensesInput} purchaserData.productUuid - The UUID of the product that the licenses are on
     *  @param {GetPurchasersLicensesInput} purchaserData.options - (Optional) extra options for filtering or additional data
     *
-    * @returns {ILicense[]}
+    * @returns {Promise<License[]>}
     */
     getForPurchaser: (purchaserData: GetPurchasersLicensesInput) => Promise<License[]>,
     /**
     *  Get licenses for granteeId
+    * 
     *  @param {string} granteeId - The granteeId for the licenses
     *  @param {{ expand: string[] }} options
     *  @param {{ expand: string[] }} options.expand - Specify the resource fields to expand as comma separated values eg `expand=subscription,plan`
     *
-    * @returns {License[]}
+    * @returns {Promise<License[]>}
     */
     getForGranteeId: ({ granteeId }: { granteeId: string }, options?: { expand?: string[] }) => Promise<License[]>,
     /**
@@ -111,9 +117,9 @@ The number of records to take before or after cursor. A positive or negative in 
     * @param {CheckLicenseInput} checkData.granteeIds - The grantee IDs to check the license for
     * @param {CheckLicenseInput} checkData.grace - (Optional) The number of days to extend the end dates of capabilities
     *
-    * @returns {Promise<CheckLicensesCapabilities>} The capabilities of the license passed
+    * @returns {Promise<CheckLicensesCapabilitiesResponse>} The capabilities of the license passed
     */
-    check: (checkData: CheckLicenseInput) => Promise<CheckLicensesCapabilities>,
+    check: (checkData: CheckLicenseInput) => Promise<CheckLicensesCapabilitiesResponse>,
     /**
     *  Verifies a license check
     *

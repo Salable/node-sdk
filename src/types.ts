@@ -388,7 +388,7 @@ export interface IProductPricingTableResponse extends IProduct {
   plans: (Plan & { features: IFeature[]; currencies: ICurrency[]; checkoutUrl: string })[];
 }
 
-export interface CheckLicensesCapabilities {
+export interface CheckLicensesCapabilitiesResponse {
   capabilities: {
     capability: string;
     expiry: string;
