@@ -447,7 +447,7 @@ export type LicenseGetUsage = {
   unitCount: number;
 };
 
-export interface IPermission {
+export interface Permission {
   uuid: string;
   value: string;
   type: string | null;
@@ -456,6 +456,20 @@ export interface IPermission {
   organisation: string;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface CreatePermissionInput {
+  value: string;
+  type?: string | null;
+  description?: string | null;
+  dependencies?: { [k: string]: string } | null;
+}
+
+export interface UpdatePermissionInput {
+  value?: string;
+  type?: string | null;
+  description?: string | null;
+  dependencies?: { [k: string]: string } | null;
 }
 
 export interface INestedPermission {
