@@ -299,7 +299,7 @@ export interface ICapability {
   productUuid: string;
 }
 
-export interface IProduct {
+export interface Product {
   uuid: string;
   name: string;
   description?: string;
@@ -330,7 +330,7 @@ export interface IProductCurrencyResponse {
   currency: ICurrency;
 }
 
-export type PricingTableParameters = {
+export type PricingTableOptions = {
   globalPlanOptions: {
     granteeId: string;
     successUrl: string;
@@ -381,7 +381,7 @@ export interface IOrganisationPaymentIntegration {
   isTest: boolean;
 }
 
-export interface IProductPricingTableResponse extends IProduct {
+export interface IProductPricingTableResponse extends Product {
   features: IFeature[];
   currencies: ICurrency[];
   organisationPaymentIntegration: IOrganisationPaymentIntegration;
