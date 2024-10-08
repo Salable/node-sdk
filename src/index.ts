@@ -1,6 +1,7 @@
 import { ErrorCodes, ResponseError, SalableResponseError, SalableUnknownError, SalableValidationError, ValidationError } from "./exceptions/salable-error";
 import { LicenseVersionedMethods, licensesInit } from "./licenses";
 import { RbacPermissionsVersionedMethods, rbacPermissionsInit } from "./rbac-permissions";
+import { RbacRolesVersionedMethods, rbacRolesInit } from "./rbac-roles";
 
 export const Version = {
   V2: 'v2',
@@ -42,13 +43,15 @@ class Salable<V extends TVersion> {
   licenses: LicenseVersionedMethods<V>;
   rbac: {
     permissions: RbacPermissionsVersionedMethods<V>;
+    roles: RbacRolesVersionedMethods<V>;
   }
   constructor(apiKey: string, version: V) {
     const request: ApiRequest = initRequest(apiKey, version);
 
     this.licenses = licensesInit(version, request);
     this.rbac = {
-      permissions: rbacPermissionsInit(version, request)
+      permissions: rbacPermissionsInit(version, request),
+      roles: rbacRolesInit(version, request),
     }
   }
 }

@@ -478,7 +478,7 @@ export interface INestedPermission {
   type: string | null;
 }
 
-export interface IRole {
+export interface Role {
   uuid: string;
   name: string;
   description: string | null;
@@ -524,16 +524,16 @@ export interface IUpdatePermissionInput {
   dependencies?: string[];
 }
 
-export interface ICreateRoleInput {
+export interface CreateRoleInput {
   name: string;
-  description: string;
-  permissions: string[];
+  description?: string;
+  permissions?: string[];
 }
 
-export interface IUpdateRoleInput {
+export interface UpdateRoleInput {
   name?: string;
   description?: string;
-  permissions: { add?: string[]; remove?: string[] };
+  permissions?: { add?: string[]; remove?: string[] };
 }
 
 export interface ICreateRbacUserInput {
