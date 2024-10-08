@@ -103,7 +103,7 @@ export interface Subscription {
 
 export type Proration = 'create_prorations' | 'none' | 'always_invoice';
 
-export type SubscriptionsChangePlanBody = {
+export type SubscriptionsChangePlanOptions = {
   planUuid: string;
   proration?: Proration;
 };
@@ -413,16 +413,16 @@ export interface ISubscriptionUpdatePlanInput {
   subscriptionId: string;
 }
 
-export interface ISubscriptionAddSeatsParams {
+export interface SubscriptionAddSeatsOptions {
   increment: number;
 }
-export type ISubscriptionAddSeatsBody = ISubscriptionAddSeatsParams;
+export type ISubscriptionAddSeatsBody = SubscriptionAddSeatsOptions;
 
-export interface ISubscriptionRemoveSeatsParams {
+export interface SubscriptionRemoveSeatsOptions {
   decrement: number;
 }
 
-export type ISubscriptionRemoveSeatsBody = ISubscriptionRemoveSeatsParams;
+export type ISubscriptionRemoveSeatsBody = SubscriptionRemoveSeatsOptions;
 
 export type CancelWhen = 'now' | 'end';
 
