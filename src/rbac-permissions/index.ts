@@ -11,45 +11,44 @@ export type RbacPermissionsVersions = {
     */
     getAll: () => Promise<Permission[]>,
     /**
-     *  Get one RBAC permission
-     * 
-     *  @param {string} permissionUuid - The UUID of the permission
-     *  @returns {Promise<Permission>}
-     */
+    *  Get one RBAC permission
+    * 
+    *  @param {string} permissionUuid - The UUID of the permission
+    *  @returns {Promise<Permission>}
+    */
     getOne: (permissionUuid: string) => Promise<Permission>,
     /**
     *  Creates an RBAC permission
     *
+    * @param {CreatePermissionInput} data
+    * @param {CreatePermissionInput} data.value - The new value of the permission
+    * @param {CreatePermissionInput} data.type - (Optional) The new type of the permission
+    * @param {CreatePermissionInput} data.description - (Optional) The new description of the permission
+    * @param {CreatePermissionInput} data.dependencies - (Optional) The new dependencies of the permission
+    *
+    * @returns {Promise<Permission>} The created permission
+    */
+    create: (permissionData: CreatePermissionInput) => Promise<Permission>,
+    /**
+    *  Update an RBAC Permission
+    *
     * @param {string} permissionUuid - The UUID of the permission
     * @param {UpdatePermissionInput} data
-    * @param {UpdatePermissionInput} data.value - The new value of the permission
+    * @param {UpdatePermissionInput} data.value - (Optional) The new value of the permission
     * @param {UpdatePermissionInput} data.type - (Optional) The new type of the permission
     * @param {UpdatePermissionInput} data.description - (Optional) The new description of the permission
     * @param {UpdatePermissionInput} data.dependencies - (Optional) The new dependencies of the permission
     *
-    * @returns {Promise<Permission>} The created permission
-     */
-    create: (permissionData: CreatePermissionInput) => Promise<Permission>,
-    /**
-      *  Update an RBAC Permission
-      *
-      * @param {string} permissionUuid - The UUID of the permission
-      * @param {UpdatePermissionInput} data
-      * @param {UpdatePermissionInput} data.value - (Optional) The new value of the permission
-      * @param {UpdatePermissionInput} data.type - (Optional) The new type of the permission
-      * @param {UpdatePermissionInput} data.description - (Optional) The new description of the permission
-      * @param {UpdatePermissionInput} data.dependencies - (Optional) The new dependencies of the permission
-      *
-      * @returns {Promise<Permission>} The updated permission
-      */
+    * @returns {Promise<Permission>} The updated permission
+    */
     update: (permissionUuid: string, data: UpdatePermissionInput) => Promise<Permission>,
     /**
-     *  Delete an RBAC permission
-     *
-     *  @param {string} permissionUuid - The UUID of the permission
-     *
-     * @returns {Promise<void>}
-     */
+    *  Delete an RBAC permission
+    *
+    *  @param {string} permissionUuid - The UUID of the permission
+    *
+    * @returns {Promise<void>}
+    */
     delete: (permissionUuid: string) => Promise<void>,
   };
 };
