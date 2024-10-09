@@ -1,22 +1,20 @@
-type INonBodyRequest = {
+type NonBodyRequest = {
   method: 'GET' | 'HEAD';
   body?: never;
 };
 
-type IBodyRequest<T = void> = {
+type BodyRequest<T = void> = {
   method: 'POST' | 'PUT' | 'DELETE';
   body?: T;
 };
 
-export function isRequestWithBody<T>(request: IRequestBase<T>): request is IBodyRequest<T> {
-  return (request as IBodyRequest).body !== undefined;
-}
-
-export type IRequestBase<T> = Omit<RequestInit, 'body'> & (INonBodyRequest | IBodyRequest<T>);
+export type IRequestBase<T> = Omit<RequestInit, 'body'> & (NonBodyRequest | BodyRequest<T>);
 
 export type Status = 'ACTIVE' | 'CANCELED';
 export type LicenseStatus = 'ACTIVE' | 'CANCELED' | 'EVALUATION' | 'SCHEDULED' | 'TRIALING' | 'INACTIVE';
-export interface ICreateAdhocLicenseInput {
+export type SearchParamOptions = Record<string, string | string[] | number | boolean>
+
+export interface CreateAdhocLicenseInput {
   planUuid: string;
   member: string;
   granteeId?: string;
@@ -24,39 +22,46 @@ export interface ICreateAdhocLicenseInput {
   endTime?: Date;
 }
 
-export interface IGetPurchasersLicensesInput {
+export interface GetLicenseOptions {
+  status?: LicenseStatus; 
+  cursor?: string; 
+  take?: string; 
+  subscriptionUuid?: string;
+};
+
+export interface GetPurchasersLicensesInput {
   purchaser: string,
   productUuid: string,
   options?: LicenseGetByPurchaserOptions
 }
 
-export interface ICheckLicenseInput {
+export interface CheckLicenseInput {
   productUuid: string,
   granteeIds: string[],
   grace?: number
 }
 
-export interface IGetLicenseCountInput {
+export interface GetLicenseCountInput {
   subscriptionUuid: string, 
   status: LicenseStatus
 }
 
-export interface IUpdateLicenseInput {
+export interface UpdateLicenseInput {
   granteeId: string;
 }
 
-export interface IUpdateManyLicenseInput {
+export interface UpdateManyLicenseInput {
   granteeId: string;
   uuid: string;
 }
 
-export interface ILicenseCountResponse {
+export interface GetLicenseCountResponse {
   count: number;
   assigned: number;
   unassigned: number;
 }
 
-export interface ILicense {
+export interface License {
   uuid: string;
   name: string;
   email: string;
@@ -75,7 +80,13 @@ export interface ILicense {
   isTest: boolean;
 }
 
-export interface ISubscription {
+export interface GetAllLicensesResponse {
+  first: string;
+  last: string;
+  data: License[];
+}
+
+export interface Subscription {
   uuid: string;
   paymentIntegrationSubscriptionId: string;
   productUuid: string;
@@ -98,7 +109,7 @@ export type SubscriptionsChangePlanBody = {
   proration?: Proration;
 };
 
-export interface IPlan {
+export interface Plan {
   uuid: string;
   name: string;
   description?: string;
@@ -375,15 +386,15 @@ export interface IProductPricingTable extends IProduct {
   features: IFeature[];
   currencies: ICurrency[];
   organisationPaymentIntegration: IOrganisationPaymentIntegration;
-  plans: (IPlan & { features: IFeature[]; currencies: ICurrency[]; checkoutUrl: string })[];
+  plans: (Plan & { features: IFeature[]; currencies: ICurrency[]; checkoutUrl: string })[];
 }
 
-export interface ICheckLicensesCapabilities {
-  capabilities: string[];
-  publicHash: string;
+export interface CheckLicensesCapabilitiesResponse {
+  capabilities: {
+    capability: string;
+    expiry: string;
+  }[];
   signature: string;
-  capsHashed: string;
-  capabilitiesEndDates: ICapabilitiesEndDates;
 }
 
 export interface ICapabilitiesEndDates {
@@ -428,7 +439,6 @@ export type LicenseCancelManyBody = {
 
 export type LicenseGetByPurchaserOptions = {
   status?: Status;
-  cancelLink?: boolean;
 };
 
 export type LicenseGetUsage = {

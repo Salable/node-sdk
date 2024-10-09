@@ -42,7 +42,6 @@ class Salable<V extends TVersion> {
   constructor(apiKey: string, version: V) {
     const request: ApiRequest = initRequest(apiKey, version);
 
-    // the resources are initialised here
     this.licenses = licensesInit(version, request);
   }
 }
