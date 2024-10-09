@@ -1,13 +1,15 @@
-function getUrl(path: string, params: Record<string, unknown>) {
-    const url = new URL(path);
+function getUrl(url: string, params: Record<string, unknown>) {
+    const paramList = Object.entries(params);
+    if (!paramList.length) return url;
+    const searchParams = [];
     for (const [k, v] of Object.entries(params)) {
         if (Array.isArray(v)) {
-            url.searchParams.set(k, v.join(','));
+            searchParams.push(`${k}=${v.join(',')}`)
             continue;
         }
-        url.searchParams.set(k, String(v));
+        searchParams.push(`${k}=${v}`)
     }
-    return url.toString();
+    return `${url}?${searchParams.join('&')}`;
 }
 
 export default getUrl;

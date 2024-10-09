@@ -21,11 +21,7 @@ export const v2LicenseMethods = (request: ApiRequest): LicenseVersions['v2'] => 
         return request(getUrl(`${baseUrl}/purchaser`, purchaserData as unknown as SearchParamOptions), { method: 'GET' }) as unknown as License[];
     },
     getForGranteeId: async ({ granteeId }, options) => {
-        let url = `${baseUrl}/granteeId${granteeId}`;
-        if (options && options.expand) {
-            url += `?expand=${options.expand.join(',')}`;
-        }
-        return request(url, { method: 'GET' }) as unknown as License[];
+        return request(getUrl(`${baseUrl}/granteeId${granteeId}`, options as SearchParamOptions), { method: 'GET' }) as unknown as License[];
     },
     create: async (licenseData) => {
         return request(baseUrl, { method: 'POST', body: JSON.stringify(licenseData) }) as unknown as License[];
@@ -43,9 +39,7 @@ export const v2LicenseMethods = (request: ApiRequest): LicenseVersions['v2'] => 
         return request(`${baseUrl}/cancel`, { method: 'POST', body: JSON.stringify(licenseUuids) }) as unknown as void;
     },
     check: async ({ productUuid, granteeIds, grace }) => {
-        let params = `productUuid=${productUuid}&granteeIds=${granteeIds.toString()}`;
-        if (grace) params += `&grace=${grace}`;
-        return request(`${baseUrl}/check${params}`, { method: 'GET' }) as unknown as CheckLicensesCapabilitiesResponse;
+        return request(getUrl(`${baseUrl}/check`, { productUuid, granteeIds, grace }), { method: 'GET' }) as unknown as CheckLicensesCapabilitiesResponse;
     },
     verify: ({ publicKey, signature, payload }) => {
         const verify = crypto.createVerify('sha256');
