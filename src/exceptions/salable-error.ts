@@ -1,10 +1,11 @@
 export enum ErrorCodes {
   unauthorised = 'S1000',
-  notFound = 'S1001',
-  badRequest = 'S1002',
-  validation = 'S1003',
-  unhandled = 'S1004',
-  unknown = 'S1005',
+  unauthenticated = 'S1001',
+  notFound = 'S1002',
+  badRequest = 'S1003',
+  validation = 'S1004',
+  unhandled = 'S1005',
+  unknown = 'S1006',
 }
 
 export type ValidationErrorMessage = {
