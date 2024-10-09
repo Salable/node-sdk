@@ -12,6 +12,7 @@ export type IRequestBase<T> = Omit<RequestInit, 'body'> & (NonBodyRequest | Body
 
 export type Status = 'ACTIVE' | 'CANCELED';
 export type LicenseStatus = 'ACTIVE' | 'CANCELED' | 'EVALUATION' | 'SCHEDULED' | 'TRIALING' | 'INACTIVE';
+export type SearchParamOptions = Record<string, string | string[] | number | boolean>
 
 export interface CreateAdhocLicenseInput {
   planUuid: string;
@@ -25,7 +26,7 @@ export interface GetLicenseOptions {
   status?: LicenseStatus; 
   cursor?: string; 
   take?: string; 
-  subsriptionUuid?: string
+  subscriptionUuid?: string;
 };
 
 export interface GetPurchasersLicensesInput {
