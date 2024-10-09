@@ -1,5 +1,5 @@
 import { ApiRequest, TVersion, Version } from '..';
-import { PricingTableOptions, Product } from '../types';
+import { PricingTableResponse } from '../types';
 import { v2PricingTableMethods } from './v2';
 
 export type PricingTableVersions = {
@@ -7,10 +7,16 @@ export type PricingTableVersions = {
     /**
      *  Retrieves a pricing table by its UUID. This returns all necessary data on a Pricing Table to be able to display it.
      *  @param {string} pricingTableUuid - The UUID for the pricingTable
+     *  @param {{ granteeId?: string; currency?: string;}} options
+     *  @param {{ granteeId?: string; currency?: string;}} options.granteeId - The unique identifier for the grantee
+     *  @param {{ granteeId?: string; currency?: string;}} options.currency - Uses the currency short name e.g. USD, defaults to the default currency on the Product which the Plan is linked to.
      *
      * @returns {Promise<Product>} The data of the product requested
      */
-    getOne: (pricingTableUuid: string, options: PricingTableOptions) => Promise<Product>;
+    getOne: (
+      pricingTableUuid: string,
+      options?: { granteeId?: string; currency?: string },
+    ) => Promise<PricingTableResponse>;
   };
 };
 

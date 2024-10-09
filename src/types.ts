@@ -12,6 +12,7 @@ export type IRequestBase<T> = Omit<RequestInit, 'body'> & (NonBodyRequest | Body
 
 export type Status = 'ACTIVE' | 'CANCELED';
 export type LicenseStatus = 'ACTIVE' | 'CANCELED' | 'EVALUATION' | 'SCHEDULED' | 'TRIALING' | 'INACTIVE';
+export type ProductStatus = 'ACTIVE' | 'DEPRECATED';
 export type SearchParamOptions = Record<string, string | string[] | number | boolean>
 
 export interface CreateAdhocLicenseInput {
@@ -187,18 +188,7 @@ export interface IPlanCheckoutParams
   quantity?: number;
 }
 
-export interface IPricingTableParams
-  extends ICheckoutDefaultParams,
-  ICheckoutCustomerParams,
-  ICheckoutVatParams {
-  globalSuccessUrl: string;
-  globalCancelUrl: string;
-  globalGranteeId: string;
-  contactUsLink?: string;
-}
-
 export type PlanCheckoutKey = keyof IPlanCheckoutParams;
-export type PricingTableCheckoutKey = keyof IPricingTableParams;
 export type SupportedCurrencies = 'USD' | 'EUR' | 'GBP';
 
 export interface IPlanCheckoutInputParams {
@@ -331,43 +321,6 @@ export interface IProductCurrencyResponse {
   currency: ICurrency;
 }
 
-export type PricingTableOptions = {
-  globalPlanOptions: {
-    granteeId: string;
-    successUrl: string;
-    cancelUrl: string;
-    member: string;
-    contactUsLink: string;
-    marketingConsent?: string;
-    couponCode?: string;
-    promoCode?: string;
-    allowPromoCode?: string;
-    currency?: SupportedCurrencies;
-    customer?: {
-      email?: string;
-      country?: string;
-      postcode?: string;
-    };
-    vat?: {
-      number?: string;
-      companyName?: string;
-      street?: string;
-      city?: string;
-      state?: string;
-      country?: string;
-      postcode?: string;
-    };
-    customMessage?: string;
-  };
-  individualPlanOptions?: {
-    [key: string]: {
-      granteeId?: string;
-      successUrl?: string;
-      cancelUrl?: string;
-    };
-  };
-};
-
 export interface IOrganisationPaymentIntegration {
   uuid: string;
   organisation: string;
@@ -382,9 +335,20 @@ export interface IOrganisationPaymentIntegration {
   isTest: boolean;
 }
 
-export interface IProductPricingTableResponse extends Product {
+export interface PricingTableResponse {
+  uuid: string;
+  name: string;
+  status: ProductStatus;
+  title: string;
+  text: string;
+  theme: string;
+  featureOrder: string;
+  productUuid: string;
+  customTheme: string;
+  featuredPlanUuid: string;
+  updatedAt: string;
   features: IFeature[];
-  currencies: ICurrency[];
+  product: Product & { features: IFeature[]; currencies: ICurrency[];}
   organisationPaymentIntegration: IOrganisationPaymentIntegration;
   plans: (Plan & { features: IFeature[]; currencies: ICurrency[]; checkoutUrl: string })[];
 }
