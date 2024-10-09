@@ -5,8 +5,8 @@ import { v2PricingTableMethods } from './v2';
 export type PricingTableVersions = {
   [Version.V2]: {
     /**
-     *  Get a single pricing table
-     *  @param {string} pricingTableUuid - The UUID of the pricing table
+     *  Retrieves a pricing table by its UUID. This returns all necessary data on a Pricing Table to be able to display it.
+     *  @param {string} pricingTableUuid - The UUID for the pricingTable
      *
      * @returns {Promise<Product>} The data of the product requested
      */
