@@ -1,14 +1,13 @@
 import { ErrorCodes, ResponseError, SalableResponseError, SalableUnknownError, SalableValidationError, ValidationError } from "./exceptions/salable-error";
+import { LicenseVersionedMethods, licensesInit } from "./licenses";
 
 export const Version = {
-  V1: 'v1',
   V2: 'v2',
-} as const
+} as const;
 
-type Version = typeof Version[keyof typeof Version];
-
-export type ApiFetch = (apiKey: string, version: string) => (input: string | URL | Request, init: RequestInit | undefined) => Promise<Record<string, unknown>>;
-export type ApiResponse = (input: string | URL | Request, init: RequestInit | undefined) => Promise<Record<string, unknown>>;
+export type TVersion = typeof Version[keyof typeof Version];
+export type ApiFetch = (apiKey: string, version: string) => ApiRequest;
+export type ApiRequest = (input: string | URL | Request, init: RequestInit | undefined) => Promise<Record<string, unknown>>;
 
 export const initRequest: ApiFetch = (apiKey, version) => async (input, init) => {
   let response;
@@ -38,10 +37,11 @@ export const initRequest: ApiFetch = (apiKey, version) => async (input, init) =>
   }
 }
 
-class Salable<V extends Version> {
+class Salable<V extends TVersion> {
+  licenses: LicenseVersionedMethods<V>;
   constructor(apiKey: string, version: V) {
-    const request: (input: string | URL | Request, init: RequestInit | undefined) => Promise<Record<string, unknown>> = initRequest(apiKey, version); // initRequest returns a function which is simply fetch wrapped in a try/catch
+    const request: ApiRequest = initRequest(apiKey, version);
 
-    // the resources are initialised here
+    this.licenses = licensesInit(version, request);
   }
 }
