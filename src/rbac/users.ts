@@ -6,11 +6,12 @@ import { ICreateRbacUserInput, IRbacUser, IUpdateRbacUserInput } from '../types'
  * Salable Node SDK RBAC Users Class
  *
  * Contains the Salable RBAC Users methods
+ * @deprecated
  */
 export default class Users extends Base {
   /**
    *  Get all users
-   *
+   * @deprecated
    * @returns {Promise<IRbacUser[]>} All users
    */
   public getAll(): Promise<IRbacUser[]> {
@@ -21,7 +22,7 @@ export default class Users extends Base {
    *  Get a single user
    *
    * @param {string} uuid - The UUID of the user to get
-   *
+   * @deprecated
    * @returns {Promise<IRbacUser>} The details for the user UUID passed
    */
   public getOne(uuid: string): Promise<IRbacUser> {
@@ -32,7 +33,7 @@ export default class Users extends Base {
    *  Create a new user
    *
    * @param {ICreateRbacUserInput} userDetails - The details of the new user to be created
-   *
+   * @deprecated
    * @returns {Promise<IRbacUser>} The created user
    */
   public create(userDetails: ICreateRbacUserInput): Promise<IRbacUser> {
@@ -46,7 +47,7 @@ export default class Users extends Base {
    *  Deletes a user
    *
    * @param {string} uuid - The UUID of the user to delete
-   *
+   * @deprecated
    * @returns {Promise<void>} The created user
    */
   public delete(uuid: string): Promise<void> {
@@ -60,7 +61,7 @@ export default class Users extends Base {
    *
    * @param {string} uuid - The UUID of the user to update
    * @param {IUpdateRbacUserInput} userDetails - The details to update the user with
-   *
+   * @deprecated
    * @returns {Promise<IRbacUser>} The updated user
    */
   public update(uuid: string, userDetails: IUpdateRbacUserInput): Promise<IRbacUser> {

@@ -6,11 +6,13 @@ import { ICreatePermissionInput, IPermission, IUpdatePermissionInput } from '../
  * Salable Node SDK RBAC Permissions Class
  *
  * Contains the Salable RBAC Permissions methods
+ *
+ * @deprecated
  */
 export default class Permissions extends Base {
   /**
    *  Get all permissions
-   *
+   * @deprecated
    * @returns {Promise<IPermission[]>} All permissions
    */
   public getAll(): Promise<IPermission[]> {
@@ -21,7 +23,7 @@ export default class Permissions extends Base {
    *  Get a single permission
    *
    * @param {string} uuid - The UUID of the permission to get
-   *
+   * @deprecated
    * @returns {Promise<IPermission>} The details for the permission UUID passed
    */
   public getOne(uuid: string): Promise<IPermission> {
@@ -32,7 +34,7 @@ export default class Permissions extends Base {
    *  Create a new permission
    *
    * @param {ICreatePermissionInput} permissionDetails - The details of the new permission to be created
-   *
+   * @deprecated
    * @returns {Promise<IPermission>} The created permission
    */
   public create(permissionDetails: ICreatePermissionInput): Promise<IPermission> {
@@ -46,7 +48,7 @@ export default class Permissions extends Base {
    *  Deletes a permission
    *
    * @param {string} uuid - The UUID of the permission to delete
-   *
+   * @deprecated
    * @returns {Promise<void>} The created permission
    */
   public delete(uuid: string): Promise<void> {
@@ -60,7 +62,7 @@ export default class Permissions extends Base {
    *
    * @param {string} uuid - The UUID of the permission to update
    * @param {IUpdatePermissionInput} permissionDetails - The details to update the permission with
-   *
+   * @deprecated
    * @returns {Promise<IPermission>} The updated permission
    */
   public update(uuid: string, permissionDetails: IUpdatePermissionInput): Promise<IPermission> {
