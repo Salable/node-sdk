@@ -300,7 +300,7 @@ export interface ICapability {
   productUuid: string;
 }
 
-export interface IProduct {
+export interface Product {
   uuid: string;
   name: string;
   description?: string;
@@ -315,7 +315,7 @@ export interface IProduct {
   isTest: boolean;
 }
 
-export interface IProductCapability {
+export interface ProductCapability {
   uuid: string;
   name: string;
   description?: string;
@@ -324,7 +324,7 @@ export interface IProductCapability {
   updatedAt: string;
 }
 
-export interface IProductCurrency {
+export interface ProductCurrency {
   productUuid: string;
   currencyUuid: string;
   defaultCurrency: boolean;
@@ -382,7 +382,7 @@ export interface IOrganisationPaymentIntegration {
   isTest: boolean;
 }
 
-export interface IProductPricingTable extends IProduct {
+export interface ProductPricingTable extends Product {
   features: IFeature[];
   currencies: ICurrency[];
   organisationPaymentIntegration: IOrganisationPaymentIntegration;

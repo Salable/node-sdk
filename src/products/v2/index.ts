@@ -1,99 +1,58 @@
 import { ApiRequest } from "@/src";
 import { ProductVersions } from "..";
-import { IPlan, IProduct, IProductCapability, IProductCurrency, IProductPricingTable, PricingTableCheckoutKey, PricingTableParameters } from '@/src/types';
+import {
+  Plan,
+  Product,
+  ProductCapability,
+  ProductCurrency,
+  ProductPricingTable,
+  SearchParamOptions,
+} from '@/src/types';
 import { RESOURCE_NAMES, SALABLE_BASE_URL } from "@/src/constants";
-import defaultParametersCheckoutFactory from "@/src/utils/default-parameters-checkout-factory";
+import getUrl from "@/src/utils/get-url";
 
+const baseUrl = `${SALABLE_BASE_URL}/${RESOURCE_NAMES.PRODUCTS}`;
 
 export const v2ProductMethods = (request: ApiRequest): ProductVersions['v2'] => ({
-  getAll: async (): Promise<IProduct[]> => {
-    return request(`${SALABLE_BASE_URL}/${RESOURCE_NAMES.PRODUCTS}`, {
+  getAll: async (): Promise<Product[]> => {
+    return request(getUrl(baseUrl, {}), {
       method: 'GET',
-    }) as unknown as IProduct[];
+    }) as unknown as Product[];
   },
 
-  getOne: async (productUuid: string): Promise<IProduct> => {
-    return request(`${SALABLE_BASE_URL}/${RESOURCE_NAMES.PRODUCTS}/${productUuid}`, {
+  getOne: async (productUuid: string, options): Promise<Product> => {
+    return request(getUrl(`${baseUrl}/${productUuid}`, options as SearchParamOptions), {
       method: 'GET',
-    }) as unknown as IProduct;
+    }) as unknown as Product;
   },
 
-  getPricingTable: async (
-    productUuid: string,
-    queryParams: PricingTableParameters,
-  ): Promise<IProductPricingTable> => {
-
-    const {
-      globalPlanOptions: { granteeId, successUrl, cancelUrl, contactUsLink, member, ...rest },
-      individualPlanOptions,
-    } = queryParams;
-
-    const flatCheckoutDefaultParams = defaultParametersCheckoutFactory(rest);
-    const flatCheckoutParams = Object.assign(
-      {
-        globalGranteeId: granteeId,
-        globalSuccessUrl: successUrl,
-        globalCancelUrl: cancelUrl,
-        contactUsLink,
-        member,
-      },
-      flatCheckoutDefaultParams,
-    );
-    let paramsStr = '';
-    let query = '';
-    for (const key of Object.keys(flatCheckoutParams)) {
-      const itemKey = key as PricingTableCheckoutKey;
-      const itemValue = flatCheckoutParams[itemKey];
-      if (itemValue) paramsStr += `&${itemKey}=${itemValue}`;
-    }
-
-    if (individualPlanOptions) {
-      let granteeIds = '';
-      let cancelUrls = '';
-      let successUrls = '';
-      for (const key of Object.keys(individualPlanOptions)) {
-        if (individualPlanOptions[key].granteeId) {
-          granteeIds += `${key},${individualPlanOptions[key].granteeId as string}`;
-        }
-        if (individualPlanOptions[key].cancelUrl) {
-          cancelUrls += `${key},${individualPlanOptions[key].cancelUrl as string}`;
-        }
-        if (individualPlanOptions[key].successUrl) {
-          successUrls += `${key},${individualPlanOptions[key].successUrl as string}`;
-        }
-      }
-      if (granteeIds) paramsStr += `&granteeIds=${granteeIds}`;
-      if (cancelUrls) paramsStr += `&cancelUrls=${cancelUrls}`;
-      if (successUrls) paramsStr += `&successUrls=${successUrls}`;
-    }
-    query = encodeURI(paramsStr);
-
-    return request(`${SALABLE_BASE_URL}/${RESOURCE_NAMES.PRODUCTS}/${productUuid}/pricingtable?${query}`, {
+  getPricingTable: async (productUuid: string, options): Promise<ProductPricingTable> => {
+    return request(getUrl(`${baseUrl}/${productUuid}/pricingtable`, options as SearchParamOptions), {
       method: 'GET',
-    }) as unknown as IProductPricingTable;
+    }) as unknown as ProductPricingTable;
   },
 
-  getPlans: async (productUuid: string): Promise<IPlan[]> => {
-    return request(`${SALABLE_BASE_URL}/${RESOURCE_NAMES.PRODUCTS}/${productUuid}/plans`, {
+  getPlans: async (productUuid: string, options): Promise<Plan[]> => {
+    return request(getUrl(`${baseUrl}/${productUuid}/plans`, options as SearchParamOptions), {
       method: 'GET',
-    }) as unknown as IPlan[];
+    }) as unknown as Plan[];
   },
 
-  getFeatures: async (productUuid: string): Promise<IProduct> => {
-    return request(`${SALABLE_BASE_URL}/${RESOURCE_NAMES.PRODUCTS}/${productUuid}/features`, {
+  getFeatures: async (productUuid: string): Promise<Product> => {
+    return request(getUrl(`${baseUrl}/${productUuid}/features`, {}), {
       method: 'GET',
-    }) as unknown as IProduct;
+    }) as unknown as Product;
   },
 
-  getCapabilities: async (productUuid: string): Promise<IProductCapability[]> => {
-    return request(`${SALABLE_BASE_URL}/${RESOURCE_NAMES.PRODUCTS}/${productUuid}/capabilities`, {
+  getCapabilities: async (productUuid: string): Promise<ProductCapability[]> => {
+    return request(getUrl(`${baseUrl}/${productUuid}/capabilities`, {}), {
       method: 'GET',
-    }) as unknown as IProductCapability[];
+    }) as unknown as ProductCapability[];
   },
-  
-  getCurrencies: async (productUuid: string): Promise<IProductCurrency[]> => {
-    return request(`${SALABLE_BASE_URL}/${RESOURCE_NAMES.PRODUCTS}/${productUuid}/currencies`, {
+
+  getCurrencies: async (productUuid: string): Promise<ProductCurrency[]> => {
+    return request(getUrl(`${baseUrl}/${productUuid}/currencies`, {}), {
       method: 'GET',
-    }) as unknown as IProductCurrency[];
+    }) as unknown as ProductCurrency[];
   },
 });
