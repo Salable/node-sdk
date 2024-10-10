@@ -6,11 +6,13 @@ import { ICreateRoleInput, IRole, IUpdateRoleInput } from '../types';
  * Salable Node SDK RBAC Roles Class
  *
  * Contains the Salable RBAC Roles methods
+ *
+ * @deprecated
  */
 export default class Roles extends Base {
   /**
    *  Get all roles
-   *
+   * @deprecated
    * @returns {Promise<IRole[]>} All roles
    */
   public getAll(): Promise<IRole[]> {
@@ -21,7 +23,7 @@ export default class Roles extends Base {
    *  Get a single role
    *
    * @param {string} uuid - The UUID of the role to get
-   *
+   * @deprecated
    * @returns {Promise<IRole>} The details for the role UUID passed
    */
   public getOne(uuid: string): Promise<IRole> {
@@ -32,7 +34,7 @@ export default class Roles extends Base {
    *  Create a new role
    *
    * @param {ICreateRoleInput} roleDetails - The details of the new role to be created
-   *
+   * @deprecated
    * @returns {Promise<IRole>} The created role
    */
   public create(roleDetails: ICreateRoleInput): Promise<IRole> {
@@ -46,7 +48,7 @@ export default class Roles extends Base {
    *  Deletes a role
    *
    * @param {string} uuid - The UUID of the role to delete
-   *
+   * @deprecated
    * @returns {Promise<void>} The created role
    */
   public delete(uuid: string): Promise<void> {
@@ -60,7 +62,7 @@ export default class Roles extends Base {
    *
    * @param {string} uuid - The UUID of the role to update
    * @param {IUpdateRoleInput} roleDetails - The details to update the role with
-   *
+   * @deprecated
    * @returns {Promise<IRole>} The updated role
    */
   public update(uuid: string, roleDetails: IUpdateRoleInput): Promise<IRole> {
