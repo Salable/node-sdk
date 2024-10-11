@@ -201,35 +201,6 @@ export type PlanCheckoutKey = keyof IPlanCheckoutParams;
 export type PricingTableCheckoutKey = keyof IPricingTableParams;
 export type SupportedCurrencies = 'USD' | 'EUR' | 'GBP';
 
-export interface PlanCheckoutInputParams {
-  successUrl: string;
-  cancelUrl: string;
-  contactUsLink?: string;
-  granteeId: string;
-  member: string;
-  marketingConsent?: string;
-  couponCode?: string;
-  promoCode?: string;
-  allowPromoCode?: string;
-  quantity?: number;
-  currency?: SupportedCurrencies;
-  customer?: {
-    email?: string;
-    country?: string;
-    postcode?: string;
-  };
-  vat?: {
-    number?: string;
-    companyName?: string;
-    street?: string;
-    city?: string;
-    state?: string;
-    country?: string;
-    postcode?: string;
-  };
-  customMessage?: string;
-}
-
 export interface IDefaultCheckoutInputParams {
   marketingConsent?: string;
   couponCode?: string;
