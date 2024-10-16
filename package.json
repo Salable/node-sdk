@@ -60,6 +60,7 @@
   },
   "dependencies": {
     "@sentry/node": "^7.81.1",
+    "jest-extended": "^4.0.2",
     "uuid": "^9.0.0"
   }
 }

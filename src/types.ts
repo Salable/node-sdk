@@ -67,13 +67,14 @@ export interface License {
   email: string;
   status: string;
   granteeId: string;
+  subscriptionUuid: string;
   paymentService: string;
   purchaser: string;
   type: string;
   productUuid: string;
   planUuid: string;
-  capabilities: ICapability[];
-  metadata: IMetadata | null;
+  capabilities: Capability[];
+  metadata: null;
   startTime: string;
   endTime: string;
   updatedAt: string;
@@ -273,7 +274,7 @@ export interface IPlanCapabilityResponse {
   planUuid: string;
   capabilityUuid: string;
   updatedAt: string;
-  capability: ICapability;
+  capability: Capability;
 }
 
 export interface IPlanCurrencyResponse {
@@ -291,7 +292,7 @@ export interface ICurrency {
   symbol: string;
 }
 
-export interface ICapability {
+export interface Capability {
   uuid: string;
   name: string;
   status: string;
