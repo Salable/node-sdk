@@ -11,8 +11,14 @@ type BodyRequest<T = void> = {
 export type IRequestBase<T> = Omit<RequestInit, 'body'> & (NonBodyRequest | BodyRequest<T>);
 
 export type Status = 'ACTIVE' | 'CANCELED';
-export type LicenseStatus = 'ACTIVE' | 'CANCELED' | 'EVALUATION' | 'SCHEDULED' | 'TRIALING' | 'INACTIVE';
-export type SearchParamOptions = Record<string, string | string[] | number | boolean>
+export type LicenseStatus =
+  | 'ACTIVE'
+  | 'CANCELED'
+  | 'EVALUATION'
+  | 'SCHEDULED'
+  | 'TRIALING'
+  | 'INACTIVE';
+export type SearchParamOptions = Record<string, string | string[] | number | boolean>;
 
 export interface CreateAdhocLicenseInput {
   planUuid: string;
@@ -23,27 +29,27 @@ export interface CreateAdhocLicenseInput {
 }
 
 export interface GetLicenseOptions {
-  status?: LicenseStatus; 
-  cursor?: string; 
-  take?: string; 
+  status?: LicenseStatus;
+  cursor?: string;
+  take?: string;
   subscriptionUuid?: string;
-};
+}
 
 export interface GetPurchasersLicensesInput {
-  purchaser: string,
-  productUuid: string,
-  options?: LicenseGetByPurchaserOptions
+  purchaser: string;
+  productUuid: string;
+  options?: LicenseGetByPurchaserOptions;
 }
 
 export interface CheckLicenseInput {
-  productUuid: string,
-  granteeIds: string[],
-  grace?: number
+  productUuid: string;
+  granteeIds: string[];
+  grace?: number;
 }
 
 export interface GetLicenseCountInput {
-  subscriptionUuid: string, 
-  status: LicenseStatus
+  subscriptionUuid: string;
+  status: LicenseStatus;
 }
 
 export interface UpdateLicenseInput {
@@ -92,6 +98,8 @@ export interface Subscription {
   productUuid: string;
   type: string;
   email: string;
+  quantity: number;
+  lineItemIds: string[];
   organisation: string;
   status: string;
   createdAt: string;
@@ -104,9 +112,9 @@ export interface Subscription {
 
 export type Proration = 'create_prorations' | 'none' | 'always_invoice';
 
-export type SubscriptionsChangePlanBody = {
+export type SubscriptionsChangePlan = {
   planUuid: string;
-  proration?: Proration;
+  proration: Proration;
 };
 
 export interface Plan {
@@ -178,8 +186,8 @@ export interface ICheckoutVatParams {
 
 export interface IPlanCheckoutParams
   extends ICheckoutDefaultParams,
-  ICheckoutCustomerParams,
-  ICheckoutVatParams {
+    ICheckoutCustomerParams,
+    ICheckoutVatParams {
   successUrl: string;
   cancelUrl: string;
   contactUsLink?: string;
@@ -189,8 +197,8 @@ export interface IPlanCheckoutParams
 
 export interface IPricingTableParams
   extends ICheckoutDefaultParams,
-  ICheckoutCustomerParams,
-  ICheckoutVatParams {
+    ICheckoutCustomerParams,
+    ICheckoutVatParams {
   globalSuccessUrl: string;
   globalCancelUrl: string;
   globalGranteeId: string;
@@ -380,23 +388,6 @@ export interface IUsageUpdateCountOptions {
   increment: number;
 }
 
-export interface ISubscriptionUpdatePlanInput {
-  newPlanId: string;
-  subscriptionId: string;
-}
-
-export interface ISubscriptionAddSeatsParams {
-  increment: number;
-}
-export type ISubscriptionAddSeatsBody = ISubscriptionAddSeatsParams;
-
-export interface ISubscriptionRemoveSeatsParams {
-  decrement: number;
-}
-
-export type ISubscriptionRemoveSeatsBody = ISubscriptionRemoveSeatsParams;
-
-export type CancelWhen = 'now' | 'end';
 
 export interface IUsageUpdateInput {
   licenseUuid: string;
@@ -507,3 +498,349 @@ export interface IUpdateRbacUserInput {
   role?: string;
   permissions: { add?: string[]; remove?: string[] };
 }
+
+export type SubscriptionInvoice = {
+  first: string;
+  last: string;
+  hasMore: boolean;
+  data: Invoice[];
+};
+
+type Invoice = {
+  id: string;
+  object: string;
+  account_country: string;
+  account_name: string;
+  account_tax_ids: string;
+  amount_due: number;
+  amount_paid: number;
+  amount_remaining: number;
+  amount_shipping: number;
+  application: string;
+  application_fee_amount: string;
+  attempt_count: number;
+  attempted: boolean;
+  auto_advance: boolean;
+  automatic_tax: {
+    enabled: boolean;
+    status: string;
+  };
+  billing_reason: string;
+  charge: string;
+  collection_method: string;
+  created: number;
+  currency: string;
+  custom_fields: string;
+  customer: string;
+  customer_address: {
+    city: string;
+    country: string;
+    line1: string;
+    line2: string;
+    postal_code: string;
+    state: string;
+  };
+  customer_email: string;
+  customer_name: string;
+  customer_phone: string;
+  customer_shipping: string;
+  customer_tax_exempt: string;
+  customer_tax_ids: string[];
+  default_payment_method: string;
+  default_source: string;
+  default_tax_rates: string[];
+  description: string;
+  discount: string;
+  discounts: string[];
+  due_date: string;
+  effective_at: number;
+  ending_balance: number;
+  footer: string;
+  from_invoice: string;
+  hosted_invoice_url: string;
+  invoice_pdf: string;
+  last_finalization_error: string;
+  latest_revision: string;
+  lines: {
+    object: string;
+    data: LineItem[];
+    has_more: boolean;
+    total_count: number;
+    url: string;
+  };
+  livemode: boolean;
+  metadata: Record<string, unknown>;
+  next_payment_attempt: string;
+  number: string;
+  on_behalf_of: string;
+  paid: boolean;
+  paid_out_of_band: boolean;
+  payment_intent: string;
+  payment_settings: {
+    default_mandate: string;
+    payment_method_options: {
+      acss_debit: string;
+      bancontact: string;
+      card: {
+        request_three_d_secure: string;
+      };
+      customer_balance: string;
+      konbini: string;
+      sepa_debit: string;
+      us_bank_account: string;
+    };
+    payment_method_types: string;
+  };
+  period_end: number;
+  period_start: number;
+  post_payment_credit_notes_amount: number;
+  pre_payment_credit_notes_amount: number;
+  quote: string;
+  receipt_number: string;
+  rendering: string;
+  rendering_options: string;
+  shipping_cost: string;
+  shipping_details: string;
+  starting_balance: number;
+  statement_descriptor: string;
+  status: string;
+  status_transitions: {
+    finalized_at: number;
+    marked_uncollectible_at: string;
+    paid_at: number;
+    voided_at: string;
+  };
+  subscription: string;
+  subscription_details: {
+    metadata: {
+      granteeId: string;
+      member: string;
+    };
+  };
+  subtotal: number;
+  subtotal_excluding_tax: number;
+  tax: string;
+  test_clock: string;
+  total: number;
+  total_discount_amounts: string[];
+  total_excluding_tax: number;
+  total_tax_amounts: string[];
+  transfer_data: string;
+  webhooks_delivered_at: number;
+};
+
+type LineItem = {
+  id: string;
+  object: string;
+  amount: number;
+  amount_excluding_tax: number;
+  currency: string;
+  description: string;
+  discount_amounts: string[];
+  discountable: boolean;
+  discounts: string[];
+  invoice_item: string;
+  livemode: boolean;
+  metadata: Record<string, unknown>;
+  period: {
+    end: number;
+    start: number;
+  };
+  plan: {
+    id: string;
+    object: string;
+    active: boolean;
+    aggregate_usage: string;
+    amount: number;
+    amount_decimal: string;
+    billing_scheme: string;
+    created: number;
+    currency: string;
+    interval: string;
+    interval_count: number;
+    livemode: boolean;
+    metadata: Record<string, unknown>;
+    nickname: string;
+    product: string;
+    tiers_mode: string;
+    transform_usage: string;
+    trial_period_days: string;
+    usage_type: string;
+  };
+  price: {
+    id: string;
+    object: string;
+    active: boolean;
+    billing_scheme: string;
+    created: number;
+    currency: string;
+    custom_unit_amount: string;
+    livemode: boolean;
+    lookup_key: string;
+    metadata: Record<string, unknown>;
+    nickname: string;
+    product: string;
+    recurring: {
+      aggregate_usage: string;
+      interval: string;
+      interval_count: number;
+      trial_period_days: string;
+      usage_type: string;
+    };
+    tax_behavior: string;
+    tiers_mode: string;
+    transform_quantity: string;
+    type: string;
+    unit_amount: number;
+    unit_amount_decimal: string;
+  };
+  proration: boolean;
+  proration_details: {
+    credited_items: {
+      invoice: string;
+      invoice_line_items: string[];
+    };
+  };
+  quantity: number;
+  subscription: string;
+  subscription_item: string;
+  tax_amounts: string[];
+  tax_rates: string[];
+  type: string;
+  unit_amount_excluding_tax: string;
+};
+
+export type SubscriptionPlan = {
+  uuid: string;
+  name: string;
+  description: string;
+  displayName: string;
+  status: 'ACTIVE' | string;
+  isTest: boolean;
+  trialDays: number;
+  evaluation: boolean;
+  evalDays: number;
+  organisation: string;
+  visibility: string;
+  licenseType: string;
+  perSeatAmount: number;
+  interval: string;
+  length: number;
+  active: boolean;
+  planType: string;
+  pricingType: string;
+  environment: string;
+  paddlePlanId: string;
+  productUuid: string;
+  salablePlan: boolean;
+  updatedAt: string;
+  currencies: Currency[];
+  features: Feature[];
+};
+
+type Currency = {
+  planUuid: string;
+  currencyUuid: string;
+  price: number;
+  paymentIntegrationPlanId: string;
+  currency: {
+    uuid: string;
+    shortName: string;
+    longName: string;
+    symbol: string;
+  };
+};
+
+type Feature = {
+  planUuid: string;
+  featureUuid: string;
+  value: string;
+  enumValueUuid: string;
+  isUnlimited: boolean;
+  isUsage: boolean;
+  pricePerUnit: number;
+  minUsage: number;
+  maxUsage: number;
+  updatedAt: string;
+  feature: {
+    uuid: string;
+    name: string;
+    description: string;
+    displayName: string;
+    variableName: string;
+    status: 'ACTIVE' | string;
+    visibility: string;
+    valueType: string;
+    defaultValue: string;
+    showUnlimited: boolean;
+    productUuid: string;
+    updatedAt: string;
+    sortOrder: number;
+  };
+  enumValue: {
+    uuid: string;
+    name: string;
+    featureUuid: string;
+    updatedAt: string;
+  };
+};
+
+export type SubscriptionPaymentLink = {
+  url: string;
+};
+
+export type SubscriptionPaymentMethod = {
+  id: string;
+  object: string;
+  billing_details: BillingDetails;
+  card: Card;
+  created: number;
+  customer: string;
+  livemode: boolean;
+  metadata: Record<string, unknown>;
+  type: string;
+};
+
+type BillingDetails = {
+  address: Address;
+  email: string;
+  name: string;
+  phone: string;
+};
+
+type Address = {
+  city: string;
+  country: string;
+  line1: string;
+  line2: string;
+  postal_code: string;
+  state: string;
+};
+
+type Card = {
+  brand: string;
+  checks: {
+    address_line1_check: string;
+    address_postal_code_check: string;
+    cvc_check: string;
+  };
+  country: string;
+  exp_month: number;
+  exp_year: number;
+  fingerprint: string;
+  funding: string;
+  generated_from: string;
+  last4: string;
+  networks: {
+    available: string[];
+    preferred: string;
+  };
+  three_d_secure_usage: {
+    supported: boolean;
+  };
+  wallet: string;
+};
+
+export type SubscriptionSeatResponse = {
+  eventUuid: string;
+};
