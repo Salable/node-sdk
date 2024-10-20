@@ -1,7 +1,5 @@
-// initRequest.test.ts
-
-import { initRequest } from ".";
-import { SalableResponseError, SalableValidationError } from "./exceptions/salable-error";
+import { initRequest } from '.';
+import { SalableResponseError, SalableValidationError } from './exceptions/salable-error';
 
 global.fetch = jest.fn();
 
@@ -46,7 +44,9 @@ describe('initRequest', () => {
     mockFetch.mockResolvedValueOnce({
       ok: true,
       status: 200,
-      json: async () => { throw new SyntaxError('Invalid JSON'); },
+      json: async () => {
+        throw new SyntaxError('Invalid JSON');
+      },
     });
 
     const request = initRequest(apiKey, version);
