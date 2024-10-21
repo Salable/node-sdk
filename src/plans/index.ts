@@ -1,11 +1,5 @@
 import { ApiRequest, TVersion, Version } from '..';
-import {
-  Plan,
-  PlanCheckout,
-  PlanFeature,
-  PlanCapability,
-  PlanCurrency,
-} from '../types';
+import { Plan, PlanCheckout, PlanFeature, PlanCapability, PlanCurrency } from '../types';
 import { v2PlanMethods } from './v2';
 
 export type PlanVersions = {
@@ -50,7 +44,7 @@ export type PlanVersions = {
         automaticTax?: string;
         quantity?: string;
         changeQuantity?: string;
-        requirePaymentMethod?: 'true' | 'false';
+        requirePaymentMethod?: boolean;
       },
     ) => Promise<PlanCheckout>;
 
@@ -89,14 +83,9 @@ export type PlanVersions = {
   };
 };
 
-export type PlanVersionedMethods<V extends TVersion> = V extends keyof PlanVersions
-  ? PlanVersions[V]
-  : never;
+export type PlanVersionedMethods<V extends TVersion> = V extends keyof PlanVersions ? PlanVersions[V] : never;
 
-export const PlansInit = <V extends TVersion>(
-  version: V,
-  request: ApiRequest,
-): PlanVersionedMethods<V> => {
+export const PlansInit = <V extends TVersion>(version: V, request: ApiRequest): PlanVersionedMethods<V> => {
   switch (version) {
     case Version.V2:
       return v2PlanMethods(request) as PlanVersionedMethods<V>;
