@@ -11,9 +11,15 @@ type BodyRequest<T = void> = {
 export type IRequestBase<T> = Omit<RequestInit, 'body'> & (NonBodyRequest | BodyRequest<T>);
 
 export type Status = 'ACTIVE' | 'CANCELED';
-export type LicenseStatus = 'ACTIVE' | 'CANCELED' | 'EVALUATION' | 'SCHEDULED' | 'TRIALING' | 'INACTIVE';
+export type LicenseStatus =
+  | 'ACTIVE'
+  | 'CANCELED'
+  | 'EVALUATION'
+  | 'SCHEDULED'
+  | 'TRIALING'
+  | 'INACTIVE';
 export type ProductStatus = 'ACTIVE' | 'DEPRECATED';
-export type SearchParamOptions = Record<string, string | string[] | number | boolean>
+export type SearchParamOptions = Record<string, string | string[] | number | boolean>;
 
 export interface CreateAdhocLicenseInput {
   planUuid: string;
@@ -73,7 +79,7 @@ export interface License {
   type: string;
   productUuid: string;
   planUuid: string;
-  capabilities: ICapability[];
+  capabilities: Capability[];
   metadata: IMetadata | null;
   startTime: string;
   endTime: string;
@@ -87,24 +93,6 @@ export interface GetAllLicensesResponse {
   data: License[];
 }
 
-export interface Subscription {
-  uuid: string;
-  paymentIntegrationSubscriptionId: string;
-  productUuid: string;
-  type: string;
-  email: string;
-  quantity: number;
-  lineItemIds: string[];
-  organisation: string;
-  status: string;
-  createdAt: string;
-  updatedAt: string;
-  expiryDate: string;
-  licenseUuid: string;
-  planUuid: string;
-  isTest: boolean;
-}
-
 export type Proration = 'create_prorations' | 'none' | 'always_invoice';
 
 export type SubscriptionsChangePlan = {
@@ -112,157 +100,7 @@ export type SubscriptionsChangePlan = {
   proration: Proration;
 };
 
-export interface Plan {
-  uuid: string;
-  name: string;
-  description?: string;
-  displayName: string;
-  status: string;
-  trialDays: null;
-  evaluation: false;
-  evalDays: number;
-  organisation: string;
-  visibility: string;
-  licenseType: string;
-  interval: string;
-  length: number;
-  active: boolean;
-  planType: string;
-  pricingType: string;
-  environment: string;
-  type: string;
-  paddlePlanId?: string;
-  productUuid: string;
-  salablePlan: boolean;
-  updatedAt: string;
-  isTest: boolean;
-}
-
-export interface IFeature {
-  uuid: string;
-  name: string;
-  description?: string;
-  displayName: string;
-  variableName?: string;
-  status: string;
-  visibility: string;
-  valueType: string;
-  defaultValue: string;
-  showUnlimited: boolean;
-  productUuid?: string;
-  updatedAt: string;
-}
-
-export interface ICheckoutDefaultParams {
-  member: string;
-  marketingConsent?: string;
-  couponCode?: string;
-  promoCode?: string;
-  allowPromoCode?: string;
-  customMessage?: string;
-  currency?: SupportedCurrencies;
-}
-
-export interface ICheckoutCustomerParams {
-  customerEmail?: string;
-  customerCountry?: string;
-  customerPostcode?: string;
-}
-
-export interface ICheckoutVatParams {
-  vatNumber?: string;
-  vatCompanyName?: string;
-  vatStreet?: string;
-  vatCity?: string;
-  vatState?: string;
-  vatCountry?: string;
-  vatPostcode?: string;
-}
-
-export interface IPlanCheckoutParams
-  extends ICheckoutDefaultParams,
-    ICheckoutCustomerParams,
-    ICheckoutVatParams {
-  successUrl: string;
-  cancelUrl: string;
-  contactUsLink?: string;
-  granteeId: string;
-  quantity?: number;
-}
-
-export type PlanCheckoutKey = keyof IPlanCheckoutParams;
-export type SupportedCurrencies = 'USD' | 'EUR' | 'GBP';
-
-export interface IDefaultCheckoutInputParams {
-  marketingConsent?: string;
-  couponCode?: string;
-  promoCode?: string;
-  allowPromoCode?: string;
-  customMessage?: string;
-  currency?: SupportedCurrencies;
-  customer?: {
-    email?: string;
-    country?: string;
-    postcode?: string;
-  };
-  vat?: {
-    number?: string;
-    companyName?: string;
-    street?: string;
-    city?: string;
-    state?: string;
-    country?: string;
-    postcode?: string;
-  };
-}
-
-export interface PlanCheckout {
-  checkoutUrl: string;
-}
-
-export interface PlanFeature {
-  planUuid: string;
-  featureUuid: string;
-  value: string;
-  enumValueUuid?: string;
-  isUnlimited: boolean;
-  updatedAt: string;
-  feature: IFeature;
-  enumValue?: string;
-  sortOrder: number;
-}
-
-export interface PlanCapability {
-  planUuid: string;
-  capabilityUuid: string;
-  updatedAt: string;
-  capability: ICapability;
-}
-
-export interface PlanCurrency {
-  planUuid: string;
-  currencyUuid: string;
-  price: number;
-  paymentIntegrationPlanId: string;
-  currency: ICurrency;
-}
-
-export interface ICurrency {
-  uuid: string;
-  shortName: string;
-  longName: string;
-  symbol: string;
-}
-
-export interface ICapability {
-  uuid: string;
-  name: string;
-  status: string;
-  updatedAt: string;
-  description?: string;
-  productUuid: string;
-}
-
+// PRODUCT
 export interface Product {
   uuid: string;
   name: string;
@@ -270,12 +108,65 @@ export interface Product {
   logoUrl?: string;
   displayName: string;
   organisation: string;
-  status: string;
+  status: ProductStatus;
   paid: boolean;
+  paymentIntegrationProductId: string | null;
   organisationPaymentIntegrationUuid: string;
-  paymentIntegrationProductId?: string;
+  appType: string;
   updatedAt: string;
   isTest: boolean;
+}
+export interface Feature {
+  uuid: string;
+  name: string;
+  description?: string;
+  displayName: string;
+  variableName?: string;
+  status: ProductStatus;
+  visibility: string;
+  valueType: string;
+  defaultValue: string;
+  showUnlimited: boolean;
+  productUuid: string;
+  updatedAt: string;
+  sortOrder: number;
+}
+export interface featureEnumOption {
+  uuid: string;
+  name: string;
+  featureUuid: string;
+  updatedAt: string;
+}
+export interface ProductCurrency {
+  productUuid: string;
+  currencyUuid: string;
+  defaultCurrency: boolean;
+  currency: Currency;
+}
+export interface Currency {
+  uuid: string;
+  shortName: string;
+  longName: string;
+  symbol: string;
+}
+
+export interface Capability {
+  uuid: string;
+  name: string;
+  description: string | null;
+  status: ProductStatus;
+  productUuid: string;
+  updatedAt: string;
+}
+
+export interface Grantee {
+  isLicensed: boolean;
+  isSubscribed: boolean;
+}
+export interface ProductPricingTable extends Product {
+  features: Feature[];
+  currencies: ProductCurrency[];
+  plans: Plan & { grantee: Grantee; currencies: Currency[]; features: Feature[] }[];
 }
 
 export interface ProductCapability {
@@ -287,44 +178,379 @@ export interface ProductCapability {
   updatedAt: string;
 }
 
-export interface ProductCurrency {
+/**
+ * PLAN TYPES
+ */
+export type PlanStatus =
+  | 'ACTIVE'
+  | 'DEPRECATED'
+  | 'DRAFT'
+  | 'REVISION'
+  | 'SCHEDULED'
+  | 'COMING_SOON';
+export interface Plan {
+  uuid: string;
+  /**
+   * Deprecated
+   */
+  name: string;
+  description?: string;
+  displayName: string;
+  status: PlanStatus;
+  isTest: boolean;
+  trialDays: number | null;
+  evaluation: boolean;
+  evalDays: number;
+  organisation: string;
+  visibility: string;
+  licenseType: string;
+  perSeatAmount: number;
+  interval: string;
+  length: number;
+  active: boolean;
+  planType: string;
+  pricingType: string;
+  environment: string;
+  /**
+   * Deprecated
+   */
+  paddlePlanId?: string;
   productUuid: string;
-  currencyUuid: string;
-  defaultCurrency: boolean;
-  currency: ICurrency;
+  salablePlan: boolean;
+  updatedAt: string;
 }
 
-export interface IOrganisationPaymentIntegration {
+export interface PlanFeatureEnumValue {
   uuid: string;
-  organisation: string;
-  integrationName: string;
-  accountName: string;
-  accountData: {
-    key: string;
-    encryptedData: string;
-  };
-  accountId: string;
+  name: string;
+  featureUuid: string;
   updatedAt: string;
-  isTest: boolean;
 }
+export interface PlanFeature {
+  planUuid: string;
+  featureUuid: string;
+  value: string;
+  enumValueUuid: string | null;
+  isUnlimited: boolean;
+  isUsage: boolean;
+  pricePerUnit: number | null;
+  minUsage: number | null;
+  maxUsage: number | null;
+  updatedAt: string;
+  feature: Feature;
+  enumValue: PlanFeatureEnumValue;
+}
+
+export interface PlanCurrency {
+  planUuid: string;
+  currencyUuid: string;
+  price: number;
+  paymentIntegrationPlanId: string;
+  currency: Currency;
+}
+
+export interface PlanCheckout {
+  checkoutUrl: string;
+}
+
+export interface PlanCapability {
+  planUuid: string;
+  capabilityUuid: string;
+  updatedAt: string;
+  capability: Capability;
+}
+
+// PRICING TABLE
 
 export interface PricingTableResponse {
   uuid: string;
   name: string;
   status: ProductStatus;
-  title: string;
-  text: string;
-  theme: string;
+  title: string | null;
+  text: string | null;
+  theme: 'light' | 'dark' | string;
   featureOrder: string;
   productUuid: string;
-  customTheme: string;
-  featuredPlanUuid: string;
+  customTheme: string | string;
+  featuredPlanUuid: string | string;
   updatedAt: string;
-  features: IFeature[];
-  product: Product & { features: IFeature[]; currencies: ICurrency[];}
-  organisationPaymentIntegration: IOrganisationPaymentIntegration;
-  plans: (Plan & { features: IFeature[]; currencies: ICurrency[]; checkoutUrl: string })[];
+  features: PricingTableFeature[];
+  product: Product & { features: Feature[]; currencies: ProductCurrency[] };
+  plans: PricingTablePlan[];
 }
+
+interface PricingTableFeature {
+  pricingTableUuid: string;
+  featureUuid: string;
+  sortOrder: number;
+  updatedAt: string;
+  feature: Feature & {
+    featureEnumOptions: featureEnumOption[];
+  };
+}
+
+interface PricingTablePlan {
+  planUuid: string;
+  pricingTableUuid: string;
+  sortOrder: number;
+  updatedAt: string;
+  plan: Plan & {
+    features: Feature & { featureEnumOptions: featureEnumOption[] }[];
+    currencies: PlanCurrency[];
+  };
+}
+
+/**
+ * SUBSCRIPTION
+ */
+
+export type AllSubscription = {
+  first: string;
+  last: string;
+  hasMore: boolean;
+  data: Subscription[];
+};
+
+export type SubscriptionType = 'salable' | 'stripe_existing';
+export type SubscriptionStatus =
+  | 'ACTIVE'
+  | 'CANCELED'
+  | 'PAUSED'
+  | 'TRIALING'
+  | 'DELETED'
+  | 'PAST_DUE'
+  | 'INCOMPLETE_EXPIRED'
+  | 'INCOMPLETE'
+  | 'UNPAID';
+export interface Subscription {
+  uuid: string;
+  productUuid: string;
+  planUuid: string;
+  organisation: string;
+  paymentIntegrationSubscriptionId: string;
+  type: SubscriptionType;
+  quantity: number;
+  email: string | null;
+  expiryDate: string;
+  lineItemIds: string[] | null;
+  status: SubscriptionStatus;
+  createdAt: string;
+  updatedAt: string;
+  isTest: boolean;
+}
+
+export type SubscriptionInvoice = {
+  first: string;
+  last: string;
+  hasMore: boolean;
+  data: Invoice[];
+};
+
+export interface Invoice {
+  id: string;
+  object: string;
+  account_country: string;
+  account_name: string;
+  account_tax_ids: string | null;
+  amount_due: number;
+  amount_paid: number;
+  amount_remaining: number;
+  amount_shipping: number;
+  application: string;
+  application_fee_amount: string | null;
+  attempt_count: number;
+  attempted: boolean;
+  auto_advance: boolean;
+  automatic_tax: {
+    enabled: boolean;
+    status: string | null;
+  };
+  billing_reason: string;
+  charge: string | null;
+  collection_method: string;
+  created: number;
+  currency: string;
+  custom_fields: string | null;
+  customer: string;
+  customer_address: {
+    city: string | null;
+    country: string;
+    line1: string | null;
+    line2: string | null;
+    postal_code: string;
+    state: string | null;
+  };
+  customer_email: string;
+  customer_name: string;
+  customer_phone: string | null;
+  customer_shipping: string | null;
+  customer_tax_exempt: string;
+  customer_tax_ids: string[] | null;
+  default_payment_method: string | null;
+  default_source: string | null;
+  default_tax_rates: string[] | null;
+  description: string | null;
+  discount: string | null;
+  discounts: string[] | null;
+  due_date: string | null;
+  effective_at: number;
+  ending_balance: number;
+  footer: string | null;
+  from_invoice: string | null;
+  hosted_invoice_url: string;
+  invoice_pdf: string;
+  last_finalization_error: string | null;
+  latest_revision: string | null;
+  lines: {
+    object: string;
+    data: LineItem[];
+    has_more: boolean;
+    total_count: number;
+    url: string;
+  };
+  livemode: boolean;
+  metadata: Record<string, unknown>;
+  next_payment_attempt: string | null;
+  number: string;
+  on_behalf_of: string | null;
+  paid: boolean;
+  paid_out_of_band: boolean;
+  payment_intent: string | null;
+  payment_settings: {
+    default_mandate: string | null;
+    payment_method_options: {
+      acss_debit: string;
+      bancontact: string;
+      card: {
+        request_three_d_secure: string;
+      };
+      customer_balance: string;
+      konbini: string;
+      sepa_debit: string;
+      us_bank_account: string;
+    } | null;
+    payment_method_types: string | null;
+  };
+  period_end: number;
+  period_start: number;
+  post_payment_credit_notes_amount: number;
+  pre_payment_credit_notes_amount: number;
+  quote: string | null;
+  receipt_number: string | null;
+  rendering: string | null;
+  rendering_options: string | null;
+  shipping_cost: string | null;
+  shipping_details: string | null;
+  starting_balance: number;
+  statement_descriptor: string | null;
+  status: string;
+  status_transitions: {
+    finalized_at: number;
+    marked_uncollectible_at: string | null;
+    paid_at: number;
+    voided_at: string | null;
+  };
+  subscription: string;
+  subscription_details: {
+    metadata: {
+      granteeId: string;
+      member: string;
+    };
+  };
+  subtotal: number;
+  subtotal_excluding_tax: number;
+  tax: string | null;
+  test_clock: string | null;
+  total: number;
+  total_discount_amounts: string[] | null;
+  total_excluding_tax: number;
+  total_tax_amounts: string[] | null;
+  transfer_data: string | null;
+  webhooks_delivered_at: number;
+}
+
+interface LineItem {
+  id: string;
+  object: string;
+  amount: number;
+  amount_excluding_tax: number;
+  currency: string;
+  description: string;
+  discount_amounts: string[] | null;
+  discountable: boolean;
+  discounts: string[] | null;
+  invoice_item: string;
+  livemode: boolean;
+  metadata: Record<string, unknown>;
+  period: {
+    end: number;
+    start: number;
+  };
+  plan: {
+    id: string;
+    object: string;
+    active: boolean;
+    aggregate_usage: string | null;
+    amount: number;
+    amount_decimal: string;
+    billing_scheme: string;
+    created: number;
+    currency: string;
+    interval: string;
+    interval_count: number;
+    livemode: boolean;
+    metadata: Record<string, unknown>;
+    nickname: string;
+    product: string;
+    tiers_mode: string | null;
+    transform_usage: string | null;
+    trial_period_days: string | null;
+    usage_type: string;
+  };
+  price: {
+    id: string;
+    object: string;
+    active: boolean;
+    billing_scheme: string;
+    created: number;
+    currency: string;
+    custom_unit_amount: string | null;
+    livemode: boolean;
+    lookup_key: string | null;
+    metadata: Record<string, unknown>;
+    nickname: string;
+    product: string;
+    recurring: {
+      aggregate_usage: string | null;
+      interval: string;
+      interval_count: number;
+      trial_period_days: string | null;
+      usage_type: string;
+    };
+    tax_behavior: string;
+    tiers_mode: string | null;
+    transform_quantity: string | null;
+    type: string;
+    unit_amount: number;
+    unit_amount_decimal: string;
+  };
+  proration: boolean;
+  proration_details: {
+    credited_items: {
+      invoice: string;
+      invoice_line_items: string[];
+    } | null;
+  };
+  quantity: number;
+  subscription: string;
+  subscription_item: string;
+  tax_amounts: string[] | null;
+  tax_rates: string[] | null;
+  type: string;
+  unit_amount_excluding_tax: string;
+}
+
+// END
 
 export interface CheckLicensesCapabilitiesResponse {
   capabilities: {
@@ -345,7 +571,6 @@ export interface IMetadata {
 export interface IUsageUpdateCountOptions {
   increment: number;
 }
-
 
 export interface IUsageUpdateInput {
   licenseUuid: string;
@@ -457,217 +682,6 @@ export interface IUpdateRbacUserInput {
   permissions: { add?: string[]; remove?: string[] };
 }
 
-export type SubscriptionInvoice = {
-  first: string;
-  last: string;
-  hasMore: boolean;
-  data: Invoice[];
-};
-
-type Invoice = {
-  id: string;
-  object: string;
-  account_country: string;
-  account_name: string;
-  account_tax_ids: string;
-  amount_due: number;
-  amount_paid: number;
-  amount_remaining: number;
-  amount_shipping: number;
-  application: string;
-  application_fee_amount: string;
-  attempt_count: number;
-  attempted: boolean;
-  auto_advance: boolean;
-  automatic_tax: {
-    enabled: boolean;
-    status: string;
-  };
-  billing_reason: string;
-  charge: string;
-  collection_method: string;
-  created: number;
-  currency: string;
-  custom_fields: string;
-  customer: string;
-  customer_address: {
-    city: string;
-    country: string;
-    line1: string;
-    line2: string;
-    postal_code: string;
-    state: string;
-  };
-  customer_email: string;
-  customer_name: string;
-  customer_phone: string;
-  customer_shipping: string;
-  customer_tax_exempt: string;
-  customer_tax_ids: string[];
-  default_payment_method: string;
-  default_source: string;
-  default_tax_rates: string[];
-  description: string;
-  discount: string;
-  discounts: string[];
-  due_date: string;
-  effective_at: number;
-  ending_balance: number;
-  footer: string;
-  from_invoice: string;
-  hosted_invoice_url: string;
-  invoice_pdf: string;
-  last_finalization_error: string;
-  latest_revision: string;
-  lines: {
-    object: string;
-    data: LineItem[];
-    has_more: boolean;
-    total_count: number;
-    url: string;
-  };
-  livemode: boolean;
-  metadata: Record<string, unknown>;
-  next_payment_attempt: string;
-  number: string;
-  on_behalf_of: string;
-  paid: boolean;
-  paid_out_of_band: boolean;
-  payment_intent: string;
-  payment_settings: {
-    default_mandate: string;
-    payment_method_options: {
-      acss_debit: string;
-      bancontact: string;
-      card: {
-        request_three_d_secure: string;
-      };
-      customer_balance: string;
-      konbini: string;
-      sepa_debit: string;
-      us_bank_account: string;
-    };
-    payment_method_types: string;
-  };
-  period_end: number;
-  period_start: number;
-  post_payment_credit_notes_amount: number;
-  pre_payment_credit_notes_amount: number;
-  quote: string;
-  receipt_number: string;
-  rendering: string;
-  rendering_options: string;
-  shipping_cost: string;
-  shipping_details: string;
-  starting_balance: number;
-  statement_descriptor: string;
-  status: string;
-  status_transitions: {
-    finalized_at: number;
-    marked_uncollectible_at: string;
-    paid_at: number;
-    voided_at: string;
-  };
-  subscription: string;
-  subscription_details: {
-    metadata: {
-      granteeId: string;
-      member: string;
-    };
-  };
-  subtotal: number;
-  subtotal_excluding_tax: number;
-  tax: string;
-  test_clock: string;
-  total: number;
-  total_discount_amounts: string[];
-  total_excluding_tax: number;
-  total_tax_amounts: string[];
-  transfer_data: string;
-  webhooks_delivered_at: number;
-};
-
-type LineItem = {
-  id: string;
-  object: string;
-  amount: number;
-  amount_excluding_tax: number;
-  currency: string;
-  description: string;
-  discount_amounts: string[];
-  discountable: boolean;
-  discounts: string[];
-  invoice_item: string;
-  livemode: boolean;
-  metadata: Record<string, unknown>;
-  period: {
-    end: number;
-    start: number;
-  };
-  plan: {
-    id: string;
-    object: string;
-    active: boolean;
-    aggregate_usage: string;
-    amount: number;
-    amount_decimal: string;
-    billing_scheme: string;
-    created: number;
-    currency: string;
-    interval: string;
-    interval_count: number;
-    livemode: boolean;
-    metadata: Record<string, unknown>;
-    nickname: string;
-    product: string;
-    tiers_mode: string;
-    transform_usage: string;
-    trial_period_days: string;
-    usage_type: string;
-  };
-  price: {
-    id: string;
-    object: string;
-    active: boolean;
-    billing_scheme: string;
-    created: number;
-    currency: string;
-    custom_unit_amount: string;
-    livemode: boolean;
-    lookup_key: string;
-    metadata: Record<string, unknown>;
-    nickname: string;
-    product: string;
-    recurring: {
-      aggregate_usage: string;
-      interval: string;
-      interval_count: number;
-      trial_period_days: string;
-      usage_type: string;
-    };
-    tax_behavior: string;
-    tiers_mode: string;
-    transform_quantity: string;
-    type: string;
-    unit_amount: number;
-    unit_amount_decimal: string;
-  };
-  proration: boolean;
-  proration_details: {
-    credited_items: {
-      invoice: string;
-      invoice_line_items: string[];
-    };
-  };
-  quantity: number;
-  subscription: string;
-  subscription_item: string;
-  tax_amounts: string[];
-  tax_rates: string[];
-  type: string;
-  unit_amount_excluding_tax: string;
-};
-
 export type SubscriptionPlan = {
   uuid: string;
   name: string;
@@ -694,53 +708,6 @@ export type SubscriptionPlan = {
   updatedAt: string;
   currencies: Currency[];
   features: Feature[];
-};
-
-type Currency = {
-  planUuid: string;
-  currencyUuid: string;
-  price: number;
-  paymentIntegrationPlanId: string;
-  currency: {
-    uuid: string;
-    shortName: string;
-    longName: string;
-    symbol: string;
-  };
-};
-
-type Feature = {
-  planUuid: string;
-  featureUuid: string;
-  value: string;
-  enumValueUuid: string;
-  isUnlimited: boolean;
-  isUsage: boolean;
-  pricePerUnit: number;
-  minUsage: number;
-  maxUsage: number;
-  updatedAt: string;
-  feature: {
-    uuid: string;
-    name: string;
-    description: string;
-    displayName: string;
-    variableName: string;
-    status: 'ACTIVE' | string;
-    visibility: string;
-    valueType: string;
-    defaultValue: string;
-    showUnlimited: boolean;
-    productUuid: string;
-    updatedAt: string;
-    sortOrder: number;
-  };
-  enumValue: {
-    uuid: string;
-    name: string;
-    featureUuid: string;
-    updatedAt: string;
-  };
 };
 
 export type SubscriptionPaymentLink = {

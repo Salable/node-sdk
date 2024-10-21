@@ -1,7 +1,7 @@
 import { ApiRequest } from '@/src';
 import { SubscriptionVersions } from '..';
 import {
-    GetAllLicensesResponse,
+  AllSubscription,
     SearchParamOptions,
     Subscription,
     SubscriptionInvoice,
@@ -17,10 +17,10 @@ import getUrl from '@/src/utils/get-url';
 const baseUrl = `${SALABLE_BASE_URL}/${RESOURCE_NAMES.SUBSCRIPTIONS}`;
 
 export const v2SubscriptionMethods = (request: ApiRequest): SubscriptionVersions['v2'] => ({
-  getAll: async (options): Promise<GetAllLicensesResponse> => {
+  getAll: async (options): Promise<AllSubscription> => {
     return request(getUrl(baseUrl, options as SearchParamOptions), {
       method: 'GET',
-    }) as unknown as GetAllLicensesResponse;
+    }) as unknown as AllSubscription;
   },
 
   getOne: async (subscriptionUuid: string, options): Promise<Subscription> => {
@@ -86,20 +86,14 @@ export const v2SubscriptionMethods = (request: ApiRequest): SubscriptionVersions
     }) as unknown as void;
   },
 
-  addSeats: async (
-    subscriptionUuid: string,
-    options,
-  ): Promise<SubscriptionSeatResponse> => {
+  addSeats: async (subscriptionUuid: string, options): Promise<SubscriptionSeatResponse> => {
     return request(getUrl(`${baseUrl}/${subscriptionUuid}/seats`, {}), {
       method: 'POST',
       body: JSON.stringify(options),
     }) as unknown as SubscriptionSeatResponse;
   },
 
-  removeSeats: async (
-    subscriptionUuid: string,
-    options,
-  ): Promise<SubscriptionSeatResponse> => {
+  removeSeats: async (subscriptionUuid: string, options): Promise<SubscriptionSeatResponse> => {
     return request(getUrl(`${baseUrl}/${subscriptionUuid}/seats`, {}), {
       method: 'PUT',
       body: JSON.stringify(options),
