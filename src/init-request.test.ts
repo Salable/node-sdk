@@ -5,7 +5,7 @@ global.fetch = jest.fn();
 
 describe('initRequest', () => {
   const apiKey = 'test-api-key';
-  const version = '1.0';
+  const version = 'v2';
   const input = 'https://api.example.com/data';
   const init = { method: 'GET' };
   const mockFetch = global.fetch as jest.Mock;
