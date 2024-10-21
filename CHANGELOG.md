@@ -1,49 +1,48 @@
-# [3.4.0](https://github.com/Salable/node-sdk/compare/v3.3.0...v3.4.0) (2024-07-12)
+## [3.4.1](https://github.com/Salable/node-sdk/compare/v3.4.0...v3.4.1) (2024-10-10)
 
+### Bug Fixes
+
+- deprecate rbac ([b75d464](https://github.com/Salable/node-sdk/commit/b75d464d1d01a9d801f097920bdf89758aadaecd))
+
+# [3.4.0](https://github.com/Salable/node-sdk/compare/v3.3.0...v3.4.0) (2024-07-12)
 
 ### Features
 
-* **SD-168:** added verify-signature method ([c8b4a42](https://github.com/Salable/node-sdk/commit/c8b4a42a83fa72e6884adcfac96cefbddaf0dc20))
+- **SD-168:** added verify-signature method ([c8b4a42](https://github.com/Salable/node-sdk/commit/c8b4a42a83fa72e6884adcfac96cefbddaf0dc20))
 
 # [3.3.0](https://github.com/Salable/node-sdk/compare/v3.2.1...v3.3.0) (2024-02-01)
 
-
 ### Bug Fixes
 
-* fixed licenses cancelMany method ([3cf5fe7](https://github.com/Salable/node-sdk/commit/3cf5fe7c052befd466f94c034214d4dec5043700))
-
+- fixed licenses cancelMany method ([3cf5fe7](https://github.com/Salable/node-sdk/commit/3cf5fe7c052befd466f94c034214d4dec5043700))
 
 ### Features
 
-* currency and quantity parameters added checkout link and pricing table methods ([f822750](https://github.com/Salable/node-sdk/commit/f82275015c83fac69df2b0ab7b6b681821334c24))
+- currency and quantity parameters added checkout link and pricing table methods ([f822750](https://github.com/Salable/node-sdk/commit/f82275015c83fac69df2b0ab7b6b681821334c24))
 
 ## [3.2.1](https://github.com/Salable/node-sdk/compare/v3.2.0...v3.2.1) (2023-12-05)
 
-
 ### Bug Fixes
 
-* added isTest to the response types ([46ba143](https://github.com/Salable/node-sdk/commit/46ba14365b7393b43a4d0417ecf6785d60633bc6))
+- added isTest to the response types ([46ba143](https://github.com/Salable/node-sdk/commit/46ba14365b7393b43a4d0417ecf6785d60633bc6))
 
 # [3.2.0](https://github.com/Salable/node-sdk/compare/v3.1.0...v3.2.0) (2023-11-27)
 
-
 ### Features
 
-* added grace as an optional parameter to license check ([39105e8](https://github.com/Salable/node-sdk/commit/39105e806c7dfc4ddbafc0e825e19a8628532457))
+- added grace as an optional parameter to license check ([39105e8](https://github.com/Salable/node-sdk/commit/39105e806c7dfc4ddbafc0e825e19a8628532457))
 
 # [3.1.0](https://github.com/Salable/node-sdk/compare/v3.0.1...v3.1.0) (2023-11-24)
 
-
 ### Bug Fixes
 
-* updated getByGranteeId response type comment ([143a3a8](https://github.com/Salable/node-sdk/commit/143a3a883339aa8992cfecb74ba807c6e16e3705))
-
+- updated getByGranteeId response type comment ([143a3a8](https://github.com/Salable/node-sdk/commit/143a3a883339aa8992cfecb74ba807c6e16e3705))
 
 ### Features
 
-* create licenses updated to be able to create many licenses ([d0b7f43](https://github.com/Salable/node-sdk/commit/d0b7f4382e38fd7d774bf5eef7e4ac25f80a3978))
-* create licenses updated to be able to create many licenses ([9b43b3a](https://github.com/Salable/node-sdk/commit/9b43b3a69be7d9e529766e0e465647dce93dcf7a))
-* licenses endpoints up to date ([e0972da](https://github.com/Salable/node-sdk/commit/e0972dacceea6d9723b2969ba5d9e5948bcea133))
+- create licenses updated to be able to create many licenses ([d0b7f43](https://github.com/Salable/node-sdk/commit/d0b7f4382e38fd7d774bf5eef7e4ac25f80a3978))
+- create licenses updated to be able to create many licenses ([9b43b3a](https://github.com/Salable/node-sdk/commit/9b43b3a69be7d9e529766e0e465647dce93dcf7a))
+- licenses endpoints up to date ([e0972da](https://github.com/Salable/node-sdk/commit/e0972dacceea6d9723b2969ba5d9e5948bcea133))
 
 ## [3.0.1](https://github.com/Salable/node-sdk/compare/v3.0.0...v3.0.1) (2023-11-24)
 
