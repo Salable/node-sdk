@@ -353,6 +353,7 @@ export type PricingTableParameters = {
     couponCode?: string;
     promoCode?: string;
     allowPromoCode?: string;
+    customMessage?: string;
     currency?: SupportedCurrencies;
     customer?: {
       email?: string;
@@ -367,14 +368,6 @@ export type PricingTableParameters = {
       state?: string;
       country?: string;
       postcode?: string;
-    };
-    customMessage?: string;
-  };
-  individualPlanOptions?: {
-    [key: string]: {
-      granteeId?: string;
-      successUrl?: string;
-      cancelUrl?: string;
     };
   };
 };
