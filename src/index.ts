@@ -19,7 +19,7 @@ export const initRequest: ApiFetch =
         ...init,
         headers: { 'Content-Type': 'application/json', ...init?.headers, 'x-api-key': apiKey, version },
       });
-      if (!response.headers.get('Content-Length')) return '' as T;
+      if (response.headers.get('Content-Length') === '0') return undefined as T;
       data = (await response.json()) as T;
     } catch (error) {
       if (error instanceof TypeError) throw new Error('Unable to complete fetch operation');

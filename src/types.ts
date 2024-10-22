@@ -34,7 +34,7 @@ export type GetLicenseOptions = {
 export type GetPurchasersLicensesOptions = {
   purchaser: string;
   productUuid: string;
-  status: string; // Todo: define status types
+  status?: LicenseStatus; // Todo: define status types
 };
 
 export type GetGranteeIdLicensesInput = { expand: string[] };
@@ -46,8 +46,8 @@ export type CheckLicenseInput = {
 };
 
 export type GetLicenseCountOptions = {
-  subscriptionUuid: string;
-  status: string;
+  subscriptionUuid?: string;
+  status?: LicenseStatus;
 };
 
 export type UpdateLicenseInput = {

@@ -2,39 +2,29 @@ import { ApiRequest, TVersion, Version } from '..';
 import { CheckLicenseInput, CheckLicensesCapabilitiesResponse, CreateAdhocLicenseInput, GetAllLicensesResponse, GetLicenseOptions, License, GetLicenseCountResponse, UpdateManyLicenseInput, GetLicenseCountOptions, GetPurchasersLicensesOptions } from '../../src/types';
 import { v2LicenseMethods } from './v2';
 
-// TODO: do not write docs for options, just link the docs
 export type LicenseVersions = {
   [Version.V2]: {
     /**
-    *  Get all licenses
-    * 
-    * @param {GetLicenseOptions} options 
-    * @param {GetLicenseOptions} options.status - The status of the licenses, can be one of: "ACTIVE" "CANCELED" "EVALUATION" "SCHEDULED" "TRIALING" "INACTIVE"
-The status of the licenses.
-    * @param {GetLicenseOptions} options.cursor - A unique identifier for the last item of one page to get the next page. This will be either the first or last property from the previous response. No cursor is required on the first request.
-    * @param {GetLicenseOptions} options.take - Default: "20"
-The number of records to take before or after cursor. A positive or negative in the range of -100 to 100. Use a number below 0 to take the previous records before the cursor.
-    * @param {GetLicenseOptions} options.subscriptionUuid - Filters licenses by their subscription. Useful for returning licenses on a per seat subscription.
-    * 
-    * @returns {Promise<GetAllLicensesResponse>} All licenses present on the account
-    */
+     *  Get all licenses
+     *
+     * @param {GetLicenseOptions} options - (Optional) Filter parameters. See https://docs.salable.app/api#tag/Licenses/operation/getLicenses
+     *
+     * @returns {Promise<GetAllLicensesResponse>} All licenses present on the account
+     */
     getAll: (options?: GetLicenseOptions) => Promise<GetAllLicensesResponse>;
     /**
      *  Get one license
      *
      *  @param {string} uuid - The UUID of the license
-     *  @param {{ expand: string[] }} options
-     *  @param {{ expand: string[] }} options.expand - Specify the resource fields to expand as comma separated values eg `expand=subscription,plan`
+     *  @param {{ expand: string[] }} options - (Optional) Filter parameters. See https://docs.salable.app/api#tag/Licenses/operation/getLicenseByUuid
      *
-     * @returns { Promise<License>}
+     *  @returns { Promise<License>}
      */
     getOne: (uuid: string, options?: { expand: string[] }) => Promise<License>;
     /**
      *  Get License's Count
      *
-     *  @param {GetLicenseCountOptions} options
-     *  @param {GetLicenseCountOptions} options.subscriptionUuid - (Optional) The UUID of the subscription
-     *  @param {GetLicenseCountOptions} options.status - (Optional) The status of the licenses, can be one of: "ACTIVE" "CANCELED" "EVALUATION" "SCHEDULED" "TRIALING" "INACTIVE"
+     * @param {GetLicenseCountOptions} options - (Optional) Filter parameters. See https://docs.salable.app/api#tag/Licenses/operation/getLicensesCount
      *
      * @returns {Promise<GetLicenseCountResponse>}
      */
@@ -54,10 +44,9 @@ The number of records to take before or after cursor. A positive or negative in 
      *  Get licenses for granteeId
      *
      *  @param {string} granteeId - The granteeId for the licenses
-     *  @param {{ expand: string[] }} options
-     *  @param {{ expand: string[] }} options.expand - Specify the resource fields to expand as comma separated values eg `expand=subscription,plan`
+     *  @param {{ expand: string[] }} options - (Optional) Filter parameters. See https://docs.salable.app/api#tag/Licenses/operation/getLicensesByGranteeId
      *
-     * @returns {Promise<License[]>}
+     *  @returns {Promise<License[]>}
      */
     getForGranteeId: (granteeId: string, options?: { expand?: string[] }) => Promise<License[]>;
     /**
