@@ -13,6 +13,7 @@ export const v2LicenseMethods = (request: ApiRequest): LicenseVersions['v2'] => 
   getForPurchaser: (options) => request(getUrl(`${baseUrl}/purchaser`, options), { method: 'GET' }),
   getForGranteeId: (granteeId, options) => request(getUrl(`${baseUrl}/granteeId/${granteeId}`, options), { method: 'GET' }),
   create: (data) => request(baseUrl, { method: 'POST', body: JSON.stringify(data) }),
+  createMany: (data) => request(baseUrl, { method: 'POST', body: JSON.stringify(data) }),
   update: (uuid, data) => request(`${baseUrl}/${uuid}`, { method: 'PUT', body: JSON.stringify(data) }),
   updateMany: (data) => request(baseUrl, { method: 'PUT', body: JSON.stringify(data) }),
   cancel: (uuid) => request(`${baseUrl}/${uuid}`, { method: 'DELETE' }),

@@ -9,15 +9,28 @@ describe('Licenses V2 Tests', () => {
   const licensesV2 = v2LicenseMethods(req);
 
   const testProductUuid = '29c9a7c8-9a41-4e87-9e7e-7c62d293c131';
+  const testPlanUuid = '5a866dba-20c9-466f-88ac-e05c8980c90b';
+  const testSubscriptionUuid = '04c4bada-7133-4829-a27c-8e5b00558b9e';
+  const testPurchaser = 'tester@testing.com';
+  const testGrantee = '123456';
   const cancellableLicenseUuid = '48cdd0ee-2954-436e-ad10-39cd418e5b2d';
   const cancellableLicenseUuidTwo = '9868b62f-84af-46f9-8a3e-c43db31243ce';
   const cancellableLicenseUuidThree = '67b913c2-2713-4d6a-a106-a44e773fc15d';
 
   it('getAll: Should successfully fetch licenses', async () => {
     const data = await licensesV2.getAll();
-    const dataWithSearchParams = await licensesV2.getAll({ status: 'ACTIVE', take: '3', subscriptionUuid: '04c4bada-7133-4829-a27c-8e5b00558b9e' });
 
-    expect(data.data.length).toEqual(11);
+    expect(data).toEqual(
+      expect.objectContaining({
+        first: expect.any(String),
+        last: expect.any(String),
+        data: expect.arrayContaining([licenseSchema]),
+      }),
+    );
+  });
+
+  it('getAll (w/ search params): Should successfully fetch licenses', async () => {
+    const dataWithSearchParams = await licensesV2.getAll({ status: 'ACTIVE', take: '3', subscriptionUuid: testSubscriptionUuid });
 
     expect(dataWithSearchParams).toEqual(
       expect.objectContaining({
@@ -34,17 +47,21 @@ describe('Licenses V2 Tests', () => {
 
   it('getOne: Should successfully fetch the specified license', async () => {
     const data = await licensesV2.getOne('1e97a9ea-c66a-4822-a5f1-bebf5ea7e44c');
-    const dataWithSearchParams = await licensesV2.getOne('1e97a9ea-c66a-4822-a5f1-bebf5ea7e44c', { expand: ['plan'] });
 
     expect(data).toEqual(expect.objectContaining(licenseSchema));
     expect(data).not.toHaveProperty('plan');
 
+  });
+
+  it('getOne (w/ search params): Should successfully fetch the specified license', async () => {
+    const dataWithSearchParams = await licensesV2.getOne('1e97a9ea-c66a-4822-a5f1-bebf5ea7e44c', { expand: ['plan'] });
+
     expect(dataWithSearchParams).toEqual(expect.objectContaining(licenseSchema));
     expect(dataWithSearchParams).toHaveProperty('plan', planSchema);
   });
+
   it('getCount: Should successfully fetch a subscriptions count', async () => {
     const data = await licensesV2.getCount();
-    const dataWithSearchParams = await licensesV2.getCount({ subscriptionUuid: '04c4bada-7133-4829-a27c-8e5b00558b9e', status: 'ACTIVE' });
 
     expect(data).toEqual(
       expect.objectContaining({
@@ -53,6 +70,11 @@ describe('Licenses V2 Tests', () => {
         unassigned: expect.any(Number),
       }),
     );
+  });
+
+  it('getCount (w/ search params): Should successfully fetch a subscriptions count', async () => {
+    const dataWithSearchParams = await licensesV2.getCount({ subscriptionUuid: testSubscriptionUuid, status: 'ACTIVE' });
+
     expect(dataWithSearchParams).toEqual(
       expect.objectContaining({
         count: expect.any(Number),
@@ -61,49 +83,71 @@ describe('Licenses V2 Tests', () => {
       }),
     );
   });
+
   it('getForPurchaser: Should successfully fetch a purchasers licenses', async () => {
-    const data = await licensesV2.getForPurchaser({ purchaser: 'tester@testing.com', productUuid: testProductUuid });
-    const dataWithSearchParams = await licensesV2.getForPurchaser({ purchaser: 'tester@testing.com', productUuid: testProductUuid, status: 'ACTIVE' });
+    const data = await licensesV2.getForPurchaser({ purchaser: testPurchaser, productUuid: testProductUuid });
 
     expect(data).toEqual(expect.arrayContaining([expect.objectContaining(licenseSchema)]));
-    expect(dataWithSearchParams).toEqual(expect.arrayContaining([expect.objectContaining(licenseSchema)]));
-    for (const license of dataWithSearchParams) {
-      expect(license).toHaveProperty('purchaser', 'tester@testing.com');
-      expect(license).toHaveProperty('productUuid', testProductUuid);
-      expect(license).toHaveProperty('status', 'ACTIVE');
-    }
   });
+
+  it('getForPurchaser (w/ search params): Should successfully fetch a purchasers licenses', async () => {
+    const dataWithSearchParams = await licensesV2.getForPurchaser({ purchaser: testPurchaser, productUuid: testProductUuid, status: 'ACTIVE' });
+
+    expect(dataWithSearchParams).toEqual(expect.arrayContaining([expect.objectContaining({ ...licenseSchema, status: 'ACTIVE', purchaser: testPurchaser, productUuid: testProductUuid })]));
+  });
+
   it('getForGranteeId: Should successfully fetch a grantees licenses', async () => {
-    const data = await licensesV2.getForGranteeId('123456');
-    const dataWithSearchParams = await licensesV2.getForGranteeId('123456', { expand: ['plan'] });
+    const data = await licensesV2.getForGranteeId(testGrantee);
 
     expect(data).toEqual(expect.arrayContaining([expect.objectContaining(licenseSchema)]));
-    expect(dataWithSearchParams).toEqual(expect.arrayContaining([expect.objectContaining(licenseSchema)]));
-    for (const license of data) {
-      expect(license).not.toHaveProperty('plan', planSchema);
-    }
-    for (const license of dataWithSearchParams) {
-      expect(license).toHaveProperty('plan', planSchema);
-    }
   });
+
+  it('getForGranteeId (w/ search params): Should successfully fetch a grantees licenses', async () => {
+    const dataWithSearchParams = await licensesV2.getForGranteeId(testGrantee, { expand: ['plan'] });
+
+    expect(dataWithSearchParams).toEqual(expect.arrayContaining([expect.objectContaining({ ...licenseSchema, plan: planSchema })]));
+  });
+
   it('create: Should successfully create a license', async () => {
-    const data = await licensesV2.create([
+    const data = await licensesV2.create({
+      planUuid: testPlanUuid,
+      member: 'example',
+      granteeId: 'test-grantee-id',
+      status: 'ACTIVE',
+      endTime: '2025-07-06T12:00:00.000Z',
+    });
+
+    expect(data).toEqual(expect.objectContaining(licenseSchema));
+  });
+
+  it('createMany: Should successfully create multiple licenses', async () => {
+    const data = await licensesV2.createMany([
       {
-        planUuid: '5a866dba-20c9-466f-88ac-e05c8980c90b',
+        planUuid: testPlanUuid,
         member: 'example',
         granteeId: 'example-grantee-id',
         status: 'ACTIVE',
         endTime: '2025-07-06T12:00:00.000Z',
       },
+      {
+        planUuid: testPlanUuid,
+        member: 'example',
+        granteeId: 'example-other-grantee-id',
+        status: 'ACTIVE',
+        endTime: '2025-07-06T12:00:00.000Z',
+      },
     ]);
 
+    expect(data.length).toEqual(2);
     expect(data).toEqual(expect.arrayContaining([expect.objectContaining(licenseSchema)]));
   });
+
   it('update: Should successfully update a license', async () => {
     const data = await licensesV2.update(cancellableLicenseUuid, { granteeId: 'updated-grantee-id' });
 
     expect(data.granteeId).toEqual('updated-grantee-id');
   });
+
   it('updateMany: Should successfully update multiple licenses', async () => {
     const data = await licensesV2.updateMany([
       {
@@ -117,24 +161,25 @@ describe('Licenses V2 Tests', () => {
     ]);
 
     expect(data.length).toEqual(2);
-    for (const license of data) {
-      expect(license.granteeId).toEqual('updated-grantee-id');
-    }
+    expect(data).toEqual(expect.arrayContaining([expect.objectContaining({ ...licenseSchema, granteeId: 'updated-grantee-id' })]));
   });
+
   it('cancel: Should successfully cancel the specified license', async () => {
     const data = await licensesV2.cancel(cancellableLicenseUuid);
 
-    expect(data).toEqual(undefined);
+    expect(data).toBeUndefined();
   });
+
   it('cancelMany: Should successfully multiple licenses', async () => {
     const data = await licensesV2.cancelMany({ uuids: [cancellableLicenseUuidTwo, cancellableLicenseUuidThree] });
 
-    expect(data).toEqual(undefined);
+    expect(data).toBeUndefined();
   });
+
   it('check: Should successfully check the specified grantees permissions', async () => {
     const data = await licensesV2.check({
       productUuid: testProductUuid,
-      granteeIds: ['123456'],
+      granteeIds: [testGrantee],
     });
 
     expect(data).toEqual(
@@ -149,6 +194,7 @@ describe('Licenses V2 Tests', () => {
       }),
     );
   });
+  
   it('verify: Verifies the license-check signatures correctly', async () => {
     const testPublicKeyPem = `-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAES7jvFxC50Fe2hHd3Sn7Q8TvnxuSZ\nV8HvRHGDvFacOiESAqg3uroeNTgoT7lD4BwQ+fFsn7zig5hwncoTsrCPbw==\n-----END PUBLIC KEY-----`;
     const testLicenseCheckData = [

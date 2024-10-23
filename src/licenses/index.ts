@@ -50,7 +50,20 @@ export type LicenseVersions = {
      */
     getForGranteeId: (granteeId: string, options?: { expand?: string[] }) => Promise<License[]>;
     /**
-     *  Creates a single license or many licenses with the details provided
+     *  Creates a single license with the details provided
+     *
+     * @param {CreateAdhocLicenseInput} data - The details to create the new license with
+     * @param {CreateAdhocLicenseInput} data.planUuid - The UUID of the plan associated with the license. The planUuid can be found on the Plan view in the Salable dashboard
+     * @param {CreateAdhocLicenseInput} data.member - The ID of the member who will manage the license.
+     * @param {CreateAdhocLicenseInput} data.granteeId - (Optional) The grantee ID for the license.
+     * @param {CreateAdhocLicenseInput} data.status - (Optional) The status of the created license, e.g. "ACTIVE" "TRIALING"
+     * @param {CreateAdhocLicenseInput} data.endTime - (Optional) Provide a custom end time for the license; this will override the plan's default interval.
+     *
+     * @returns {Promise<License>} The data for the new license created
+     */
+    create: (data: CreateAdhocLicenseInput) => Promise<License>;
+    /**
+     *  Creates many licenses with the details provided
      *
      * @param {CreateAdhocLicenseInput[]} data - The details to create the new license with
      * @param {CreateAdhocLicenseInput[]} data.planUuid - The UUID of the plan associated with the license. The planUuid can be found on the Plan view in the Salable dashboard
@@ -59,9 +72,9 @@ export type LicenseVersions = {
      * @param {CreateAdhocLicenseInput[]} data.status - (Optional) The status of the created license, e.g. "ACTIVE" "TRIALING"
      * @param {CreateAdhocLicenseInput[]} data.endTime - (Optional) Provide a custom end time for the license; this will override the plan's default interval.
      *
-     * @returns {Promise<License | License[]>} The data for the new license or licenses created
+     * @returns {Promise<License[]>} The data for the new license or licenses created
      */
-    create: (data: CreateAdhocLicenseInput[]) => Promise<License | License[]>;
+    createMany: (data: CreateAdhocLicenseInput[]) => Promise<License[]>;
     /**
      *  Update a license
      *
