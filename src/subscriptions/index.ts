@@ -1,5 +1,5 @@
 import { ApiRequest, TVersion, Version } from '..';
-import { GetAllLicensesResponse, Subscription, SubscriptionInvoice, SubscriptionPaymentLink, SubscriptionPaymentMethod, SubscriptionPlan, SubscriptionsChangePlan, SubscriptionSeatResponse } from '../types';
+import { AllSubscription, Subscription, SubscriptionInvoice, SubscriptionPaymentLink, SubscriptionPaymentMethod, SubscriptionPlan, SubscriptionsChangePlan, SubscriptionSeatResponse } from '../types';
 import { v2SubscriptionMethods } from './v2';
 
 export type SubscriptionVersions = {
@@ -12,9 +12,9 @@ export type SubscriptionVersions = {
      *
      * Docs - https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptions
      *
-     * @returns {Promise<GetAllLicensesResponse>} The data of the subscription requested
+     * @returns {Promise<AllSubscription>} The data of the subscription requested
      */
-    getAll: (options?: { status?: 'active' | 'canceled' | 'paused' | 'trailing' | 'deleted' | 'past_due' | 'incomplete'; email?: string; cursor?: string; take?: string; expand?: string[] }) => Promise<GetAllLicensesResponse>;
+    getAll: (options?: { status?: 'active' | 'canceled' | 'paused' | 'trailing' | 'deleted' | 'past_due' | 'incomplete'; email?: string; cursor?: string; take?: string; expand?: string[] }) => Promise<AllSubscription>;
 
     /**
      *  Retrieves the subscription data based on the UUID. By default, the response does not contain any relational data. If you want to expand the relational data, you can do so with the `expand` query parameter.
