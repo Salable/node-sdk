@@ -1,8 +1,8 @@
-import { ApiRequest } from '@/src';
-import { SALABLE_BASE_URL } from '@/src/constants';
+import { ApiRequest } from '../../index';
+import { SALABLE_BASE_URL } from '../../constants';
 import crypto from 'crypto';
 import { LicenseVersions } from '..';
-import getUrl from '@/src/utils/get-url';
+import getUrl from '../../utils/get-url';
 
 const baseUrl = `${SALABLE_BASE_URL}/licenses`;
 
