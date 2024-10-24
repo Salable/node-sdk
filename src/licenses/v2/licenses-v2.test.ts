@@ -1,5 +1,6 @@
 import { Version, initRequest } from '../..';
 import { v2LicenseMethods } from '.';
+import { Capability, License, Plan } from '@/src/types';
 
 describe('Licenses V2 Tests', () => {
   const apiKey = process.env.SALABLE_TEST_API_KEY!;
@@ -50,7 +51,6 @@ describe('Licenses V2 Tests', () => {
 
     expect(data).toEqual(expect.objectContaining(licenseSchema));
     expect(data).not.toHaveProperty('plan');
-
   });
 
   it('getOne (w/ search params): Should successfully fetch the specified license', async () => {
@@ -194,7 +194,7 @@ describe('Licenses V2 Tests', () => {
       }),
     );
   });
-  
+
   it('verify: Verifies the license-check signatures correctly', async () => {
     const testPublicKeyPem = `-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAES7jvFxC50Fe2hHd3Sn7Q8TvnxuSZ\nV8HvRHGDvFacOiESAqg3uroeNTgoT7lD4BwQ+fFsn7zig5hwncoTsrCPbw==\n-----END PUBLIC KEY-----`;
     const testLicenseCheckData = [
@@ -223,7 +223,7 @@ describe('Licenses V2 Tests', () => {
   });
 });
 
-const licenseCapabilitySchema = {
+const licenseCapabilitySchema: Capability = {
   uuid: expect.any(String),
   productUuid: expect.any(String),
   name: expect.any(String),
@@ -232,7 +232,7 @@ const licenseCapabilitySchema = {
   updatedAt: expect.any(String),
 };
 
-const licenseSchema = {
+const licenseSchema: License = {
   uuid: expect.any(String),
   name: expect.toBeOneOf([expect.any(String), null]),
   email: expect.toBeOneOf([expect.any(String), null]),
@@ -252,7 +252,7 @@ const licenseSchema = {
   isTest: expect.any(Boolean),
 };
 
-const planSchema = {
+const planSchema: Plan = {
   uuid: expect.any(String),
   name: expect.any(String),
   slug: expect.any(String),
@@ -275,9 +275,10 @@ const planSchema = {
   pricingType: expect.any(String),
   environment: expect.any(String),
   isTest: expect.any(Boolean),
-  paddlePlanId: null,
+  paddlePlanId: expect.toBeOneOf([expect.any(String), null]),
   productUuid: expect.any(String),
   salablePlan: expect.any(Boolean),
+  type: expect.toBeOneOf([expect.any(String), undefined]),
   updatedAt: expect.any(String),
   features: expect.toBeOneOf([expect.anything(), undefined]),
 };

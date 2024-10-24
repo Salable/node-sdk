@@ -76,11 +76,12 @@ export type License = {
   type: string;
   productUuid: string;
   planUuid: string;
-  capabilities: ICapability[];
+  capabilities: Capability[];
   metadata: IMetadata | null;
   startTime: string;
   endTime: string;
   updatedAt: string;
+  subscriptionUuid: string | null;
   isTest: boolean;
 };
 
@@ -118,8 +119,12 @@ export type SubscriptionsChangePlan = {
 export type Plan = {
   uuid: string;
   name: string;
+  slug: string;
   description?: string;
+  perSeatAmount: number;
+  maxSeatAmount: null;
   displayName: string;
+  hasAcceptedTransaction: boolean;
   status: string;
   trialDays: null;
   evaluation: false;
@@ -133,12 +138,13 @@ export type Plan = {
   planType: string;
   pricingType: string;
   environment: string;
-  type: string;
+  type?: string;
   paddlePlanId?: string;
   productUuid: string;
   salablePlan: boolean;
   updatedAt: string;
   isTest: boolean;
+  features: Feature;
 };
 
 export type IFeature = {
@@ -244,7 +250,7 @@ export type PlanCapability = {
   planUuid: string;
   capabilityUuid: string;
   updatedAt: string;
-  capability: ICapability;
+  capability: Capability;
 };
 
 export type PlanCurrency = {
@@ -262,7 +268,7 @@ export type ICurrency = {
   symbol: string;
 };
 
-export type ICapability = {
+export type Capability = {
   uuid: string;
   name: string;
   status: string;
@@ -368,7 +374,7 @@ export type CheckLicensesCapabilitiesResponse = {
   signature: string;
 };
 
-export type ICapabilitiesEndDates = {
+export type CapabilitiesEndDates = {
   [key: string]: string;
 };
 
