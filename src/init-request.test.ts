@@ -19,6 +19,9 @@ describe('initRequest', () => {
     mockFetch.mockResolvedValueOnce({
       ok: true,
       status: 200,
+      headers: {
+        get: () => '10',
+      },
       json: async () => mockData,
     });
 
@@ -26,6 +29,27 @@ describe('initRequest', () => {
     const data = await request(input, init);
 
     expect(data).toEqual(mockData);
+    expect(mockFetch).toHaveBeenCalledWith(input, {
+      ...init,
+      headers: { 'Content-Type': 'application/json', 'x-api-key': apiKey, version },
+    });
+  });
+
+  it('should return undefined if content-length is 0', async () => {
+    const mockData = { key: 'value' };
+    mockFetch.mockResolvedValueOnce({
+      ok: true,
+      status: 204,
+      headers: {
+        get: () => '0',
+      },
+      json: async () => mockData,
+    });
+
+    const request = initRequest(apiKey, version);
+    const data = await request(input, init);
+
+    expect(data).toBeUndefined();
     expect(mockFetch).toHaveBeenCalledWith(input, {
       ...init,
       headers: { 'Content-Type': 'application/json', 'x-api-key': apiKey, version },
@@ -44,6 +68,9 @@ describe('initRequest', () => {
     mockFetch.mockResolvedValueOnce({
       ok: true,
       status: 200,
+      headers: {
+        get: () => '10',
+      },
       json: async () => {
         throw new SyntaxError('Invalid JSON');
       },
@@ -58,6 +85,9 @@ describe('initRequest', () => {
     mockFetch.mockResolvedValueOnce({
       ok: false,
       status: 400,
+      headers: {
+        get: () => '10',
+      },
       json: async () => ({}),
     });
 
@@ -70,6 +100,9 @@ describe('initRequest', () => {
     mockFetch.mockResolvedValueOnce({
       ok: false,
       status: 401,
+      headers: {
+        get: () => '10',
+      },
       json: async () => ({}),
     });
 
@@ -82,6 +115,9 @@ describe('initRequest', () => {
     mockFetch.mockResolvedValueOnce({
       ok: false,
       status: 403,
+      headers: {
+        get: () => '10',
+      },
       json: async () => ({}),
     });
 
@@ -94,6 +130,9 @@ describe('initRequest', () => {
     mockFetch.mockResolvedValueOnce({
       ok: false,
       status: 500,
+      headers: {
+        get: () => '10',
+      },
       json: async () => ({}),
     });
 
