@@ -64,7 +64,7 @@ export type License = {
   type: string;
   productUuid: string;
   planUuid: string;
-  capabilities: ICapability[];
+  capabilities: Capability[];
   metadata: IMetadata | null;
   startTime: string;
   endTime: string;
@@ -111,29 +111,32 @@ export type SubscriptionsChangePlan = {
 };
 
 export type Plan = {
-  uuid: string;
-  name: string;
-  description?: string;
-  displayName: string;
-  status: string;
-  trialDays: null;
-  evaluation: false;
-  evalDays: number;
-  organisation: string;
-  visibility: string;
-  licenseType: string;
-  interval: string;
-  length: number;
   active: boolean;
+  description: string | null;
+  displayName: string;
+  environment: string;
+  evalDays: number;
+  evaluation: boolean;
+  hasAcceptedTransaction: boolean;
+  interval: string;
+  isTest: boolean;
+  length: number;
+  licenseType: string;
+  maxSeatAmount: number;
+  name: string;
+  organisation: string;
+  paddlePlanId: string | null;
+  perSeatAmount: number;
   planType: string;
   pricingType: string;
-  environment: string;
-  type: string;
-  paddlePlanId?: string;
   productUuid: string;
   salablePlan: boolean;
+  slug: string;
+  status: string;
+  trialDays: number;
   updatedAt: string;
-  isTest: boolean;
+  uuid: string;
+  visibility: string;
 };
 
 export type IFeature = {
@@ -263,7 +266,7 @@ export type PlanCapability = {
   planUuid: string;
   capabilityUuid: string;
   updatedAt: string;
-  capability: ICapability;
+  capability: Capability;
 };
 
 export type PlanCurrency = {
@@ -281,7 +284,7 @@ export type ICurrency = {
   symbol: string;
 };
 
-export type ICapability = {
+export type Capability = {
   uuid: string;
   name: string;
   status: string;
@@ -293,6 +296,7 @@ export type ICapability = {
 export type Product = {
   uuid: string;
   name: string;
+  slug: string;
   description?: string;
   logoUrl?: string;
   displayName: string;
@@ -302,6 +306,7 @@ export type Product = {
   organisationPaymentIntegrationUuid: string;
   paymentIntegrationProductId?: string;
   updatedAt: string;
+  appType: string;
   isTest: boolean;
 };
 
@@ -312,6 +317,23 @@ export type ProductCapability = {
   status: string;
   productUuid: string;
   updatedAt: string;
+};
+
+export type ProductFeature = {
+  defaultValue: string;
+  description: string;
+  displayName: string;
+  featureEnumOptions: FeatureEnumOption | [];
+  name: string;
+  productUuid: string;
+  showUnlimited: boolean;
+  sortOrder: number;
+  status: string;
+  updatedAt: string;
+  uuid: string;
+  valueType: string;
+  variableName: string;
+  visibility: string;
 };
 
 export type ProductCurrency = {
@@ -389,7 +411,6 @@ export type IOrganisationPaymentIntegration = {
 export type ProductPricingTable = {
   features: IFeature[];
   currencies: ICurrency[];
-  organisationPaymentIntegration: IOrganisationPaymentIntegration;
   plans: (Plan & { features: IFeature[]; currencies: ICurrency[]; checkoutUrl: string })[];
 } & Product;
 

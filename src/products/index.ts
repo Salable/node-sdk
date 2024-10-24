@@ -1,13 +1,6 @@
-import { ApiRequest, TVersion, Version } from ".."
-import {
-  Plan,
-  Product,
-  ProductCapability,
-  ProductCurrency,
-  ProductPricingTable,
-} from '../types';
-import { v2ProductMethods } from "./v2";
-
+import { ApiRequest, TVersion, Version } from '..';
+import { Plan, Product, ProductCapability, ProductCurrency, ProductFeature, ProductPricingTable } from '../types';
+import { v2ProductMethods } from './v2';
 
 export type ProductVersions = {
   [Version.V2]: {
@@ -22,9 +15,9 @@ export type ProductVersions = {
 
     /**
      *  Retrieves a specific product by its UUID. By default, the response does not contain any relational data. If you want to expand the relational data, you can do so with the `expand` query parameter.
-     *  @param {string} productUuid - The UUID of the product
      *
-     * Docs - https://docs.salable.app/api/v2#tag/Products/operation/getProductByUuid
+     *  @param {string} productUuid - The UUID for the pricingTable
+     *  @param {{ expand: string[]}} options - (Optional) Filter parameters. See https://docs.salable.app/api/v2#tag/Products/operation/getProductByUuid
      *
      * @returns {Promise<Product>}
      */
@@ -32,16 +25,13 @@ export type ProductVersions = {
 
     /**
      *  Retrieves all the plans associated with a specific product. By default, the response does not contain any relational data. If you want to expand the relational data, you can do so with the expand query parameter.
-     *  @param {string} productUuid - The UUID of the product
      *
-     * Docs - https://docs.salable.app/api/v2#tag/Products/operation/getProductPricingTable
+     *  @param {string} productUuid - The UUID for the pricingTable
+     *  @param {{ granteeId?: string; currency?: string }} options - (Optional) Filter parameters. See https://docs.salable.app/api/v2#tag/Products/operation/getProductPricingTable
      *
      * @returns {Promise<ProductPricingTable>}
      */
-    getPricingTable: (
-      productUuid: string,
-      options?: { granteeId?: string; currency?: string },
-    ) => Promise<ProductPricingTable>;
+    getPricingTable: (productUuid: string, options?: { granteeId?: string; currency?: string }) => Promise<ProductPricingTable>;
 
     /**
      * Retrieves all the plans associated with a specific product. By default, the response does not contain any relational data. If you want to expand the relational data, you can do so with the `expand` query parameter.
@@ -52,12 +42,7 @@ export type ProductVersions = {
      *
      * @returns {Promise<IPlan[]>} An array of all the associated plans
      */
-    getPlans(
-      productUuid: string,
-      options?: {
-        expand?: string[];
-      },
-    ): Promise<Plan[]>;
+    getPlans(productUuid: string): Promise<Plan[]>;
 
     /**
      * Retrieve the list of features for a product
@@ -66,9 +51,9 @@ export type ProductVersions = {
      *
      * Docs - https://docs.salable.app/api/v2#tag/Products/operation/getProductFeatures
      *
-     * @returns {Promise<Product>} An array of all the associated features
+     * @returns {Promise<ProductFeature>} An array of all the associated features
      */
-    getFeatures(productUuid: string): Promise<Product>;
+    getFeatures(productUuid: string): Promise<ProductFeature>;
 
     /**
      * Retrieve the list of capabilities for a product
@@ -97,10 +82,10 @@ export type ProductVersions = {
 export type ProductVersionedMethods<V extends TVersion> = V extends keyof ProductVersions ? ProductVersions[V] : never;
 
 export const ProductsInit = <V extends TVersion>(version: V, request: ApiRequest): ProductVersionedMethods<V> => {
-    switch (version) {
-        case Version.V2:
-            return v2ProductMethods(request) as ProductVersionedMethods<V>;
-        default:
-            throw new Error("Unsupported version")
-    }
-}
+  switch (version) {
+    case Version.V2:
+      return v2ProductMethods(request) as ProductVersionedMethods<V>;
+    default:
+      throw new Error('Unsupported version');
+  }
+};
