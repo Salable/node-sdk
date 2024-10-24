@@ -1,7 +1,7 @@
-import { ApiRequest } from '@/src';
+import { ApiRequest } from '../../../src';
 import { PlanVersions } from '..';
-import { RESOURCE_NAMES, SALABLE_BASE_URL } from '@/src/constants';
-import getUrl from '@/src/utils/get-url';
+import { RESOURCE_NAMES, SALABLE_BASE_URL } from '../../../src/constants';
+import getUrl from '../../../src/utils/get-url';
 
 const baseUrl = `${SALABLE_BASE_URL}/${RESOURCE_NAMES.PLANS}`;
 
