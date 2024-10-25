@@ -111,32 +111,32 @@ export type SubscriptionsChangePlan = {
 };
 
 export type Plan = {
-  active: boolean;
-  description: string | null;
-  displayName: string;
-  environment: string;
-  evalDays: number;
-  evaluation: boolean;
-  hasAcceptedTransaction: boolean;
-  interval: string;
-  isTest: boolean;
-  length: number;
-  licenseType: string;
-  maxSeatAmount: number;
+  uuid: string;
   name: string;
-  organisation: string;
-  paddlePlanId: string | null;
-  perSeatAmount: number;
-  planType: string;
-  pricingType: string;
-  productUuid: string;
-  salablePlan: boolean;
+  description: string;
+  displayName: string;
   slug: string;
   status: string;
+  isTest: boolean;
   trialDays: number;
-  updatedAt: string;
-  uuid: string;
+  evaluation: boolean;
+  evalDays: number;
+  organisation: string;
   visibility: string;
+  licenseType: string;
+  perSeatAmount: number;
+  maxSeatAmount: number;
+  interval: string;
+  length: number;
+  active: boolean;
+  planType: string;
+  pricingType: string;
+  environment: string;
+  paddlePlanId: string | null;
+  productUuid: string;
+  salablePlan: boolean;
+  updatedAt: string;
+  hasAcceptedTransaction: boolean;
 };
 
 export type IFeature = {
@@ -256,10 +256,13 @@ export type PlanFeature = {
   value: string;
   enumValueUuid?: string;
   isUnlimited: boolean;
+  isUsage: boolean;
+  maxUsage: boolean;
+  minUsage: boolean;
+  pricePerUnit: number;
   updatedAt: string;
   feature: IFeature;
-  enumValue?: string;
-  sortOrder: number;
+  enumValue: string | null;
 };
 
 export type PlanCapability = {
@@ -273,6 +276,7 @@ export type PlanCurrency = {
   planUuid: string;
   currencyUuid: string;
   price: number;
+  hasAcceptedTransaction: boolean;
   paymentIntegrationPlanId: string;
   currency: ICurrency;
 };
