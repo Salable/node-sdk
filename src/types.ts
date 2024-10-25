@@ -9,7 +9,7 @@ export type CreateAdhocLicenseInput = {
   member: string;
   granteeId?: string;
   status?: 'ACTIVE' | 'TRIALING';
-  endTime?: Date;
+  endTime?: string;
 };
 
 export type GetLicenseOptions = {
@@ -19,10 +19,10 @@ export type GetLicenseOptions = {
   subscriptionUuid?: string;
 };
 
-export type GetPurchasersLicensesInput = {
+export type GetPurchasersLicensesOptions = {
   purchaser: string;
   productUuid: string;
-  status: string; // Todo: define status types
+  status?: LicenseStatus; // Todo: define status types
 };
 
 export type GetGranteeIdLicensesInput = { expand: string[] };
@@ -33,9 +33,9 @@ export type CheckLicenseInput = {
   grace?: number;
 };
 
-export type GetLicenseCountInput = {
-  subscriptionUuid: string;
-  status: string;
+export type GetLicenseCountOptions = {
+  subscriptionUuid?: string;
+  status?: LicenseStatus;
 };
 
 export type UpdateLicenseInput = {
@@ -69,6 +69,7 @@ export type License = {
   startTime: string;
   endTime: string;
   updatedAt: string;
+  subscriptionUuid: string | null;
   isTest: boolean;
 };
 
@@ -113,30 +114,32 @@ export type SubscriptionsChangePlan = {
 export type Plan = {
   uuid: string;
   name: string;
-  description: string;
-  displayName: string;
   slug: string;
+  description?: string;
+  perSeatAmount: number;
+  maxSeatAmount: null;
+  displayName: string;
+  hasAcceptedTransaction: boolean;
   status: string;
-  isTest: boolean;
-  trialDays: number;
-  evaluation: boolean;
+  trialDays: null;
+  evaluation: false;
   evalDays: number;
   organisation: string;
   visibility: string;
   licenseType: string;
-  perSeatAmount: number;
-  maxSeatAmount: number;
   interval: string;
   length: number;
   active: boolean;
   planType: string;
   pricingType: string;
   environment: string;
-  paddlePlanId: string | null;
+  type?: string;
+  paddlePlanId?: string;
   productUuid: string;
   salablePlan: boolean;
   updatedAt: string;
-  hasAcceptedTransaction: boolean;
+  isTest: boolean;
+  features: Feature;
 };
 
 export type IFeature = {
@@ -379,7 +382,6 @@ export type PricingTableParameters = {
     couponCode?: string;
     promoCode?: string;
     allowPromoCode?: string;
-    customMessage?: string;
     currency?: SupportedCurrencies;
     customer?: {
       email?: string;
@@ -394,6 +396,14 @@ export type PricingTableParameters = {
       state?: string;
       country?: string;
       postcode?: string;
+    };
+    customMessage?: string;
+  };
+  individualPlanOptions?: {
+    [key: string]: {
+      granteeId?: string;
+      successUrl?: string;
+      cancelUrl?: string;
     };
   };
 };
@@ -426,7 +436,7 @@ export type CheckLicensesCapabilitiesResponse = {
   signature: string;
 };
 
-export type ICapabilitiesEndDates = {
+export type CapabilitiesEndDates = {
   [key: string]: string;
 };
 
