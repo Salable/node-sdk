@@ -1,19 +1,17 @@
-import { Version, initRequest } from '../..';
-import { v2SubscriptionMethods } from '.';
+import Salable, { Version } from '../..';
 import { Plan, Subscription } from '../../types';
 
 describe('Subscriptions V2 Tests', () => {
   const apiKey = process.env.SALABLE_TEST_API_KEY!;
   const version = Version.V2;
 
-  const req = initRequest(apiKey, version);
-  const subscriptionsV2 = v2SubscriptionMethods(req);
+  const salable = new Salable(apiKey, version);
 
   const testSubscriptionUuid = '04c4bada-7133-4829-a27c-8e5b00558b9e';
   const testEmail = 'tester@domain.com';
 
   it('getAll: Should successfully fetch subscriptions', async () => {
-    const data = await subscriptionsV2.getAll();
+    const data = await salable.subscriptions.getAll();
 
     expect(data).toEqual({
       first: expect.any(String),
@@ -23,7 +21,12 @@ describe('Subscriptions V2 Tests', () => {
   });
 
   it('getAll (w/ search params): Should successfully fetch subscriptions', async () => {
-    const dataWithSearchParams = await subscriptionsV2.getAll({ status: 'ACTIVE', take: '3', email: testEmail, expand: ['plan'] });
+    const dataWithSearchParams = await salable.subscriptions.getAll({
+      status: 'ACTIVE',
+      take: '3',
+      email: testEmail,
+      expand: ['plan'],
+    });
 
     expect(dataWithSearchParams).toEqual({
       first: expect.any(String),
@@ -31,25 +34,34 @@ describe('Subscriptions V2 Tests', () => {
       data: expect.arrayContaining([{ ...subscriptionSchema, plan: planSchema }]),
     });
     expect(dataWithSearchParams.data.length).toEqual(3);
-    expect(dataWithSearchParams.data).toEqual(expect.arrayContaining([expect.objectContaining({ ...subscriptionSchema, status: 'ACTIVE', email: testEmail, plan: planSchema })]));
+    expect(dataWithSearchParams.data).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          ...subscriptionSchema,
+          status: 'ACTIVE',
+          email: testEmail,
+          plan: planSchema,
+        }),
+      ]),
+    );
   });
 
   it('getOne: Should successfully fetch the specified subscription', async () => {
-    const data = await subscriptionsV2.getOne(testSubscriptionUuid);
+    const data = await salable.subscriptions.getOne(testSubscriptionUuid);
 
     expect(data).toEqual(subscriptionSchema);
     expect(data).not.toHaveProperty('plan');
   });
 
   it('getOne (w/ search params): Should successfully fetch the specified subscription', async () => {
-    const dataWithSearchParams = await subscriptionsV2.getOne(testSubscriptionUuid, { expand: ['plan'] });
+    const dataWithSearchParams = await salable.subscriptions.getOne(testSubscriptionUuid, { expand: ['plan'] });
 
     expect(dataWithSearchParams).toEqual({ ...subscriptionSchema, plan: planSchema });
     expect(dataWithSearchParams).toHaveProperty('plan', planSchema);
   });
 
   it('getInvoices: Should successfully fetch a subscriptions invoices', async () => {
-    const data = await subscriptionsV2.getInvoices(testSubscriptionUuid);
+    const data = await salable.subscriptions.getInvoices(testSubscriptionUuid);
 
     expect(data).toEqual({
       first: expect.any(String),
@@ -60,37 +72,37 @@ describe('Subscriptions V2 Tests', () => {
   });
 
   it('getSwitchablePlans: Should successfully fetch a subscriptions switchable plans', async () => {
-    const data = await subscriptionsV2.getSwitchablePlans('b3a2d3d0-968a-434a-bc99-d95a827a8f3e');
+    const data = await salable.subscriptions.getSwitchablePlans('b3a2d3d0-968a-434a-bc99-d95a827a8f3e');
 
     expect(data).toEqual(expect.arrayContaining([planSchema]));
   });
 
   it('getUpdatePaymentLink: Should successfully fetch a subscriptions payment link', async () => {
-    const data = await subscriptionsV2.getUpdatePaymentLink('4ffe5998-77af-49b0-815b-66b8269c4abd');
+    const data = await salable.subscriptions.getUpdatePaymentLink('4ffe5998-77af-49b0-815b-66b8269c4abd');
 
     expect(data).toEqual(expect.objectContaining({ url: expect.any(String) }));
   });
 
   it('getPortalLink: Should successfully fetch a subscriptions portal link', async () => {
-    const data = await subscriptionsV2.getPortalLink(testSubscriptionUuid);
+    const data = await salable.subscriptions.getPortalLink(testSubscriptionUuid);
 
     expect(data).toEqual(expect.objectContaining({ url: expect.any(String) }));
   });
 
   it('getCancelSubscriptionLink: Should successfully fetch a subscriptions cancel link', async () => {
-    const data = await subscriptionsV2.getCancelSubscriptionLink(testSubscriptionUuid);
+    const data = await salable.subscriptions.getCancelSubscriptionLink(testSubscriptionUuid);
 
     expect(data).toEqual(expect.objectContaining({ url: expect.any(String) }));
   });
 
   it('getPaymentMethod: Should successfully fetch a subscriptions payment method', async () => {
-    const data = await subscriptionsV2.getPaymentMethod(testSubscriptionUuid);
+    const data = await salable.subscriptions.getPaymentMethod(testSubscriptionUuid);
 
     expect(data).toEqual(expect.objectContaining(stripePaymentMethodSchema));
   });
 
   it('changePlan: Should successfully change a subscriptions plan', async () => {
-    const data = await subscriptionsV2.changePlan('b3a2d3d0-968a-434a-bc99-d95a827a8f3e', {
+    const data = await salable.subscriptions.changePlan('b3a2d3d0-968a-434a-bc99-d95a827a8f3e', {
       planUuid: 'cee50a36-c012-4a78-8e1a-b2bab93830ba',
     });
 
@@ -98,7 +110,7 @@ describe('Subscriptions V2 Tests', () => {
   });
 
   it('addSeats: Should successfully add seats to the subscription', async () => {
-    const data = await subscriptionsV2.addSeats(testSubscriptionUuid, {
+    const data = await salable.subscriptions.addSeats(testSubscriptionUuid, {
       increment: 1,
     });
 
@@ -106,7 +118,7 @@ describe('Subscriptions V2 Tests', () => {
   });
 
   it('removeSeats: Should successfully remove seats from a subscription', async () => {
-    const data = await subscriptionsV2.removeSeats(testSubscriptionUuid, {
+    const data = await salable.subscriptions.removeSeats(testSubscriptionUuid, {
       decrement: 1,
     });
 
@@ -114,7 +126,7 @@ describe('Subscriptions V2 Tests', () => {
   });
 
   it('cancel: Should successfully cancel the subscription', async () => {
-    const data = await subscriptionsV2.cancel('d01b031d-e2a2-450d-addb-c88599977d1e', { when: 'now' });
+    const data = await salable.subscriptions.cancel('d01b031d-e2a2-450d-addb-c88599977d1e', { when: 'now' });
 
     expect(data).toBeUndefined();
   });
@@ -288,7 +300,10 @@ const stripePaymentMethodSchema = {
     funding: expect.any(String),
     generated_from: expect.toBeOneOf([expect.any(String), null]),
     last4: expect.any(String),
-    networks: expect.objectContaining({ available: expect.toBeArray(), preferred: expect.toBeOneOf([expect.any(String), null]) }),
+    networks: expect.objectContaining({
+      available: expect.toBeArray(),
+      preferred: expect.toBeOneOf([expect.any(String), null]),
+    }),
     three_d_secure_usage: expect.objectContaining({ supported: expect.any(Boolean) }),
     wallet: expect.toBeOneOf([expect.any(String), null]),
   }),

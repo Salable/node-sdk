@@ -1,29 +1,27 @@
-import { initRequest, Version } from '../..';
-import { v2ProductMethods } from '.';
+import Salable, { Version } from '../..';
 import { Plan, Product, ProductCapability, ProductCurrency, ProductFeature, ProductPricingTable } from '../../types';
 
 describe('Products V2 Tests', () => {
   const apiKey = process.env.SALABLE_TEST_API_KEY!;
   const version = Version.V2;
 
-  const req = initRequest(apiKey, version);
-  const productsV2 = v2ProductMethods(req);
+  const salable = new Salable(apiKey, version);
 
   const productUuid = '1ad1a518-2076-4d76-9280-4b23f19b48bb';
 
   it('getAll: should successfully fetch all products', async () => {
-    const data = await productsV2.getAll();
+    const data = await salable.products.getAll();
 
     expect(data).toEqual(expect.arrayContaining([ProductSchema]));
   });
   it('getOne: should successfully fetch a product', async () => {
-    const data = await productsV2.getOne(productUuid);
+    const data = await salable.products.getOne(productUuid);
 
     expect(data).toEqual(ProductSchema);
   });
 
   it('getOne (w / search params): should successfully fetch a product', async () => {
-    const data = await productsV2.getOne(productUuid, {
+    const data = await salable.products.getOne(productUuid, {
       expand: ['features', 'features.featureEnumOptions', 'capabilities', 'currencies', 'currencies.currency', 'organisationPaymentIntegration', 'plans', 'plans.capabilities', 'plans.features', 'plans.features.feature', 'plans.features.enumValue', 'plans.currencies', 'plans.currencies.currency'],
     });
 
@@ -38,37 +36,40 @@ describe('Products V2 Tests', () => {
   });
 
   it('getPricingTable: should successfully fetch a product pricing table', async () => {
-    const data = await productsV2.getPricingTable(productUuid);
+    const data = await salable.products.getPricingTable(productUuid);
 
     expect(data).toEqual(ProductPricingTableSchema);
   });
 
   it('getPricingTable (w / search params): should successfully fetch a product pricing table', async () => {
-    const data = await productsV2.getPricingTable(productUuid, { granteeId: 'granteeid@email.com', currency: 'GBP' });
+    const data = await salable.products.getPricingTable(productUuid, {
+      granteeId: 'granteeid@email.com',
+      currency: 'GBP',
+    });
 
     expect(data).toEqual(ProductPricingTableSchema);
   });
 
   it('getPlans: should successfully fetch a product plans', async () => {
-    const data = await productsV2.getPlans(productUuid);
+    const data = await salable.products.getPlans(productUuid);
 
     expect(data).toEqual(expect.arrayContaining([ProductPlanSchema]));
   });
 
   it('getFeatures: should successfully fetch a product features', async () => {
-    const data = await productsV2.getFeatures(productUuid);
+    const data = await salable.products.getFeatures(productUuid);
 
     expect(data).toEqual(expect.arrayContaining([ProductFeatureSchema]));
   });
 
   it('getCapabilities: should successfully fetch a product capabilities', async () => {
-    const data = await productsV2.getCapabilities(productUuid);
+    const data = await salable.products.getCapabilities(productUuid);
 
     expect(data).toEqual(expect.arrayContaining([ProductCapabilitySchema]));
   });
 
   it('getCurrencies: should successfully fetch a product currencies', async () => {
-    const data = await productsV2.getCurrencies(productUuid);
+    const data = await salable.products.getCurrencies(productUuid);
 
     expect(data).toEqual(expect.arrayContaining([ProductCurrencySchema]));
   });

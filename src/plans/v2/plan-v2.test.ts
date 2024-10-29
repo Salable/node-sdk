@@ -1,29 +1,27 @@
-import { initRequest, Version } from '../..';
-import { v2PlanMethods } from '.';
+import Salable, { Version } from '../..';
 import { Plan, PlanCapability, PlanCheckout, PlanCurrency, PlanFeature } from '../../types';
 
 describe('Plans V2 Tests', () => {
   const apiKey = process.env.SALABLE_TEST_API_KEY!;
   const version = Version.V2;
 
-  const req = initRequest(apiKey, version);
-  const plansV2 = v2PlanMethods(req);
+  const salable = new Salable(apiKey, version);
 
   const planUuid = '111eefac-9b21-4299-8cde-302249d6f111';
 
   it('getOne: should successfully fetch all products', async () => {
-    const data = await plansV2.getOne(planUuid);
+    const data = await salable.plans.getOne(planUuid);
     expect(data).toEqual(PlanSchema);
   });
 
   it('getOne (w / search params): should successfully fetch a plan', async () => {
-    const data = await plansV2.getOne(planUuid, { expand: ['capabilities', 'capabilities.capability', 'features', 'features.feature', 'features.enumValue', 'currencies', 'currencies.currency'] });
+    const data = await salable.plans.getOne(planUuid, { expand: ['capabilities', 'capabilities.capability', 'features', 'features.feature', 'features.enumValue', 'currencies', 'currencies.currency'] });
 
     expect(data).toEqual(PlanSchema);
   });
 
   it('getCheckoutLink (w / required params): should successfully fetch checkout link for plan', async () => {
-    const data = await plansV2.getCheckoutLink(planUuid, {
+    const data = await salable.plans.getCheckoutLink(planUuid, {
       successUrl: 'https://www.salable.app',
       cancelUrl: 'https://www.salable.app',
       granteeId: 'granteeid@example.com',
@@ -34,7 +32,7 @@ describe('Plans V2 Tests', () => {
   });
 
   it('getCheckoutLink (w / optional params): should successfully fetch checkout link for plan', async () => {
-    const data = await plansV2.getCheckoutLink(planUuid, {
+    const data = await salable.plans.getCheckoutLink(planUuid, {
       successUrl: 'https://www.salable.app',
       cancelUrl: 'https://www.salable.app',
       granteeId: 'granteeid@example.com',
@@ -51,19 +49,19 @@ describe('Plans V2 Tests', () => {
   });
 
   it('getFeatures: should successfully fetch features for plan', async () => {
-    const data = await plansV2.getFeatures(planUuid);
+    const data = await salable.plans.getFeatures(planUuid);
 
     expect(data).toEqual(expect.arrayContaining([PlanFeatureSchema]));
   });
 
   it('getCapabilities: should successfully fetch capabilities for plan', async () => {
-    const data = await plansV2.getCapabilities(planUuid);
+    const data = await salable.plans.getCapabilities(planUuid);
 
     expect(data).toEqual(expect.arrayContaining([PlanCapabilitySchema]));
   });
 
   it('getCurrencies: should successfully fetch currencies for plan', async () => {
-    const data = await plansV2.getCurrencies(planUuid);
+    const data = await salable.plans.getCurrencies(planUuid);
 
     expect(data).toEqual(expect.arrayContaining([PlanCurrencySchema]));
   });

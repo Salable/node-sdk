@@ -1,13 +1,11 @@
-import { Version, initRequest } from '../..';
-import { v2LicenseMethods } from '.';
+import Salable, { Version } from '../..';
 import { Capability, License, Plan } from '@/src/types';
 
 describe('Licenses V2 Tests', () => {
   const apiKey = process.env.SALABLE_TEST_API_KEY!;
   const version = Version.V2;
 
-  const req = initRequest(apiKey, version);
-  const licensesV2 = v2LicenseMethods(req);
+  const salable = new Salable(apiKey, version);
 
   const testProductUuid = '29c9a7c8-9a41-4e87-9e7e-7c62d293c131';
   const testPlanUuid = '5a866dba-20c9-466f-88ac-e05c8980c90b';
@@ -19,7 +17,7 @@ describe('Licenses V2 Tests', () => {
   const cancellableLicenseUuidThree = '67b913c2-2713-4d6a-a106-a44e773fc15d';
 
   it('getAll: Should successfully fetch licenses', async () => {
-    const data = await licensesV2.getAll();
+    const data = await salable.licenses.getAll();
 
     expect(data).toEqual({
       first: expect.any(String),
@@ -29,7 +27,11 @@ describe('Licenses V2 Tests', () => {
   });
 
   it('getAll (w/ search params): Should successfully fetch licenses', async () => {
-    const dataWithSearchParams = await licensesV2.getAll({ status: 'ACTIVE', take: '3', subscriptionUuid: testSubscriptionUuid });
+    const dataWithSearchParams = await salable.licenses.getAll({
+      status: 'ACTIVE',
+      take: '3',
+      subscriptionUuid: testSubscriptionUuid,
+    });
 
     expect(dataWithSearchParams).toEqual({
       first: expect.any(String),
@@ -43,21 +45,21 @@ describe('Licenses V2 Tests', () => {
   });
 
   it('getOne: Should successfully fetch the specified license', async () => {
-    const data = await licensesV2.getOne('1e97a9ea-c66a-4822-a5f1-bebf5ea7e44c');
+    const data = await salable.licenses.getOne('1e97a9ea-c66a-4822-a5f1-bebf5ea7e44c');
 
     expect(data).toEqual(licenseSchema);
     expect(data).not.toHaveProperty('plan');
   });
 
   it('getOne (w/ search params): Should successfully fetch the specified license', async () => {
-    const dataWithSearchParams = await licensesV2.getOne('1e97a9ea-c66a-4822-a5f1-bebf5ea7e44c', { expand: ['plan'] });
+    const dataWithSearchParams = await salable.licenses.getOne('1e97a9ea-c66a-4822-a5f1-bebf5ea7e44c', { expand: ['plan'] });
 
     expect(dataWithSearchParams).toEqual({ ...licenseSchema, plan: planSchema });
     expect(dataWithSearchParams).toHaveProperty('plan', planSchema);
   });
 
   it('getCount: Should successfully fetch a subscriptions count', async () => {
-    const data = await licensesV2.getCount();
+    const data = await salable.licenses.getCount();
 
     expect(data).toEqual({
       count: expect.any(Number),
@@ -67,7 +69,10 @@ describe('Licenses V2 Tests', () => {
   });
 
   it('getCount (w/ search params): Should successfully fetch a subscriptions count', async () => {
-    const dataWithSearchParams = await licensesV2.getCount({ subscriptionUuid: testSubscriptionUuid, status: 'ACTIVE' });
+    const dataWithSearchParams = await salable.licenses.getCount({
+      subscriptionUuid: testSubscriptionUuid,
+      status: 'ACTIVE',
+    });
 
     expect(dataWithSearchParams).toEqual({
       count: expect.any(Number),
@@ -77,31 +82,51 @@ describe('Licenses V2 Tests', () => {
   });
 
   it('getForPurchaser: Should successfully fetch a purchasers licenses', async () => {
-    const data = await licensesV2.getForPurchaser({ purchaser: testPurchaser, productUuid: testProductUuid });
+    const data = await salable.licenses.getForPurchaser({ purchaser: testPurchaser, productUuid: testProductUuid });
 
     expect(data).toEqual(expect.arrayContaining([expect.objectContaining(licenseSchema)]));
   });
 
   it('getForPurchaser (w/ search params): Should successfully fetch a purchasers licenses', async () => {
-    const dataWithSearchParams = await licensesV2.getForPurchaser({ purchaser: testPurchaser, productUuid: testProductUuid, status: 'ACTIVE' });
+    const dataWithSearchParams = await salable.licenses.getForPurchaser({
+      purchaser: testPurchaser,
+      productUuid: testProductUuid,
+      status: 'ACTIVE',
+    });
 
-    expect(dataWithSearchParams).toEqual(expect.arrayContaining([expect.objectContaining({ ...licenseSchema, status: 'ACTIVE', purchaser: testPurchaser, productUuid: testProductUuid })]));
+    expect(dataWithSearchParams).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          ...licenseSchema,
+          status: 'ACTIVE',
+          purchaser: testPurchaser,
+          productUuid: testProductUuid,
+        }),
+      ]),
+    );
   });
 
   it('getForGranteeId: Should successfully fetch a grantees licenses', async () => {
-    const data = await licensesV2.getForGranteeId(testGrantee);
+    const data = await salable.licenses.getForGranteeId(testGrantee);
 
     expect(data).toEqual(expect.arrayContaining([expect.objectContaining(licenseSchema)]));
   });
 
   it('getForGranteeId (w/ search params): Should successfully fetch a grantees licenses', async () => {
-    const dataWithSearchParams = await licensesV2.getForGranteeId(testGrantee, { expand: ['plan'] });
+    const dataWithSearchParams = await salable.licenses.getForGranteeId(testGrantee, { expand: ['plan'] });
 
-    expect(dataWithSearchParams).toEqual(expect.arrayContaining([expect.objectContaining({ ...licenseSchema, plan: planSchema })]));
+    expect(dataWithSearchParams).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          ...licenseSchema,
+          plan: planSchema,
+        }),
+      ]),
+    );
   });
 
   it('create: Should successfully create a license', async () => {
-    const data = await licensesV2.create({
+    const data = await salable.licenses.create({
       planUuid: testPlanUuid,
       member: 'example',
       granteeId: 'test-grantee-id',
@@ -113,7 +138,7 @@ describe('Licenses V2 Tests', () => {
   });
 
   it('createMany: Should successfully create multiple licenses', async () => {
-    const data = await licensesV2.createMany([
+    const data = await salable.licenses.createMany([
       {
         planUuid: testPlanUuid,
         member: 'example',
@@ -135,13 +160,13 @@ describe('Licenses V2 Tests', () => {
   });
 
   it('update: Should successfully update a license', async () => {
-    const data = await licensesV2.update(cancellableLicenseUuid, { granteeId: 'updated-grantee-id' });
+    const data = await salable.licenses.update(cancellableLicenseUuid, { granteeId: 'updated-grantee-id' });
 
     expect(data.granteeId).toEqual('updated-grantee-id');
   });
 
   it('updateMany: Should successfully update multiple licenses', async () => {
-    const data = await licensesV2.updateMany([
+    const data = await salable.licenses.updateMany([
       {
         uuid: cancellableLicenseUuidTwo,
         granteeId: 'updated-grantee-id',
@@ -153,23 +178,30 @@ describe('Licenses V2 Tests', () => {
     ]);
 
     expect(data.length).toEqual(2);
-    expect(data).toEqual(expect.arrayContaining([expect.objectContaining({ ...licenseSchema, granteeId: 'updated-grantee-id' })]));
+    expect(data).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          ...licenseSchema,
+          granteeId: 'updated-grantee-id',
+        }),
+      ]),
+    );
   });
 
   it('cancel: Should successfully cancel the specified license', async () => {
-    const data = await licensesV2.cancel(cancellableLicenseUuid);
+    const data = await salable.licenses.cancel(cancellableLicenseUuid);
 
     expect(data).toBeUndefined();
   });
 
   it('cancelMany: Should successfully multiple licenses', async () => {
-    const data = await licensesV2.cancelMany({ uuids: [cancellableLicenseUuidTwo, cancellableLicenseUuidThree] });
+    const data = await salable.licenses.cancelMany({ uuids: [cancellableLicenseUuidTwo, cancellableLicenseUuidThree] });
 
     expect(data).toBeUndefined();
   });
 
   it('check: Should successfully check the specified grantees permissions', async () => {
-    const data = await licensesV2.check({
+    const data = await salable.licenses.check({
       productUuid: testProductUuid,
       granteeIds: [testGrantee],
     });
@@ -199,12 +231,12 @@ describe('Licenses V2 Tests', () => {
     const testSignature = '3045022100b210aa29519f3146afe7a0d343a6b7ec5e47a1ac0de9686e2ec4cf0081e159c402206ecf98ad4d1d339c59f7ff3b4744d1f377747702c6253f7904ef6589191a2254';
     const testIncorrectSignature = 'bad-signature';
 
-    const falseLicenseCheck = licensesV2.verify({
+    const falseLicenseCheck = salable.licenses.verify({
       publicKey: testPublicKeyPem,
       signature: testIncorrectSignature,
       payload: JSON.stringify(testLicenseCheckData),
     });
-    const trueLicenseCheck = licensesV2.verify({
+    const trueLicenseCheck = salable.licenses.verify({
       publicKey: testPublicKeyPem,
       signature: testSignature,
       payload: JSON.stringify(testLicenseCheckData),
