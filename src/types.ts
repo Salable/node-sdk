@@ -4,6 +4,8 @@ export type LicenseStatus = 'ACTIVE' | 'CANCELED' | 'EVALUATION' | 'SCHEDULED' |
 
 export type SearchParamOptions = Record<string, string | string[] | number | boolean>;
 
+export type SubscriptionStatus = 'ACTIVE' | 'CANCELED' | 'PAUSED' | 'TRIALING' | 'DELETED' | 'PAST_DUE' | 'INCOMPLETE';
+
 export type CreateAdhocLicenseInput = {
   planUuid: string;
   member: string;
@@ -86,15 +88,15 @@ export type Subscription = {
   type: string;
   email: string;
   quantity: number;
-  lineItemIds: string[];
+  lineItemIds: string[] | null;
   organisation: string;
   status: string;
   createdAt: string;
   updatedAt: string;
   expiryDate: string;
-  licenseUuid: string;
   planUuid: string;
   isTest: boolean;
+  cancelAtPeriodEnd: boolean;
 };
 
 export type AllSubscription = {
@@ -140,6 +142,7 @@ export type Plan = {
   updatedAt: string;
   isTest: boolean;
   features: Feature;
+  currencies?: Currency;
 };
 
 export type IFeature = {
