@@ -12,7 +12,7 @@ export type SubscriptionVersions = {
      *
      * Docs - https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptions
      *
-     * @returns {Promise<GetAllLicensesResponse>} The data of the subscription requested
+     * @returns {Promise<AllSubscription>} The data of the subscription requested
      */
     getAll: (options?: { status?: SubscriptionStatus; email?: string; cursor?: string; take?: string; expand?: string[] }) => Promise<GetAllLicensesResponse>;
 

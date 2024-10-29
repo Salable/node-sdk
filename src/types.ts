@@ -1,17 +1,5 @@
-type NonBodyRequest = {
-  method: 'GET' | 'HEAD';
-  body?: never;
-};
-
-type BodyRequest<T = void> = {
-  method: 'POST' | 'PUT' | 'DELETE';
-  body?: T;
-};
-
-export type IRequestBase<T> = Omit<RequestInit, 'body'> & (NonBodyRequest | BodyRequest<T>);
-
 export type Status = 'ACTIVE' | 'CANCELED';
-
+export type ProductStatus = 'ACTIVE' | 'DEPRECATED';
 export type LicenseStatus = 'ACTIVE' | 'CANCELED' | 'EVALUATION' | 'SCHEDULED' | 'TRIALING' | 'INACTIVE';
 
 export type SearchParamOptions = Record<string, string | string[] | number | boolean>;
@@ -111,6 +99,13 @@ export type Subscription = {
   cancelAtPeriodEnd: boolean;
 };
 
+export type AllSubscription = {
+  first: string;
+  last: string;
+  hasMore: boolean;
+  data: Subscription[];
+};
+
 export type Proration = 'create_prorations' | 'none' | 'always_invoice';
 
 export type SubscriptionsChangePlan = {
@@ -165,6 +160,13 @@ export type IFeature = {
   updatedAt: string;
 };
 
+export type FeatureEnumOption = {
+  uuid: string;
+  name: string;
+  featureUuid: string;
+  updatedAt: string;
+};
+
 export type ICheckoutDefaultParams = {
   member: string;
   marketingConsent?: string;
@@ -189,6 +191,23 @@ export type ICheckoutVatParams = {
   vatState?: string;
   vatCountry?: string;
   vatPostcode?: string;
+};
+
+export type PricingTableResponse = {
+  uuid: string;
+  name: string;
+  status: ProductStatus;
+  title: string | null;
+  text: string | null;
+  theme: 'light' | 'dark' | string;
+  featureOrder: string;
+  productUuid: string;
+  customTheme: string;
+  featuredPlanUuid: string;
+  updatedAt: string;
+  features: PricingTableFeature[];
+  product: Product & { features: Feature[]; currencies: ProductCurrency[] };
+  plans: PricingTablePlan[];
 };
 
 export interface IPlanCheckoutParams extends ICheckoutDefaultParams, ICheckoutCustomerParams, ICheckoutVatParams {
@@ -243,10 +262,13 @@ export type PlanFeature = {
   value: string;
   enumValueUuid?: string;
   isUnlimited: boolean;
+  isUsage: boolean;
+  maxUsage: boolean;
+  minUsage: boolean;
+  pricePerUnit: number;
   updatedAt: string;
   feature: IFeature;
-  enumValue?: string;
-  sortOrder: number;
+  enumValue: string | null;
 };
 
 export type PlanCapability = {
@@ -260,6 +282,7 @@ export type PlanCurrency = {
   planUuid: string;
   currencyUuid: string;
   price: number;
+  hasAcceptedTransaction: boolean;
   paymentIntegrationPlanId: string;
   currency: ICurrency;
 };
@@ -283,6 +306,7 @@ export type Capability = {
 export type Product = {
   uuid: string;
   name: string;
+  slug: string;
   description?: string;
   logoUrl?: string;
   displayName: string;
@@ -292,6 +316,7 @@ export type Product = {
   organisationPaymentIntegrationUuid: string;
   paymentIntegrationProductId?: string;
   updatedAt: string;
+  appType: string;
   isTest: boolean;
 };
 
@@ -304,11 +329,49 @@ export type ProductCapability = {
   updatedAt: string;
 };
 
+export type ProductFeature = {
+  defaultValue: string;
+  description: string;
+  displayName: string;
+  featureEnumOptions: FeatureEnumOption | [];
+  name: string;
+  productUuid: string;
+  showUnlimited: boolean;
+  sortOrder: number;
+  status: string;
+  updatedAt: string;
+  uuid: string;
+  valueType: string;
+  variableName: string;
+  visibility: string;
+};
+
 export type ProductCurrency = {
   productUuid: string;
   currencyUuid: string;
   defaultCurrency: boolean;
   currency: ICurrency;
+};
+
+export type PricingTableFeature = {
+  pricingTableUuid: string;
+  featureUuid: string;
+  sortOrder: number;
+  updatedAt: string;
+  feature: Feature & {
+    featureEnumOptions: FeatureEnumOption[]; // Todo: fix type
+  };
+};
+
+export type PricingTablePlan = {
+  planUuid: string;
+  pricingTableUuid: string;
+  sortOrder: number;
+  updatedAt: string;
+  plan: Plan & {
+    features: Feature & { featureEnumOptions: FeatureEnumOption[] }[];
+    currencies: PlanCurrency[];
+  };
 };
 
 export type PricingTableParameters = {
@@ -365,7 +428,6 @@ export type IOrganisationPaymentIntegration = {
 export type ProductPricingTable = {
   features: IFeature[];
   currencies: ICurrency[];
-  organisationPaymentIntegration: IOrganisationPaymentIntegration;
   plans: (Plan & { features: IFeature[]; currencies: ICurrency[]; checkoutUrl: string })[];
 } & Product;
 
@@ -408,95 +470,6 @@ export type LicenseGetUsage = {
   featureUuid: string;
   planUuid: string;
   unitCount: number;
-};
-
-export type IPermission = {
-  uuid: string;
-  value: string;
-  type: string | null;
-  description: string | null;
-  dependencies: { [k: string]: string } | null;
-  organisation: string;
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-export type INestedPermission = {
-  uuid: string;
-  value: string;
-  type: string | null;
-};
-
-export type IRole = {
-  uuid: string;
-  name: string;
-  description: string | null;
-  organisation: string;
-  permissions?: INestedPermission[];
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-export type INestedRole = {
-  uuid: string;
-  name?: string;
-  description?: string;
-  permissions?: INestedPermission[];
-  createdAt: Date;
-};
-
-export type IRbacUser = {
-  id: string;
-  name: string | null;
-  organisation: string;
-  role?: INestedRole;
-  permissions?: INestedPermission[];
-  createdAt: Date;
-  updatedAt: Date;
-};
-
-export type ICreatePermissionInput = {
-  value: string;
-  type?: string | null;
-  description?: string | null;
-  dependencies?: { [k: string]: string } | null;
-  createdAt?: Date | string;
-  updatedAt?: Date | string;
-  rbacUsers?: string[];
-  roles?: string[];
-};
-
-export type IUpdatePermissionInput = {
-  value?: string;
-  type?: string;
-  description?: string;
-  dependencies?: string[];
-};
-
-export type ICreateRoleInput = {
-  name: string;
-  description: string;
-  permissions: string[];
-};
-
-export type IUpdateRoleInput = {
-  name?: string;
-  description?: string;
-  permissions: { add?: string[]; remove?: string[] };
-};
-
-export type ICreateRbacUserInput = {
-  id: string;
-  name?: string;
-  role?: string;
-  permissions?: string[];
-};
-
-export type IUpdateRbacUserInput = {
-  id?: string;
-  name?: string;
-  role?: string;
-  permissions: { add?: string[]; remove?: string[] };
 };
 
 export type SubscriptionInvoice = {
