@@ -180,7 +180,7 @@ export type SubscriptionVersions = {
 
 export type SubscriptionVersionedMethods<V extends TVersion> = V extends keyof SubscriptionVersions ? SubscriptionVersions[V] : never;
 
-export const SubscriptionsInit = <V extends TVersion>(version: V, request: ApiRequest): SubscriptionVersionedMethods<V> => {
+export const subscriptionsInit = <V extends TVersion>(version: V, request: ApiRequest): SubscriptionVersionedMethods<V> => {
   switch (version) {
     case Version.V2:
       return v2SubscriptionMethods(request) as SubscriptionVersionedMethods<V>;

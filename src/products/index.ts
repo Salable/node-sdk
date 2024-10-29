@@ -81,7 +81,7 @@ export type ProductVersions = {
 
 export type ProductVersionedMethods<V extends TVersion> = V extends keyof ProductVersions ? ProductVersions[V] : never;
 
-export const ProductsInit = <V extends TVersion>(version: V, request: ApiRequest): ProductVersionedMethods<V> => {
+export const productsInit = <V extends TVersion>(version: V, request: ApiRequest): ProductVersionedMethods<V> => {
   switch (version) {
     case Version.V2:
       return v2ProductMethods(request) as ProductVersionedMethods<V>;

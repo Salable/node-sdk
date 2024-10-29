@@ -18,7 +18,7 @@ export type PricingTableVersions = {
 
 export type PricingTableVersionedMethods<V extends TVersion> = V extends keyof PricingTableVersions ? PricingTableVersions[V] : never;
 
-export const PricingTablesInit = <V extends TVersion>(version: V, request: ApiRequest): PricingTableVersionedMethods<V> => {
+export const pricingTablesInit = <V extends TVersion>(version: V, request: ApiRequest): PricingTableVersionedMethods<V> => {
   switch (version) {
     case Version.V2:
       return v2PricingTableMethods(request) as PricingTableVersionedMethods<V>;

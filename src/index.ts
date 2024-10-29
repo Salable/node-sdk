@@ -1,5 +1,9 @@
 import { ErrorCodes, ResponseError, SalableResponseError, SalableUnknownError, SalableValidationError, ValidationError } from './exceptions/salable-error';
 import { licensesInit, LicenseVersionedMethods } from './licenses';
+import { subscriptionsInit, SubscriptionVersionedMethods } from '@/src/subscriptions';
+import { plansInit, PlanVersionedMethods } from '@/src/plans';
+import { productsInit, ProductVersionedMethods } from '@/src/products';
+import { pricingTablesInit, PricingTableVersionedMethods } from '@/src/pricing-tables';
 
 export const Version = {
   V2: 'v2',
@@ -44,11 +48,19 @@ export const initRequest: ApiFetch =
   };
 
 export default class Salable<V extends TVersion> {
+  products: ProductVersionedMethods<V>;
+  plans: PlanVersionedMethods<V>;
+  pricingTables: PricingTableVersionedMethods<V>;
+  subscriptions: SubscriptionVersionedMethods<V>;
   licenses: LicenseVersionedMethods<V>;
 
   constructor(apiKey: string, version: V) {
     const request = initRequest(apiKey, version);
 
+    this.products = productsInit(version, request);
+    this.plans = plansInit(version, request);
+    this.pricingTables = pricingTablesInit(version, request);
+    this.subscriptions = subscriptionsInit(version, request);
     this.licenses = licensesInit(version, request);
   }
 }

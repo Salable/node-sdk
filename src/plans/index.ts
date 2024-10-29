@@ -94,7 +94,7 @@ export type PlanVersions = {
 
 export type PlanVersionedMethods<V extends TVersion> = V extends keyof PlanVersions ? PlanVersions[V] : never;
 
-export const PlansInit = <V extends TVersion>(version: V, request: ApiRequest): PlanVersionedMethods<V> => {
+export const plansInit = <V extends TVersion>(version: V, request: ApiRequest): PlanVersionedMethods<V> => {
   switch (version) {
     case Version.V2:
       return v2PlanMethods(request) as PlanVersionedMethods<V>;
