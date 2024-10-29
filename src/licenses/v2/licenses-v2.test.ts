@@ -21,25 +21,21 @@ describe('Licenses V2 Tests', () => {
   it('getAll: Should successfully fetch licenses', async () => {
     const data = await licensesV2.getAll();
 
-    expect(data).toEqual(
-      expect.objectContaining({
-        first: expect.any(String),
-        last: expect.any(String),
-        data: expect.arrayContaining([licenseSchema]),
-      }),
-    );
+    expect(data).toEqual({
+      first: expect.any(String),
+      last: expect.any(String),
+      data: expect.arrayContaining([licenseSchema]),
+    });
   });
 
   it('getAll (w/ search params): Should successfully fetch licenses', async () => {
     const dataWithSearchParams = await licensesV2.getAll({ status: 'ACTIVE', take: '3', subscriptionUuid: testSubscriptionUuid });
 
-    expect(dataWithSearchParams).toEqual(
-      expect.objectContaining({
-        first: expect.any(String),
-        last: expect.any(String),
-        data: expect.arrayContaining([licenseSchema]),
-      }),
-    );
+    expect(dataWithSearchParams).toEqual({
+      first: expect.any(String),
+      last: expect.any(String),
+      data: expect.arrayContaining([licenseSchema]),
+    });
     expect(dataWithSearchParams.data.length).toEqual(3);
     for (const license of dataWithSearchParams.data) {
       expect(license).toHaveProperty('status', 'ACTIVE');
@@ -49,39 +45,35 @@ describe('Licenses V2 Tests', () => {
   it('getOne: Should successfully fetch the specified license', async () => {
     const data = await licensesV2.getOne('1e97a9ea-c66a-4822-a5f1-bebf5ea7e44c');
 
-    expect(data).toEqual(expect.objectContaining(licenseSchema));
+    expect(data).toEqual(licenseSchema);
     expect(data).not.toHaveProperty('plan');
   });
 
   it('getOne (w/ search params): Should successfully fetch the specified license', async () => {
     const dataWithSearchParams = await licensesV2.getOne('1e97a9ea-c66a-4822-a5f1-bebf5ea7e44c', { expand: ['plan'] });
 
-    expect(dataWithSearchParams).toEqual(expect.objectContaining(licenseSchema));
+    expect(dataWithSearchParams).toEqual({ ...licenseSchema, plan: planSchema });
     expect(dataWithSearchParams).toHaveProperty('plan', planSchema);
   });
 
   it('getCount: Should successfully fetch a subscriptions count', async () => {
     const data = await licensesV2.getCount();
 
-    expect(data).toEqual(
-      expect.objectContaining({
-        count: expect.any(Number),
-        assigned: expect.any(Number),
-        unassigned: expect.any(Number),
-      }),
-    );
+    expect(data).toEqual({
+      count: expect.any(Number),
+      assigned: expect.any(Number),
+      unassigned: expect.any(Number),
+    });
   });
 
   it('getCount (w/ search params): Should successfully fetch a subscriptions count', async () => {
     const dataWithSearchParams = await licensesV2.getCount({ subscriptionUuid: testSubscriptionUuid, status: 'ACTIVE' });
 
-    expect(dataWithSearchParams).toEqual(
-      expect.objectContaining({
-        count: expect.any(Number),
-        assigned: expect.any(Number),
-        unassigned: expect.any(Number),
-      }),
-    );
+    expect(dataWithSearchParams).toEqual({
+      count: expect.any(Number),
+      assigned: expect.any(Number),
+      unassigned: expect.any(Number),
+    });
   });
 
   it('getForPurchaser: Should successfully fetch a purchasers licenses', async () => {
