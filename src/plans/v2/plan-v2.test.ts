@@ -7,7 +7,7 @@ describe('Plans V2 Tests', () => {
 
   const salable = new Salable(apiKey, version);
 
-  const planUuid = '111eefac-9b21-4299-8cde-302249d6f111';
+  const planUuid = '351eefac-9b21-4299-8cde-302249d6fb1e';
 
   it('getOne: should successfully fetch all products', async () => {
     const data = await salable.plans.getOne(planUuid);

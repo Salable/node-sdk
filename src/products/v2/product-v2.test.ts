@@ -7,7 +7,7 @@ describe('Products V2 Tests', () => {
 
   const salable = new Salable(apiKey, version);
 
-  const productUuid = '1ad1a518-2076-4d76-9280-4b23f19b48bb';
+  const productUuid = '2e0ac383-ee7e-44ba-90cb-ab3eabd56722';
 
   it('getAll: should successfully fetch all products', async () => {
     const data = await salable.products.getAll();

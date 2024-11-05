@@ -1,13 +1,13 @@
 import Salable, { Version } from '../..';
 import { PricingTableResponse } from '../../types';
 
-describe('Products V2 Tests', () => {
+describe('Pricing Table V2 Tests', () => {
   const apiKey = process.env.SALABLE_TEST_API_KEY!;
   const version = Version.V2;
 
   const salable = new Salable(apiKey, version);
 
-  const pricingTableUuid = '28013adc-f132-49c5-89c5-8f8233314f71';
+  const pricingTableUuid = 'aec06de8-3a3e-46eb-bd09-f1094c1b1b8d';
 
   it('getAll: should successfully fetch all products', async () => {
     const data = await salable.pricingTables.getOne(pricingTableUuid);
