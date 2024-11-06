@@ -1,0 +1,27 @@
+name: Clone Bitbucket Repo and test
+
+on:
+  push:
+    branches: ["test/ci-cd"]
+
+jobs:
+  clone-bitbucket:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v3
+
+      - name: Set up SSH agent
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.BITBUCKET_SSH_KEY }}
+
+      - name: Add Bitbucket to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan bitbucket.org >> ~/.ssh/known_hosts
+
+      - name: Clone Bitbucket repository
+        run: |
+          git clone git@bitbucket.org:adaptavistlabs/salable-api.git
