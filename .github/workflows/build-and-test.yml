@@ -42,6 +42,7 @@ jobs:
             KMS_ENCRYPTION_KEY_ARN: ${{ secrets.KMS_ENCRYPTION_KEY_ARN }}
 
           run: |
+            cd salable-api
             npm install -g npm
             npm ci
             npx prisma generate
