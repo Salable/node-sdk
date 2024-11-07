@@ -47,7 +47,6 @@ jobs:
 
           run: |
             cd salable-api
-            npm install -g npm
             npm ci
             npx prisma generate
             npx prisma db push --force-reset
