@@ -53,6 +53,6 @@ jobs:
             npx prisma generate
             npx prisma db push --force-reset
             npx sst build --stage node-sdk --region ${{ vars.REGION }}
-            npx sst deploy -stage node-sdk --region ${{ vars.REGION }}
+            npx sst deploy --stage node-sdk --region ${{ vars.REGION }}
 
             
