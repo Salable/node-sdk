@@ -2,7 +2,6 @@ import Stripe from "stripe";
 import createStripeCustomAccount from '../../test-utils/stripe/create-stripe-custom-account'
 
 const STRIPE_KEY = process.env.STRIPE_KEY;
-let STRIPE_ACCOUNT_ID = process.env.STRIPE_ACCOUNT_ID || null;
 
 export default async function createStripeData() {
   if (!STRIPE_KEY) throw new Error('Missing STRIPE_KEY');
@@ -65,14 +64,14 @@ export default async function createStripeData() {
     stripePlanPerSeatRangeMonthlyGbpId: '',
   };
 
-  if (!STRIPE_ACCOUNT_ID) {
+  if (!process.env.STRIPE_ACCOUNT_ID) {
     const account = await createStripeCustomAccount();
-    STRIPE_ACCOUNT_ID = account.id;
+    process.env.STRIPE_ACCOUNT_ID = account.id;
   }
 
   const stripeConnect = new Stripe(STRIPE_KEY, {
     apiVersion: "2024-09-30.acacia",
-    stripeAccount: STRIPE_ACCOUNT_ID
+    stripeAccount: process.env.STRIPE_ACCOUNT_ID
   });
 
   if (!obj.stripePaymentMethodId) {
