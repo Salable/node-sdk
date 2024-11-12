@@ -26,6 +26,6 @@ module.exports = {
   moduleNameMapper: {
     '^(\\.{1,2}/.*)\\.js$': '$1',
   },
-  setupFiles: ['<rootDir>/__tests__/_setup/setup-test-envs.ts'],
+  globalSetup: '<rootDir>/__tests__/_setup/setup-test-envs.ts',
   setupFilesAfterEnv: ['<rootDir>/__tests__/_setup/test-setup.ts'],
 };
