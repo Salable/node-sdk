@@ -1,10 +1,16 @@
 import Stripe from "stripe";
 import createStripeCustomAccount from '../../test-utils/stripe/create-stripe-custom-account'
+import getConsoleLoader from '../helpers/console-loading-wheel'
+import { config } from 'dotenv';
+
+config({ path: '.env.test' });
 
 const STRIPE_KEY = process.env.STRIPE_KEY;
 
 export default async function createStripeData() {
   if (!STRIPE_KEY) throw new Error('Missing STRIPE_KEY');
+
+  const loadingWheel = getConsoleLoader('CREATING STRIPE ACCOUNT DATA');
 
   const stripeCustomerEmail = 'tester@domain.com';
 
@@ -79,7 +85,6 @@ export default async function createStripeData() {
       type: 'card',
       card: { token: 'tok_visa' } as Stripe.PaymentMethodCreateParams.Card,
     });
-    console.log('CREATED stripePaymentMethod');
     obj.stripePaymentMethodId = stripePaymentMethod.id
   }
 
@@ -88,7 +93,6 @@ export default async function createStripeData() {
       email: stripeCustomerEmail,
       payment_method: obj.stripePaymentMethodId
     });
-    console.log('CREATED stripeCustomer');
     obj.stripeCustomerId = stripeCustomer.id
   }
 
@@ -96,7 +100,6 @@ export default async function createStripeData() {
     const stripeProductWidgetOne = await stripeConnect.products.create({
       name: 'Widget One',
     });
-    console.log('CREATED stripeProductWidgetOne');
     obj.stripeProductWidgetOneId = stripeProductWidgetOne.id
   }
 
@@ -109,7 +112,6 @@ export default async function createStripeData() {
       amount: 50,
       usage_type: 'metered'
     });
-    console.log('CREATED stripePlanUsageProMonthlyGbpId');
     obj.stripePlanUsageProMonthlyGbpId = stripePlanUsageProMonthlyGbp.id
   }
 
@@ -122,7 +124,6 @@ export default async function createStripeData() {
       amount: 20,
       usage_type: 'metered'
     });
-    console.log('CREATED stripePlanUsageBasicMonthlyGbp');
     obj.stripePlanUsageBasicMonthlyGbpId = stripePlanUsageBasicMonthlyGbp.id
   }
 
@@ -134,7 +135,6 @@ export default async function createStripeData() {
       }],
       default_payment_method: obj.stripePaymentMethodId
     });
-    console.log('CREATED stripeUsageBasicSubscription');
     obj.stripeUsageBasicSubscriptionId = stripeUsageBasicSubscription.id;
     obj.stripeUsageBasicSubscriptionLineItemId = stripeUsageBasicSubscription.items.data[0].id
   }
@@ -147,7 +147,6 @@ export default async function createStripeData() {
       product: obj.stripeProductWidgetOneId,
       amount: 1500
     });
-    console.log('CREATED stripePlanPerSeatBasicMonthlyGbp');
     obj.stripePlanPerSeatBasicMonthlyGbpId = stripePlanPerSeatBasicMonthlyGbp.id
   }
 
@@ -159,7 +158,6 @@ export default async function createStripeData() {
       product: obj.stripeProductWidgetOneId,
       amount: 100
     });
-    console.log('CREATED stripePlanPerSeatUnlimitedMonthlyGbp');
     obj.stripePlanPerSeatUnlimitedMonthlyGbpId = stripePlanPerSeatUnlimitedMonthlyGbp.id
   }
 
@@ -171,7 +169,6 @@ export default async function createStripeData() {
       product: obj.stripeProductWidgetOneId,
       amount: 200
     });
-    console.log('CREATED stripePlanPerSeatMaximumMonthlyGbp');
     obj.stripePlanPerSeatMaximumMonthlyGbpId = stripePlanPerSeatMaximumMonthlyGbp.id
   }
 
@@ -183,7 +180,6 @@ export default async function createStripeData() {
       product: obj.stripeProductWidgetOneId,
       amount: 300
     });
-    console.log('CREATED stripePlanPerSeatRangeMonthlyGbp');
     obj.stripePlanPerSeatRangeMonthlyGbpId = stripePlanPerSeatRangeMonthlyGbp.id
   }
 
@@ -195,7 +191,6 @@ export default async function createStripeData() {
       product: obj.stripeProductWidgetOneId,
       amount: 400
     });
-    console.log('CREATED stripePlanPerSeatMinimumMonthlyGbp');
     obj.stripePlanPerSeatMinimumMonthlyGbpId = stripePlanPerSeatMinimumMonthlyGbp.id
   }
 
@@ -208,7 +203,6 @@ export default async function createStripeData() {
       }],
       default_payment_method: obj.stripePaymentMethodId
     });
-    console.log('CREATED stripePerSeatBasicSubscription');
     obj.stripePerSeatBasicSubscriptionId = stripePerSeatBasicSubscription.id;
     obj.stripePerSeatBasicSubscriptionLineItemId = stripePerSeatBasicSubscription.items.data[0].id
   }
@@ -220,7 +214,6 @@ export default async function createStripeData() {
       product: obj.stripeProductWidgetOneId,
       amount: 1000
     });
-    console.log('CREATED stripePlanBasicMonthlyGbp');
     obj.stripePlanBasicMonthlyGbpId = stripePlanBasicMonthlyGbp.id
   }
 
@@ -231,7 +224,6 @@ export default async function createStripeData() {
       product: obj.stripeProductWidgetOneId,
       amount: 1000
     });
-    console.log('CREATED stripePlanBasicYearlyGbp');
     obj.stripePlanBasicYearlyGbpId = stripePlanBasicYearlyGbp.id
   }
 
@@ -242,7 +234,6 @@ export default async function createStripeData() {
       product: obj.stripeProductWidgetOneId,
       amount: 10000
     });
-    console.log('CREATED stripePlanBasicMonthlyGbp');
     obj.stripePlanBasicYearlyGbpId = stripePlanBasicMonthlyGbp.id
   }
 
@@ -255,7 +246,6 @@ export default async function createStripeData() {
       }],
       default_payment_method: obj.stripePaymentMethodId
     });
-    console.log('CREATED stripeBasicSubscription');
     obj.stripeBasicSubscriptionId = stripeBasicSubscription.id;
     obj.stripeBasicSubscriptionLineItemId = stripeBasicSubscription.items.data[0].id
   }
@@ -269,7 +259,6 @@ export default async function createStripeData() {
       }],
       default_payment_method: obj.stripePaymentMethodId
     });
-    console.log('CREATED stripeBasicSubscriptionIdTwo');
     obj.stripeBasicSubscriptionIdTwo = stripeBasicSubscription.id;
     obj.stripeBasicSubscriptionTwoLineItemId = stripeBasicSubscription.items.data[0].id
   }
@@ -281,7 +270,6 @@ export default async function createStripeData() {
       product: obj.stripeProductWidgetOneId,
       amount: 2500
     });
-    console.log('CREATED stripePlanProGbpMonthly');
     obj.stripePlanProMonthlyGbpId = stripePlanProGbpMonthly.id
   }
 
@@ -294,7 +282,6 @@ export default async function createStripeData() {
       }],
       default_payment_method: obj.stripePaymentMethodId
     });
-    console.log('CREATED stripeProSubscription');
     obj.stripeProSubscriptionId = stripeProSubscription.id;
     obj.stripeProSubscriptionLineItemId = stripeProSubscription.items.data[0].id
   }
@@ -306,7 +293,6 @@ export default async function createStripeData() {
       product: obj.stripeProductWidgetOneId,
       amount: 1000
     });
-    console.log('CREATED stripePlanBasicUsdMonthly');
     obj.stripePlanBasicMonthlyUsdId = stripePlanBasicUsdMonthly.id
   }
 
@@ -319,8 +305,6 @@ export default async function createStripeData() {
       amount: 2500
     });
     obj.stripePlanProMonthlyUsdId = stripePlanProUsdMonthly.id;
-
-    console.log('CREATED stripeProSubscription');
     obj.stripePlanProMonthlyUsdId = stripePlanProUsdMonthly.id
   }
 
@@ -347,8 +331,9 @@ export default async function createStripeData() {
     if (i === 6) await stripeConnect.invoices.voidInvoice(invoice.id);
     if (i === 8) await stripeConnect.invoices.voidInvoice(invoice.id);
 
-    console.log(`Created and finalized invoice with ID: ${invoice.id}`);
   }
+
+  clearInterval(loadingWheel);
 
   return obj;
 }

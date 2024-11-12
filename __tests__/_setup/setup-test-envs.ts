@@ -1,8 +1,15 @@
-import { config } from 'dotenv';
 import createStripeData from '../../test-utils/stripe/create-stripe-test-data';
 import createTestData from '../../test-utils/scripts/create-test-data';
+import { config } from 'dotenv';
 
-(async () => {
+config({ path: '.env.test' });
+
+const globalSetup = async () => {
+    await setupStripeEnvironmentVariables();
+    await createTestData();
+};
+
+async function setupStripeEnvironmentVariables (){
     const stripeEnvVariables = await createStripeData();
     process.env = {
         ...process.env,
@@ -32,7 +39,6 @@ import createTestData from '../../test-utils/scripts/create-test-data';
         STRIPE_PRO_SUBSCRIPTION_ID: stripeEnvVariables.stripeProSubscriptionId,
         STRIPE_PRO_SUBSCRIPTION_LINE_ITEM_ID: stripeEnvVariables.stripeProSubscriptionLineItemId,
     };
-    await createTestData();
-})();
+};
 
-config({ path: '.env.test' });
+export default globalSetup;
