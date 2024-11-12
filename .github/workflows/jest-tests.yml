@@ -1,8 +1,8 @@
-name: Jest tests
+name: Clone Bitbucket Repo and test
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main", "feat/SD-960-node-sdk-v4"]
   pull_request:
     types: [opened, synchronize]
 
@@ -10,33 +10,65 @@ jobs:
   tests:
     name: Run Jest tests
     timeout-minutes: 15
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
+    runs-on: ubuntu-latest
+    env:
+      REGION: ${{ vars.REGION }}
+      ENVIRONMENT: ${{ vars.ENVIRONMENT }}
+      ACCOUNT: ${{ secrets.ACCOUNT }}
+      SEED_API_KEY: ${{ secrets.SEED_API_KEY }}
+      SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+      SEGMENT_WRITE_KEY: ${{ secrets.SEGMENT_WRITE_KEY }}
+      SEGMENT_SOURCE_ID: ${{ secrets.SEGMENT_SOURCE_ID }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+      SALABLE_STRIPE_SECRET_KEY: ${{ secrets.SALABLE_STRIPE_SECRET_KEY }}
+      SALABLE_STRIPE_TEST_SECRET_KEY: ${{ secrets.SALABLE_STRIPE_TEST_SECRET_KEY }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      LAUNCHDARKLY_KEY: ${{ secrets.LAUNCHDARKLY_KEY }}
+      KMS_ENCRYPTION_KEY_ARN: ${{ secrets.KMS_ENCRYPTION_KEY_ARN }}
+      SALABLE_BASE_URL: ${{ secrets.SALABLE_BASE_URL }}
+      SALABLE_TEST_API_KEY: ${{ secrets.SALABLE_TEST_API_KEY }}
+      STRIPE_ACCOUNT_ID: ${{ secrets.STRIPE_ACCOUNT_ID }}
+      STRIPE_KEY: ${{ secrets.STRIPE_KEY }}
 
     steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+        - name: Checkout this repository
+          uses: actions/checkout@v3
+          
+        - name: Set up SSH agent
+          uses: webfactory/ssh-agent@v0.7.0
+          with:
+            ssh-private-key: ${{ secrets.BITBUCKET_SSH_KEY }}
+            
+        - name: Add Bitbucket to known_hosts
+          run: |
+            mkdir -p ~/.ssh
+            ssh-keyscan bitbucket.org >> ~/.ssh/known_hosts
+            
+        - name: Clone Bitbucket repository
+          run: |
+            git clone ${{ vars.SALABLE_API_REPO_URL }}
+            if [ ! -d "salable-api" ]; then
+                echo "Error: Directory 'salable-api' does not exist."
+                exit 1
+            fi
+            
+        - name: Build and deploy
 
-      - name: Fetch main branch
-        run: git fetch --no-tags --depth=1000 origin main
+          run: |
+            cd salable-api
+            npm ci
+            npx prisma generate
+            npx prisma db push --force-reset
+            npx sst build --stage node-sdk --region ${{ vars.REGION }}
+            npx sst deploy --stage node-sdk --region ${{ vars.REGION }}
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16.x.x
+        - name: Jest Tests Overall
+          run: npm run test
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Jest Tests Overall
-        run: npm run test
-
-      - name: Jest Tests Code Coverage (branch)
-        run: npm run test:coverage
-
-      - name: Jest Tests Code Coverage (global)
-        run: npm run test:globalCoverage
+        - name: Jest Tests Code Coverage (branch)
+          run: npm run test:coverage
+          
+        - name: Jest Tests Code Coverage (global)
+          run: npm run test:globalCoverage
