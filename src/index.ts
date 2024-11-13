@@ -1,9 +1,9 @@
 import { ErrorCodes, ResponseError, SalableResponseError, SalableUnknownError, SalableValidationError, ValidationError } from './exceptions/salable-error';
 import { licensesInit, LicenseVersionedMethods } from './licenses';
-import { subscriptionsInit, SubscriptionVersionedMethods } from '@/src/subscriptions';
-import { plansInit, PlanVersionedMethods } from '@/src/plans';
-import { productsInit, ProductVersionedMethods } from '@/src/products';
-import { pricingTablesInit, PricingTableVersionedMethods } from '@/src/pricing-tables';
+import { subscriptionsInit, SubscriptionVersionedMethods } from '../src/subscriptions';
+import { plansInit, PlanVersionedMethods } from '../src/plans';
+import { productsInit, ProductVersionedMethods } from '../src/products';
+import { pricingTablesInit, PricingTableVersionedMethods } from '../src/pricing-tables';
 
 export const Version = {
   V2: 'v2',

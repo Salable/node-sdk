@@ -1,342 +1,325 @@
 import Stripe from "stripe";
 import createStripeCustomAccount from '../../test-utils/stripe/create-stripe-custom-account'
+import getConsoleLoader from '../helpers/console-loading-wheel'
+import { config } from 'dotenv';
+
+config({ path: '.env.test' });
 
 const STRIPE_KEY = process.env.STRIPE_KEY;
-let STRIPE_ACCOUNT_ID = process.env.STRIPE_ACCOUNT_ID || null;
+
+export type StripeData = {
+  paymentMethodId: string,
+  customerId: string,
+  productWidgetOneId: string,
+  planBasicMonthlyGbpId: string,
+  planBasicYearlyGbpId: string,
+  planPerSeatBasicMonthlyGbpId: string,
+  planUsageProMonthlyGbpId: string,
+  planUsageBasicMonthlyGbpId: string,
+  usageBasicSubscriptionLineItemId: string,
+  usageBasicSubscriptionId: string,
+  planProMonthlyGbpId: string,
+  planBasicMonthlyUsdId: string,
+  planProMonthlyUsdId: string,
+  basicSubscriptionId: string,
+  basicSubscriptionIdTwo: string,
+  basicSubscriptionLineItemId: string,
+  basicSubscriptionTwoLineItemId: string,
+  perSeatBasicSubscriptionId: string,
+  perSeatBasicSubscriptionLineItemId: string,
+  proSubscriptionId: string,
+  proSubscriptionLineItemId: string,
+  planPerSeatUnlimitedMonthlyGbpId: string,
+  planPerSeatMaximumMonthlyGbpId: string,
+  planPerSeatMinimumMonthlyGbpId: string,
+  planPerSeatRangeMonthlyGbpId: string,
+}
 
 export default async function createStripeData() {
   if (!STRIPE_KEY) throw new Error('Missing STRIPE_KEY');
 
+  const loadingWheel = getConsoleLoader('CREATING STRIPE ACCOUNT DATA');
+
   const stripeCustomerEmail = 'tester@domain.com';
 
-  type StripeData = {
-    stripePaymentMethodId: string,
-    stripeCustomerId: string,
-    stripeProductWidgetOneId: string,
-    stripePlanBasicMonthlyGbpId: string,
-    stripePlanBasicYearlyGbpId: string,
-    stripePlanPerSeatBasicMonthlyGbpId: string,
-    stripePlanUsageProMonthlyGbpId: string,
-    stripePlanUsageBasicMonthlyGbpId: string,
-    stripeUsageBasicSubscriptionLineItemId: string,
-    stripeUsageBasicSubscriptionId: string,
-    stripePlanProMonthlyGbpId: string,
-    stripePlanBasicMonthlyUsdId: string,
-    stripePlanProMonthlyUsdId: string,
-    stripeBasicSubscriptionId: string,
-    stripeBasicSubscriptionIdTwo: string,
-    stripeBasicSubscriptionLineItemId: string,
-    stripeBasicSubscriptionTwoLineItemId: string,
-    stripePerSeatBasicSubscriptionId: string,
-    stripePerSeatBasicSubscriptionLineItemId: string,
-    stripeProSubscriptionId: string,
-    stripeProSubscriptionLineItemId: string,
-    stripePlanPerSeatUnlimitedMonthlyGbpId: string,
-    stripePlanPerSeatMaximumMonthlyGbpId: string,
-    stripePlanPerSeatMinimumMonthlyGbpId: string,
-    stripePlanPerSeatRangeMonthlyGbpId: string,
-  }
-
   const obj: StripeData = {
-    stripePaymentMethodId: '',
-    stripeCustomerId: '',
-    stripeProductWidgetOneId: '',
-    stripePlanBasicMonthlyGbpId: '',
-    stripePlanBasicYearlyGbpId: '',
-    stripeUsageBasicSubscriptionLineItemId: '',
-    stripeUsageBasicSubscriptionId: '',
-    stripePlanPerSeatBasicMonthlyGbpId: '',
-    stripePlanUsageBasicMonthlyGbpId: '',
-    stripePlanUsageProMonthlyGbpId: '',
-    stripePlanProMonthlyGbpId: '',
-    stripePlanBasicMonthlyUsdId: '',
-    stripePlanProMonthlyUsdId: '',
-    stripeBasicSubscriptionId: '',
-    stripeBasicSubscriptionIdTwo: '',
-    stripeBasicSubscriptionLineItemId: '',
-    stripeBasicSubscriptionTwoLineItemId: '',
-    stripePerSeatBasicSubscriptionId: '',
-    stripePerSeatBasicSubscriptionLineItemId: '',
-    stripeProSubscriptionId: '',
-    stripeProSubscriptionLineItemId: '',
-    stripePlanPerSeatUnlimitedMonthlyGbpId: '',
-    stripePlanPerSeatMaximumMonthlyGbpId: '',
-    stripePlanPerSeatMinimumMonthlyGbpId: '',
-    stripePlanPerSeatRangeMonthlyGbpId: '',
+    paymentMethodId: '',
+    customerId: '',
+    productWidgetOneId: '',
+    planBasicMonthlyGbpId: '',
+    planBasicYearlyGbpId: '',
+    planPerSeatBasicMonthlyGbpId: '',
+    planUsageProMonthlyGbpId: '',
+    planUsageBasicMonthlyGbpId: '',
+    usageBasicSubscriptionLineItemId: '',
+    usageBasicSubscriptionId: '',
+    planProMonthlyGbpId: '',
+    planBasicMonthlyUsdId: '',
+    planProMonthlyUsdId: '',
+    basicSubscriptionId: '',
+    basicSubscriptionIdTwo: '',
+    basicSubscriptionLineItemId: '',
+    basicSubscriptionTwoLineItemId: '',
+    perSeatBasicSubscriptionId: '',
+    perSeatBasicSubscriptionLineItemId: '',
+    proSubscriptionId: '',
+    proSubscriptionLineItemId: '',
+    planPerSeatUnlimitedMonthlyGbpId: '',
+    planPerSeatMaximumMonthlyGbpId: '',
+    planPerSeatMinimumMonthlyGbpId: '',
+    planPerSeatRangeMonthlyGbpId: '',
   };
 
-  if (!STRIPE_ACCOUNT_ID) {
+  if (!process.env.STRIPE_ACCOUNT_ID) {
     const account = await createStripeCustomAccount();
-    STRIPE_ACCOUNT_ID = account.id;
+    process.env.STRIPE_ACCOUNT_ID = account.id;
   }
 
   const stripeConnect = new Stripe(STRIPE_KEY, {
     apiVersion: "2024-09-30.acacia",
-    stripeAccount: STRIPE_ACCOUNT_ID
+    stripeAccount: process.env.STRIPE_ACCOUNT_ID
   });
 
-  if (!obj.stripePaymentMethodId) {
+  if (!obj.paymentMethodId) {
     const stripePaymentMethod = await stripeConnect.paymentMethods.create({
       type: 'card',
       card: { token: 'tok_visa' } as Stripe.PaymentMethodCreateParams.Card,
     });
-    console.log('CREATED stripePaymentMethod');
-    obj.stripePaymentMethodId = stripePaymentMethod.id
+    obj.paymentMethodId = stripePaymentMethod.id
   }
 
-  if (!obj.stripeCustomerId) {
+  if (!obj.customerId) {
     const stripeCustomer = await stripeConnect.customers.create({
       email: stripeCustomerEmail,
-      payment_method: obj.stripePaymentMethodId
+      payment_method: obj.paymentMethodId
     });
-    console.log('CREATED stripeCustomer');
-    obj.stripeCustomerId = stripeCustomer.id
+    obj.customerId = stripeCustomer.id
   }
 
-  if (!obj.stripeProductWidgetOneId) {
+  if (!obj.productWidgetOneId) {
     const stripeProductWidgetOne = await stripeConnect.products.create({
       name: 'Widget One',
     });
-    console.log('CREATED stripeProductWidgetOne');
-    obj.stripeProductWidgetOneId = stripeProductWidgetOne.id
+    obj.productWidgetOneId = stripeProductWidgetOne.id
   }
 
-  if (!obj.stripePlanUsageProMonthlyGbpId) {
+  if (!obj.planUsageProMonthlyGbpId) {
     const stripePlanUsageProMonthlyGbp = await stripeConnect.plans.create({
       nickname: 'Usage Basic',
       currency: "gbp",
       interval: "month",
-      product: obj.stripeProductWidgetOneId,
+      product: obj.productWidgetOneId,
       amount: 50,
       usage_type: 'metered'
     });
-    console.log('CREATED stripePlanUsageProMonthlyGbpId');
-    obj.stripePlanUsageProMonthlyGbpId = stripePlanUsageProMonthlyGbp.id
+    obj.planUsageProMonthlyGbpId = stripePlanUsageProMonthlyGbp.id
   }
 
-  if (!obj.stripePlanUsageBasicMonthlyGbpId) {
+  if (!obj.planUsageBasicMonthlyGbpId) {
     const stripePlanUsageBasicMonthlyGbp = await stripeConnect.plans.create({
       nickname: 'Usage Basic',
       currency: "gbp",
       interval: "month",
-      product: obj.stripeProductWidgetOneId,
+      product: obj.productWidgetOneId,
       amount: 20,
       usage_type: 'metered'
     });
-    console.log('CREATED stripePlanUsageBasicMonthlyGbp');
-    obj.stripePlanUsageBasicMonthlyGbpId = stripePlanUsageBasicMonthlyGbp.id
+    obj.planUsageBasicMonthlyGbpId = stripePlanUsageBasicMonthlyGbp.id
   }
 
-  if (!obj.stripeUsageBasicSubscriptionId) {
+  if (!obj.usageBasicSubscriptionId) {
     const stripeUsageBasicSubscription = await stripeConnect.subscriptions.create({
-      customer: obj.stripeCustomerId,
+      customer: obj.customerId,
       items: [{
-        price: obj.stripePlanUsageBasicMonthlyGbpId
+        price: obj.planUsageBasicMonthlyGbpId
       }],
-      default_payment_method: obj.stripePaymentMethodId
+      default_payment_method: obj.paymentMethodId
     });
-    console.log('CREATED stripeUsageBasicSubscription');
-    obj.stripeUsageBasicSubscriptionId = stripeUsageBasicSubscription.id;
-    obj.stripeUsageBasicSubscriptionLineItemId = stripeUsageBasicSubscription.items.data[0].id
+    obj.usageBasicSubscriptionId = stripeUsageBasicSubscription.id;
+    obj.usageBasicSubscriptionLineItemId = stripeUsageBasicSubscription.items.data[0].id
   }
 
-  if (!obj.stripePlanPerSeatBasicMonthlyGbpId) {
+  if (!obj.planPerSeatBasicMonthlyGbpId) {
     const stripePlanPerSeatBasicMonthlyGbp = await stripeConnect.plans.create({
       nickname: 'Per Seat Basic',
       currency: "gbp",
       interval: "month",
-      product: obj.stripeProductWidgetOneId,
+      product: obj.productWidgetOneId,
       amount: 1500
     });
-    console.log('CREATED stripePlanPerSeatBasicMonthlyGbp');
-    obj.stripePlanPerSeatBasicMonthlyGbpId = stripePlanPerSeatBasicMonthlyGbp.id
+    obj.planPerSeatBasicMonthlyGbpId = stripePlanPerSeatBasicMonthlyGbp.id
   }
 
-  if (!obj.stripePlanPerSeatUnlimitedMonthlyGbpId) {
+  if (!obj.planPerSeatUnlimitedMonthlyGbpId) {
     const stripePlanPerSeatUnlimitedMonthlyGbp = await stripeConnect.plans.create({
       nickname: 'Per Seat Unlimited',
       currency: "gbp",
       interval: "month",
-      product: obj.stripeProductWidgetOneId,
+      product: obj.productWidgetOneId,
       amount: 100
     });
-    console.log('CREATED stripePlanPerSeatUnlimitedMonthlyGbp');
-    obj.stripePlanPerSeatUnlimitedMonthlyGbpId = stripePlanPerSeatUnlimitedMonthlyGbp.id
+    obj.planPerSeatUnlimitedMonthlyGbpId = stripePlanPerSeatUnlimitedMonthlyGbp.id
   }
 
-  if (!obj.stripePlanPerSeatMaximumMonthlyGbpId) {
+  if (!obj.planPerSeatMaximumMonthlyGbpId) {
     const stripePlanPerSeatMaximumMonthlyGbp = await stripeConnect.plans.create({
       nickname: 'Per Seat Maximum',
       currency: "gbp",
       interval: "month",
-      product: obj.stripeProductWidgetOneId,
+      product: obj.productWidgetOneId,
       amount: 200
     });
-    console.log('CREATED stripePlanPerSeatMaximumMonthlyGbp');
-    obj.stripePlanPerSeatMaximumMonthlyGbpId = stripePlanPerSeatMaximumMonthlyGbp.id
+    obj.planPerSeatMaximumMonthlyGbpId = stripePlanPerSeatMaximumMonthlyGbp.id
   }
 
-  if (!obj.stripePlanPerSeatRangeMonthlyGbpId) {
+  if (!obj.planPerSeatRangeMonthlyGbpId) {
     const stripePlanPerSeatRangeMonthlyGbp = await stripeConnect.plans.create({
       nickname: 'Per Seat Range',
       currency: "gbp",
       interval: "month",
-      product: obj.stripeProductWidgetOneId,
+      product: obj.productWidgetOneId,
       amount: 300
     });
-    console.log('CREATED stripePlanPerSeatRangeMonthlyGbp');
-    obj.stripePlanPerSeatRangeMonthlyGbpId = stripePlanPerSeatRangeMonthlyGbp.id
+    obj.planPerSeatRangeMonthlyGbpId = stripePlanPerSeatRangeMonthlyGbp.id
   }
 
-  if (!obj.stripePlanPerSeatMinimumMonthlyGbpId) {
+  if (!obj.planPerSeatMinimumMonthlyGbpId) {
     const stripePlanPerSeatMinimumMonthlyGbp = await stripeConnect.plans.create({
       nickname: 'Per Seat Minimum',
       currency: "gbp",
       interval: "month",
-      product: obj.stripeProductWidgetOneId,
+      product: obj.productWidgetOneId,
       amount: 400
     });
-    console.log('CREATED stripePlanPerSeatMinimumMonthlyGbp');
-    obj.stripePlanPerSeatMinimumMonthlyGbpId = stripePlanPerSeatMinimumMonthlyGbp.id
+    obj.planPerSeatMinimumMonthlyGbpId = stripePlanPerSeatMinimumMonthlyGbp.id
   }
 
-  if (!obj.stripePerSeatBasicSubscriptionId) {
+  if (!obj.perSeatBasicSubscriptionId) {
     const stripePerSeatBasicSubscription = await stripeConnect.subscriptions.create({
-      customer: obj.stripeCustomerId,
+      customer: obj.customerId,
       items: [{
         quantity: 3,
-        price: obj.stripePlanPerSeatBasicMonthlyGbpId
+        price: obj.planPerSeatBasicMonthlyGbpId
       }],
-      default_payment_method: obj.stripePaymentMethodId
+      default_payment_method: obj.paymentMethodId
     });
-    console.log('CREATED stripePerSeatBasicSubscription');
-    obj.stripePerSeatBasicSubscriptionId = stripePerSeatBasicSubscription.id;
-    obj.stripePerSeatBasicSubscriptionLineItemId = stripePerSeatBasicSubscription.items.data[0].id
+    obj.perSeatBasicSubscriptionId = stripePerSeatBasicSubscription.id;
+    obj.perSeatBasicSubscriptionLineItemId = stripePerSeatBasicSubscription.items.data[0].id
   }
 
-  if (!obj.stripePlanBasicMonthlyGbpId) {
+  if (!obj.planBasicMonthlyGbpId) {
     const stripePlanBasicMonthlyGbp = await stripeConnect.plans.create({
       currency: "gbp",
       interval: "month",
-      product: obj.stripeProductWidgetOneId,
+      product: obj.productWidgetOneId,
       amount: 1000
     });
-    console.log('CREATED stripePlanBasicMonthlyGbp');
-    obj.stripePlanBasicMonthlyGbpId = stripePlanBasicMonthlyGbp.id
+    obj.planBasicMonthlyGbpId = stripePlanBasicMonthlyGbp.id
   }
 
-  if (!obj.stripePlanBasicYearlyGbpId) {
+  if (!obj.planBasicYearlyGbpId) {
     const stripePlanBasicYearlyGbp = await stripeConnect.plans.create({
       currency: "gbp",
       interval: "month",
-      product: obj.stripeProductWidgetOneId,
+      product: obj.productWidgetOneId,
       amount: 1000
     });
-    console.log('CREATED stripePlanBasicYearlyGbp');
-    obj.stripePlanBasicYearlyGbpId = stripePlanBasicYearlyGbp.id
+    obj.planBasicYearlyGbpId = stripePlanBasicYearlyGbp.id
   }
 
-  if (!obj.stripePlanBasicYearlyGbpId) {
+  if (!obj.planBasicYearlyGbpId) {
     const stripePlanBasicMonthlyGbp = await stripeConnect.plans.create({
       currency: "gbp",
       interval: "year",
-      product: obj.stripeProductWidgetOneId,
+      product: obj.productWidgetOneId,
       amount: 10000
     });
-    console.log('CREATED stripePlanBasicMonthlyGbp');
-    obj.stripePlanBasicYearlyGbpId = stripePlanBasicMonthlyGbp.id
+    obj.planBasicYearlyGbpId = stripePlanBasicMonthlyGbp.id
   }
 
-  if (!obj.stripeBasicSubscriptionId) {
+  if (!obj.basicSubscriptionId) {
     const stripeBasicSubscription = await stripeConnect.subscriptions.create({
-      customer: obj.stripeCustomerId,
+      customer: obj.customerId,
       items: [{
         quantity: 1,
-        price: obj.stripePlanBasicMonthlyGbpId
+        price: obj.planBasicMonthlyGbpId
       }],
-      default_payment_method: obj.stripePaymentMethodId
+      default_payment_method: obj.paymentMethodId
     });
-    console.log('CREATED stripeBasicSubscription');
-    obj.stripeBasicSubscriptionId = stripeBasicSubscription.id;
-    obj.stripeBasicSubscriptionLineItemId = stripeBasicSubscription.items.data[0].id
+    obj.basicSubscriptionId = stripeBasicSubscription.id;
+    obj.basicSubscriptionLineItemId = stripeBasicSubscription.items.data[0].id
   }
 
-  if (!obj.stripeBasicSubscriptionIdTwo) {
+  if (!obj.basicSubscriptionIdTwo) {
     const stripeBasicSubscription = await stripeConnect.subscriptions.create({
-      customer: obj.stripeCustomerId,
+      customer: obj.customerId,
       items: [{
         quantity: 1,
-        price: obj.stripePlanBasicMonthlyGbpId
+        price: obj.planBasicMonthlyGbpId
       }],
-      default_payment_method: obj.stripePaymentMethodId
+      default_payment_method: obj.paymentMethodId
     });
-    console.log('CREATED stripeBasicSubscriptionIdTwo');
-    obj.stripeBasicSubscriptionIdTwo = stripeBasicSubscription.id;
-    obj.stripeBasicSubscriptionTwoLineItemId = stripeBasicSubscription.items.data[0].id
+    obj.basicSubscriptionIdTwo = stripeBasicSubscription.id;
+    obj.basicSubscriptionTwoLineItemId = stripeBasicSubscription.items.data[0].id
   }
 
-  if (!obj.stripePlanProMonthlyGbpId) {
+  if (!obj.planProMonthlyGbpId) {
     const stripePlanProGbpMonthly = await stripeConnect.plans.create({
       currency: "gbp",
       interval: "month",
-      product: obj.stripeProductWidgetOneId,
+      product: obj.productWidgetOneId,
       amount: 2500
     });
-    console.log('CREATED stripePlanProGbpMonthly');
-    obj.stripePlanProMonthlyGbpId = stripePlanProGbpMonthly.id
+    obj.planProMonthlyGbpId = stripePlanProGbpMonthly.id
   }
 
-  if (!obj.stripeProSubscriptionId) {
+  if (!obj.proSubscriptionId) {
     const stripeProSubscription = await stripeConnect.subscriptions.create({
-      customer: obj.stripeCustomerId,
+      customer: obj.customerId,
       items: [{
         quantity: 2,
-        price: obj.stripePlanProMonthlyGbpId
+        price: obj.planProMonthlyGbpId
       }],
-      default_payment_method: obj.stripePaymentMethodId
+      default_payment_method: obj.paymentMethodId
     });
-    console.log('CREATED stripeProSubscription');
-    obj.stripeProSubscriptionId = stripeProSubscription.id;
-    obj.stripeProSubscriptionLineItemId = stripeProSubscription.items.data[0].id
+    obj.proSubscriptionId = stripeProSubscription.id;
+    obj.proSubscriptionLineItemId = stripeProSubscription.items.data[0].id
   }
 
-  if (!obj.stripePlanBasicMonthlyUsdId) {
+  if (!obj.planBasicMonthlyUsdId) {
     const stripePlanBasicUsdMonthly = await stripeConnect.plans.create({
       currency: "usd",
       interval: "month",
-      product: obj.stripeProductWidgetOneId,
+      product: obj.productWidgetOneId,
       amount: 1000
     });
-    console.log('CREATED stripePlanBasicUsdMonthly');
-    obj.stripePlanBasicMonthlyUsdId = stripePlanBasicUsdMonthly.id
+    obj.planBasicMonthlyUsdId = stripePlanBasicUsdMonthly.id
   }
 
 
-  if (!obj.stripePlanProMonthlyUsdId) {
+  if (!obj.planProMonthlyUsdId) {
     const stripePlanProUsdMonthly = await stripeConnect.plans.create({
       currency: "usd",
       interval: "month",
-      product: obj.stripeProductWidgetOneId,
+      product: obj.productWidgetOneId,
       amount: 2500
     });
-    obj.stripePlanProMonthlyUsdId = stripePlanProUsdMonthly.id;
-
-    console.log('CREATED stripeProSubscription');
-    obj.stripePlanProMonthlyUsdId = stripePlanProUsdMonthly.id
+    obj.planProMonthlyUsdId = stripePlanProUsdMonthly.id;
+    obj.planProMonthlyUsdId = stripePlanProUsdMonthly.id
   }
 
   for (let i = 10; i < 10; i++) {
     await stripeConnect.invoiceItems.create({
-      customer: obj.stripeCustomerId,
-      subscription: obj.stripeBasicSubscriptionId,
+      customer: obj.customerId,
+      subscription: obj.basicSubscriptionId,
       amount: 1000,
       currency: 'gbp',
       description: 'Charge for past period'
     });
 
     const invoice = await stripeConnect.invoices.create({
-      customer: obj.stripeCustomerId,
-      subscription: obj.stripeBasicSubscriptionId,
+      customer: obj.customerId,
+      subscription: obj.basicSubscriptionId,
       auto_advance: true,
       collection_method: 'send_invoice',
       due_date: Math.floor(Date.now() / 1000) + (2592000 * (i + 1)),
@@ -348,8 +331,9 @@ export default async function createStripeData() {
     if (i === 6) await stripeConnect.invoices.voidInvoice(invoice.id);
     if (i === 8) await stripeConnect.invoices.voidInvoice(invoice.id);
 
-    console.log(`Created and finalized invoice with ID: ${invoice.id}`);
   }
 
-  return obj;
+  clearInterval(loadingWheel);
+
+  global.stripeEnvs = obj;
 }
