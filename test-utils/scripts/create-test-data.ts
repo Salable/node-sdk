@@ -1,31 +1,34 @@
 import prismaClient from "../../test-utils/prisma/prisma-client";
 import { generateKeyPairSync } from "crypto";
 import kmsSymmetricEncrypt from "../kms/kms-symmetric-encrypt";
+import getConsoleLoader from "../helpers/console-loading-wheel";
+import { config } from 'dotenv';
 
-const testOrganisationId = "test-org";
+config({ path: '.env.test' });
+
+const organisationId = "test-org";
 const devApiKeyV2 = "dddf2aa585c285478dae404803335c0013e795aa";
-const testProductUuid = '29c9a7c8-9a41-4e87-9e7e-7c62d293c131';
-const testProductTwoUuid = "2e0ac383-ee7e-44ba-90cb-ab3eabd56722";
-const testFreeMonthlyPlanUuid = '5a866dba-20c9-466f-88ac-e05c8980c90b';
-const testPaidPlanUuid = "351eefac-9b21-4299-8cde-302249d6fb1e";
-const testPerSeatPaidPlanUuid = "cee50a36-c012-4a78-8e1a-b2bab93830ba";
-const testPaidYearlyPlanUuid = "111eefac-9b21-4299-8cde-302249d6f111";
-const testFreeYearlyPlanUuid = "22266dba-20c9-466f-88ac-e05c8980c222";
-const testMeteredPaidPlanUuid = "a770ac97-4a36-4815-870c-396586b2d565";
-const testMeteredPaidPlanTwoUuid = "07cebad1-e2dc-44e0-8585-1ba4c91c032b";
-const testComingSoonPlanUuid = "50238f96-4f2e-4fe9-a9a2-f2e917ae78bf";
-const testPerSeatUnlimitedPlanUuid = "cab9b1b0-4b0f-4d6e-9dbb-a647ef1f8834";
-const testPerSeatMaxPlanUuid = "fe8c96eb-88ea-4261-876c-951cec530e63";
-const testPerSeatMinPlanUuid = "9cbaf4e7-166a-447d-91ed-662b569b111d";
-const testPerSeatRangePlanUuid = "4606094a-0cec-40f3-b733-10cf65fdd5ce";
-const testCurrencyUuids = {
+const productUuid = '29c9a7c8-9a41-4e87-9e7e-7c62d293c131';
+const productTwoUuid = "2e0ac383-ee7e-44ba-90cb-ab3eabd56722";
+const freeMonthlyPlanUuid = '5a866dba-20c9-466f-88ac-e05c8980c90b';
+const paidPlanUuid = "351eefac-9b21-4299-8cde-302249d6fb1e";
+const perSeatPaidPlanUuid = "cee50a36-c012-4a78-8e1a-b2bab93830ba";
+const paidYearlyPlanUuid = "111eefac-9b21-4299-8cde-302249d6f111";
+const freeYearlyPlanUuid = "22266dba-20c9-466f-88ac-e05c8980c222";
+const meteredPaidPlanUuid = "a770ac97-4a36-4815-870c-396586b2d565";
+const meteredPaidPlanTwoUuid = "07cebad1-e2dc-44e0-8585-1ba4c91c032b";
+const comingSoonPlanUuid = "50238f96-4f2e-4fe9-a9a2-f2e917ae78bf";
+const perSeatUnlimitedPlanUuid = "cab9b1b0-4b0f-4d6e-9dbb-a647ef1f8834";
+const perSeatMaxPlanUuid = "fe8c96eb-88ea-4261-876c-951cec530e63";
+const perSeatMinPlanUuid = "9cbaf4e7-166a-447d-91ed-662b569b111d";
+const perSeatRangePlanUuid = "4606094a-0cec-40f3-b733-10cf65fdd5ce";
+const currencyUuids = {
     gbp: 'b1b12bc9-6da7-4fd9-97e5-401d996c261c',
     usd: '6ebfb42a-a78b-481c-bd79-9e857b432af9'
 };
 
-const testFeatures = [
+const features = [
     {
-        uuid: '501767b4-1583-4475-b2b5-c98e35de217c',
         name: "boolean",
         displayName: "Boolean",
         sortOrder: 0,
@@ -36,7 +39,6 @@ const testFeatures = [
         status: 'ACTIVE'
     },
     {
-        uuid: '24aba9db-9112-4b23-9e2f-7f1ac161169f',
         name: "text options",
         displayName: "Text options",
         sortOrder: 1,
@@ -48,7 +50,6 @@ const testFeatures = [
         status: 'ACTIVE'
     },
     {
-        uuid: '19f5d888-12d9-48a7-988f-0c2ceccf6dff',
         name: "numerical",
         displayName: "Numerical",
         sortOrder: 2,
@@ -60,7 +61,6 @@ const testFeatures = [
         status: 'ACTIVE'
     },
     {
-        uuid: '45a1304a-dab8-40ef-a7ca-c0b3593544b5',
         name: "Unlimited numerical",
         displayName: "Numerical unlimited",
         sortOrder: 3,
@@ -73,7 +73,7 @@ const testFeatures = [
     }
 ];
 
-const testCapabilities = [
+const capabilities = [
     {
         name: 'test_capability_1',
         status: 'ACTIVE',
@@ -118,13 +118,33 @@ const { publicKey, privateKey } = generateKeyPairSync("ec", {
 });
 
 export default async function createTestData() {
+    const loadingWheel = getConsoleLoader('CREATING TEST DATA');
+
     const encryptedPrivateKey = await kmsSymmetricEncrypt(privateKey);
+
+    await prismaClient.currency.create({
+        data: {
+            uuid: currencyUuids.gbp,
+            shortName: 'USD',
+            longName: 'United States Dollar',
+            symbol: '$',
+        },
+    });
+
+    await prismaClient.currency.create({
+        data: {
+            uuid: currencyUuids.usd,
+            shortName: 'GBP',
+            longName: 'British Pound',
+            symbol: '£',
+        },
+    });
 
     await prismaClient.organisation.create({
         data: {
-            clerkOrgId: testOrganisationId,
-            salablePlanUuid: testOrganisationId,
-            svixAppId: testOrganisationId,
+            clerkOrgId: organisationId,
+            salablePlanUuid: organisationId,
+            svixAppId: organisationId,
             logoUrl: "https://example.com/xxxxx.png",
             billingEmailId: "xxxxx",
             addressDetails: {},
@@ -140,7 +160,7 @@ export default async function createTestData() {
     await prismaClient.apiKey.create({
         data: {
             name: 'Sample API Key',
-            organisation: testOrganisationId,
+            organisation: organisationId,
             value: devApiKeyV2,
             scopes: JSON.stringify(apiKeyScopesV2),
             status: 'ACTIVE'
@@ -158,10 +178,10 @@ export default async function createTestData() {
             paid: false,
             appType: 'CUSTOM',
             isTest: false,
-            uuid: testProductUuid,
+            uuid: productUuid,
             organisationPaymentIntegration: {
                 create: {
-                    organisation: testOrganisationId,
+                    organisation: organisationId,
                     accountId: process.env.STRIPE_ACCOUNT_ID,
                     accountName: "Widgy Widgets",
                     integrationName: "salable",
@@ -173,17 +193,19 @@ export default async function createTestData() {
                 create: [
                     {
                         defaultCurrency: true,
-                        currency: { connect: { uuid: testCurrencyUuids.gbp } },
+                        currency: { connect: { uuid: currencyUuids.gbp } },
                     },
                     {
                         defaultCurrency: false,
-                        currency: { connect: { uuid: testCurrencyUuids.usd } },
+                        currency: { connect: { uuid: currencyUuids.usd } },
                     },
                 ],
             },
-            features: { create: testFeatures },
+            features: {
+                create: features
+            },
             capabilities: {
-                create: testCapabilities,
+                create: capabilities
             },
         },
         include: {
@@ -204,10 +226,10 @@ export default async function createTestData() {
             paid: false,
             appType: 'CUSTOM',
             isTest: false,
-            uuid: testProductTwoUuid,
+            uuid: productTwoUuid,
             organisationPaymentIntegration: {
                 create: {
-                    organisation: testOrganisationId,
+                    organisation: organisationId,
                     accountId: process.env.STRIPE_ACCOUNT_ID,
                     accountName: "Widgy Widgets Two",
                     integrationName: "salable",
@@ -219,13 +241,15 @@ export default async function createTestData() {
                 create: [
                     {
                         defaultCurrency: true,
-                        currency: { connect: { uuid: testCurrencyUuids.gbp } },
+                        currency: { connect: { uuid: currencyUuids.gbp } },
                     },
                 ],
             },
-            features: { create: testFeatures },
+            features: {
+                create: features
+            },
             capabilities: {
-                create: testCapabilities,
+                create: capabilities
             },
         },
         include: {
@@ -235,16 +259,16 @@ export default async function createTestData() {
         },
     });
 
-    const perSeatBasicMonthlyPlan = await prismaClient.plan.create({
+    await prismaClient.plan.create({
         data: {
-            organisation: testOrganisationId,
+            organisation: organisationId,
             pricingType: "paid",
             licenseType: "perSeat",
             perSeatAmount: 2,
             name: "Per Seat Basic Monthly Plan Name",
             description: "Per Seat Basic Monthly Plan description",
             displayName: "Per Seat Basic Monthly Plan Display Name",
-            uuid: testPerSeatPaidPlanUuid,
+            uuid: perSeatPaidPlanUuid,
             product: { connect: { uuid: product.uuid } },
             status: 'ACTIVE',
             trialDays: 0,
@@ -283,15 +307,15 @@ export default async function createTestData() {
         include: { features: { include: { feature: true, enumValue: true } } },
     });
 
-    const basicMonthlyPlan = await prismaClient.plan.create({
+    await prismaClient.plan.create({
         data: {
-            organisation: testOrganisationId,
+            organisation: organisationId,
             pricingType: "paid",
             licenseType: "licensed",
             name: "Basic Monthly Plan Name",
             description: "Basic Monthly Plan description",
             displayName: "Basic Monthly Plan Display Name",
-            uuid: testPaidPlanUuid,
+            uuid: paidPlanUuid,
             product: { connect: { uuid: product.uuid } },
             status: 'ACTIVE',
             trialDays: 0,
@@ -332,15 +356,15 @@ export default async function createTestData() {
         include: { features: { include: { feature: true, enumValue: true } } },
     });
 
-    const freeMonthlyPlan = await prismaClient.plan.create({
+    await prismaClient.plan.create({
         data: {
-            organisation: testOrganisationId,
+            organisation: organisationId,
             pricingType: "free",
             licenseType: "licensed",
             name: "Free Monthly Plan Name",
             description: "Free Monthly Plan description",
             displayName: "Free Monthly Plan Display Name",
-            uuid: testFreeMonthlyPlanUuid,
+            uuid: freeMonthlyPlanUuid,
             product: { connect: { uuid: product.uuid } },
             status: 'ACTIVE',
             trialDays: 0,
@@ -372,15 +396,15 @@ export default async function createTestData() {
         include: { features: { include: { feature: true, enumValue: true } } },
     });
 
-    const basicYearlyPlan = await prismaClient.plan.create({
+    await prismaClient.plan.create({
         data: {
-            organisation: testOrganisationId,
+            organisation: organisationId,
             pricingType: "paid",
             licenseType: "licensed",
             name: "Basic Yearly Plan Name",
             description: "Basic Yearly Plan description",
             displayName: "Basic Yearly Plan Display Name",
-            uuid: testPaidYearlyPlanUuid,
+            uuid: paidYearlyPlanUuid,
             product: { connect: { uuid: product.uuid } },
             status: 'ACTIVE',
             trialDays: 0,
@@ -421,15 +445,15 @@ export default async function createTestData() {
         include: { features: { include: { feature: true, enumValue: true } } },
     });
 
-    const freeYearlyPlan = await prismaClient.plan.create({
+    await prismaClient.plan.create({
         data: {
-            organisation: testOrganisationId,
+            organisation: organisationId,
             pricingType: "free",
             licenseType: "licensed",
             name: "Free Yearly Plan Name",
             description: "Free Yearly Plan description",
             displayName: "Free Yearly Plan Display Name",
-            uuid: testFreeYearlyPlanUuid,
+            uuid: freeYearlyPlanUuid,
             product: { connect: { uuid: product.uuid } },
             status: 'ACTIVE',
             trialDays: 0,
@@ -461,16 +485,16 @@ export default async function createTestData() {
         include: { features: { include: { feature: true, enumValue: true } } },
     });
 
-    const usagePlan = await prismaClient.plan.create({
+    await prismaClient.plan.create({
         data: {
-            organisation: testOrganisationId,
+            organisation: organisationId,
             pricingType: "paid",
             licenseType: "metered",
             name: "Usage Basic Monthly Plan Name",
             description: "Usage Basic Monthly Plan description",
             displayName: "Usage Basic Monthly Plan Display Name",
-            uuid: testMeteredPaidPlanUuid,
-            product: { connect: { uuid: testProductTwoUuid } },
+            uuid: meteredPaidPlanUuid,
+            product: { connect: { uuid: productTwoUuid } },
             status: 'ACTIVE',
             trialDays: 0,
             evaluation: false,
@@ -508,16 +532,16 @@ export default async function createTestData() {
         include: { features: { include: { feature: true, enumValue: true } } },
     });
 
-    const usagePlanTwo = await prismaClient.plan.create({
+    await prismaClient.plan.create({
         data: {
-            organisation: testOrganisationId,
+            organisation: organisationId,
             pricingType: "paid",
             licenseType: "metered",
             name: "Usage Pro Monthly Plan Name",
             description: "Usage Pro Monthly Plan description",
             displayName: "Usage Pro Monthly Plan Display Name",
-            uuid: testMeteredPaidPlanTwoUuid,
-            product: { connect: { uuid: testProductTwoUuid } },
+            uuid: meteredPaidPlanTwoUuid,
+            product: { connect: { uuid: productTwoUuid } },
             status: 'ACTIVE',
             trialDays: 0,
             evaluation: false,
@@ -555,16 +579,16 @@ export default async function createTestData() {
         include: { features: { include: { feature: true, enumValue: true } } },
     });
 
-    const comingSoonPlan = await prismaClient.plan.create({
+    await prismaClient.plan.create({
         data: {
-            organisation: testOrganisationId,
+            organisation: organisationId,
             pricingType: "free",
             licenseType: "licensed",
             name: "Future Plan Name",
             description: "Future Plan description",
             displayName: "Future Plan Display Name",
-            uuid: testComingSoonPlanUuid,
-            product: { connect: { uuid: testProductTwoUuid } },
+            uuid: comingSoonPlanUuid,
+            product: { connect: { uuid: productTwoUuid } },
             status: 'ACTIVE',
             trialDays: 0,
             evaluation: false,
@@ -595,16 +619,16 @@ export default async function createTestData() {
         include: { features: { include: { feature: true, enumValue: true } } },
     });
 
-    const perSeatUnlimittedPlan = await prismaClient.plan.create({
+    await prismaClient.plan.create({
         data: {
-            organisation: testOrganisationId,
+            organisation: organisationId,
             pricingType: "paid",
             licenseType: "perSeat",
             name: "Per Seat Unlimited Plan",
             description: "Per Seat Unlimited Plan description",
             displayName: "Per Seat Unlimited Plan",
-            uuid: testPerSeatUnlimitedPlanUuid,
-            product: { connect: { uuid: testProductTwoUuid } },
+            uuid: perSeatUnlimitedPlanUuid,
+            product: { connect: { uuid: productTwoUuid } },
             status: 'ACTIVE',
             trialDays: 0,
             evaluation: false,
@@ -643,16 +667,16 @@ export default async function createTestData() {
         include: { features: { include: { feature: true, enumValue: true } } },
     });
 
-    const perSeatMaximumPlan = await prismaClient.plan.create({
+    await prismaClient.plan.create({
         data: {
-            organisation: testOrganisationId,
+            organisation: organisationId,
             pricingType: "paid",
             licenseType: "perSeat",
             name: "Per Seat Maximum Plan",
             description: "Per Seat Maximum Plan description",
             displayName: "Per Seat Maximum Plan",
-            uuid: testPerSeatMaxPlanUuid,
-            product: { connect: { uuid: testProductTwoUuid } },
+            uuid: perSeatMaxPlanUuid,
+            product: { connect: { uuid: productTwoUuid } },
             status: 'ACTIVE',
             trialDays: 0,
             evaluation: false,
@@ -691,16 +715,16 @@ export default async function createTestData() {
         include: { features: { include: { feature: true, enumValue: true } } },
     });
 
-    const perSeatMinimumPlan = await prismaClient.plan.create({
+    await prismaClient.plan.create({
         data: {
-            organisation: testOrganisationId,
+            organisation: organisationId,
             pricingType: "paid",
             licenseType: "perSeat",
             name: "Per Seat Minimum Plan",
             description: "Per Seat Minimum Plan description",
             displayName: "Per Seat Minimum Plan",
-            uuid: testPerSeatMinPlanUuid,
-            product: { connect: { uuid: testProductTwoUuid } },
+            uuid: perSeatMinPlanUuid,
+            product: { connect: { uuid: productTwoUuid } },
             status: 'ACTIVE',
             trialDays: 0,
             evaluation: false,
@@ -739,16 +763,16 @@ export default async function createTestData() {
         include: { features: { include: { feature: true, enumValue: true } } },
     });
 
-    const perSeatRangePlan = await prismaClient.plan.create({
+    await prismaClient.plan.create({
         data: {
-            organisation: testOrganisationId,
+            organisation: organisationId,
             pricingType: "paid",
             licenseType: "perSeat",
             name: "Per Seat Range Plan",
             description: "Per Seat Range Plan description",
             displayName: "Per Seat Range Plan",
-            uuid: testPerSeatRangePlanUuid,
-            product: { connect: { uuid: testProductTwoUuid } },
+            uuid: perSeatRangePlanUuid,
+            product: { connect: { uuid: productTwoUuid } },
             status: 'ACTIVE',
             trialDays: 0,
             evaluation: false,
@@ -786,6 +810,28 @@ export default async function createTestData() {
         },
         include: { features: { include: { feature: true, enumValue: true } } },
     });
+
+    global.db = {
+        organisationId,
+        devApiKeyV2,
+        productUuid,
+        productTwoUuid,
+        freeMonthlyPlanUuid,
+        paidPlanUuid,
+        perSeatPaidPlanUuid,
+        paidYearlyPlanUuid,
+        freeYearlyPlanUuid,
+        meteredPaidPlanUuid,
+        meteredPaidPlanTwoUuid,
+        comingSoonPlanUuid,
+        perSeatUnlimitedPlanUuid,
+        perSeatMaxPlanUuid,
+        perSeatMinPlanUuid,
+        perSeatRangePlanUuid,
+        currencyUuids
+    };
+
+    clearInterval(loadingWheel);
 }
 
 function getFeatureValue(variableName: string) {
