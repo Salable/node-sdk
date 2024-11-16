@@ -6,6 +6,29 @@ import { config } from 'dotenv';
 
 config({ path: '.env.test' });
 
+export type TestDbData = {
+    organisationId: string,
+    devApiKeyV2: string,
+    productUuid: string,
+    productTwoUuid: string,
+    freeMonthlyPlanUuid: string,
+    paidPlanUuid: string,
+    perSeatPaidPlanUuid: string,
+    paidYearlyPlanUuid: string,
+    freeYearlyPlanUuid: string,
+    meteredPaidPlanUuid: string,
+    meteredPaidPlanTwoUuid: string,
+    comingSoonPlanUuid: string,
+    perSeatUnlimitedPlanUuid: string,
+    perSeatMaxPlanUuid: string,
+    perSeatMinPlanUuid: string,
+    perSeatRangePlanUuid: string,
+    currencyUuids: {
+        gbp: string
+        usd: string
+    }
+};
+
 const organisationId = "test-org";
 const devApiKeyV2 = "dddf2aa585c285478dae404803335c0013e795aa";
 const productUuid = '29c9a7c8-9a41-4e87-9e7e-7c62d293c131';
@@ -173,7 +196,7 @@ export default async function createTestData() {
             description: 'This is a sample product for testing purposes',
             logoUrl: 'https://example.com/logo.png',
             displayName: 'Sample Product',
-            organisation: 'xxxxx',
+            organisation: organisationId,
             status: 'ACTIVE',
             paid: false,
             appType: 'CUSTOM',
@@ -221,7 +244,7 @@ export default async function createTestData() {
             description: 'This is a sample product for testing purposes',
             logoUrl: 'https://example.com/logo.png',
             displayName: 'Sample Product Two',
-            organisation: 'xxxxx',
+            organisation: organisationId,
             status: 'ACTIVE',
             paid: false,
             appType: 'CUSTOM',
@@ -810,6 +833,22 @@ export default async function createTestData() {
         },
         include: { features: { include: { feature: true, enumValue: true } } },
     });
+
+    await prismaClient.capabilitiesOnPlans.createMany({
+        data: [
+          { capabilityUuid: product.capabilities[0].uuid, planUuid: paidPlanUuid },
+          { capabilityUuid: product.capabilities[0].uuid, planUuid: freeMonthlyPlanUuid },
+          {
+            capabilityUuid: product.capabilities[0].uuid,
+            planUuid: paidYearlyPlanUuid,
+          },
+          { capabilityUuid: product.capabilities[0].uuid, planUuid: freeYearlyPlanUuid },
+          {
+            capabilityUuid: product.capabilities[0].uuid,
+            planUuid: perSeatPaidPlanUuid,
+          },
+        ],
+      });
 
     global.db = {
         organisationId,

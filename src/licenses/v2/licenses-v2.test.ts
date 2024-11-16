@@ -1,27 +1,37 @@
 import Salable, { Version } from '../..';
-import { Capability, License, Plan } from '@/src/types';
+import { Capability, License, Plan } from '../../../src/types';
+import prismaClient from "../../../test-utils/prisma/prisma-client";
+import { TestDbData } from '../../../test-utils/scripts/create-test-data';
+import { StripeData } from '../../../test-utils/stripe/create-stripe-test-data';
+import getEndTime from '../../../test-utils/helpers/get-end-time';
+
+const version = Version.V2;
+
+const { db: testUuids, stripeEnvs } = global as unknown as { db: TestDbData, stripeEnvs: StripeData }
+const licenseUuid = 'be01faf6-2ced-4036-8df2-69eeb4f6321d';
+const licenseTwoUuid = '0988c051-206d-4814-9241-f590f554bafc';
+const licenseThreeUuid = '19e1e237-9c4a-4499-bdc9-34e4787aeefe';
+const activeLicenseUuid = '3404d158-ee39-42a8-813f-6d0ae59abaf3';
+const noSubLicenseUuid = 'e3790990-28ad-4f21-ac55-c9d08c60cb33';
+const noSubLicenseTwoUuid = 'd14366f0-0ec8-498b-91c6-bc6fdd24d05c';
+const noSubLicenseThreeUuid = 'd5caf7b7-e37b-4554-a820-b8854573a876';
+const subscriptionUuid = '04c4bada-7133-4829-a27c-8e5b00558b9e';
+const testPurchaser = 'tester@testing.com';
+const testGrantee = '123456';
 
 describe('Licenses V2 Tests', () => {
-  const apiKey = process.env.SALABLE_TEST_API_KEY!;
-  const version = Version.V2;
+  const salable = new Salable(testUuids.devApiKeyV2, version);
 
-  const salable = new Salable(apiKey, version);
-
-  const testProductUuid = '29c9a7c8-9a41-4e87-9e7e-7c62d293c131';
-  const testPlanUuid = '5a866dba-20c9-466f-88ac-e05c8980c90b';
-  const testSubscriptionUuid = '04c4bada-7133-4829-a27c-8e5b00558b9e';
-  const testPurchaser = 'tester@testing.com';
-  const testGrantee = '123456';
-  const cancellableLicenseUuid = '48cdd0ee-2954-436e-ad10-39cd418e5b2d';
-  const cancellableLicenseUuidTwo = '9868b62f-84af-46f9-8a3e-c43db31243ce';
-  const cancellableLicenseUuidThree = '67b913c2-2713-4d6a-a106-a44e773fc15d';
+  beforeAll(async () => {
+    await generateTestData();
+  });
 
   it('getAll: Should successfully fetch licenses', async () => {
     const data = await salable.licenses.getAll();
 
     expect(data).toEqual({
-      first: expect.any(String),
-      last: expect.any(String),
+      first: expect.toBeOneOf([expect.any(String), null]),
+      last: expect.toBeOneOf([expect.any(String), null]),
       data: expect.arrayContaining([licenseSchema]),
     });
   });
@@ -30,7 +40,7 @@ describe('Licenses V2 Tests', () => {
     const dataWithSearchParams = await salable.licenses.getAll({
       status: 'ACTIVE',
       take: '3',
-      subscriptionUuid: testSubscriptionUuid,
+      subscriptionUuid: subscriptionUuid,
     });
 
     expect(dataWithSearchParams).toEqual({
@@ -45,14 +55,14 @@ describe('Licenses V2 Tests', () => {
   });
 
   it('getOne: Should successfully fetch the specified license', async () => {
-    const data = await salable.licenses.getOne('1e97a9ea-c66a-4822-a5f1-bebf5ea7e44c');
+    const data = await salable.licenses.getOne(licenseUuid);
 
     expect(data).toEqual(licenseSchema);
     expect(data).not.toHaveProperty('plan');
   });
 
   it('getOne (w/ search params): Should successfully fetch the specified license', async () => {
-    const dataWithSearchParams = await salable.licenses.getOne('1e97a9ea-c66a-4822-a5f1-bebf5ea7e44c', { expand: ['plan'] });
+    const dataWithSearchParams = await salable.licenses.getOne(licenseUuid, { expand: ['plan'] });
 
     expect(dataWithSearchParams).toEqual({ ...licenseSchema, plan: planSchema });
     expect(dataWithSearchParams).toHaveProperty('plan', planSchema);
@@ -70,7 +80,7 @@ describe('Licenses V2 Tests', () => {
 
   it('getCount (w/ search params): Should successfully fetch a subscriptions count', async () => {
     const dataWithSearchParams = await salable.licenses.getCount({
-      subscriptionUuid: testSubscriptionUuid,
+      subscriptionUuid: subscriptionUuid,
       status: 'ACTIVE',
     });
 
@@ -82,7 +92,7 @@ describe('Licenses V2 Tests', () => {
   });
 
   it('getForPurchaser: Should successfully fetch a purchasers licenses', async () => {
-    const data = await salable.licenses.getForPurchaser({ purchaser: testPurchaser, productUuid: testProductUuid });
+    const data = await salable.licenses.getForPurchaser({ purchaser: testPurchaser, productUuid: testUuids.productUuid });
 
     expect(data).toEqual(expect.arrayContaining([expect.objectContaining(licenseSchema)]));
   });
@@ -90,7 +100,7 @@ describe('Licenses V2 Tests', () => {
   it('getForPurchaser (w/ search params): Should successfully fetch a purchasers licenses', async () => {
     const dataWithSearchParams = await salable.licenses.getForPurchaser({
       purchaser: testPurchaser,
-      productUuid: testProductUuid,
+      productUuid: testUuids.productUuid,
       status: 'ACTIVE',
     });
 
@@ -100,7 +110,7 @@ describe('Licenses V2 Tests', () => {
           ...licenseSchema,
           status: 'ACTIVE',
           purchaser: testPurchaser,
-          productUuid: testProductUuid,
+          productUuid: testUuids.productUuid,
         }),
       ]),
     );
@@ -127,7 +137,7 @@ describe('Licenses V2 Tests', () => {
 
   it('create: Should successfully create a license', async () => {
     const data = await salable.licenses.create({
-      planUuid: testPlanUuid,
+      planUuid: testUuids.paidPlanUuid,
       member: 'example',
       granteeId: 'test-grantee-id',
       status: 'ACTIVE',
@@ -140,14 +150,14 @@ describe('Licenses V2 Tests', () => {
   it('createMany: Should successfully create multiple licenses', async () => {
     const data = await salable.licenses.createMany([
       {
-        planUuid: testPlanUuid,
+        planUuid: testUuids.paidPlanUuid,
         member: 'example',
         granteeId: 'example-grantee-id',
         status: 'ACTIVE',
         endTime: '2025-07-06T12:00:00.000Z',
       },
       {
-        planUuid: testPlanUuid,
+        planUuid: testUuids.paidPlanUuid,
         member: 'example',
         granteeId: 'example-other-grantee-id',
         status: 'ACTIVE',
@@ -160,7 +170,7 @@ describe('Licenses V2 Tests', () => {
   });
 
   it('update: Should successfully update a license', async () => {
-    const data = await salable.licenses.update(cancellableLicenseUuid, { granteeId: 'updated-grantee-id' });
+    const data = await salable.licenses.update(noSubLicenseUuid, { granteeId: 'updated-grantee-id' });
 
     expect(data.granteeId).toEqual('updated-grantee-id');
   });
@@ -168,11 +178,11 @@ describe('Licenses V2 Tests', () => {
   it('updateMany: Should successfully update multiple licenses', async () => {
     const data = await salable.licenses.updateMany([
       {
-        uuid: cancellableLicenseUuidTwo,
+        uuid: noSubLicenseTwoUuid,
         granteeId: 'updated-grantee-id',
       },
       {
-        uuid: cancellableLicenseUuidThree,
+        uuid: noSubLicenseThreeUuid,
         granteeId: 'updated-grantee-id',
       },
     ]);
@@ -189,20 +199,20 @@ describe('Licenses V2 Tests', () => {
   });
 
   it('cancel: Should successfully cancel the specified license', async () => {
-    const data = await salable.licenses.cancel(cancellableLicenseUuid);
+    const data = await salable.licenses.cancel(noSubLicenseUuid);
 
     expect(data).toBeUndefined();
   });
 
   it('cancelMany: Should successfully multiple licenses', async () => {
-    const data = await salable.licenses.cancelMany({ uuids: [cancellableLicenseUuidTwo, cancellableLicenseUuidThree] });
+    const data = await salable.licenses.cancelMany({ uuids: [noSubLicenseTwoUuid, noSubLicenseThreeUuid] });
 
     expect(data).toBeUndefined();
   });
 
   it('check: Should successfully check the specified grantees permissions', async () => {
     const data = await salable.licenses.check({
-      productUuid: testProductUuid,
+      productUuid: testUuids.productUuid,
       granteeIds: [testGrantee],
     });
 
@@ -305,4 +315,277 @@ const planSchema: Plan = {
   type: expect.toBeOneOf([expect.any(String), undefined]),
   updatedAt: expect.any(String),
   features: expect.toBeOneOf([expect.anything(), undefined]),
+};
+
+const generateTestData = async () => {
+
+  await prismaClient.license.create({
+    data: {
+      name: null,
+      email: null,
+      status: 'ACTIVE',
+      granteeId: testGrantee,
+      paymentService: 'ad-hoc',
+      purchaser: 'tester@testing.com',
+      type: 'user',
+      uuid: licenseUuid,
+      metadata: undefined,
+      plan: { connect: { uuid: testUuids.paidPlanUuid } },
+      product: { connect: { uuid: testUuids.productUuid } },
+      startTime: undefined,
+      capabilities: [
+        {
+          name: 'CapabilityOne',
+          uuid: '38e63e2a-1269-4e9d-b712-28cfbf087285',
+          status: 'ACTIVE',
+          updatedAt: '2022-10-17T11:41:11.626Z',
+          description: null,
+          productUuid: testUuids.productUuid,
+        },
+        {
+          name: 'CapabilityTwo',
+          uuid: '38e63e2a-1269-4e9d-b712-28cfbf087285',
+          status: 'ACTIVE',
+          updatedAt: '2022-10-17T11:41:11.626Z',
+          description: null,
+          productUuid: testUuids.productUuid,
+        }
+      ],
+      endTime: getEndTime(1, 'years'),
+    }
+  });
+
+  await prismaClient.license.create({
+    data: {
+      name: null,
+      email: null,
+      status: 'ACTIVE',
+      granteeId: testGrantee,
+      paymentService: 'ad-hoc',
+      purchaser: 'tester@testing.com',
+      type: 'user',
+      uuid: licenseTwoUuid,
+      metadata: undefined,
+      plan: { connect: { uuid: testUuids.freeMonthlyPlanUuid } },
+      product: { connect: { uuid: testUuids.productUuid } },
+      startTime: undefined,
+      capabilities: [
+        {
+          name: 'CapabilityOne',
+          uuid: '38e63e2a-1269-4e9d-b712-28cfbf087285',
+          status: 'ACTIVE',
+          updatedAt: '2022-10-17T11:41:11.626Z',
+          description: null,
+          productUuid: testUuids.productUuid,
+        },
+        {
+          name: 'CapabilityTwo',
+          uuid: '38e63e2a-1269-4e9d-b712-28cfbf087285',
+          status: 'ACTIVE',
+          updatedAt: '2022-10-17T11:41:11.626Z',
+          description: null,
+          productUuid: testUuids.productUuid,
+        }
+      ],
+      endTime: getEndTime(1, 'years'),
+    }
+  });
+
+  await prismaClient.license.create({
+    data: {
+      name: null,
+      email: null,
+      status: 'ACTIVE',
+      granteeId: testGrantee,
+      paymentService: 'ad-hoc',
+      purchaser: 'tester@testing.com',
+      type: 'user',
+      uuid: licenseThreeUuid,
+      metadata: undefined,
+      plan: { connect: { uuid: testUuids.freeMonthlyPlanUuid } },
+      product: { connect: { uuid: testUuids.productUuid } },
+      startTime: undefined,
+      capabilities: [
+        {
+          name: 'CapabilityOne',
+          uuid: '38e63e2a-1269-4e9d-b712-28cfbf087285',
+          status: 'ACTIVE',
+          updatedAt: '2022-10-17T11:41:11.626Z',
+          description: null,
+          productUuid: testUuids.productUuid,
+        },
+        {
+          name: 'CapabilityTwo',
+          uuid: '38e63e2a-1269-4e9d-b712-28cfbf087285',
+          status: 'ACTIVE',
+          updatedAt: '2022-10-17T11:41:11.626Z',
+          description: null,
+          productUuid: testUuids.productUuid,
+        }
+      ],
+      endTime: getEndTime(1, 'years'),
+    }
+  });
+
+  await prismaClient.license.create({
+    data: {
+      name: null,
+      email: null,
+      status: 'ACTIVE',
+      granteeId: "active-grantee-id",
+      paymentService: 'ad-hoc',
+      purchaser: 'tester@testing.com',
+      type: 'user',
+      uuid: activeLicenseUuid,
+      metadata: undefined,
+      plan: { connect: { uuid: testUuids.paidPlanUuid } },
+      product: { connect: { uuid: testUuids.productUuid } },
+      startTime: undefined,
+      capabilities: [
+        {
+          name: 'CapabilityOne',
+          uuid: '38e63e2a-1269-4e9d-b712-28cfbf087285',
+          status: 'ACTIVE',
+          updatedAt: '2022-10-17T11:41:11.626Z',
+          description: null,
+          productUuid: testUuids.productUuid,
+        },
+        {
+          name: 'CapabilityTwo',
+          uuid: '38e63e2a-1269-4e9d-b712-28cfbf087285',
+          status: 'ACTIVE',
+          updatedAt: '2022-10-17T11:41:11.626Z',
+          description: null,
+          productUuid: testUuids.productUuid,
+        }
+      ],
+      endTime: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000),
+    }
+  });
+
+  await prismaClient.license.create({
+    data: {
+      name: null,
+      email: null,
+      status: 'ACTIVE',
+      granteeId: "no-sub-license",
+      paymentService: 'ad-hoc',
+      purchaser: 'tester@testing.com',
+      type: 'user',
+      uuid: noSubLicenseUuid,
+      metadata: undefined,
+      plan: { connect: { uuid: testUuids.paidPlanUuid } },
+      product: { connect: { uuid: testUuids.productUuid } },
+      startTime: undefined,
+      capabilities: [
+        {
+          name: 'CapabilityOne',
+          uuid: '38e63e2a-1269-4e9d-b712-28cfbf087285',
+          status: 'ACTIVE',
+          updatedAt: '2022-10-17T11:41:11.626Z',
+          description: null,
+          productUuid: testUuids.productUuid,
+        },
+        {
+          name: 'CapabilityTwo',
+          uuid: '38e63e2a-1269-4e9d-b712-28cfbf087285',
+          status: 'ACTIVE',
+          updatedAt: '2022-10-17T11:41:11.626Z',
+          description: null,
+          productUuid: testUuids.productUuid,
+        }
+      ],
+      endTime: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000),
+    }
+  });
+
+  await prismaClient.license.create({
+    data: {
+      name: null,
+      email: null,
+      status: 'ACTIVE',
+      granteeId: "no-sub-license",
+      paymentService: 'ad-hoc',
+      purchaser: 'tester@testing.com',
+      type: 'user',
+      uuid: noSubLicenseTwoUuid,
+      metadata: undefined,
+      plan: { connect: { uuid: testUuids.paidPlanUuid } },
+      product: { connect: { uuid: testUuids.productUuid } },
+      startTime: undefined,
+      capabilities: [
+        {
+          name: 'CapabilityOne',
+          uuid: '38e63e2a-1269-4e9d-b712-28cfbf087285',
+          status: 'ACTIVE',
+          updatedAt: '2022-10-17T11:41:11.626Z',
+          description: null,
+          productUuid: testUuids.productUuid,
+        },
+        {
+          name: 'CapabilityTwo',
+          uuid: '38e63e2a-1269-4e9d-b712-28cfbf087285',
+          status: 'ACTIVE',
+          updatedAt: '2022-10-17T11:41:11.626Z',
+          description: null,
+          productUuid: testUuids.productUuid,
+        }
+      ],
+      endTime: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000),
+    }
+  });
+
+  await prismaClient.license.create({
+    data: {
+      name: null,
+      email: null,
+      status: 'ACTIVE',
+      granteeId: "no-sub-license",
+      paymentService: 'ad-hoc',
+      purchaser: 'tester@testing.com',
+      type: 'user',
+      uuid: noSubLicenseThreeUuid,
+      metadata: undefined,
+      plan: { connect: { uuid: testUuids.paidPlanUuid } },
+      product: { connect: { uuid: testUuids.productUuid } },
+      startTime: undefined,
+      capabilities: [
+        {
+          name: 'CapabilityOne',
+          uuid: '38e63e2a-1269-4e9d-b712-28cfbf087285',
+          status: 'ACTIVE',
+          updatedAt: '2022-10-17T11:41:11.626Z',
+          description: null,
+          productUuid: testUuids.productUuid,
+        },
+        {
+          name: 'CapabilityTwo',
+          uuid: '38e63e2a-1269-4e9d-b712-28cfbf087285',
+          status: 'ACTIVE',
+          updatedAt: '2022-10-17T11:41:11.626Z',
+          description: null,
+          productUuid: testUuids.productUuid,
+        }
+      ],
+      endTime: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000),
+    }
+  });
+
+  await prismaClient.subscription.create({
+    data: {
+      lineItemIds: [stripeEnvs.basicSubscriptionLineItemId],
+      paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionId,
+      uuid: subscriptionUuid,
+      email: 'tester@testing.com',
+      type: 'salable',
+      status: 'ACTIVE',
+      organisation: testUuids.organisationId,
+      license: { connect: [{ uuid: licenseUuid }, { uuid: licenseTwoUuid }, { uuid: licenseThreeUuid }] },
+      product: { connect: { uuid: testUuids.productUuid } },
+      plan: { connect: { uuid: testUuids.paidPlanUuid } },
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      expiryDate: new Date(Date.now() + 31536000000),
+    },
+  });
 };
