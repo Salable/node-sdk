@@ -1,6 +1,6 @@
 import Salable from '../..';
 import { Capability, License, Plan, Version } from '../../types';
-import prismaClient from "../../../test-utils/prisma/prisma-client";
+import prismaClient from '../../../test-utils/prisma/prisma-client';
 import { testUuids } from '../../../test-utils/scripts/create-test-data';
 import getEndTime from '../../../test-utils/helpers/get-end-time';
 import { v4 as uuidv4 } from 'uuid';
@@ -29,7 +29,7 @@ describe('Licenses V2 Tests', () => {
 
   afterAll(async () => {
     await deleteTestData();
-  })
+  });
 
   it('getOne: Should successfully fetch the specified license', async () => {
     const data = await salable.licenses.getOne(licenseUuid);
@@ -44,7 +44,7 @@ describe('Licenses V2 Tests', () => {
     expect(dataWithSearchParams).toEqual({ ...licenseSchema, plan: planSchema });
     expect(dataWithSearchParams).toHaveProperty('plan', planSchema);
   });
-  
+
   it('getAll: Should successfully fetch licenses', async () => {
     const data = await salable.licenses.getAll();
 
@@ -324,13 +324,12 @@ const planSchema: Plan = {
 };
 
 const deleteTestData = async () => {
-  await prismaClient.license.deleteMany({ where: { OR: [{ uuid: licenseUuid }, { uuid: licenseTwoUuid }, { uuid: licenseThreeUuid }, { uuid: activeLicenseUuid }, { uuid: noSubLicenseUuid }, {uuid: noSubLicenseTwoUuid}, {uuid: noSubLicenseThreeUuid}] } });
+  await prismaClient.license.deleteMany({ where: { OR: [{ uuid: licenseUuid }, { uuid: licenseTwoUuid }, { uuid: licenseThreeUuid }, { uuid: activeLicenseUuid }, { uuid: noSubLicenseUuid }, { uuid: noSubLicenseTwoUuid }, { uuid: noSubLicenseThreeUuid }] } });
   await prismaClient.subscription.deleteMany({ where: { OR: [{ uuid: subscriptionUuid }] } });
 };
 
 const generateTestData = async () => {
-
- await prismaClient.license.create({
+  await prismaClient.license.create({
     data: {
       name: null,
       email: null,
@@ -360,11 +359,11 @@ const generateTestData = async () => {
           updatedAt: '2022-10-17T11:41:11.626Z',
           description: null,
           productUuid: testUuids.productUuid,
-        }
+        },
       ],
       endTime: getEndTime(1, 'years'),
-    }
-  })
+    },
+  });
 
   await prismaClient.license.create({
     data: {
@@ -396,10 +395,10 @@ const generateTestData = async () => {
           updatedAt: '2022-10-17T11:41:11.626Z',
           description: null,
           productUuid: testUuids.productUuid,
-        }
+        },
       ],
       endTime: getEndTime(1, 'years'),
-    }
+    },
   });
 
   await prismaClient.license.create({
@@ -432,10 +431,10 @@ const generateTestData = async () => {
           updatedAt: '2022-10-17T11:41:11.626Z',
           description: null,
           productUuid: testUuids.productUuid,
-        }
+        },
       ],
       endTime: getEndTime(1, 'years'),
-    }
+    },
   });
 
   await prismaClient.license.create({
@@ -443,7 +442,7 @@ const generateTestData = async () => {
       name: null,
       email: null,
       status: 'ACTIVE',
-      granteeId: "active-grantee-id",
+      granteeId: 'active-grantee-id',
       paymentService: 'ad-hoc',
       purchaser: 'tester@testing.com',
       type: 'user',
@@ -468,10 +467,10 @@ const generateTestData = async () => {
           updatedAt: '2022-10-17T11:41:11.626Z',
           description: null,
           productUuid: testUuids.productUuid,
-        }
+        },
       ],
       endTime: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000),
-    }
+    },
   });
 
   await prismaClient.license.create({
@@ -479,7 +478,7 @@ const generateTestData = async () => {
       name: null,
       email: null,
       status: 'ACTIVE',
-      granteeId: "no-sub-license",
+      granteeId: 'no-sub-license',
       paymentService: 'ad-hoc',
       purchaser: 'tester@testing.com',
       type: 'user',
@@ -504,10 +503,10 @@ const generateTestData = async () => {
           updatedAt: '2022-10-17T11:41:11.626Z',
           description: null,
           productUuid: testUuids.productUuid,
-        }
+        },
       ],
       endTime: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000),
-    }
+    },
   });
 
   await prismaClient.license.create({
@@ -515,7 +514,7 @@ const generateTestData = async () => {
       name: null,
       email: null,
       status: 'ACTIVE',
-      granteeId: "no-sub-license",
+      granteeId: 'no-sub-license',
       paymentService: 'ad-hoc',
       purchaser: 'tester@testing.com',
       type: 'user',
@@ -540,10 +539,10 @@ const generateTestData = async () => {
           updatedAt: '2022-10-17T11:41:11.626Z',
           description: null,
           productUuid: testUuids.productUuid,
-        }
+        },
       ],
       endTime: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000),
-    }
+    },
   });
 
   await prismaClient.license.create({
@@ -551,7 +550,7 @@ const generateTestData = async () => {
       name: null,
       email: null,
       status: 'ACTIVE',
-      granteeId: "no-sub-license",
+      granteeId: 'no-sub-license',
       paymentService: 'ad-hoc',
       purchaser: 'tester@testing.com',
       type: 'user',
@@ -576,10 +575,10 @@ const generateTestData = async () => {
           updatedAt: '2022-10-17T11:41:11.626Z',
           description: null,
           productUuid: testUuids.productUuid,
-        }
+        },
       ],
       endTime: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000),
-    }
+    },
   });
 
   await prismaClient.subscription.upsert({
