@@ -73,6 +73,7 @@ export type License = {
   updatedAt: string;
   subscriptionUuid: string | null;
   isTest: boolean;
+  cancelAtPeriodEnd: boolean;
 };
 
 export type GetAllLicensesResponse = {

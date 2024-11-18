@@ -26,6 +26,20 @@ describe('Licenses V2 Tests', () => {
     await generateTestData();
   });
 
+  it('getOne: Should successfully fetch the specified license', async () => {
+    const data = await salable.licenses.getOne(licenseUuid);
+
+    expect(data).toEqual(licenseSchema);
+    expect(data).not.toHaveProperty('plan');
+  });
+
+  it('getOne (w/ search params): Should successfully fetch the specified license', async () => {
+    const dataWithSearchParams = await salable.licenses.getOne(licenseUuid, { expand: ['plan'] });
+
+    expect(dataWithSearchParams).toEqual({ ...licenseSchema, plan: planSchema });
+    expect(dataWithSearchParams).toHaveProperty('plan', planSchema);
+  });
+  
   it('getAll: Should successfully fetch licenses', async () => {
     const data = await salable.licenses.getAll();
 
@@ -52,20 +66,6 @@ describe('Licenses V2 Tests', () => {
     for (const license of dataWithSearchParams.data) {
       expect(license).toHaveProperty('status', 'ACTIVE');
     }
-  });
-
-  it('getOne: Should successfully fetch the specified license', async () => {
-    const data = await salable.licenses.getOne(licenseUuid);
-
-    expect(data).toEqual(licenseSchema);
-    expect(data).not.toHaveProperty('plan');
-  });
-
-  it('getOne (w/ search params): Should successfully fetch the specified license', async () => {
-    const dataWithSearchParams = await salable.licenses.getOne(licenseUuid, { expand: ['plan'] });
-
-    expect(dataWithSearchParams).toEqual({ ...licenseSchema, plan: planSchema });
-    expect(dataWithSearchParams).toHaveProperty('plan', planSchema);
   });
 
   it('getCount: Should successfully fetch a subscriptions count', async () => {
@@ -284,6 +284,7 @@ const licenseSchema: License = {
   endTime: expect.any(String),
   updatedAt: expect.any(String),
   isTest: expect.any(Boolean),
+  cancelAtPeriodEnd: expect.any(Boolean),
 };
 
 const planSchema: Plan = {
