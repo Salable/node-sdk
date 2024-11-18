@@ -6,7 +6,7 @@ datasource db {
 
 generator client {
   provider      = "prisma-client-js"
-  binaryTargets = ["native", "rhel-openssl-1.0.x"]
+  binaryTargets = ["native"]
 }
 
 model Product {
@@ -74,6 +74,7 @@ model Plan {
   updatedAt              DateTime               @default(now()) @updatedAt
   flags                  FlagsOnPlans[]
   hasAcceptedTransaction Boolean                @default(false)
+  licensesUsage          LicensesUsage[]
 }
 
 model Capability {
@@ -193,7 +194,7 @@ model PlansOnPricingTables {
 enum ApiKeyType {
   PUBLISHABLE
   SECRET
-  WEB_COMPONENT
+  WEB_COMPONENT /// @deprecated This API Key type isn't supported, use another type
   RESTRICTED
 }
 
@@ -208,8 +209,10 @@ model ApiKey {
   sub          String     @default("n/a")
   awsId        String     @default("n/a")
   updatedAt    DateTime   @updatedAt
+  createdAt    DateTime   @default(now())
   isTest       Boolean    @default(false)
   expiresAt    DateTime?
+  lastUsedAt   DateTime?
   type         ApiKeyType @default(RESTRICTED)
 
   @@index([organisation, value])
@@ -229,28 +232,30 @@ model Session {
 }
 
 model License {
-  uuid             String                 @id @default(uuid())
-  name             String?
-  email            String?
-  subscription     Subscription?          @relation(fields: [subscriptionUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
-  subscriptionUuid String?
-  status           String
-  granteeId        String?
-  paymentService   String
-  purchaser        String
-  type             String
-  product          Product                @relation(fields: [productUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
-  productUuid      String
-  plan             Plan                   @relation(fields: [planUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
-  planUuid         String
-  capabilities     Json
-  metadata         Json?
-  startTime        DateTime               @default(now())
-  endTime          DateTime
-  updatedAt        DateTime               @default(now()) @updatedAt
-  features         FeaturesOnLicenses[] /// @deprecated Use `usage` instead.
-  usage            LicensesUsageOnPlans[]
-  isTest           Boolean                @default(false)
+  uuid              String                 @id @default(uuid())
+  name              String?
+  email             String?
+  subscription      Subscription?          @relation(fields: [subscriptionUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  subscriptionUuid  String?
+  status            String
+  granteeId         String?
+  paymentService    String
+  purchaser         String
+  type              String
+  product           Product                @relation(fields: [productUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  productUuid       String
+  plan              Plan                   @relation(fields: [planUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  planUuid          String
+  capabilities      Json
+  metadata          Json?
+  startTime         DateTime               @default(now())
+  endTime           DateTime
+  updatedAt         DateTime               @default(now()) @updatedAt
+  features          FeaturesOnLicenses[] /// @deprecated Use `usage` instead.
+  usage             LicensesUsageOnPlans[]
+  usageRecords     LicensesUsage[]
+  isTest            Boolean                @default(false)
+  cancelAtPeriodEnd Boolean                @default(false)
 
   @@index([productUuid])
   @@index([planUuid])
@@ -259,6 +264,7 @@ model License {
   @@index([endTime(sort: Asc)])
   @@index([purchaser])
   @@index([subscriptionUuid])
+  @@index([cancelAtPeriodEnd])
 }
 
 model Subscription {
@@ -375,14 +381,41 @@ model Webhook {
   @@index([organisationPaymentIntegrationUuid])
 }
 
-model LicensesUsageOnPlans {
-  license     License  @relation(fields: [licenseUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+model LicensesUsage {
+  uuid        String                    @id @default(uuid())
+  license     License                   @relation(fields: [licenseUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
   licenseUuid String
-  plan        Plan     @relation(fields: [planUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  plan        Plan                      @relation(fields: [planUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
   planUuid    String
-  unitCount   Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @default(now()) @updatedAt
+  unitCount   Int                       @default(0)
+  type        LicensesUsageRecordType
+  recordedAt  DateTime?
+  resetAt     DateTime?
+  createdAt   DateTime                  @default(now())
+  updatedAt   DateTime                  @default(now()) @updatedAt
+
+  @@index([licenseUuid])
+  @@index([planUuid])
+  @@index([resetAt(sort: Asc)])
+  @@index([createdAt(sort: Asc)])
+}
+
+enum LicensesUsageRecordType {
+    recorded
+    current
+    final
+}
+
+/// @deprecated model deprecated to use LicensesUsage instead
+model LicensesUsageOnPlans {
+  license     License   @relation(fields: [licenseUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  licenseUuid String
+  plan        Plan      @relation(fields: [planUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  planUuid    String
+  unitCount   Int       @default(0)
+  resetAt     DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now()) @updatedAt
 
   @@id([licenseUuid, planUuid])
   @@index([licenseUuid])
