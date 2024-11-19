@@ -1,6 +1,9 @@
 import Salable, { Version } from '../..';
 import { PricingTableResponse } from '../../types';
 import prismaClient from '../../../test-utils/prisma/prisma-client';
+import { TestDbData } from '@/test-utils/scripts/create-test-data';
+
+const { db: testUuids } = global as unknown as { db: TestDbData; };
 
 const pricingTableUuid = 'aec06de8-3a3e-46eb-bd09-f1094c1b1b8d';
 describe('Pricing Table V2 Tests', () => {
@@ -40,11 +43,14 @@ const PricingTableSchema: PricingTableResponse = {
 
 const generateTestData = async () => {
 
-  const product = await prismaClient.product.findFirst({where: {uuid: global.db.productUuid }, select: {
-    features: true,
-    uuid: true,
-    plans: true
-  }})
+  const product = await prismaClient.product.findFirst({
+    where: { uuid: testUuids.productUuid },
+    select: {
+      features: true,
+      uuid: true,
+      plans: true,
+    },
+  });
 
   if (!product) return null;
 
@@ -59,9 +65,9 @@ const generateTestData = async () => {
            sortOrder: f.sortOrder,
          })),
        },
-       featuredPlan: { connect: { uuid: global.db.paidPlanUuid } },
+       featuredPlan: { connect: { uuid: testUuids.paidPlanUuid } },
        plans: {
-         create: [{ planUuid: global.db.paidPlanUuid, sortOrder: 0 }],
+         create: [{ planUuid: testUuids.paidPlanUuid, sortOrder: 0 }],
        },
      },
      include: {
@@ -88,6 +94,4 @@ const generateTestData = async () => {
        },
      },
    });
-
-   console.log('CREATED PRICING TABLES');
 }

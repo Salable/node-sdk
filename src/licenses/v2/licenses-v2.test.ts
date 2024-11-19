@@ -4,18 +4,19 @@ import prismaClient from "../../../test-utils/prisma/prisma-client";
 import { TestDbData } from '../../../test-utils/scripts/create-test-data';
 import { StripeData } from '../../../test-utils/stripe/create-stripe-test-data';
 import getEndTime from '../../../test-utils/helpers/get-end-time';
+import { v4 as uuidv4 } from 'uuid';
 
 const version = Version.V2;
 
 const { db: testUuids, stripeEnvs } = global as unknown as { db: TestDbData, stripeEnvs: StripeData }
-const licenseUuid = 'be01faf6-2ced-4036-8df2-69eeb4f6321d';
-const licenseTwoUuid = '0988c051-206d-4814-9241-f590f554bafc';
-const licenseThreeUuid = '19e1e237-9c4a-4499-bdc9-34e4787aeefe';
-const activeLicenseUuid = '3404d158-ee39-42a8-813f-6d0ae59abaf3';
-const noSubLicenseUuid = 'e3790990-28ad-4f21-ac55-c9d08c60cb33';
-const noSubLicenseTwoUuid = 'd14366f0-0ec8-498b-91c6-bc6fdd24d05c';
-const noSubLicenseThreeUuid = 'd5caf7b7-e37b-4554-a820-b8854573a876';
-const subscriptionUuid = '04c4bada-7133-4829-a27c-8e5b00558b9e';
+const licenseUuid = uuidv4();
+const licenseTwoUuid = uuidv4();
+const licenseThreeUuid = uuidv4();
+const activeLicenseUuid = uuidv4();
+const noSubLicenseUuid = uuidv4();
+const noSubLicenseTwoUuid = uuidv4();
+const noSubLicenseThreeUuid = uuidv4();
+const subscriptionUuid = uuidv4();
 const testPurchaser = 'tester@testing.com';
 const testGrantee = '123456';
 
@@ -25,6 +26,10 @@ describe('Licenses V2 Tests', () => {
   beforeAll(async () => {
     await generateTestData();
   });
+
+  afterAll(async () => {
+    await deleteTestData();
+  })
 
   it('getOne: Should successfully fetch the specified license', async () => {
     const data = await salable.licenses.getOne(licenseUuid);
@@ -318,9 +323,14 @@ const planSchema: Plan = {
   features: expect.toBeOneOf([expect.anything(), undefined]),
 };
 
+const deleteTestData = async () => {
+  await prismaClient.license.deleteMany({});
+  await prismaClient.subscription.deleteMany({});
+};
+
 const generateTestData = async () => {
 
-  await prismaClient.license.create({
+ await prismaClient.license.create({
     data: {
       name: null,
       email: null,
@@ -337,7 +347,7 @@ const generateTestData = async () => {
       capabilities: [
         {
           name: 'CapabilityOne',
-          uuid: '38e63e2a-1269-4e9d-b712-28cfbf087285',
+          uuid: uuidv4(),
           status: 'ACTIVE',
           updatedAt: '2022-10-17T11:41:11.626Z',
           description: null,
@@ -345,7 +355,7 @@ const generateTestData = async () => {
         },
         {
           name: 'CapabilityTwo',
-          uuid: '38e63e2a-1269-4e9d-b712-28cfbf087285',
+          uuid: uuidv4(),
           status: 'ACTIVE',
           updatedAt: '2022-10-17T11:41:11.626Z',
           description: null,
@@ -354,7 +364,7 @@ const generateTestData = async () => {
       ],
       endTime: getEndTime(1, 'years'),
     }
-  });
+  })
 
   await prismaClient.license.create({
     data: {
@@ -373,7 +383,7 @@ const generateTestData = async () => {
       capabilities: [
         {
           name: 'CapabilityOne',
-          uuid: '38e63e2a-1269-4e9d-b712-28cfbf087285',
+          uuid: uuidv4(),
           status: 'ACTIVE',
           updatedAt: '2022-10-17T11:41:11.626Z',
           description: null,
@@ -381,7 +391,7 @@ const generateTestData = async () => {
         },
         {
           name: 'CapabilityTwo',
-          uuid: '38e63e2a-1269-4e9d-b712-28cfbf087285',
+          uuid: uuidv4(),
           status: 'ACTIVE',
           updatedAt: '2022-10-17T11:41:11.626Z',
           description: null,
@@ -409,7 +419,7 @@ const generateTestData = async () => {
       capabilities: [
         {
           name: 'CapabilityOne',
-          uuid: '38e63e2a-1269-4e9d-b712-28cfbf087285',
+          uuid: uuidv4(),
           status: 'ACTIVE',
           updatedAt: '2022-10-17T11:41:11.626Z',
           description: null,
@@ -417,7 +427,7 @@ const generateTestData = async () => {
         },
         {
           name: 'CapabilityTwo',
-          uuid: '38e63e2a-1269-4e9d-b712-28cfbf087285',
+          uuid: uuidv4(),
           status: 'ACTIVE',
           updatedAt: '2022-10-17T11:41:11.626Z',
           description: null,
@@ -445,7 +455,7 @@ const generateTestData = async () => {
       capabilities: [
         {
           name: 'CapabilityOne',
-          uuid: '38e63e2a-1269-4e9d-b712-28cfbf087285',
+          uuid: uuidv4(),
           status: 'ACTIVE',
           updatedAt: '2022-10-17T11:41:11.626Z',
           description: null,
@@ -453,7 +463,7 @@ const generateTestData = async () => {
         },
         {
           name: 'CapabilityTwo',
-          uuid: '38e63e2a-1269-4e9d-b712-28cfbf087285',
+          uuid: uuidv4(),
           status: 'ACTIVE',
           updatedAt: '2022-10-17T11:41:11.626Z',
           description: null,
@@ -481,7 +491,7 @@ const generateTestData = async () => {
       capabilities: [
         {
           name: 'CapabilityOne',
-          uuid: '38e63e2a-1269-4e9d-b712-28cfbf087285',
+          uuid: uuidv4(),
           status: 'ACTIVE',
           updatedAt: '2022-10-17T11:41:11.626Z',
           description: null,
@@ -489,7 +499,7 @@ const generateTestData = async () => {
         },
         {
           name: 'CapabilityTwo',
-          uuid: '38e63e2a-1269-4e9d-b712-28cfbf087285',
+          uuid: uuidv4(),
           status: 'ACTIVE',
           updatedAt: '2022-10-17T11:41:11.626Z',
           description: null,
@@ -517,7 +527,7 @@ const generateTestData = async () => {
       capabilities: [
         {
           name: 'CapabilityOne',
-          uuid: '38e63e2a-1269-4e9d-b712-28cfbf087285',
+          uuid: uuidv4(),
           status: 'ACTIVE',
           updatedAt: '2022-10-17T11:41:11.626Z',
           description: null,
@@ -525,7 +535,7 @@ const generateTestData = async () => {
         },
         {
           name: 'CapabilityTwo',
-          uuid: '38e63e2a-1269-4e9d-b712-28cfbf087285',
+          uuid: uuidv4(),
           status: 'ACTIVE',
           updatedAt: '2022-10-17T11:41:11.626Z',
           description: null,
@@ -553,7 +563,7 @@ const generateTestData = async () => {
       capabilities: [
         {
           name: 'CapabilityOne',
-          uuid: '38e63e2a-1269-4e9d-b712-28cfbf087285',
+          uuid: uuidv4(),
           status: 'ACTIVE',
           updatedAt: '2022-10-17T11:41:11.626Z',
           description: null,
@@ -561,7 +571,7 @@ const generateTestData = async () => {
         },
         {
           name: 'CapabilityTwo',
-          uuid: '38e63e2a-1269-4e9d-b712-28cfbf087285',
+          uuid: uuidv4(),
           status: 'ACTIVE',
           updatedAt: '2022-10-17T11:41:11.626Z',
           description: null,

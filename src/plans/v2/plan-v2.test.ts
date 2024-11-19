@@ -1,13 +1,17 @@
 import Salable, { Version } from '../..';
 import { Plan, PlanCapability, PlanCheckout, PlanCurrency, PlanFeature } from '../../types';
 
+import { TestDbData } from '@/test-utils/scripts/create-test-data';
+
+const { db: testUuids } = global as unknown as { db: TestDbData };
+
 describe('Plans V2 Tests', () => {
   const apiKey = process.env.SALABLE_TEST_API_KEY!;
   const version = Version.V2;
 
   const salable = new Salable(apiKey, version);
 
-  const planUuid = global.db.paidPlanUuid;
+  const planUuid = testUuids.paidPlanUuid;
 
   it('getOne: should successfully fetch all products', async () => {
     const data = await salable.plans.getOne(planUuid);

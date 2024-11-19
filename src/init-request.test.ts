@@ -1,5 +1,5 @@
 import { initRequest } from '.';
-import { SalableResponseError, SalableValidationError } from './exceptions/salable-error';
+import { SalableParseError, SalableRequestError, SalableResponseError, SalableValidationError } from './exceptions/salable-error';
 
 global.fetch = jest.fn();
 
@@ -61,7 +61,7 @@ describe('initRequest', () => {
 
     const request = initRequest(apiKey, version);
 
-    await expect(request(input, init)).rejects.toThrow('Unable to complete fetch operation');
+    await expect(request(input, init)).rejects.toThrow(SalableRequestError);
   });
 
   it('should throw an error on invalid JSON response', async () => {
@@ -78,7 +78,8 @@ describe('initRequest', () => {
 
     const request = initRequest(apiKey, version);
 
-    await expect(request(input, init)).rejects.toThrow('Unable to parse data');
+      await expect(request(input, init)).rejects.toThrow(SalableParseError);
+
   });
 
   it('should throw an error on bad request (400)', async () => {
