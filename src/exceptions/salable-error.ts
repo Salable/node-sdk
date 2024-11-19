@@ -6,6 +6,8 @@ export enum ErrorCodes {
   validation = 'S1004',
   unhandled = 'S1005',
   unknown = 'S1006',
+  parse = 'S1007',
+  requestFailed = 'S1008',
 }
 
 export type ValidationErrorMessage = {
@@ -55,5 +57,29 @@ export class SalableUnknownError extends Error {
     Object.setPrototypeOf(this, SalableUnknownError.prototype);
     this.code = ErrorCodes.unknown;
     this.error = error ?? 'Salable SDK error';
+  }
+}
+
+export class SalableParseError extends Error {
+  code: string;
+  error?: string;
+
+  constructor(error?: string) {
+    super();
+    Object.setPrototypeOf(this, SalableParseError.prototype);
+    this.code = ErrorCodes.parse;
+    this.error = error ?? 'Unable to parse data';
+  }
+}
+
+export class SalableRequestError extends Error {
+  code: string;
+  error?: string;
+
+  constructor(error?: string) {
+    super();
+    Object.setPrototypeOf(this, SalableRequestError.prototype);
+    this.code = ErrorCodes.requestFailed;
+    this.error = error ?? 'Unable to complete fetch operation';
   }
 }

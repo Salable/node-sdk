@@ -1,4 +1,4 @@
-import { ErrorCodes, ResponseError, SalableResponseError, SalableUnknownError, SalableValidationError, ValidationError } from './exceptions/salable-error';
+import { ErrorCodes, ResponseError, SalableParseError, SalableRequestError, SalableResponseError, SalableUnknownError, SalableValidationError, ValidationError } from './exceptions/salable-error';
 import { licensesInit, LicenseVersionedMethods } from './licenses';
 import { subscriptionsInit, SubscriptionVersionedMethods } from '../src/subscriptions';
 import { plansInit, PlanVersionedMethods } from '../src/plans';
@@ -26,8 +26,8 @@ export const initRequest: ApiFetch =
         if (response.headers.get('Content-Length') === '0') return undefined as T;
         data = (await response.json()) as T;
       } catch (error) {
-        if (error instanceof TypeError) throw new Error('Unable to complete fetch operation');
-        if (error instanceof SyntaxError) throw new Error('Unable to parse data');
+        if (error instanceof TypeError) throw new SalableRequestError();
+        if (error instanceof SyntaxError) throw new SalableParseError();
         throw new SalableUnknownError();
       }
 
