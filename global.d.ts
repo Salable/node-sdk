@@ -3,9 +3,6 @@ import 'jest-extended';
 
 declare global {
   let db: DBVariables;
-  const StripeEnvs: {
-    id: string;
-  }
 }
 
 interface DBVariables {

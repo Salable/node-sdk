@@ -1,5 +1,8 @@
+import { TestDbData } from '@/test-utils/scripts/create-test-data';
 import Salable, { Version } from '../..';
 import { Plan, Product, ProductCapability, ProductCurrency, ProductFeature, ProductPricingTable } from '../../types';
+
+const { db: testUuids } = global as unknown as { db: TestDbData };
 
 describe('Products V2 Tests', () => {
   const apiKey = process.env.SALABLE_TEST_API_KEY!;
@@ -7,7 +10,7 @@ describe('Products V2 Tests', () => {
 
   const salable = new Salable(apiKey, version);
 
-  const productUuid = global.db.productUuid;
+  const productUuid = testUuids.productUuid;
 
   it('getAll: should successfully fetch all products', async () => {
     const data = await salable.products.getAll();

@@ -4,24 +4,18 @@ import { Plan, Subscription } from '../../types';
 import { TestDbData } from '../../../test-utils/scripts/create-test-data';
 import { StripeData } from '../../../test-utils/stripe/create-stripe-test-data';
 import getEndTime from '../../../test-utils/helpers/get-end-time';
+import { v4 as uuidv4 } from 'uuid';
 
 const { db: testUuids, stripeEnvs } = global as unknown as { db: TestDbData, stripeEnvs: StripeData }
 
-const subscriptionUuid = '04c4bada-7133-4829-a27c-8e5b00558b9e';
-const basicSubscriptionUuid = '71e785df-949e-4c7d-9cdf-4dc5ad31beb3';
-const proSubscriptionUuid = '2cf747da-f522-4b35-83ca-d1626cbc2448';
-const perSeatSubscriptionUuid = '73d02935-4c48-43d2-9b76-a9258920045e';
-const licenseUuid = 'be01faf6-2ced-4036-8df2-69eeb4f6321d';
-const licenseTwoUuid = '0988c051-206d-4814-9241-f590f554bafc';
-const licenseThreeUuid = '19e1e237-9c4a-4499-bdc9-34e4787aeefe';
-const perSeatBasicLicenseUuids = [
-  "264e98fb-38c6-48cd-aa77-5b6b631fbc95",
-  "1e97a9ea-c66a-4822-a5f1-bebf5ea7e44c",
-  "e52d47a0-0fee-4740-8dbd-7bef88800e7c",
-  "28362f68-d919-4a3a-bada-b868a104bd37",
-  "a4326ad0-5e1d-41ba-a6e0-5dec408acf97",
-  "80b36154-3d49-47b2-b99a-1c59698c14db",
-];
+const subscriptionUuid = uuidv4();
+const basicSubscriptionUuid = uuidv4()
+const proSubscriptionUuid = uuidv4()
+const perSeatSubscriptionUuid = uuidv4()
+const licenseUuid = uuidv4();
+const licenseTwoUuid = uuidv4()
+const licenseThreeUuid = uuidv4()
+const perSeatBasicLicenseUuids = [uuidv4(), uuidv4(), uuidv4(), uuidv4(), uuidv4(), uuidv4()];
 const testGrantee = '123456';
 const testEmail = 'tester@domain.com';
 
@@ -34,6 +28,10 @@ describe('Subscriptions V2 Tests', () => {
   beforeAll(async () => {
     await generateTestData();
   });
+
+  afterAll(async() => {
+    await deleteTestData();
+  })
 
   it('getAll: Should successfully fetch subscriptions', async () => {
     const data = await salable.subscriptions.getAll();
@@ -338,6 +336,11 @@ const stripePaymentMethodSchema = {
   metadata: expect.toBeObject(),
   type: expect.any(String),
 };
+
+const deleteTestData = async () => {
+  await prismaClient.license.deleteMany({});
+  await prismaClient.subscription.deleteMany({})
+}
 
 const generateTestData = async () => {
   await prismaClient.license.create({
