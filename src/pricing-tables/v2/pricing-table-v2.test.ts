@@ -1,13 +1,17 @@
 import Salable, { Version } from '../..';
 import { PricingTableResponse } from '../../types';
+import prismaClient from '../../../test-utils/prisma/prisma-client';
 
-describe('Products V2 Tests', () => {
+const pricingTableUuid = 'aec06de8-3a3e-46eb-bd09-f1094c1b1b8d';
+describe('Pricing Table V2 Tests', () => {
   const apiKey = process.env.SALABLE_TEST_API_KEY!;
   const version = Version.V2;
 
   const salable = new Salable(apiKey, version);
 
-  const pricingTableUuid = '28013adc-f132-49c5-89c5-8f8233314f71';
+  beforeAll(async() => {
+    await generateTestData()
+  })
 
   it('getAll: should successfully fetch all products', async () => {
     const data = await salable.pricingTables.getOne(pricingTableUuid);
@@ -32,3 +36,58 @@ const PricingTableSchema: PricingTableResponse = {
   product: expect.toBeOneOf([expect.anything(), undefined]),
   plans: expect.toBeOneOf([expect.anything(), undefined]),
 };
+
+
+const generateTestData = async () => {
+
+  const product = await prismaClient.product.findFirst({where: {uuid: global.db.productUuid }, select: {
+    features: true,
+    uuid: true,
+    plans: true
+  }})
+
+  if (!product) return null;
+
+   await prismaClient.pricingTable.create({
+     data: {
+       uuid: pricingTableUuid,
+       name: 'xxxxx',
+       product: { connect: { uuid: product.uuid } },
+       features: {
+         create: product.features.map((f) => ({
+           feature: { connect: { uuid: f.uuid } },
+           sortOrder: f.sortOrder,
+         })),
+       },
+       featuredPlan: { connect: { uuid: global.db.paidPlanUuid } },
+       plans: {
+         create: [{ planUuid: global.db.paidPlanUuid, sortOrder: 0 }],
+       },
+     },
+     include: {
+       features: {
+         include: { feature: { include: { featureEnumOptions: true } } },
+       },
+       plans: {
+         include: {
+           plan: {
+             include: {
+               features: { include: { feature: true, enumValue: true } },
+               capabilities: { include: { capability: true } },
+               currencies: { include: { currency: true } },
+             },
+           },
+         },
+       },
+       product: {
+         include: {
+           currencies: true,
+           organisationPaymentIntegration: true,
+           features: { include: { featureEnumOptions: true } },
+         },
+       },
+     },
+   });
+
+   console.log('CREATED PRICING TABLES');
+}

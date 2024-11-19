@@ -7,7 +7,7 @@ describe('Products V2 Tests', () => {
 
   const salable = new Salable(apiKey, version);
 
-  const productUuid = '1ad1a518-2076-4d76-9280-4b23f19b48bb';
+  const productUuid = global.db.productUuid;
 
   it('getAll: should successfully fetch all products', async () => {
     const data = await salable.products.getAll();
@@ -134,7 +134,7 @@ const ProductPlanSchema: Plan = {
 
 const ProductFeatureSchema: ProductFeature = {
   defaultValue: expect.any(String),
-  description: expect.any(String),
+  description: expect.toBeOneOf([expect.any(String), null]),
   displayName: expect.any(String),
   featureEnumOptions: expect.toBeOneOf([expect.anything()]),
   name: expect.any(String),
