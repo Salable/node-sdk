@@ -212,7 +212,7 @@ export default async function createStripeData() {
       currency: "gbp",
       interval: "month",
       product: obj.productWidgetOneId,
-      amount: 1000
+      amount: 10000
     });
     obj.planBasicMonthlyGbpId = stripePlanBasicMonthlyGbp.id
   }
@@ -220,21 +220,11 @@ export default async function createStripeData() {
   if (!obj.planBasicYearlyGbpId) {
     const stripePlanBasicYearlyGbp = await stripeConnect.plans.create({
       currency: "gbp",
-      interval: "month",
+      interval: "year",
       product: obj.productWidgetOneId,
       amount: 1000
     });
     obj.planBasicYearlyGbpId = stripePlanBasicYearlyGbp.id
-  }
-
-  if (!obj.planBasicYearlyGbpId) {
-    const stripePlanBasicMonthlyGbp = await stripeConnect.plans.create({
-      currency: "gbp",
-      interval: "year",
-      product: obj.productWidgetOneId,
-      amount: 10000
-    });
-    obj.planBasicYearlyGbpId = stripePlanBasicMonthlyGbp.id
   }
 
   if (!obj.basicSubscriptionId) {
