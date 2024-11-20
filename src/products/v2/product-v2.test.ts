@@ -1,6 +1,6 @@
-import { TestDbData } from '@/test-utils/scripts/create-test-data';
-import Salable, { Version } from '../..';
-import { Plan, Product, ProductCapability, ProductCurrency, ProductFeature, ProductPricingTable } from '../../types';
+import { TestDbData } from '../../../test-utils/scripts/create-test-data';
+import Salable from '../..';
+import { Plan, Product, ProductCapability, ProductCurrency, ProductFeature, ProductPricingTable, Version } from '../../types';
 
 const { db: testUuids } = global as unknown as { db: TestDbData };
 

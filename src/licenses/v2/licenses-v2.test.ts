@@ -1,5 +1,5 @@
-import Salable, { Version } from '../..';
-import { Capability, License, Plan } from '../../../src/types';
+import Salable from '../..';
+import { Capability, License, Plan, Version } from '../../types';
 import prismaClient from "../../../test-utils/prisma/prisma-client";
 import { TestDbData } from '../../../test-utils/scripts/create-test-data';
 import { StripeData } from '../../../test-utils/stripe/create-stripe-test-data';

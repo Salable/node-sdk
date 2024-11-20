@@ -1,7 +1,7 @@
-import Salable, { Version } from '../..';
-import { PricingTableResponse } from '../../types';
+import Salable from '../..';
+import { PricingTableResponse, Version } from '../../types';
 import prismaClient from '../../../test-utils/prisma/prisma-client';
-import { TestDbData } from '@/test-utils/scripts/create-test-data';
+import { TestDbData } from '../../../test-utils/scripts/create-test-data';
 
 const { db: testUuids } = global as unknown as { db: TestDbData; };
 

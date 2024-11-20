@@ -1,6 +1,6 @@
 import prismaClient from '../../../test-utils/prisma/prisma-client';
-import Salable, { Version } from '../..';
-import { Plan, Subscription } from '../../types';
+import Salable from '../..';
+import { Plan, Subscription, Version } from '../../types';
 import { TestDbData } from '../../../test-utils/scripts/create-test-data';
 import { StripeData } from '../../../test-utils/stripe/create-stripe-test-data';
 import getEndTime from '../../../test-utils/helpers/get-end-time';

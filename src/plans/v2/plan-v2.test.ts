@@ -1,7 +1,7 @@
-import Salable, { Version } from '../..';
-import { Plan, PlanCapability, PlanCheckout, PlanCurrency, PlanFeature } from '../../types';
+import Salable from '../..';
+import { Plan, PlanCapability, PlanCheckout, PlanCurrency, PlanFeature, Version } from '../../types';
 
-import { TestDbData } from '@/test-utils/scripts/create-test-data';
+import { TestDbData } from '../../../test-utils/scripts/create-test-data';
 
 const { db: testUuids } = global as unknown as { db: TestDbData };
 

@@ -1,3 +1,10 @@
+export const Version = {
+  V2: 'v2',
+} as const;
+export type TVersion = (typeof Version)[keyof typeof Version];
+export type ApiFetch = (apiKey: string, version: string) => ApiRequest;
+export type ApiRequest = <T>(input: string | URL | Request, init: RequestInit | undefined) => Promise<T>;
+
 export type Status = 'ACTIVE' | 'CANCELED';
 export type ProductStatus = 'ACTIVE' | 'DEPRECATED';
 export type LicenseStatus = 'ACTIVE' | 'CANCELED' | 'EVALUATION' | 'SCHEDULED' | 'TRIALING' | 'INACTIVE';

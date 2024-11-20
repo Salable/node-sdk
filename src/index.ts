@@ -1,17 +1,10 @@
 import { ErrorCodes, ResponseError, SalableParseError, SalableRequestError, SalableResponseError, SalableUnknownError, SalableValidationError, ValidationError } from './exceptions/salable-error';
 import { licensesInit, LicenseVersionedMethods } from './licenses';
-import { subscriptionsInit, SubscriptionVersionedMethods } from '../src/subscriptions';
-import { plansInit, PlanVersionedMethods } from '../src/plans';
-import { productsInit, ProductVersionedMethods } from '../src/products';
-import { pricingTablesInit, PricingTableVersionedMethods } from '../src/pricing-tables';
-
-export const Version = {
-  V2: 'v2',
-} as const;
-
-export type TVersion = (typeof Version)[keyof typeof Version];
-export type ApiFetch = (apiKey: string, version: string) => ApiRequest;
-export type ApiRequest = <T>(input: string | URL | Request, init: RequestInit | undefined) => Promise<T>;
+import { subscriptionsInit, SubscriptionVersionedMethods } from './subscriptions';
+import { plansInit, PlanVersionedMethods } from './plans';
+import { productsInit, ProductVersionedMethods } from './products';
+import { pricingTablesInit, PricingTableVersionedMethods } from './pricing-tables';
+import { ApiFetch, TVersion } from './types';
 
 export const initRequest: ApiFetch =
   (apiKey, version) =>

@@ -1,5 +1,4 @@
-import { ApiRequest, TVersion, Version } from '..';
-import { GetAllLicensesResponse, Subscription, SubscriptionInvoice, SubscriptionPaymentLink, SubscriptionPaymentMethod, SubscriptionPlan, SubscriptionSeatResponse, SubscriptionStatus } from '../types';
+import { GetAllLicensesResponse, Subscription, SubscriptionInvoice, SubscriptionPaymentLink, SubscriptionPaymentMethod, SubscriptionPlan, SubscriptionSeatResponse, SubscriptionStatus, ApiRequest, TVersion, Version } from '../types';
 import { v2SubscriptionMethods } from './v2';
 
 export type SubscriptionVersions = {
