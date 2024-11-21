@@ -14,6 +14,7 @@ jobs:
     env:
       REGION: ${{ vars.REGION }}
       ENVIRONMENT: ${{ vars.ENVIRONMENT }}
+      AWS_THIRD_PARTY_API_REGION: ${{ vars.AWS_THIRD_PARTY_API_REGION }}
       ACCOUNT: ${{ secrets.ACCOUNT }}
       SEED_API_KEY: ${{ secrets.SEED_API_KEY }}
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
