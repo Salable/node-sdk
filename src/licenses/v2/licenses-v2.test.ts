@@ -1,14 +1,12 @@
 import Salable from '../..';
 import { Capability, License, Plan, Version } from '../../types';
 import prismaClient from "../../../test-utils/prisma/prisma-client";
-import { TestDbData } from '../../../test-utils/scripts/create-test-data';
-import { StripeData } from '../../../test-utils/stripe/create-stripe-test-data';
+import { testUuids } from '../../../test-utils/scripts/create-test-data';
 import getEndTime from '../../../test-utils/helpers/get-end-time';
 import { v4 as uuidv4 } from 'uuid';
 
 const version = Version.V2;
 
-const { db: testUuids, stripeEnvs } = global as unknown as { db: TestDbData, stripeEnvs: StripeData }
 const licenseUuid = uuidv4();
 const licenseTwoUuid = uuidv4();
 const licenseThreeUuid = uuidv4();

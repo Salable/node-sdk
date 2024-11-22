@@ -1,9 +1,6 @@
 import Salable from '../..';
 import { Plan, PlanCapability, PlanCheckout, PlanCurrency, PlanFeature, Version } from '../../types';
-
-import { TestDbData } from '../../../test-utils/scripts/create-test-data';
-
-const { db: testUuids } = global as unknown as { db: TestDbData };
+import { testUuids } from '../../../test-utils/scripts/create-test-data';
 
 describe('Plans V2 Tests', () => {
   const apiKey = process.env.SALABLE_TEST_API_KEY!;

@@ -3,7 +3,7 @@ import Stripe from "stripe";
 const STRIPE_KEY = process.env.STRIPE_KEY;
 
 export default async function createStripeCustomAccount() {
-    const stripe = new Stripe(STRIPE_KEY!, {apiVersion: "2024-09-30.acacia"});
+    const stripe = new Stripe(STRIPE_KEY!, {apiVersion: "2024-10-28.acacia"});
 
     let account = await stripe.accounts.create({
         country: 'US',
@@ -132,7 +132,7 @@ export default async function createStripeCustomAccount() {
     );
 
     const stripeConnect = new Stripe(STRIPE_KEY!, {
-        apiVersion: "2024-09-30.acacia",
+        apiVersion: "2024-10-28.acacia",
         stripeAccount: account.id
     });
 

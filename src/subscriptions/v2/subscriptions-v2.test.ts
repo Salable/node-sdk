@@ -1,12 +1,9 @@
 import prismaClient from '../../../test-utils/prisma/prisma-client';
 import Salable from '../..';
 import { Plan, Subscription, Version } from '../../types';
-import { TestDbData } from '../../../test-utils/scripts/create-test-data';
-import { StripeData } from '../../../test-utils/stripe/create-stripe-test-data';
 import getEndTime from '../../../test-utils/helpers/get-end-time';
 import { v4 as uuidv4 } from 'uuid';
-
-const { db: testUuids, stripeEnvs } = global as unknown as { db: TestDbData, stripeEnvs: StripeData }
+import { testUuids } from '../../../test-utils/scripts/create-test-data';
 
 const subscriptionUuid = uuidv4();
 const basicSubscriptionUuid = uuidv4()

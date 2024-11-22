@@ -1,9 +1,7 @@
 import Salable from '../..';
 import { PricingTableResponse, Version } from '../../types';
 import prismaClient from '../../../test-utils/prisma/prisma-client';
-import { TestDbData } from '../../../test-utils/scripts/create-test-data';
-
-const { db: testUuids } = global as unknown as { db: TestDbData; };
+import { testUuids } from '../../../test-utils/scripts/create-test-data';
 
 const pricingTableUuid = 'aec06de8-3a3e-46eb-bd09-f1094c1b1b8d';
 describe('Pricing Table V2 Tests', () => {

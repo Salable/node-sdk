@@ -2,27 +2,36 @@ import 'jest-fetch-mock';
 import 'jest-extended';
 
 declare global {
-  let db: DBVariables;
+  let stripeEnvs: StripeData;
 }
 
-interface DBVariables {
-  organisationId: string;
-  devApiKeyV2: string;
-  productUuid: string;
-  productTwoUuid: string;
-  freeMonthlyPlanUuid: string;
-  paidPlanUuid: string;
-  perSeatPaidPlanUuid: string;
-  paidYearlyPlanUuid: string;
-  freeYearlyPlanUuid: string;
-  meteredPaidPlanUuid: string;
-  meteredPaidPlanTwoUuid: string;
-  comingSoonPlanUuid: string;
-  perSeatUnlimitedPlanUuid: string;
-  perSeatMaxPlanUuid: string;
-  perSeatMinPlanUuid: string;
-  perSeatRangePlanUuid: string;
-  currencyUuids: string;
+
+interface StripeData {
+  paymentMethodId: string,
+  customerId: string,
+  productWidgetOneId: string,
+  planBasicMonthlyGbpId: string,
+  planBasicYearlyGbpId: string,
+  planPerSeatBasicMonthlyGbpId: string,
+  planUsageProMonthlyGbpId: string,
+  planUsageBasicMonthlyGbpId: string,
+  usageBasicSubscriptionLineItemId: string,
+  usageBasicSubscriptionId: string,
+  planProMonthlyGbpId: string,
+  planBasicMonthlyUsdId: string,
+  planProMonthlyUsdId: string,
+  basicSubscriptionId: string,
+  basicSubscriptionIdTwo: string,
+  basicSubscriptionLineItemId: string,
+  basicSubscriptionTwoLineItemId: string,
+  perSeatBasicSubscriptionId: string,
+  perSeatBasicSubscriptionLineItemId: string,
+  proSubscriptionId: string,
+  proSubscriptionLineItemId: string,
+  planPerSeatUnlimitedMonthlyGbpId: string,
+  planPerSeatMaximumMonthlyGbpId: string,
+  planPerSeatMinimumMonthlyGbpId: string,
+  planPerSeatRangeMonthlyGbpId: string,
 }
 
 export {};

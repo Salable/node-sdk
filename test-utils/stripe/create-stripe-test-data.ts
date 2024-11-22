@@ -7,34 +7,6 @@ config({ path: '.env.test' });
 
 const STRIPE_KEY = process.env.STRIPE_KEY;
 
-export type StripeData = {
-  paymentMethodId: string,
-  customerId: string,
-  productWidgetOneId: string,
-  planBasicMonthlyGbpId: string,
-  planBasicYearlyGbpId: string,
-  planPerSeatBasicMonthlyGbpId: string,
-  planUsageProMonthlyGbpId: string,
-  planUsageBasicMonthlyGbpId: string,
-  usageBasicSubscriptionLineItemId: string,
-  usageBasicSubscriptionId: string,
-  planProMonthlyGbpId: string,
-  planBasicMonthlyUsdId: string,
-  planProMonthlyUsdId: string,
-  basicSubscriptionId: string,
-  basicSubscriptionIdTwo: string,
-  basicSubscriptionLineItemId: string,
-  basicSubscriptionTwoLineItemId: string,
-  perSeatBasicSubscriptionId: string,
-  perSeatBasicSubscriptionLineItemId: string,
-  proSubscriptionId: string,
-  proSubscriptionLineItemId: string,
-  planPerSeatUnlimitedMonthlyGbpId: string,
-  planPerSeatMaximumMonthlyGbpId: string,
-  planPerSeatMinimumMonthlyGbpId: string,
-  planPerSeatRangeMonthlyGbpId: string,
-}
-
 export default async function createStripeData() {
   if (!STRIPE_KEY) throw new Error('Missing STRIPE_KEY');
 
@@ -42,7 +14,7 @@ export default async function createStripeData() {
 
   const stripeCustomerEmail = 'tester@domain.com';
 
-  const obj: StripeData = {
+  const obj = {
     paymentMethodId: '',
     customerId: '',
     productWidgetOneId: '',
@@ -76,7 +48,7 @@ export default async function createStripeData() {
   }
 
   const stripeConnect = new Stripe(STRIPE_KEY, {
-    apiVersion: "2024-09-30.acacia",
+    apiVersion: "2024-10-28.acacia",
     stripeAccount: process.env.STRIPE_ACCOUNT_ID
   });
 
@@ -325,5 +297,5 @@ export default async function createStripeData() {
 
   clearInterval(loadingWheel);
 
-  global.stripeEnvs = obj;
+  globalThis.stripeEnvs = obj;
 }

@@ -3,7 +3,6 @@ import { generateKeyPairSync } from "crypto";
 import kmsSymmetricEncrypt from "../kms/kms-symmetric-encrypt";
 import getConsoleLoader from "../helpers/console-loading-wheel";
 import { config } from 'dotenv';
-import { StripeData } from "../stripe/create-stripe-test-data";
 
 config({ path: '.env.test' });
 
@@ -30,6 +29,9 @@ export type TestDbData = {
     }
 };
 
+
+
+
 const organisationId = "test-org";
 const devApiKeyV2 = "dddf2aa585c285478dae404803335c0013e795aa";
 const productUuid = '29c9a7c8-9a41-4e87-9e7e-7c62d293c131';
@@ -49,6 +51,26 @@ const perSeatRangePlanUuid = "4606094a-0cec-40f3-b733-10cf65fdd5ce";
 const currencyUuids = {
     gbp: 'b1b12bc9-6da7-4fd9-97e5-401d996c261c',
     usd: '6ebfb42a-a78b-481c-bd79-9e857b432af9'
+};
+
+export let testUuids = {
+  organisationId,
+  devApiKeyV2,
+  productUuid,
+  productTwoUuid,
+  freeMonthlyPlanUuid,
+  paidPlanUuid,
+  perSeatPaidPlanUuid,
+  paidYearlyPlanUuid,
+  freeYearlyPlanUuid,
+  meteredPaidPlanUuid,
+  meteredPaidPlanTwoUuid,
+  comingSoonPlanUuid,
+  perSeatUnlimitedPlanUuid,
+  perSeatMaxPlanUuid,
+  perSeatMinPlanUuid,
+  perSeatRangePlanUuid,
+  currencyUuids,
 };
 
 const features = [
@@ -142,7 +164,6 @@ const { publicKey, privateKey } = generateKeyPairSync("ec", {
 });
 
 export default async function createTestData() {
-    const { stripeEnvs } = global as unknown as { stripeEnvs: StripeData }
 
     const loadingWheel = getConsoleLoader('CREATING TEST DATA');
 
@@ -849,26 +870,26 @@ export default async function createTestData() {
                 planUuid: perSeatPaidPlanUuid,
             },
         ],
-    });
-
-    global.db = {
-        organisationId,
-        devApiKeyV2,
-        productUuid,
-        productTwoUuid,
-        freeMonthlyPlanUuid,
-        paidPlanUuid,
-        perSeatPaidPlanUuid,
-        paidYearlyPlanUuid,
-        freeYearlyPlanUuid,
-        meteredPaidPlanUuid,
-        meteredPaidPlanTwoUuid,
-        comingSoonPlanUuid,
-        perSeatUnlimitedPlanUuid,
-        perSeatMaxPlanUuid,
-        perSeatMinPlanUuid,
-        perSeatRangePlanUuid,
-        currencyUuids
+    })
+    
+    testUuids = {
+      organisationId,
+      devApiKeyV2,
+      productUuid,
+      productTwoUuid,
+      freeMonthlyPlanUuid,
+      paidPlanUuid,
+      perSeatPaidPlanUuid,
+      paidYearlyPlanUuid,
+      freeYearlyPlanUuid,
+      meteredPaidPlanUuid,
+      meteredPaidPlanTwoUuid,
+      comingSoonPlanUuid,
+      perSeatUnlimitedPlanUuid,
+      perSeatMaxPlanUuid,
+      perSeatMinPlanUuid,
+      perSeatRangePlanUuid,
+      currencyUuids,
     };
 
     clearInterval(loadingWheel);
