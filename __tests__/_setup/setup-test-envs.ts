@@ -16,10 +16,11 @@ const globalSetup = async () => {
     clearInterval(loadingWheel);
     console.log('\n DATABASE RESET');
     
-    await createStripeData();
+   const obj = await createStripeData();
     console.log('\n STRIPE ACCOUNT DATA CREATED')
+    process.env.stripEnvs = JSON.stringify(obj);
 
-    await createTestData();
+    await createTestData(obj);
     console.log('\n TEST DATA CREATED');
 };
 

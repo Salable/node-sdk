@@ -5,6 +5,8 @@ import { testUuids } from '../../../test-utils/scripts/create-test-data';
 import getEndTime from '../../../test-utils/helpers/get-end-time';
 import { v4 as uuidv4 } from 'uuid';
 
+const stripeEnvs = JSON.parse(process.env.stripEnvs || '');
+
 const version = Version.V2;
 
 const licenseUuid = uuidv4();
@@ -580,8 +582,24 @@ const generateTestData = async () => {
     }
   });
 
-  await prismaClient.subscription.create({
-    data: {
+  await prismaClient.subscription.upsert({
+    where: {
+      paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionId,
+    },
+    update: {
+      uuid: subscriptionUuid,
+      email: 'tester@testing.com',
+      type: 'salable',
+      status: 'ACTIVE',
+      organisation: testUuids.organisationId,
+      license: { connect: [{ uuid: licenseUuid }, { uuid: licenseTwoUuid }, { uuid: licenseThreeUuid }] },
+      product: { connect: { uuid: testUuids.productUuid } },
+      plan: { connect: { uuid: testUuids.paidPlanUuid } },
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      expiryDate: new Date(Date.now() + 31536000000),
+    },
+    create: {
       lineItemIds: [stripeEnvs.basicSubscriptionLineItemId],
       paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionId,
       uuid: subscriptionUuid,

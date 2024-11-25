@@ -3,7 +3,7 @@ import { Plan, PlanCapability, PlanCheckout, PlanCurrency, PlanFeature, Version 
 import { testUuids } from '../../../test-utils/scripts/create-test-data';
 
 describe('Plans V2 Tests', () => {
-  const apiKey = process.env.SALABLE_TEST_API_KEY!;
+  const apiKey = testUuids.devApiKeyV2;
   const version = Version.V2;
 
   const salable = new Salable(apiKey, version);

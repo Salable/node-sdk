@@ -7,6 +7,34 @@ config({ path: '.env.test' });
 
 const STRIPE_KEY = process.env.STRIPE_KEY;
 
+export interface StripeEnvsTypes {
+  paymentMethodId: string;
+  customerId: string;
+  productWidgetOneId: string;
+  planBasicMonthlyGbpId: string;
+  planBasicYearlyGbpId: string;
+  planPerSeatBasicMonthlyGbpId: string;
+  planUsageProMonthlyGbpId: string;
+  planUsageBasicMonthlyGbpId: string;
+  usageBasicSubscriptionLineItemId: string;
+  usageBasicSubscriptionId: string;
+  planProMonthlyGbpId: string;
+  planBasicMonthlyUsdId: string;
+  planProMonthlyUsdId: string;
+  basicSubscriptionId: string;
+  basicSubscriptionIdTwo: string;
+  basicSubscriptionLineItemId: string;
+  basicSubscriptionTwoLineItemId: string;
+  perSeatBasicSubscriptionId: string;
+  perSeatBasicSubscriptionLineItemId: string;
+  proSubscriptionId: string;
+  proSubscriptionLineItemId: string;
+  planPerSeatUnlimitedMonthlyGbpId: string;
+  planPerSeatMaximumMonthlyGbpId: string;
+  planPerSeatMinimumMonthlyGbpId: string;
+  planPerSeatRangeMonthlyGbpId: string;
+}
+
 export default async function createStripeData() {
   if (!STRIPE_KEY) throw new Error('Missing STRIPE_KEY');
 
@@ -41,6 +69,7 @@ export default async function createStripeData() {
     planPerSeatMinimumMonthlyGbpId: '',
     planPerSeatRangeMonthlyGbpId: '',
   };
+
 
   if (!process.env.STRIPE_ACCOUNT_ID) {
     const account = await createStripeCustomAccount();
@@ -297,5 +326,5 @@ export default async function createStripeData() {
 
   clearInterval(loadingWheel);
 
-  globalThis.stripeEnvs = obj;
+  return obj;
 }

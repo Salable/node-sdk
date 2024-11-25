@@ -3,7 +3,7 @@ import { Plan, Product, ProductCapability, ProductCurrency, ProductFeature, Prod
 import { testUuids } from '../../../test-utils/scripts/create-test-data';
 
 describe('Products V2 Tests', () => {
-  const apiKey = process.env.SALABLE_TEST_API_KEY!;
+  const apiKey = testUuids.devApiKeyV2;
   const version = Version.V2;
 
   const salable = new Salable(apiKey, version);

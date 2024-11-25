@@ -5,7 +5,7 @@ import { testUuids } from '../../../test-utils/scripts/create-test-data';
 
 const pricingTableUuid = 'aec06de8-3a3e-46eb-bd09-f1094c1b1b8d';
 describe('Pricing Table V2 Tests', () => {
-  const apiKey = process.env.SALABLE_TEST_API_KEY!;
+  const apiKey = testUuids.devApiKeyV2;
   const version = Version.V2;
 
   const salable = new Salable(apiKey, version);
