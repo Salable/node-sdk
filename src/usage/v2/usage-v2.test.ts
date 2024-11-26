@@ -1,6 +1,6 @@
 import Salable, { Version } from '../..';
 import { UsageRecord } from '../../types';
-import prismaClient from "../../../test-utils/prisma/prisma-client";
+import prismaClient from '../../../test-utils/prisma/prisma-client';
 import { testUuids } from '../../../test-utils/scripts/create-test-data';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -21,33 +21,41 @@ describe('Usage V2 Tests', () => {
   it('getAllUsageRecords: Should successfully fetch the grantees usage records', async () => {
     const data = await salable.usage.getAllUsageRecords(testGrantee);
 
-    expect(data).toEqual(expect.objectContaining({
-      first: expect.toBeOneOf([expect.any(String), null]),
-      last: expect.toBeOneOf([expect.any(String), null]),
-      data: expect.arrayContaining([usageRecordSchema]),
-    }));
+    expect(data).toEqual(
+      expect.objectContaining({
+        first: expect.toBeOneOf([expect.any(String), null]),
+        last: expect.toBeOneOf([expect.any(String), null]),
+        data: expect.arrayContaining([usageRecordSchema]),
+      }),
+    );
   });
 
   it('getAllUsageRecords (w/ search params): Should successfully fetch the grantees usage records', async () => {
     const data = await salable.usage.getAllUsageRecords(testGrantee, { type: 'recorded' });
 
-    expect(data).toEqual(expect.objectContaining({
-      first: expect.toBeOneOf([expect.any(String), null]),
-      last: expect.toBeOneOf([expect.any(String), null]),
-      data: expect.arrayContaining([{
-        ...usageRecordSchema,
-        type: 'recorded'
-      }]),
-    }));
+    expect(data).toEqual(
+      expect.objectContaining({
+        first: expect.toBeOneOf([expect.any(String), null]),
+        last: expect.toBeOneOf([expect.any(String), null]),
+        data: expect.arrayContaining([
+          {
+            ...usageRecordSchema,
+            type: 'recorded',
+          },
+        ]),
+      }),
+    );
   });
 
   it('getCurrentUsageRecord: Should successfully fetch the current usage record for the grantee on plan', async () => {
     const data = await salable.usage.getCurrentUsageRecord(testGrantee, testUuids.usageBasicMonthlyPlanUuid);
 
-    expect(data).toEqual(expect.objectContaining({
-      unitCount: expect.any(Number),
-      updatedAt: expect.any(String),
-    }));
+    expect(data).toEqual(
+      expect.objectContaining({
+        unitCount: expect.any(Number),
+        updatedAt: expect.any(String),
+      }),
+    );
   });
 
   it('updateLicenseUsage: Should successfully update the usage of the specified grantee', async () => {
@@ -70,7 +78,6 @@ const usageRecordSchema: UsageRecord = {
 };
 
 const generateTestData = async () => {
-
   await prismaClient.subscription.create({
     data: {
       lineItemIds: [stripeEnvs.usageBasicSubscriptionLineItemId],
@@ -87,10 +94,10 @@ const generateTestData = async () => {
           status: 'ACTIVE',
           purchaser: 'tester@testing.com',
           metadata: undefined,
-          paymentService: "salable",
+          paymentService: 'salable',
           uuid: meteredLicenseUuid,
-          granteeId: "userId_metered",
-          type: "metered",
+          granteeId: 'userId_metered',
+          type: 'metered',
           planUuid: testUuids.usageBasicMonthlyPlanUuid,
           productUuid: testUuids.productTwoUuid,
           usage: {
@@ -115,11 +122,11 @@ const generateTestData = async () => {
               updatedAt: '2022-10-17T11:41:11.626Z',
               description: null,
               productUuid: testUuids.productTwoUuid,
-            }
+            },
           ],
           startTime: undefined,
           endTime: new Date(),
-        }
+        },
       },
       product: { connect: { uuid: testUuids.productTwoUuid } },
       plan: { connect: { uuid: testUuids.usageBasicMonthlyPlanUuid } },
@@ -136,7 +143,7 @@ const generateTestData = async () => {
       planUuid: testUuids.usageBasicMonthlyPlanUuid,
       unitCount: 10,
       type: 'recorded',
-    }
+    },
   });
   await prismaClient.licensesUsage.create({
     data: {
@@ -144,6 +151,6 @@ const generateTestData = async () => {
       planUuid: testUuids.usageBasicMonthlyPlanUuid,
       unitCount: 20,
       type: 'current',
-    }
+    },
   });
 };
