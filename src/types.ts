@@ -62,6 +62,34 @@ export type GetLicenseCountResponse = {
   unassigned: number;
 };
 
+export type GetUsageOptions = {
+  type?: string;
+  status?: string;
+  planUuid?: string;
+  subscriptionUuid?: string;
+  sort?: 'asc' | 'desc';
+  cursor?: string;
+  take?: string;
+};
+
+export type GetAllUsageRecordsResponse = {
+  first: string;
+  last: string;
+  data: UsageRecord[]
+};
+
+export type UsageRecord = {
+  uuid: string;
+  unitCount: number;
+  type: string;
+  recordedAt: string;
+  resetAt: string;
+  planUuid: string;
+  licenseUuid: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export type License = {
   uuid: string;
   name: string;
