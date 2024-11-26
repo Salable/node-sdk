@@ -1,9 +1,10 @@
-import { ErrorCodes, ResponseError, SalableResponseError, SalableUnknownError, SalableValidationError, ValidationError } from './exceptions/salable-error';
+import { ErrorCodes, ResponseError, SalableParseError, SalableRequestError, SalableResponseError, SalableUnknownError, SalableValidationError, ValidationError } from './exceptions/salable-error';
 import { licensesInit, LicenseVersionedMethods } from './licenses';
 import { subscriptionsInit, SubscriptionVersionedMethods } from '../src/subscriptions';
 import { plansInit, PlanVersionedMethods } from '../src/plans';
 import { productsInit, ProductVersionedMethods } from '../src/products';
 import { pricingTablesInit, PricingTableVersionedMethods } from '../src/pricing-tables';
+import { UsageVersionedMethods, usageInit } from './usage';
 
 export const Version = {
   V2: 'v2',
@@ -26,8 +27,8 @@ export const initRequest: ApiFetch =
         if (response.headers.get('Content-Length') === '0') return undefined as T;
         data = (await response.json()) as T;
       } catch (error) {
-        if (error instanceof TypeError) throw new Error('Unable to complete fetch operation');
-        if (error instanceof SyntaxError) throw new Error('Unable to parse data');
+        if (error instanceof TypeError) throw new SalableRequestError();
+        if (error instanceof SyntaxError) throw new SalableParseError();
         throw new SalableUnknownError();
       }
 
@@ -55,6 +56,7 @@ export default class Salable<V extends TVersion> {
   pricingTables: PricingTableVersionedMethods<V>;
   subscriptions: SubscriptionVersionedMethods<V>;
   licenses: LicenseVersionedMethods<V>;
+  usage: UsageVersionedMethods<V>;
 
   constructor(apiKey: string, version: V) {
     const request = initRequest(apiKey, version);
@@ -64,5 +66,6 @@ export default class Salable<V extends TVersion> {
     this.pricingTables = pricingTablesInit(version, request);
     this.subscriptions = subscriptionsInit(version, request);
     this.licenses = licensesInit(version, request);
+    this.usage = usageInit(version, request);
   }
 }

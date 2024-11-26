@@ -3,6 +3,7 @@ import { generateKeyPairSync } from "crypto";
 import kmsSymmetricEncrypt from "../kms/kms-symmetric-encrypt";
 import getConsoleLoader from "../helpers/console-loading-wheel";
 import { config } from 'dotenv';
+import { StripeData } from "../stripe/create-stripe-test-data";
 
 config({ path: '.env.test' });
 
@@ -23,6 +24,8 @@ export type TestDbData = {
     perSeatMaxPlanUuid: string,
     perSeatMinPlanUuid: string,
     perSeatRangePlanUuid: string,
+    usageBasicMonthlyPlanUuid: string,
+    usageProMonthlyPlanUuid: string,
     currencyUuids: {
         gbp: string
         usd: string
@@ -45,6 +48,8 @@ const perSeatUnlimitedPlanUuid = "cab9b1b0-4b0f-4d6e-9dbb-a647ef1f8834";
 const perSeatMaxPlanUuid = "fe8c96eb-88ea-4261-876c-951cec530e63";
 const perSeatMinPlanUuid = "9cbaf4e7-166a-447d-91ed-662b569b111d";
 const perSeatRangePlanUuid = "4606094a-0cec-40f3-b733-10cf65fdd5ce";
+const usageBasicMonthlyPlanUuid = '14f0c504-489f-4123-8f8d-1612e389c457';
+const usageProMonthlyPlanUuid = '447f2a62-5634-467d-83bb-1b7cead08779';
 const currencyUuids = {
     gbp: 'b1b12bc9-6da7-4fd9-97e5-401d996c261c',
     usd: '6ebfb42a-a78b-481c-bd79-9e857b432af9'
@@ -132,6 +137,8 @@ const apiKeyScopesV2 = [
     "features:read",
     "products:read",
     "sessions:write",
+    "usage:read",
+    "usage:write"
 ];
 
 const { publicKey, privateKey } = generateKeyPairSync("ec", {
@@ -141,6 +148,8 @@ const { publicKey, privateKey } = generateKeyPairSync("ec", {
 });
 
 export default async function createTestData() {
+    const { stripeEnvs } = global as unknown as { stripeEnvs: StripeData }
+
     const loadingWheel = getConsoleLoader('CREATING TEST DATA');
 
     const encryptedPrivateKey = await kmsSymmetricEncrypt(privateKey);
@@ -309,7 +318,7 @@ export default async function createTestData() {
                 create: product.currencies.map((c) => ({
                     currency: { connect: { uuid: c.currencyUuid } },
                     price: 1500,
-                    paymentIntegrationPlanId: process.env.STRIPE_PLAN_PER_SEAT_BASIC_MONTHLY_GBP_ID,
+                    paymentIntegrationPlanId: stripeEnvs.planPerSeatBasicMonthlyGbpId,
                 })),
             },
             features: {
@@ -357,8 +366,8 @@ export default async function createTestData() {
                     currency: { connect: { uuid: c.currencyUuid } },
                     price: 1000,
                     paymentIntegrationPlanId: c.currency.shortName === "GBP"
-                        ? process.env.STRIPE_PLAN_BASIC_MONTHLY_GBP_ID
-                        : process.env.STRIPE_PLAN_BASIC_MONTHLY_USD_ID,
+                        ? stripeEnvs.planBasicMonthlyGbpId
+                        : stripeEnvs.planBasicMonthlyUsdId
                 })),
             },
             features: {
@@ -445,9 +454,7 @@ export default async function createTestData() {
                 create: product.currencies.map((c) => ({
                     currency: { connect: { uuid: c.currencyUuid } },
                     price: 1000,
-                    paymentIntegrationPlanId: c.currency.shortName === "GBP"
-                        ? process.env.STRIPE_PLAN_BASIC_YEARLY_GBP_ID
-                        : process.env.STRIPE_PLAN_BASIC_YEARLY_USD_ID,
+                    paymentIntegrationPlanId: stripeEnvs.planBasicYearlyGbpId
                 })),
             },
             features: {
@@ -534,7 +541,7 @@ export default async function createTestData() {
                 create: productTwo.currencies.map((c) => ({
                     currency: { connect: { uuid: c.currencyUuid } },
                     price: 20,
-                    paymentIntegrationPlanId: process.env.STRIPE_PLAN_USAGE_BASIC_MONTHLY_GBP_ID,
+                    paymentIntegrationPlanId: stripeEnvs.planUsageBasicMonthlyGbpId
                 })),
             },
             features: {
@@ -581,7 +588,7 @@ export default async function createTestData() {
                 create: productTwo.currencies.map((c) => ({
                     currency: { connect: { uuid: c.currencyUuid } },
                     price: 50,
-                    paymentIntegrationPlanId: process.env.STRIPE_PLAN_USAGE_PRO_MONTHLY_GBP_ID,
+                    paymentIntegrationPlanId: stripeEnvs.planUsageProMonthlyGbpId
                 })),
             },
             features: {
@@ -669,7 +676,7 @@ export default async function createTestData() {
                 create: productTwo.currencies.map((c) => ({
                     currency: { connect: { uuid: c.currencyUuid } },
                     price: 100,
-                    paymentIntegrationPlanId: process.env.STRIPE_PLAN_PER_SEAT_UNLIMITED_MONTHLY_GBP_ID,
+                    paymentIntegrationPlanId: stripeEnvs.planPerSeatUnlimitedMonthlyGbpId
                 })),
             },
             features: {
@@ -717,7 +724,7 @@ export default async function createTestData() {
                 create: productTwo.currencies.map((c) => ({
                     currency: { connect: { uuid: c.currencyUuid } },
                     price: 100,
-                    paymentIntegrationPlanId: process.env.STRIPE_PLAN_PER_SEAT_MAXIMUM_MONTHLY_GBP_ID,
+                    paymentIntegrationPlanId: stripeEnvs.planPerSeatMaximumMonthlyGbpId
                 })),
             },
             features: {
@@ -765,7 +772,7 @@ export default async function createTestData() {
                 create: productTwo.currencies.map((c) => ({
                     currency: { connect: { uuid: c.currencyUuid } },
                     price: 400,
-                    paymentIntegrationPlanId: process.env.STRIPE_PLAN_PER_SEAT_MINIMUM_MONTHLY_GBP_ID,
+                    paymentIntegrationPlanId: stripeEnvs.planPerSeatMinimumMonthlyGbpId
                 })),
             },
             features: {
@@ -813,7 +820,103 @@ export default async function createTestData() {
                 create: productTwo.currencies.map((c) => ({
                     currency: { connect: { uuid: c.currencyUuid } },
                     price: 100,
-                    paymentIntegrationPlanId: process.env.STRIPE_PLAN_PER_SEAT_RANGE_MONTHLY_GBP_ID,
+                    paymentIntegrationPlanId: stripeEnvs.planPerSeatRangeMonthlyGbpId
+                })),
+            },
+            features: {
+                create: productTwo.features.map((f) => ({
+                    feature: { connect: { uuid: f.uuid } },
+                    enumValue: {
+                        create: { name: "Access", feature: { connect: { uuid: f.uuid } } },
+                    },
+                    value: getFeatureValue(f.variableName!),
+                    isUnlimited: undefined as boolean | undefined,
+                    isUsage: undefined as boolean | undefined,
+                    pricePerUnit: 10,
+                    minUsage: 1,
+                    maxUsage: 100,
+                })),
+            },
+        },
+        include: { features: { include: { feature: true, enumValue: true } } },
+    });
+
+    await prismaClient.plan.create({
+        data: {
+            organisation: organisationId,
+            pricingType: "paid",
+            licenseType: "metered",
+            name: "Usage Basic Monthly Plan Name",
+            description: "Usage Basic Monthly Plan description",
+            displayName: "Usage Basic Monthly Plan Display Name",
+            uuid: usageBasicMonthlyPlanUuid,
+            product: { connect: { uuid: productTwoUuid } },
+            status: 'ACTIVE',
+            trialDays: 0,
+            evaluation: false,
+            evalDays: 0,
+            interval: 'month',
+            length: 1,
+            active: true,
+            planType: 'Standard',
+            environment: 'dev',
+            paddlePlanId: null,
+            perSeatAmount: 6,
+            maxSeatAmount: 10,
+            visibility: 'public',
+            currencies: {
+                create: productTwo.currencies.map((c) => ({
+                    currency: { connect: { uuid: c.currencyUuid } },
+                    price: 20,
+                    paymentIntegrationPlanId: stripeEnvs.planUsageBasicMonthlyGbpId,
+                })),
+            },
+            features: {
+                create: productTwo.features.map((f) => ({
+                    feature: { connect: { uuid: f.uuid } },
+                    enumValue: {
+                        create: { name: "Access", feature: { connect: { uuid: f.uuid } } },
+                    },
+                    value: getFeatureValue(f.variableName!),
+                    isUnlimited: undefined as boolean | undefined,
+                    isUsage: undefined as boolean | undefined,
+                    pricePerUnit: 10,
+                    minUsage: 1,
+                    maxUsage: 100,
+                })),
+            },
+        },
+        include: { features: { include: { feature: true, enumValue: true } } },
+    });
+
+    await prismaClient.plan.create({
+        data: {
+            organisation: organisationId,
+            pricingType: "paid",
+            licenseType: "metered",
+            name: "Usage Pro Monthly Plan Name",
+            description: "Usage Pro Monthly Plan description",
+            displayName: "Usage Pro Monthly Plan Display Name",
+            uuid: usageProMonthlyPlanUuid,
+            product: { connect: { uuid: productTwoUuid } },
+            status: 'ACTIVE',
+            trialDays: 0,
+            evaluation: false,
+            evalDays: 0,
+            interval: 'month',
+            length: 1,
+            active: true,
+            planType: 'Standard',
+            environment: 'dev',
+            paddlePlanId: null,
+            perSeatAmount: 6,
+            maxSeatAmount: 10,
+            visibility: 'public',
+            currencies: {
+                create: productTwo.currencies.map((c) => ({
+                    currency: { connect: { uuid: c.currencyUuid } },
+                    price: 50,
+                    paymentIntegrationPlanId: stripeEnvs.planUsageProMonthlyGbpId,
                 })),
             },
             features: {
@@ -836,19 +939,19 @@ export default async function createTestData() {
 
     await prismaClient.capabilitiesOnPlans.createMany({
         data: [
-          { capabilityUuid: product.capabilities[0].uuid, planUuid: paidPlanUuid },
-          { capabilityUuid: product.capabilities[0].uuid, planUuid: freeMonthlyPlanUuid },
-          {
-            capabilityUuid: product.capabilities[0].uuid,
-            planUuid: paidYearlyPlanUuid,
-          },
-          { capabilityUuid: product.capabilities[0].uuid, planUuid: freeYearlyPlanUuid },
-          {
-            capabilityUuid: product.capabilities[0].uuid,
-            planUuid: perSeatPaidPlanUuid,
-          },
+            { capabilityUuid: product.capabilities[0].uuid, planUuid: paidPlanUuid },
+            { capabilityUuid: product.capabilities[0].uuid, planUuid: freeMonthlyPlanUuid },
+            {
+                capabilityUuid: product.capabilities[0].uuid,
+                planUuid: paidYearlyPlanUuid,
+            },
+            { capabilityUuid: product.capabilities[0].uuid, planUuid: freeYearlyPlanUuid },
+            {
+                capabilityUuid: product.capabilities[0].uuid,
+                planUuid: perSeatPaidPlanUuid,
+            },
         ],
-      });
+    });
 
     global.db = {
         organisationId,
@@ -867,6 +970,8 @@ export default async function createTestData() {
         perSeatMaxPlanUuid,
         perSeatMinPlanUuid,
         perSeatRangePlanUuid,
+        usageBasicMonthlyPlanUuid,
+        usageProMonthlyPlanUuid,
         currencyUuids
     };
 
