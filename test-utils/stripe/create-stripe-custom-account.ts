@@ -46,7 +46,7 @@ export default async function createStripeCustomAccount() {
         }
     );
 
-    let representative = await stripe.accounts.createPerson(
+    const representative = await stripe.accounts.createPerson(
         account.id,
         {
             first_name: 'Jenny',
@@ -58,7 +58,7 @@ export default async function createStripeCustomAccount() {
         }
     );
 
-    representative = await stripe.accounts.updatePerson(
+    await stripe.accounts.updatePerson(
         account.id,
         representative.id,
         {
@@ -83,7 +83,7 @@ export default async function createStripeCustomAccount() {
         }
     );
 
-    let owner = await stripe.accounts.createPerson(
+    const owner = await stripe.accounts.createPerson(
         account.id,
         {
             first_name: 'Kathleen',
@@ -97,7 +97,7 @@ export default async function createStripeCustomAccount() {
         }
     );
 
-    owner = await stripe.accounts.updatePerson(
+    await stripe.accounts.updatePerson(
         account.id,
         owner.id,
         {

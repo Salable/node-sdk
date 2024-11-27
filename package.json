@@ -15,7 +15,7 @@
     "access": "public"
   },
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "husky",
     "pre-commit": "lint-staged",
     "lint": "eslint . -c eslint.config.mjs",
     "lint:fix": "eslint . -c eslint.config.mjs --fix",
