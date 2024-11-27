@@ -3,7 +3,7 @@ import Stripe from "stripe";
 const STRIPE_KEY = process.env.STRIPE_KEY;
 
 export default async function createStripeCustomAccount() {
-    const stripe = new Stripe(STRIPE_KEY!, {apiVersion: "2024-10-28.acacia"});
+    const stripe = new Stripe(STRIPE_KEY!, { apiVersion: '2023-10-16' });
 
     let account = await stripe.accounts.create({
         country: 'US',
@@ -132,8 +132,8 @@ export default async function createStripeCustomAccount() {
     );
 
     const stripeConnect = new Stripe(STRIPE_KEY!, {
-        apiVersion: "2024-10-28.acacia",
-        stripeAccount: account.id
+      apiVersion: '2023-10-16',
+      stripeAccount: account.id,
     });
 
     // Note: poll account until stripe has completed account verification

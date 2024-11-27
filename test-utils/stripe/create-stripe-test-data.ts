@@ -77,14 +77,14 @@ export default async function createStripeData() {
   }
 
   const stripeConnect = new Stripe(STRIPE_KEY, {
-    apiVersion: "2024-10-28.acacia",
-    stripeAccount: process.env.STRIPE_ACCOUNT_ID
+    apiVersion: '2023-10-16',
+    stripeAccount: process.env.STRIPE_ACCOUNT_ID,
   });
 
   if (!obj.paymentMethodId) {
     const stripePaymentMethod = await stripeConnect.paymentMethods.create({
       type: 'card',
-      card: { token: 'tok_visa' } as Stripe.PaymentMethodCreateParams.Card,
+      card: { token: 'tok_visa' },
     });
     obj.paymentMethodId = stripePaymentMethod.id
   }
