@@ -213,7 +213,7 @@ const stripeInvoiceSchema = {
   amount_paid: expect.any(Number),
   amount_remaining: expect.any(Number),
   amount_shipping: expect.any(Number),
-  application: expect.any(String),
+  application: expect.toBeOneOf([expect.any(String), null]),
   application_fee_amount: expect.toBeOneOf([expect.any(Number), null]),
   attempt_count: expect.any(Number),
   attempted: expect.any(Boolean),
