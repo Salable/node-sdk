@@ -324,8 +324,8 @@ const planSchema: Plan = {
 };
 
 const deleteTestData = async () => {
-  await prismaClient.license.deleteMany({});
-  await prismaClient.subscription.deleteMany({});
+  await prismaClient.license.deleteMany({ where: { OR: [{ uuid: licenseUuid }, { uuid: licenseTwoUuid }, { uuid: licenseThreeUuid }, { uuid: activeLicenseUuid }, { uuid: noSubLicenseUuid }, {uuid: noSubLicenseTwoUuid}, {uuid: noSubLicenseThreeUuid}] } });
+  await prismaClient.subscription.deleteMany({ where: { OR: [{ uuid: subscriptionUuid }] } });
 };
 
 const generateTestData = async () => {
