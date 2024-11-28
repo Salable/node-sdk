@@ -16,7 +16,7 @@ export const v2SubscriptionMethods = (request: ApiRequest): SubscriptionVersions
   getPortalLink: (uuid) => request(getUrl(`${baseUrl}/${uuid}/customer-portal`, {}), { method: 'GET' }),
   getCancelSubscriptionLink: (uuid) => request(getUrl(`${baseUrl}/${uuid}/cancelpaymentlink`, {}), { method: 'GET' }),
   getPaymentMethod: (uuid) => request(getUrl(`${baseUrl}/${uuid}/payment-method`, {}), { method: 'GET' }),
-  reactiveSubscription: (uuid) => request(getUrl(`${baseUrl}/${uuid}/reactivate`, {}), { method: 'PUT' }),
+  reactivateSubscription: (uuid) => request(getUrl(`${baseUrl}/${uuid}/reactivate`, {}), { method: 'PUT' }),
   addSeats: (uuid, options) => request(`${baseUrl}/${uuid}/seats`, { method: 'POST', body: JSON.stringify(options) }),
   removeSeats: (uuid, options): Promise<SubscriptionSeatResponse> =>
     request(getUrl(`${baseUrl}/${uuid}/seats`, {}), {

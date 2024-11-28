@@ -139,7 +139,7 @@ export type SubscriptionVersions = {
      *
      * @returns {Promise<void>}
      */
-    reactiveSubscription: (subscriptionUuid: string) => Promise<void>;
+    reactivateSubscription: (subscriptionUuid: string) => Promise<void>;
 
     /**
      *  Incrementing will create unassigned licenses.
