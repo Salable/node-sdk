@@ -13,7 +13,7 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}', 'v2');
 
-const licenseCount = await salable.licenses.getCount({subscriptionUuid: '1234', status: 'ACTIVE'});
+const licenseCount = await salable.licenses.getCount({subscriptionUuid: 'subscription_1', status: 'ACTIVE'});
 ```
 
 ## Parameters

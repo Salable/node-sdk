@@ -16,9 +16,9 @@ import { Salable } from '@salable/node-sdk';
 const salable = new Salable('{{API_KEY}}', 'v2');
 
 const license = await salable.licenses.create({
-  planUuid: '{{PLAN_UUID}}',
+  planUuid: 'plan_1',
   member: 'orgId_1234',
-  granteeId: 'userId-1',
+  granteeId: 'userId_1',
   status: 'ACTIVE',
   endTime: '2025-07-06T12:00:00.000Z',
 });

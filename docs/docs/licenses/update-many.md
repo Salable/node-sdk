@@ -14,8 +14,8 @@ import { Salable } from '@salable/node-sdk';
 const salable = new Salable('{{API_KEY}}', 'v2');
 
 const updatedLicenses = await salable.licenses.updateMany([
-  { granteeId: 'userId_1', uuid: '{{LICENSE_UUID_ONE}}' },
-  { granteeId: 'userId_2', uuid: '{{LICENSE_UUID_TWO}}' },
+  { granteeId: 'userId_1', uuid: 'license_1' },
+  { granteeId: 'userId_2', uuid: 'license_2' },
 ]);
 ```
 

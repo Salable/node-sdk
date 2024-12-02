@@ -13,7 +13,7 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}', 'v2');
 
-await salable.licenses.cancelMany(['license1', 'license2']);
+await salable.licenses.cancelMany(['license_1', 'license_2']);
 ```
 
 ## Parameters

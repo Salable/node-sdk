@@ -18,15 +18,15 @@ const verified = salable.licenses.verify({
     signature: 'license_check_signature',
     payload: JSON.stringify([
         {
-            capability: 'capability1', 
+            capability: 'capability_1', 
             expiry: '2024-08-14T13:15:49.310Z'
         },
         {
-            capability: 'capability2', 
+            capability: 'capability_2', 
             expiry: '2024-08-14T13:32:29.313Z'
         },
         {
-            capability: 'capability3', 
+            capability: 'capability_3', 
             expiry: '2024-08-14T13:32:29.313Z'
         }
     ]),

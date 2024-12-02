@@ -17,16 +17,16 @@ const salable = new Salable('{{API_KEY}}', 'v2');
 
 const license = await salable.licenses.createMany([
   {
-    planUuid: '{{PLAN_UUID}}',
+    planUuid: 'plan_1',
     member: 'orgId_1234',
-    granteeId: 'userId-1',
+    granteeId: 'userId_1',
     status: 'ACTIVE',
     endTime: '2025-07-06T12:00:00.000Z',
   },
   {
-    planUuid: '{{PLAN2_UUID}}',
+    planUuid: 'plan_2',
     member: 'orgId_1234',
-    granteeId: 'userId-2',
+    granteeId: 'userId_2',
     status: 'ACTIVE',
     endTime: '2025-07-06T12:00:00.000Z',
   }

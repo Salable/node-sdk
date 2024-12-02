@@ -15,7 +15,7 @@ const salable = new Salable('{{API_KEY}}', 'v2');
 
 const check = await salable.licenses.check({
     productUuid: 'product1',
-    granteeIds: ['grantee1', 'grantee2'],
+    granteeIds: ['grantee_1', 'grantee_2'],
 });
 ```
 
