@@ -1,5 +1,5 @@
 ---
-sidebar_position: 7
+sidebar_position: 5
 ---
 
 # Get Licenses Count
@@ -11,24 +11,21 @@ This method returns aggregate count number of Licenses.
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}');
+const salable = new Salable('{{API_KEY}}', 'v2');
 
-const licenseCount = await salable.licenses.getCount('{{SUBSCRIPTION_UUID}}');
+const licenseCount = await salable.licenses.getCount({subscriptionUuid: '1234', status: 'ACTIVE'});
 ```
 
 ## Parameters
 
-#### subscriptionUuid (_required_)
+#### options
 
-_Type:_ `string`
+_Type:_ `GetLicenseCountOptions`
 
-The `uuid` of the subscription to filter the license count
-
-#### status
-
-_Type:_ `string`
-
-The `status` of the license to filter by
+| Option                      | Type   | Description              |
+| --------------------------- | ------ | ------------------------ |
+| subscriptionUuid (optional) | string | Filter by subscription   |
+| status (optional)           | string | Filter by license status |
 
 ## Return Type
 

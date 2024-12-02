@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 6
 ---
 
 # Get Licenses for a Purchaser
@@ -11,32 +11,22 @@ Returns licenses for a purchaser on a product
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}');
+const salable = new Salable('{{API_KEY}}', 'v2');
 
-const licenses = await salable.licenses.getForPurchaser('orgId_1', '{{PRODUCT_UUID}}');
+const licenses = await salable.licenses.getForPurchaser({purchaser: 'purchaser1', productUuid: '1234', status: 'ACTIVE'});
 ```
 
 ## Parameters
 
-#### purchaser (_required_)
+#### purchaserData
 
-_Type:_ `string`
+_Type:_ `GetPurchasersLicensesOptions`
 
-The purchaser of the license
-
-#### productUuid (_required_)
-
-_Type:_ `string`
-
-The `uuid` of the product which the license gives access to
-
-#### options
-
-_Type:_ `LicenseGetByPurchaserOptions`
-
-| Option | Description              |
-| ------ | ------------------------ |
-| status | Filter by license status |
+| Option            | Type   | Description                                |
+| ----------------- | ------ | ------------------------------------------ |
+| purchaser         | string | The purchaser of the licenses to fetch for |
+| productUuid       | string | The UUID of the product                    |
+| status (optional) | string | Filter by license status                   |
 
 ## Return Type
 

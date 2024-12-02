@@ -11,14 +11,14 @@ This method updates specific Licenses with the values passed into the body of th
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}');
+const salable = new Salable('{{API_KEY}}', 'v2');
 
-const updatedLicense = await salable.licenses.updateMany([ await salable.licenses.update('{{LICENSE_UUID}}', 'userId_2');
+const updatedLicense = await salable.licenses.update('license1', { granteeId: 'updated-grantee-id' });
 ```
 
 ## Parameters
 
-##### licenseUuid (_required_)
+#### licenseUuid (_required_)
 
 _Type:_ `string`
 
@@ -26,11 +26,13 @@ The `uuid` of the license to be updated
 
 ---
 
-##### granteeId (_required_)
+#### updateData (_required_)
 
-_Type:_ `string` or `null`
+_Type:_ `{ granteeId: string }`
 
-The value of the new granteeId. To un-assign the license set the `granteeId` to `null`.
+| Option    | Type   | Description              |
+| --------- | ------ | ------------------------ |
+| granteeId | string | The new grantee ID value |
 
 ## Return Type
 

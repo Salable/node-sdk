@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 4
 ---
 
 # Get One License
@@ -11,10 +11,28 @@ Returns a single license
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}');
+const salable = new Salable('{{API_KEY}}', 'v2');
 
-const license = await salable.licenses.getOne('{{LICENSE_UUID}}');
+const license = await salable.licenses.getOne('license1', { expand: 'plan' });
 ```
+
+## Parameters
+
+#### licenseUuid (_required_)
+
+_Type:_ `string`
+
+The UUID of the license
+
+---
+
+#### options
+
+_Type:_ `{ expand: string }`
+
+| Option            | Type   | Description                                                   |
+| ----------------- | ------ | ------------------------------------------------------------- |
+| expand (optional) | string | Specify which properties to expand. e.g. `{ expand: 'plan' }` |
 
 ## Return Type
 

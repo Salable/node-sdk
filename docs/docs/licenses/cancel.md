@@ -1,5 +1,5 @@
 ---
-sidebar_position: 10
+sidebar_position: 11
 ---
 
 # Cancel License
@@ -11,14 +11,14 @@ This method will cancel an ad hoc License
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}');
+const salable = new Salable('{{API_KEY}}', 'v2');
 
-await salable.licenses.cancel('{{LICENSE_UUID}}');
+await salable.licenses.cancel('license1');
 ```
 
 ## Parameters
 
-##### licenseUuid (_required_)
+#### licenseUuid (_required_)
 
 _Type:_ `string`
 

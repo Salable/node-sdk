@@ -11,7 +11,7 @@ This method updates many Licenses with the values passed into the body of the re
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}');
+const salable = new Salable('{{API_KEY}}', 'v2');
 
 const updatedLicenses = await salable.licenses.updateMany([
   { granteeId: 'userId_1', uuid: '{{LICENSE_UUID_ONE}}' },
@@ -23,21 +23,13 @@ const updatedLicenses = await salable.licenses.updateMany([
 
 ### updateManyConfig (_required_)
 
-_Type:_ `IUpdateManyLicenseInput[]`
+_Type:_ `UpdateManyLicenseInput[]`
 
-All config options which can be passed in to this method
+| Option    | Type   | Description                       |
+| --------- | ------ | --------------------------------- |
+| granteeId | string | The new grantee ID value          |
+| uuid      | string | The UUID of the license to update |
 
-#### uuid (_required_)
-
-_Type:_ `string`
-
-The `uuid` of the license to be updated
-
-#### granteeId (_required_)
-
-_Type:_ `string` or `null`
-
-The value of the new granteeId. To un-assign a license set the `granteeId` to `null`.
 
 ## Return Type
 

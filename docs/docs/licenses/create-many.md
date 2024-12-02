@@ -1,34 +1,43 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
-# Create License
+# Create Many Licenses
 
-This method creates an ad hoc license
+This method creates many ad hoc licenses
 
 ## Code Sample
 
-### Create one
+### Create Many
 
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}', 'v2');
 
-const license = await salable.licenses.create({
-  planUuid: '{{PLAN_UUID}}',
-  member: 'orgId_1234',
-  granteeId: 'userId-1',
-  status: 'ACTIVE',
-  endTime: '2025-07-06T12:00:00.000Z',
-});
+const license = await salable.licenses.createMany([
+  {
+    planUuid: '{{PLAN_UUID}}',
+    member: 'orgId_1234',
+    granteeId: 'userId-1',
+    status: 'ACTIVE',
+    endTime: '2025-07-06T12:00:00.000Z',
+  },
+  {
+    planUuid: '{{PLAN2_UUID}}',
+    member: 'orgId_1234',
+    granteeId: 'userId-2',
+    status: 'ACTIVE',
+    endTime: '2025-07-06T12:00:00.000Z',
+  }
+]);
 ```
 
 ## Parameters
 
 #### options
 
-_Type:_ `CreateAdhocLicenseInput`
+_Type:_ `CreateAdhocLicenseInput[]`
 
 | Option               | Type   | Description                                                                                                           |
 | -------------------- | ------ | --------------------------------------------------------------------------------------------------------------------- |

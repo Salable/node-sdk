@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 7
 ---
 
 # Get Licenses for a Grantee ID
@@ -11,9 +11,9 @@ Returns licenses for a grantee ID
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}');
+const salable = new Salable('{{API_KEY}}', 'v2');
 
-const licenses = await salable.licenses.getForGranteeId('userId_1');
+const licenses = await salable.licenses.getForGranteeId('userId_1', { expand: 'plan' });
 ```
 
 ## Parameters
@@ -23,6 +23,16 @@ const licenses = await salable.licenses.getForGranteeId('userId_1');
 _Type:_ `string`
 
 The grantee ID of the licenses
+
+---
+
+#### options
+
+_Type:_ `{ expand: string }`
+
+| Option            | Type   | Description                                                   |
+| ----------------- | ------ | ------------------------------------------------------------- |
+| expand (optional) | string | Specify which properties to expand. e.g. `{ expand: 'plan' }` |
 
 ## Return Type
 
