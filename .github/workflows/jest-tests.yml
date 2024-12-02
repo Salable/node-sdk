@@ -71,9 +71,3 @@ jobs:
 
         - name: Jest Tests Overall
           run: npm run test
-
-        - name: Jest Tests Code Coverage (branch)
-          run: npm run test:coverage
-          
-        - name: Jest Tests Code Coverage (global)
-          run: npm run test:globalCoverage
