@@ -2,7 +2,7 @@
 sidebar_position: 6
 ---
 
-# Get Currencies
+# Get Currencies for a product
 
 Returns a list of all the currencies associated with a product
 
@@ -13,9 +13,17 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}');
 
-const currencies = await salable.products.getCurrencies();
+const currencies = await salable.products.getCurrencies('{{productUuid}}');
 ```
+
+## Parameters
+
+#### productUuid (_required_)
+
+_Type:_ `string`
+
+The UUID of the Product
 
 ## Return Type
 
-For more information about this request see our API documentation on [Product Currency Object](https://docs.salable.app/api#tag/Products/operation/getProductCurrencies)
+For more information about this request see our API documentation on [Product Currency Object](https://docs.salable.app/api/v2#tag/Products/operation/getProductCurrencies)

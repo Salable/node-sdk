@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Get All
+# Get All Products
 
 Returns a list of all the products created by your Salable organization
 
@@ -18,4 +18,4 @@ const products = await salable.products.getAll();
 
 ## Return Type
 
-For more information about this request see our API documentation on [Product Object](https://docs.salable.app/api#tag/Products/operation/getProductByUuid)
+For more information about this request see our API documentation on [Product Object](https://docs.salable.app/api/v2#tag/Products/operation/getProducts)

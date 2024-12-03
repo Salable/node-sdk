@@ -13,9 +13,17 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}');
 
-const currencies = await salable.products.getCapabilities();
+const currencies = await salable.products.getCapabilities('{{productUuid}}');
 ```
+
+## Parameters
+
+#### productUuid (_required_)
+
+_Type:_ `string`
+
+The UUID of the Product
 
 ## Return Type
 
-For more information about this request see our API documentation on [Capability Object](https://docs.salable.app/api#tag/Products/operation/getProductCapabilities)
+For more information about this request see our API documentation on [Product Capability Object](https://docs.salable.app/api/v2#tag/Products/operation/getProductCapabilities)
