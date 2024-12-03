@@ -13,9 +13,9 @@ Returns the checkout link for a plan. This endpoint will only work for paid Plan
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}');
+const salable = new Salable('{{API_KEY}}', 'v2');
 
-const checkoutLink = await salable.plans.getCheckoutLink('{{PLAN_UUID}}', {
+const checkoutLink = await salable.plans.getCheckoutLink('plan_1', {
   cancelUrl: 'https://example.com/cancel',
   successUrl: 'https://example.com/success',
   granteeId: 'userId-1',
@@ -30,87 +30,40 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}');
 
-const checkoutLink = await salable.plans.getCheckoutLink('{{PLAN_UUID}}', {
+const checkoutLink = await salable.plans.getCheckoutLink('plan_1', {
   cancelUrl: 'https://example.com/cancel',
   successUrl: 'https://example.com/success',
   granteeId: 'userId-1',
   member: 'orgId_1',
-  customer: {
-    email: 'person@company.com',
-  },
-});
-```
-
-#### VAT (Paddle only)
-
-```typescript
-import { Salable } from '@salable/node-sdk';
-
-const salable = new Salable('{{API_KEY}}');
-
-const checkoutLink = await salable.plans.getCheckoutLink('{{PLAN_UUID}}', {
-  cancelUrl: 'https://example.com/cancel',
-  successUrl: 'https://example.com/success',
-  granteeId: 'userId-1',
-  member: 'orgId_1',
-  vat: {
-    number: 'GB123456789',
-    companyName: 'Company',
-    street: '1 Street Name',
-    city: 'City',
-    state: 'State',
-    country: 'GB',
-    postcode: 'NR1 1RN',
-  },
+  customerEmail: 'person@company.com',
 });
 ```
 
 ## Parameters
 
-##### planId (_required_)
+#### planUuid (_required_)
 
 _Type:_ `string`
 
 The `uuid` of the Plan to get the checkout link from
 
-##### queryParams (_required_)
+#### options (_required_)
 
-_Type:_ `IPlanCheckoutInputParams`
+_Type:_ `GetPlanCheckoutOptions`
 
 Query parameters to be passed in to the checkout config
 
-| **Parameter**    | **Description**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | **Required** |
-| :--------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------: |
-| successUrl       | The URL to send users if they have successfully completed a purchase                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |      ✅      |
-| cancelUrl        | The URL to send users to if the transaction fails.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |      ✅      |
-| member           | The purchaser of the license                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |      ✅      |
-| granteeId        | Value to use as granteeId on Plan                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |      ✅      |
-| marketingConsent | Opt user in to marketing                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |      ❌      |
-| couponCode       | Coupon code to be used in checkout                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |      ❌      |
-| promoCode        | If your service offers promotional codes, use the `promoCode` parameter to automatically fill in these codes during checkout. Make sure these codes are already configured in your payment provider.<br/>**Stripe**<br/>Provide the Stripe Promotion Code ID to the `promoCode` parameter, you can find this in your Stripe dashboard. For guidance on creating a promotion code in Stripe, consult their [documentation](https://stripe.com/docs/billing/subscriptions/coupons). Make sure to use the ID and not the promo code itself.<br/>_Note_: If a promo code is applied this way, customers will not have the ability to modify it in the checkout. If you would prefer to give customers the option to enter a promo code themselves, you can use the `allowPromoCode` parameter instead.<br/>**Paddle**<br/>Pass the coupon code that you have created in the Paddle dashboard directly into the `promoCode` parameter. Users can modify this manually in the checkout later. |      ❌      |
-| allowPromoCode   | The `allowPromoCode` parameter controls the visibility and functionality of the Promotion Code field in your checkout process.<br/>**Stripe**<br/>In Stripe, you can use either `allowPromoCode` or `promoCode`, but not both simultaneously. Setting `allowPromoCode` to true displays the promo code field, allowing customers to enter a code.<br/>_Note_: If you would prefer to use a pre-filled specific promo code, use the `promoCode` parameter with the Promotion Code ID from your Stripe dashboard. Remember, using `promoCode` in Stripe means customers cannot modify the code during checkout.<br/>**Paddle**<br/>By default, this is set to true. Setting `allowPromoCode` to false will hide the promo code field in the checkout. If you're using the `promoCode` parameter to pre-fill a code, the user can still modify it during checkout.                                                                                                                         |      ❌      |
-| currency         | Shortname of the currency to be used in the checkout. The currency must be added to the plan's product in Salable. If not specified, it defaults to the currency selected on the product.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |      ❌      |
-| quantity         | Only applicable for per seat plans. Set the amount of seats the customer pays for in the checkout.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |      ❌      |
-| customer.email   | Pre fills email for checkout customer                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |      ❌      |
-
-See [code example](#customer-details) with customer details
-
-##### Paddle specific parameters
-
-| **Parameter**     | **Description**                                                    | **Required** |
-| :---------------- | :----------------------------------------------------------------- | :----------: |
-| vat.number        | Prefill the checkout form with the customer's VAT number           |      ❌      |
-| vat.companyName   | Prefill the checkout form with the customer's Company Name for VAT |      ❌      |
-| vat.street        | Prefill the checkout form with the customer's Street for VAT       |      ❌      |
-| vat.city          | Prefill the checkout form with the customer's city for VAT         |      ❌      |
-| vat.state         | Prefill the checkout form with the customer's state for VAT        |      ❌      |
-| vat.country       | Prefill the checkout form with the customer's country for VAT      |      ❌      |
-| vat.postcode      | Prefill the checkout form with the customer's postcode for VAT     |      ❌      |
-| customMessage     | Add a message to show in Paddle checkout                           |      ❌      |
-| customer.country  | Pre fills country for checkout customer                            |      ❌      |
-| customer.postcode | Pre fills postcode for checkout customer                           |      ❌      |
-
-See [code example](#vat-paddle-only) with VAT parameters
+| **Parameter** | **Type** | **Description** | **Required** |
+| :------------ |:------| :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------: |
+| successUrl    | string |  The URL to send users if they have successfully completed a purchase                                                                                                                      |      ✅       |
+| cancelUrl     |string | The URL to send users to if the transaction fails.                                                                                                                                        |      ✅       |
+| member        | string |The purchaser of the license                                                                                                                                                              |      ✅       |
+| granteeId     | string |Value to use as granteeId on Plan                                                                                                                                                         |      ✅       |
+| promoCode     | string |Enables the promo code field in Stripe checkout. Cannot be used with promoCode.                                                                                                           |      ❌       |
+| currency      | string |Shortname of the currency to be used in the checkout. The currency must be added to the plan's product in Salable. If not specified, it defaults to the currency selected on the product. |      ❌       |
+| quantity      | string |Only applicable for per seat plans. Set the amount of seats the customer pays for in the checkout.                                                                                        |      ❌       |
+| customerEmail | string |Pre fills email for checkout customer                                                                                                                                                     |      ❌       |
+| automaticTax  | string |Automatically calculate tax on checkout based on customers location and your Stripe settings.                                                                                             |      ❌       |
 
 ## Return Type
 

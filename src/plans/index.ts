@@ -1,5 +1,5 @@
 import { ApiRequest, TVersion, Version } from '..';
-import { Plan, PlanCheckout, PlanFeature, PlanCapability, PlanCurrency } from '../types';
+import { Plan, PlanCheckout, PlanFeature, PlanCapability, PlanCurrency, GetPlanCheckoutOptions } from '../types';
 import { v2PlanMethods } from './v2';
 
 export type PlanVersions = {
@@ -21,40 +21,18 @@ export type PlanVersions = {
     ) => Promise<Plan>;
 
     /**
-     * Retrieves a checkout link for a specific plan. The checkout link can be used by customers to purchase the plan.
-     *
-     * @param  {string} planUuid The UUID of the plan
-     *
-     * Docs - https://docs.salable.app/api/v2#tag/Plans/operation/getPlanCheckoutLink
-     *
-     * @returns {Promise<PlanCheckout>}
-     */
 
     /**
      * Retrieves a checkout link for a specific plan. The checkout link can be used by customers to purchase the plan.
      *
      * @param  {string} planUuid The UUID of the plan
-     * @param {{ successUrl: string; cancelUrl: string; granteeId: string; member: string; promoCode?: string;allowPromoCode?: boolean; customerEmail?: string; customerId?: string; currency?: string; automaticTax?: string; quantity?: string; changeQuantity?: string; requirePaymentMethod?: boolean; }} options - (Optional) Filter parameters. See https://docs.salable.app/api/v2#tag/Plans/operation/getPlanCheckoutLink
+     * @param {GetPlanCheckoutOptions} options - (Optional) Filter parameters. See https://docs.salable.app/api/v2#tag/Plans/operation/getPlanCheckoutLink
      *
      * @returns {Promise<ProductCapability[]>}
      */
     getCheckoutLink: (
       planUuid: string,
-      options: {
-        successUrl: string;
-        cancelUrl: string;
-        granteeId: string;
-        member: string;
-        promoCode?: string;
-        allowPromoCode?: boolean;
-        customerEmail?: string;
-        customerId?: string;
-        currency?: string;
-        automaticTax?: string;
-        quantity?: string;
-        changeQuantity?: string;
-        requirePaymentMethod?: boolean;
-      },
+      options: GetPlanCheckoutOptions
     ) => Promise<PlanCheckout>;
 
     /**

@@ -28,11 +28,11 @@ The grantee ID of the licenses
 
 #### options
 
-_Type:_ `{ expand: string }`
+_Type:_ `{ expand: string[] }`
 
-| Option            | Type   | Description                                                   |
-| ----------------- | ------ | ------------------------------------------------------------- |
-| expand (optional) | string | Specify which properties to expand. e.g. `{ expand: 'plan' }` |
+| Option | Type   | Description                                                     | Required |
+| ------ | ------ | --------------------------------------------------------------- | -------- |
+| expand | string | Specify which properties to expand. e.g. `{ expand: ['plan'] }` | ❌        |
 
 ## Return Type
 

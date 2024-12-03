@@ -35,15 +35,15 @@ const verified = salable.licenses.verify({
 
 ## Parameters
 
-#### verifyLicenseData (_required_)
+#### verifyLicenseParams (_required_)
 
 _Type:_ `{ publicKey: String; signature: String; payload: String }`
 
-| Option    | Type   | Description                                    |
-| --------- | ------ | ---------------------------------------------- |
-| publicKey | string | The public key belonging to your organisation  |
-| signature | string | The signature returned from a license check    |
-| payload   | string | The capabilities returned from a license check |
+| Option    | Type   | Description                                    | Required |
+| --------- | ------ | ---------------------------------------------- | -------- |
+| publicKey | string | The public key belonging to your organisation  | ✅        |
+| signature | string | The signature returned from a license check    | ✅        |
+| payload   | string | The capabilities returned from a license check | ✅        |
 
 ## Return Type
 

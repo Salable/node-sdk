@@ -18,15 +18,15 @@ const licenses = await salable.licenses.getForPurchaser({purchaser: 'purchaser_1
 
 ## Parameters
 
-#### purchaserData
+#### getForPurchaserOptions (_required_)
 
 _Type:_ `GetPurchasersLicensesOptions`
 
-| Option            | Type   | Description                                |
-| ----------------- | ------ | ------------------------------------------ |
-| purchaser         | string | The purchaser of the licenses to fetch for |
-| productUuid       | string | The UUID of the product                    |
-| status (optional) | string | Filter by license status                   |
+| Option      | Type   | Description                                | Required |
+| ----------- | ------ | ------------------------------------------ | -------- |
+| purchaser   | string | The purchaser of the licenses to fetch for | ✅        |
+| productUuid | string | The UUID of the product                    | ✅        |
+| status      | string | Filter by license status                   | ❌        |
 
 ## Return Type
 

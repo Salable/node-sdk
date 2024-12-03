@@ -22,10 +22,10 @@ const licenseCount = await salable.licenses.getCount({subscriptionUuid: 'subscri
 
 _Type:_ `GetLicenseCountOptions`
 
-| Option                      | Type   | Description              |
-| --------------------------- | ------ | ------------------------ |
-| subscriptionUuid (optional) | string | Filter by subscription   |
-| status (optional)           | string | Filter by license status |
+| Option           | Type   | Description              | Required |
+| ---------------- | ------ | ------------------------ | -------- |
+| subscriptionUuid | string | Filter by subscription   | ❌        |
+| status           | string | Filter by license status | ❌        |
 
 ## Return Type
 

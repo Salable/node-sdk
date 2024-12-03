@@ -21,15 +21,15 @@ const check = await salable.licenses.check({
 
 ## Parameters
 
-#### checkLicenseData (_required_)
+#### checkLicenseParams (_required_)
 
 _Type:_ `CheckLicenseInput`
 
-| Option               | Type     | Description                        |
-| -------------------- | -------- | ---------------------------------- |
-| grantproductUuideeId | string   | The UUID of the product            |
-| granteeIds           | string[] | An array of grantee IDs            |
-| grace (optional)     | number   | Optional grace period to filter by |
+| Option               | Type     | Description                        | Required |
+| -------------------- | -------- | ---------------------------------- | -------- |
+| grantproductUuideeId | string   | The UUID of the product            | ✅        |
+| granteeIds           | string[] | An array of grantee IDs            | ✅        |
+| grace                | number   | Optional grace period to filter by | ❌        |
 
 ## Return Type
 

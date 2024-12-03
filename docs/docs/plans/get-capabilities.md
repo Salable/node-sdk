@@ -11,14 +11,14 @@ Returns a list of all the Capabilities associated with a Plan
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}');
+const salable = new Salable('{{API_KEY}}', 'v2');
 
-const plan = await salable.plans.getCapabilities('{{PLAN_UUID}}');
+const plan = await salable.plans.getCapabilities('plan_1');
 ```
 
 ## Parameters
 
-##### planId (_required_)
+##### planUuid (_required_)
 
 _Type:_ `string`
 
