@@ -15,7 +15,7 @@
     "access": "public"
   },
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "husky",
     "pre-commit": "lint-staged",
     "lint": "eslint . -c eslint.config.mjs",
     "lint:fix": "eslint . -c eslint.config.mjs --fix",
@@ -44,6 +44,7 @@
     "@sentry/node": "^7.81.1",
     "@types/jest": "^29.5.13",
     "@types/node": "^22.7.0",
+    "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^8.7.0",
     "date-fns": "^4.1.0",
     "dotenv": "^16.3.1",
@@ -63,10 +64,10 @@
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-typescript2": "^0.36.0",
     "semantic-release": "^24.1.1",
-    "stripe": "^17.3.0",
+    "stripe": "^14.18.0",
     "ts-jest": "^29.2.5",
     "typescript": "^5.6.2",
     "typescript-eslint": "^8.10.0",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.1"
   }
 }
