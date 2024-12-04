@@ -26,13 +26,13 @@ The `uuid` of the license to be updated
 
 ---
 
-#### updateData (_required_)
+#### updateLicenseParams (_required_)
 
 _Type:_ `{ granteeId: string }`
 
-| Option    | Type   | Description              |
-| --------- | ------ | ------------------------ |
-| granteeId | string | The new grantee ID value |
+| Option    | Type   | Description              | Required |
+| --------- | ------ | ------------------------ | -------- |
+| granteeId | string | The new grantee ID value | ✅        |
 
 ## Return Type
 

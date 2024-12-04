@@ -11,18 +11,29 @@ Returns the details of a single plan.
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}');
+const salable = new Salable('{{API_KEY}}', 'v2');
 
-const plan = await salable.plans.getOne('{{PLAN_UUID}}');
+const plan = await salable.plans.getOne('plan_1', { expand: ['product'] });
 ```
 
 ## Parameters
 
-##### planId (_required_)
+#### planUuid (_required_)
 
 _Type:_ `string`
 
 The `uuid` of the Plan to be returned
+
+---
+
+#### options
+
+_Type:_ `{ expand: string[] }`
+
+| Option | Type   | Description                                                        | Required |
+| ------ | ------ | ------------------------------------------------------------------ | -------- |
+| expand | string | Specify which properties to expand. e.g. `{ expand: ['product'] }` | ❌        |
+
 
 ## Return Type
 

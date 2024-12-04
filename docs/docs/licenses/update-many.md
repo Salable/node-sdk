@@ -21,14 +21,14 @@ const updatedLicenses = await salable.licenses.updateMany([
 
 ## Parameters
 
-### updateManyConfig (_required_)
+### updateManyLicensesParams(_required_)
 
 _Type:_ `UpdateManyLicenseInput[]`
 
-| Option    | Type   | Description                       |
-| --------- | ------ | --------------------------------- |
-| granteeId | string | The new grantee ID value          |
-| uuid      | string | The UUID of the license to update |
+| Option    | Type   | Description                       | Required |
+| --------- | ------ | --------------------------------- | -------- |
+| granteeId | string | The new grantee ID value          | ✅        |
+| uuid      | string | The UUID of the license to update | ✅        |
 
 
 ## Return Type
