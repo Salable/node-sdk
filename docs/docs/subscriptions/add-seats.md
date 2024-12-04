@@ -1,8 +1,8 @@
 ---
-sidebar_position: 4
+sidebar_position: 12
 ---
 
-# Add Subscription Seats
+# Increment Subscription Seats
 
 Adds seats to a Subscription. Initially the seats will be unassigned. To assign granteeIds to the seats use the [update many](../licenses/update-many.md) method.
 
@@ -11,23 +11,29 @@ Adds seats to a Subscription. Initially the seats will be unassigned. To assign 
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}');
+const salable = new Salable('{{API_KEY}}', 'v2');
 
-await salable.subscriptions.addSeats('{{SUBSCRIPTION_UUID}}', { increment: 2 });
+await salable.subscriptions.addSeats('{{subscriptionUuid}}', { increment: 2 });
 ```
 
 ## Parameters
 
-##### subscriptionId (_required_)
+#### subscriptionUuid (_required_)
 
 _Type:_ `string`
 
-The `uuid` of the Subscription where the seats will be added
+The UUID of the Subscription
 
-##### config (_required_)
+#### Options (_required_)
 
-_Type:_ `ISubscriptionAddSeatsParams`
+_Type:_ `{ increment: number, proration: string }`
 
-| Option    | Description                       |
-| --------- | --------------------------------- |
-| increment | The number of seats to be created |
+| Option    | Type                 | Description                       | Required |
+| --------- | -------------------- | --------------------------------- | -------- |
+| increment | number               | The number of seats to be created | ✅       |
+| proration | Proration behaviour  | `create_prorations`: Will cause proration invoice items to be created when applicable (default). `none`: Disable creating prorations in this request. `always_invoice`: Always invoice immediately for prorations.  | ❌   |
+
+
+## Return Type
+
+For more information about this request see our API documentation on [Subscription Seat Object](https://docs.salable.app/api/v2#tag/Subscriptions/operation/incrementSubscriptionSeats)
