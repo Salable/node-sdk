@@ -15,7 +15,7 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}');
 
-const pricingTable = await salable.products.getPricingTable('{{productUuid}}', {
+const pricingTable = await salable.products.getPricingTable('product_1', {
   granteeId: 'granteeid@email.com',
 });
 ```
@@ -37,9 +37,9 @@ _Type:_ `PricingTableParameters`
 Below is the list of properties than can be used in the `queryParams` argument.
 
 | Parameter | Description                                                                                                       | Required |
-| :-------- | :---------------------------------------------------------------------------------------------------------------- | :------: |
-| granteeId | The unique identifier for the grantee                                                                             |    ✅    |
-| currency  | Uses the currency short name e.g USD, defaults to the default currency on the product which the plan is linked to |    ❌    |
+| --------- | ----------------------------------------------------------------------------------------------------------------- | -------- |
+| granteeId | The unique identifier for the grantee                                                                             | ✅       |
+| currency  | Uses the currency short name e.g USD, defaults to the default currency on the product which the plan is linked to | ❌       |
 
 ## Return Type
 

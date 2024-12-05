@@ -13,7 +13,7 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}', 'v2');
 
-const product = await salable.products.getOne('{{productUuid}}');
+const product = await salable.products.getOne('product_1');
 ```
 
 ## Parameters
@@ -28,11 +28,11 @@ The UUID of the Product to be returned
 
 #### options
 
-_Type:_ `{ expand: array of string }`
+_Type:_ `GetProductOptions`
 
-| Option            | Type             | Description                                                                  |
-| ----------------- | ---------------- | ---------------------------------------------------------------------------- |
-| expand (optional) | Array of strings | Specify which properties to expand. e.g. `{ expand: ['features', 'plans'] }` |
+| Option | Type     | Description                                                                  | Required |
+| ------ | -------- | ---------------------------------------------------------------------------- | -------- |
+| expand | string[] | Specify which properties to expand. e.g. `{ expand: ['features', 'plans'] }` | ❌       |
 
 ## Return Type
 
