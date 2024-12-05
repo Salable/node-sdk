@@ -11,10 +11,6 @@ sidebar_position: 2
 - Salable API versions are now supported and `Version` is now a required argument upon `Salable` instantiation. (Currently supports `v2`)
   - Support for `v1` of the Salable API has been deprecated
 
-### RBAC (DEPRECATED)
-
-- All RBAC methods have been deprecated and currently not supported by the SDK
-
 ### Licenses
 
 - `getAll` now supports cursor based pagination, licenses can also be filtered by `status` and `subscriptionUuid`
@@ -66,6 +62,10 @@ sidebar_position: 2
 - `getAllUsageRecords` gets all usage records for grantee's metered licenses
 - `getCurrentUsageRecord` gets current usage record for grantee on plan
 - `updateLicenseUsage` updates a license's usage
+
+### RBAC (DEPRECATED)
+
+- All RBAC methods have been deprecated and currently not supported by the SDK
 
 ### Other Changes
 
