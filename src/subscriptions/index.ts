@@ -7,8 +7,7 @@ export type SubscriptionVersions = {
     /**
      *  Retrieves a list of all subscriptions.
      *
-     *  @param {string} subscriptionUuid - The UUID of the subscription
-     *
+     *  @param {{ status?: SubscriptionStatus; email?: string; cursor?: string; take?: string; expand?: string[] }} options - Filter and pagination options
      *
      * Docs - https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptions
      *

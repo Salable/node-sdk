@@ -4,6 +4,75 @@ sidebar_position: 2
 
 # Changelog
 
+## v4.0.0
+
+### Breaking Changes
+
+- Salable API versions are now supported and `Version` is now a required argument upon `Salable` instantiation. (Currently supports `v2`)
+  - Support for `v1` of the Salable API has been deprecated
+
+### Licenses
+
+- `getAll` now supports cursor based pagination, licenses can also be filtered by `status` and `subscriptionUuid`
+- `getOne` and `getForGranteeId` now offer an `expand` option to expand certain properties (e.g. `plan` etc)
+- `getForPurchaser` no longer offers `cancelLink` as an option
+- `getUsage` has been deprecated
+- `create` and `createMany` are now seperate methods, `status` and `endTime` have been added as optional parameters
+- `update` method parameters have been changed to have an object as the second parameter, the `granteeId` property is where the grantee ID value can be assigned 
+- `cancelMany` method parameter has been updated to be an object, the `uuids` property is where an array of license UUIDs to cancel can be assigned 
+- `verifyLicenseCheck` has been renamed to `verify`
+
+### Plans
+
+- `getOne` now offers an `expand` option to expand certain properties (e.g. `product` etc) 
+- `getCheckoutLink` options have now been updated: 
+  - `vat` is no longer supported and has been deprecated 
+  - `customer` has been deprecated and been replaced with `customerId` and `customerEmail`
+  - `contactUsLink` has been deprecated
+  - `marketingConsent` has been deprecated
+  - `couponCode` has been deprecated
+  - `customMessage` has been deprecated
+  - `automaticTax`, `changeQuantity`, and `requirePaymentMethod` have been added
+
+### Pricing Tables
+
+- `getOne` options have been updated. The only supported options are now `granteeId` and `currency`
+
+### Products
+
+- `getOne` now offers an `expand` option to expand certain properties (e.g. `plan` etc)
+- `getPricingTable` options have been updated. The only supported options are now `granteeId` and `currency`
+
+### Subscriptions
+
+- `getOne` now offers an `expand` option to expand certain properties (e.g. `plan` etc)
+- `getAll` method added. Retrieves a list of all subscriptions
+- `getInvoices` method added. Retrieves a list of invoices for a subscription
+- `getSwitchablePlans` method added. Retrieves a list of available plans that a subscribed user can switch to
+- `getUpdatePaymentLink` method added. Retrieves the update payment portal link for a specific subscription
+- `getPortalLink` method added. Retrieves the customer portal link for a subscription
+- `getCancelSubscriptionLink` method added. Retrieves the cancel subscription portal link for a specific subscription
+- `getPaymentMethod` method added. Retrieves the payment method used to pay for a subscription
+- `reactivateSubscription` method added. Reactivate a Subscription's scheduled cancellation before the billing period has passed
+- `updatePlan` method has been deprecated
+- `addSeats` and `removeSeats` now optionally allow proration as an option
+
+### Usage (NEW)
+
+- `getAllUsageRecords` gets all usage records for grantee's metered licenses
+- `getCurrentUsageRecord` gets current usage record for grantee on plan
+- `updateLicenseUsage` updates a license's usage
+
+### RBAC (DEPRECATED)
+
+- All RBAC methods have been deprecated and currently not supported by the SDK
+
+### Other Changes
+
+- **DOCS**: JSDoc and SDK documentation have been updated
+- interfaces have been replaced with types
+- `403` and `404` errors now specifically handled
+
 ## v3.2.0
 
 ### Licenses
