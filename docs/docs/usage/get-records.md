@@ -13,7 +13,7 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}', 'v2');
 
-const records = await salable.usage.getAllUsageRecords('{{granteeId}}');
+const records = await salable.usage.getAllUsageRecords('grantee_1');
 ```
 
 ## Parameters
@@ -30,15 +30,15 @@ The granteeId of the license
 
 _Type:_ `GetLicenseOptions`
 
-| Option             | Type   | Description                                                                         | Required |
-| ------------------ | ------ | ----------------------------------------------------------------------------------- | -------- |
-| type               | string | Filter by the type of usage record                                                  | ❌       |
-| status             | string | Filter by the status of the license                                                 | ❌       |
-| planUuid           | string | The UUID of the plan the license belongs to                                         | ❌       |
-| subscriptionUuid   | string | Filters usage records by their license's subscription                               | ❌       |
-| sort               | string | Sorts usage records by createdAt field. Default (`'asc'`). Enum: `'asc'` \| `'desc'` | ❌       |
-| cursor             | string | Cursor value, used for pagination                                                   | ❌       |
-| take               | string | The amount of licenses to fetch                                                     | ❌       |
+| Option           | Type   | Description                                                                          | Required |
+| ---------------- | ------ | ------------------------------------------------------------------------------------ | -------- |
+| type             | string | Filter by the type of usage record                                                   | ❌       |
+| status           | string | Filter by the status of the license                                                  | ❌       |
+| planUuid         | string | The UUID of the plan the license belongs to                                          | ❌       |
+| subscriptionUuid | string | Filters usage records by their license's subscription                                | ❌       |
+| sort             | string | Sorts usage records by createdAt field. Default (`'asc'`). Enum: `'asc'` \| `'desc'` | ❌       |
+| cursor           | string | Cursor value, used for pagination                                                    | ❌       |
+| take             | string | The amount of licenses to fetch                                                      | ❌       |
 
 ## Return Type
 
