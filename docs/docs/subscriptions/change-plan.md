@@ -13,8 +13,8 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}', 'v2');
 
-const changeSubscriptionPlan = await salable.subscriptions.changePlan('{{subscriptionUuid}}', {
-  planUuid: '{{planUuid}}',
+const changeSubscriptionPlan = await salable.subscriptions.changePlan('subscription_1', {
+  planUuid: 'plan_1',
 });
 ```
 

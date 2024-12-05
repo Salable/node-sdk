@@ -13,7 +13,7 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}', 'v2');
 
-const subscription = await salable.subscriptions.reactivateSubscription('{{subscriptionUuid}}');
+const subscription = await salable.subscriptions.reactivateSubscription('subscription_1');
 ```
 
 ## Parameters
@@ -23,7 +23,6 @@ const subscription = await salable.subscriptions.reactivateSubscription('{{subsc
 _Type:_ `string`
 
 The UUID of the subscription to be returned
-
 
 ## Return Type
 

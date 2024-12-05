@@ -13,7 +13,7 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}', 'v2');
 
-const subscription = await salable.subscriptions.getCancelSubscriptionLink('{{subscriptionUuid}}');
+const subscription = await salable.subscriptions.getCancelSubscriptionLink('subscription_1');
 ```
 
 ## Parameters
@@ -23,7 +23,6 @@ const subscription = await salable.subscriptions.getCancelSubscriptionLink('{{su
 _Type:_ `string`
 
 The UUID of the subscription
-
 
 ## Return Type
 

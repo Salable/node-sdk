@@ -13,7 +13,7 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}', 'v2');
 
-await salable.subscriptions.cancel('{{subscriptionUuid}}', { when: 'end' });
+await salable.subscriptions.cancel('subscription_1', { when: 'end' });
 ```
 
 ## Parameters
