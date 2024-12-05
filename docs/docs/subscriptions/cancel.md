@@ -24,14 +24,13 @@ _Type:_ `string`
 
 The UUID of the Subscription to be canceled
 
-#### options (_required_)
+##### options (_required_)
 
-_Type:_ `{ when: 'end' | 'now' }`
+_Type:_ `CancelSubscriptionOptions`
 
-| When | Description                                                |
-| ---- | ---------------------------------------------------------- |
-| now  | Immediately cancels the Subscription                       |
-| end  | Cancels the Subscription at the end of it's billing period |
+| Option | Type | Description                                                                                                    | Required |
+| ------ | ---- | -------------------------------------------------------------------------------------------------------------- | -------- |
+| when   | enum | `now`: Immediately cancels the Subscription. `end`: Cancels the Subscription at the end of it's billing period | ✅       |
 
 ## Return Type
 

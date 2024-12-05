@@ -30,11 +30,10 @@ The UUID of the Subscription that is being moved
 
 _Type:_ `SubscriptionsChangePlanOptions`
 
-
-| Option                      | Type                                                         | Description                                                | Required    |
-| --------------------------- | ---------------------------------------------------------------- | -------------------------------------------------------- | ----------- |
-| planUuid                    | The `uuid` of the Plan the Subscription is moving to         | The status of the subscription, e.g. "ACTIVE" "CANCELED"                    |  ✅         |
-| proration                   | Proration behaviour                                          | `create_prorations`: Will cause proration invoice items to be created when applicable (default). `none`: Disable creating prorations in this request. `always_invoice`: Always invoice immediately for prorations.      | ❌          |
+| Option    | Type   | Description                                                                                                                                                                                                        | Required |
+| --------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
+| planUuid  | string | The status of the subscription, e.g. "ACTIVE" "CANCELED"                                                                                                                                                           | ✅       |
+| proration | string | `create_prorations`: Will cause proration invoice items to be created when applicable (default). `none`: Disable creating prorations in this request. `always_invoice`: Always invoice immediately for prorations. | ❌       |
 
 ## Return Type
 

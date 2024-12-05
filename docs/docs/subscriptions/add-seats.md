@@ -28,11 +28,10 @@ The UUID of the Subscription
 
 _Type:_ `{ increment: number, proration: string }`
 
-| Option    | Type                 | Description                       | Required |
-| --------- | -------------------- | --------------------------------- | -------- |
-| increment | number               | The number of seats to be created | ✅       |
-| proration | Proration behaviour  | `create_prorations`: Will cause proration invoice items to be created when applicable (default). `none`: Disable creating prorations in this request. `always_invoice`: Always invoice immediately for prorations.  | ❌   |
-
+| Option    | Type   | Description                                                                                                                                                                                                        | Required |
+| --------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
+| increment | number | The number of seats to be created                                                                                                                                                                                  | ✅       |
+| proration | string | `create_prorations`: Will cause proration invoice items to be created when applicable (default). `none`: Disable creating prorations in this request. `always_invoice`: Always invoice immediately for prorations. | ❌       |
 
 ## Return Type
 

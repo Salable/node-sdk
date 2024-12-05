@@ -22,13 +22,13 @@ const subscription = await salable.subscriptions.getAll();
 
 _Type:_ `GetSubscriptionOptions`
 
-| Option                      | Type             | Description                                                                  |
-| --------------------------- | ---------------- | ---------------------------------------------------------------------------- |
-| status (optional)           | string           | The status of the subscription, e.g. "ACTIVE" "CANCELED"                     |
-| email (optional)            | string           | The email of who purchased the subscription                                  |
-| cursor (optional)           | string           | Cursor value, used for pagination                                            |
-| take (optional)             | string           | The amount of subscriptions to fetch. Default: `20`                          |
-| expand (optional)           | array of strings | Specify which properties to expand. e.g `{ expand: ['product', 'plan'] }`    |
+| Option | Type     | Description                                                               | Required |
+| ------ | -------- | ------------------------------------------------------------------------- | -------- |
+| status | string   | The status of the subscription, e.g. "ACTIVE" "CANCELED"                  | ❌       |
+| email  | string   | The email of who purchased the subscription                               | ❌       |
+| cursor | string   | Cursor value, used for pagination                                         | ❌       |
+| take   | string   | The amount of subscriptions to fetch. Default: `20`                       | ❌       |
+| expand | string[] | Specify which properties to expand. e.g `{ expand: ['product', 'plan'] }` | ❌       |
 
 ## Return Type
 

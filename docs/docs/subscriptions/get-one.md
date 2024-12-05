@@ -28,11 +28,11 @@ The UUID of the subscription to be returned
 
 #### options
 
-_Type:_ `{ expand: array of string }`
+_Type:_ `GetSubscriptionOptions`
 
-| Option            | Type             | Description                                                   |
-| ----------------- | ---------------- | ------------------------------------------------------------- |
-| expand (optional) | array of strings | Specify which properties to expand. e.g. `{ expand: 'product' }` |
+| Option | Type     | Description                                                      | Required |
+| ------ | -------- | ---------------------------------------------------------------- | -------- |
+| expand | string[] | Specify which properties to expand. e.g. `{ expand: 'product' }` | ❌       |
 
 ## Return Type
 
