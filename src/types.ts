@@ -19,6 +19,9 @@ export type GetLicenseOptions = {
   cursor?: string;
   take?: string;
   subscriptionUuid?: string;
+  granteeId?: string;
+  planUuid?: string;
+  productUuid?: string;
 };
 
 export type GetPurchasersLicensesOptions = {

@@ -13,7 +13,7 @@ sidebar_position: 2
 
 ### Licenses
 
-- `getAll` now supports cursor based pagination, licenses can also be filtered by `status` and `subscriptionUuid`
+- `getAll` now supports cursor based pagination, licenses can also be filtered by `status`, `subscriptionUuid`, `planUuid`, `productUuid`, and `granteeId`
 - `getOne` and `getForGranteeId` now offer an `expand` option to expand certain properties (e.g. `plan` etc)
 - `getForPurchaser` no longer offers `cancelLink` as an option
 - `getUsage` has been deprecated

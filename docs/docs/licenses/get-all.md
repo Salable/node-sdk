@@ -28,6 +28,9 @@ _Type:_ `GetLicenseOptions`
 | cursor           | string | Cursor value, used for pagination                           | ❌        |
 | take             | string | The amount of licenses to fetch                             | ❌        |
 | subscriptionUuid | string | The UUID of the subscription to filter by                   | ❌        |
+| granteeId        | string | The grantee ID to filter by                                 | ❌        |
+| planUuid         | string | The UUID of the plan to filter by                           | ❌        |
+| productUuid      | string | The UUID of the product to filter by                        | ❌        |
 
 ## Return Type
 
