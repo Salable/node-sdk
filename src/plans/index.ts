@@ -1,5 +1,5 @@
 import { ApiRequest, TVersion, Version } from '..';
-import { Plan, PlanCheckout, PlanFeature, PlanCapability, PlanCurrency, GetPlanCheckoutOptions } from '../types';
+import { Plan, PlanCheckout, PlanFeature, PlanCapability, PlanCurrency, GetPlanCheckoutOptions, GetPlanOptions } from '../types';
 import { v2PlanMethods } from './v2';
 
 export type PlanVersions = {
@@ -15,9 +15,7 @@ export type PlanVersions = {
      */
     getOne: (
       planUuid: string,
-      options?: {
-        expand?: string[];
-      },
+      options?: GetPlanOptions
     ) => Promise<Plan>;
 
     /**
