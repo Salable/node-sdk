@@ -12,6 +12,7 @@ export type CreateAdhocLicenseInput = {
   granteeId?: string;
   status?: 'ACTIVE' | 'TRIALING';
   endTime?: string;
+  cancelAtPeriodEnd?: boolean
 };
 
 export type GetLicenseOptions = {
@@ -286,6 +287,20 @@ export type IDefaultCheckoutInputParams = {
 
 export type PlanCheckout = {
   checkoutUrl: string;
+};
+
+export type GetPlanOptions = {
+  expand?: string[];
+  successUrl?: string;
+  cancelUrl?: string;
+  granteeId?: string;
+  member?: string;
+  promoCode?: string;
+  allowPromoCode?: boolean;
+  customerEmail?: string;
+  customerId?: string;
+  currency?: string;
+  automaticTax?: string;
 };
 
 export type GetPlanCheckoutOptions = {

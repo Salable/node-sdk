@@ -58,6 +58,7 @@ export type LicenseVersions = {
      * @param {CreateAdhocLicenseInput} data.granteeId - (Optional) The grantee ID for the license.
      * @param {CreateAdhocLicenseInput} data.status - (Optional) The status of the created license, e.g. "ACTIVE" "TRIALING"
      * @param {CreateAdhocLicenseInput} data.endTime - (Optional) Provide a custom end time for the license; this will override the plan's default interval.
+     * @param {CreateAdhocLicenseInput} data.cancelAtPeriodEnd - (Optional) If set to true the license will not renew once the endTime date has passed.
      *
      * @returns {Promise<License>} The data for the new license created
      */
