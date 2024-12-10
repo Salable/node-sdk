@@ -29,4 +29,4 @@ _Type:_ `GetLicenseCountOptions`
 
 ## Return Type
 
-For more information about this request see our API documentation on [License count](https://docs.salable.app/api#tag/Licenses/operation/getLicensesCount)
+For more information about this request see our API documentation on [License count](https://docs.salable.app/api/v2#tag/Licenses/operation/getLicensesCount)

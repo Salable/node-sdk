@@ -7,7 +7,7 @@ export type LicenseVersions = {
     /**
      *  Get all licenses
      *
-     * @param {GetLicenseOptions} options - (Optional) Filter parameters. See https://docs.salable.app/api#tag/Licenses/operation/getLicenses
+     * @param {GetLicenseOptions} options - (Optional) Filter parameters. See https://docs.salable.app/api/v2#tag/Licenses/operation/getLicenses
      *
      * @returns {Promise<GetAllLicensesResponse>} All licenses present on the account
      */
@@ -16,7 +16,7 @@ export type LicenseVersions = {
      *  Get one license
      *
      *  @param {string} uuid - The UUID of the license
-     *  @param {{ expand: string[] }} options - (Optional) Filter parameters. See https://docs.salable.app/api#tag/Licenses/operation/getLicenseByUuid
+     *  @param {{ expand: string[] }} options - (Optional) Filter parameters. See https://docs.salable.app/api/v2#tag/Licenses/operation/getLicenseByUuid
      *
      *  @returns { Promise<License>}
      */
@@ -24,7 +24,7 @@ export type LicenseVersions = {
     /**
      *  Get License's Count
      *
-     * @param {GetLicenseCountOptions} options - (Optional) Filter parameters. See https://docs.salable.app/api#tag/Licenses/operation/getLicensesCount
+     * @param {GetLicenseCountOptions} options - (Optional) Filter parameters. See https://docs.salable.app/api/v2#tag/Licenses/operation/getLicensesCount
      *
      * @returns {Promise<GetLicenseCountResponse>}
      */
@@ -44,7 +44,7 @@ export type LicenseVersions = {
      *  Get licenses for granteeId
      *
      *  @param {string} granteeId - The granteeId for the licenses
-     *  @param {{ expand: string[] }} options - (Optional) Filter parameters. See https://docs.salable.app/api#tag/Licenses/operation/getLicensesByGranteeId
+     *  @param {{ expand: string[] }} options - (Optional) Filter parameters. See https://docs.salable.app/api/v2#tag/Licenses/operation/getLicensesByGranteeId
      *
      *  @returns {Promise<License[]>}
      */

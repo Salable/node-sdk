@@ -26,4 +26,4 @@ The `uuid` of the Plan to return the Features from
 
 ## Return Type
 
-For more information about this request see our API documentation on [Plan Capability Object](https://docs.salable.app/api#tag/Plans/operation/getPlanCapabilities)
+For more information about this request see our API documentation on [Plan Capability Object](https://docs.salable.app/api/v2#tag/Plans/operation/getPlanCapabilities)

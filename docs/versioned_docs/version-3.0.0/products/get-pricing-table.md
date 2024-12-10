@@ -103,8 +103,8 @@ const pricingTable = await salable.products.getPricingTable('{{PRODUCT_UUID}}', 
 
 ## Return Type
 
-For more information about this request see our API documentation on [Pricing Table](https://docs.salable.app/api#tag/Pricing-Tables/operation/getPricingTableByUuid)
+For more information about this request see our API documentation on [Pricing Table](https://docs.salable.app/api/v2#tag/Pricing-Tables/operation/getPricingTableByUuid)
 
 ## Return Type
 
-For more information about this request see our API documentation on [Product Pricing Table](https://docs.salable.app/api#tag/Products/operation/getProductPricingTable)
+For more information about this request see our API documentation on [Product Pricing Table](https://docs.salable.app/api/v2#tag/Products/operation/getProductPricingTable)

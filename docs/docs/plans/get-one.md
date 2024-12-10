@@ -37,4 +37,4 @@ _Type:_ `{ expand: string[] }`
 
 ## Return Type
 
-For more information about this request see our API documentation on [plan object](https://docs.salable.app/api#tag/Plans/operation/getPlanByUuid)
+For more information about this request see our API documentation on [plan object](https://docs.salable.app/api/v2#tag/Plans/operation/getPlanByUuid)

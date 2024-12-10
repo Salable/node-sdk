@@ -18,4 +18,4 @@ const features = await salable.products.getFeatures();
 
 ## Return Type
 
-For more information about this request see our API documentation on [Feature Object](https://docs.salable.app/api#tag/Products/operation/getProductFeatures)
+For more information about this request see our API documentation on [Feature Object](https://docs.salable.app/api/v2#tag/Products/operation/getProductFeatures)

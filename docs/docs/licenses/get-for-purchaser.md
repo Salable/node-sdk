@@ -30,4 +30,4 @@ _Type:_ `GetPurchasersLicensesOptions`
 
 ## Return Type
 
-For more information about this request see our API documentation on [License Object](https://docs.salable.app/api#tag/Licenses/operation/getLicenseByUuid)
+For more information about this request see our API documentation on [License Object](https://docs.salable.app/api/v2#tag/Licenses/operation/getLicenseByUuid)
