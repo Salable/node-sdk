@@ -1,5 +1,4 @@
-import { ApiRequest, TVersion, Version } from '..';
-import { PricingTableResponse } from '../types';
+import { PricingTableResponse, ApiRequest, TVersion, Version } from '../types';
 import { v2PricingTableMethods } from './v2';
 
 export type PricingTableVersions = {

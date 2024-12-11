@@ -1,5 +1,4 @@
-import { ApiRequest, TVersion, Version } from '..';
-import { Plan, Product, ProductCapability, ProductCurrency, ProductFeature, ProductPricingTable } from '../types';
+import { Plan, Product, ProductCapability, ProductCurrency, ProductFeature, ProductPricingTable, ApiRequest, TVersion, Version } from '../types';
 import { v2ProductMethods } from './v2';
 
 export type ProductVersions = {

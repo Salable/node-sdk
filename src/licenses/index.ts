@@ -1,5 +1,4 @@
-import { ApiRequest, TVersion, Version } from '..';
-import { CheckLicenseInput, CheckLicensesCapabilitiesResponse, CreateAdhocLicenseInput, GetAllLicensesResponse, GetLicenseOptions, License, GetLicenseCountResponse, UpdateManyLicenseInput, GetLicenseCountOptions, GetPurchasersLicensesOptions } from '../../src/types';
+import { CheckLicenseInput, CheckLicensesCapabilitiesResponse, CreateAdhocLicenseInput, GetAllLicensesResponse, GetLicenseOptions, License, GetLicenseCountResponse, UpdateManyLicenseInput, GetLicenseCountOptions, GetPurchasersLicensesOptions, ApiRequest, TVersion, Version } from '../types';
 import { v2LicenseMethods } from './v2';
 
 export type LicenseVersions = {

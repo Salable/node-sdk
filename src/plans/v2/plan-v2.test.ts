@@ -1,13 +1,14 @@
-import Salable, { Version } from '../..';
-import { Plan, PlanCapability, PlanCheckout, PlanCurrency, PlanFeature } from '../../types';
+import Salable from '../..';
+import { Plan, PlanCapability, PlanCheckout, PlanCurrency, PlanFeature, Version } from '../../types';
+import { testUuids } from '../../../test-utils/scripts/create-test-data';
 
 describe('Plans V2 Tests', () => {
-  const apiKey = process.env.SALABLE_TEST_API_KEY!;
+  const apiKey = testUuids.devApiKeyV2;
   const version = Version.V2;
 
   const salable = new Salable(apiKey, version);
 
-  const planUuid = '111eefac-9b21-4299-8cde-302249d6f111';
+  const planUuid = testUuids.paidPlanUuid;
 
   it('getOne: should successfully fetch all products', async () => {
     const data = await salable.plans.getOne(planUuid);

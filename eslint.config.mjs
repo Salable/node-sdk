@@ -12,7 +12,8 @@ export default [
       'docs/*',
       'rollup.config.mjs',
       'jest.config.js',
-      'commitlint.config.js'
+      'commitlint.config.js',
+      "coverage"
     ]
   },
   { languageOptions: { globals: globals.browser } },

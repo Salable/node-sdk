@@ -1,5 +1,4 @@
-import { ApiRequest, TVersion, Version } from '..';
-import { Plan, PlanCheckout, PlanFeature, PlanCapability, PlanCurrency, GetPlanCheckoutOptions, GetPlanOptions } from '../types';
+import { Plan, PlanCheckout, PlanFeature, PlanCapability, PlanCurrency, ApiRequest, TVersion, Version, GetPlanOptions, GetPlanCheckoutOptions } from '../types';
 import { v2PlanMethods } from './v2';
 
 export type PlanVersions = {

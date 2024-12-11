@@ -1,4 +1,4 @@
-import { ApiRequest } from '../..';
+import { ApiRequest } from '../../types';
 import { PricingTableVersions } from '..';
 import { RESOURCE_NAMES, SALABLE_BASE_URL } from '../../constants';
 import getUrl from '../../utils/get-url';
