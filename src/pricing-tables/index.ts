@@ -1,74 +1,27 @@
-import { Base } from '../base';
-import { RESOURCE_NAMES } from '../constants';
-import {
-  PricingTableParameters,
-  IProductPricingTableResponse,
-  PricingTableCheckoutKey,
-} from '../types';
-import defaultParametersCheckoutFactory from '../utils/default-parameters-checkout-factory';
+import { PricingTableResponse, ApiRequest, TVersion, Version } from '../types';
+import { v2PricingTableMethods } from './v2';
 
-/**
- * Salable Node SDK Product Class
- *
- * Contains the Salable pricing table methods
- */
-export default class PricingTables extends Base {
-  /**
-   * Get a single pricing table
-   *
-   * @param  {string} pricingTableId The uuid of the pricing table
-   *
-   * @returns {Promise<IProduct>} The data of the product requested
-   */
+export type PricingTableVersions = {
+  [Version.V2]: {
+    /**
+     *  Retrieves a pricing table by its UUID. This returns all necessary data on a Pricing Table to be able to display it.
+     *
+     *  @param {string} pricingTableUuid - The UUID for the pricingTable
+     *  @param {{ granteeId?: string; currency?: string;}} options - (Optional) Filter parameters. See https://docs.salable.app/api/v2#tag/Pricing-Tables/operation/getPricingTableByUuid
+     *
+     * @returns {Promise<PricingTableResponse>}
+     */
+    getOne: (pricingTableUuid: string, options?: { granteeId?: string; currency?: string }) => Promise<PricingTableResponse>;
+  };
+};
 
-  public getOne(pricingTableId: string, queryParams: PricingTableParameters) {
-    const {
-      globalPlanOptions: { granteeId, successUrl, cancelUrl, contactUsLink, member, ...rest },
-      individualPlanOptions,
-    } = queryParams;
+export type PricingTableVersionedMethods<V extends TVersion> = V extends keyof PricingTableVersions ? PricingTableVersions[V] : never;
 
-    const flatCheckoutDefaultParams = defaultParametersCheckoutFactory(rest);
-    const flatCheckoutParams = Object.assign(
-      {
-        globalGranteeId: granteeId,
-        globalSuccessUrl: successUrl,
-        globalCancelUrl: cancelUrl,
-        contactUsLink,
-        member,
-      },
-      flatCheckoutDefaultParams
-    );
-    let paramsStr = '';
-    let query = '';
-    for (const key of Object.keys(flatCheckoutParams)) {
-      const itemKey = key as PricingTableCheckoutKey;
-      const itemValue = flatCheckoutParams[itemKey];
-      if (itemValue) paramsStr += `&${itemKey}=${itemValue}`;
-    }
-
-    if (individualPlanOptions) {
-      let granteeIds = '';
-      let cancelUrls = '';
-      let successUrls = '';
-      for (const key of Object.keys(individualPlanOptions)) {
-        if (individualPlanOptions[key].granteeId) {
-          granteeIds += `${key},${individualPlanOptions[key].granteeId as string}`;
-        }
-        if (individualPlanOptions[key].cancelUrl) {
-          cancelUrls += `${key},${individualPlanOptions[key].cancelUrl as string}`;
-        }
-        if (individualPlanOptions[key].successUrl) {
-          successUrls += `${key},${individualPlanOptions[key].successUrl as string}`;
-        }
-      }
-      if (granteeIds) paramsStr += `&granteeIds=${granteeIds}`;
-      if (cancelUrls) paramsStr += `&cancelUrls=${cancelUrls}`;
-      if (successUrls) paramsStr += `&successUrls=${successUrls}`;
-    }
-    query = encodeURI(paramsStr);
-
-    return this._request<IProductPricingTableResponse>(
-      `${RESOURCE_NAMES.PRICING_TABLES}/${pricingTableId}?${query}`
-    );
+export const pricingTablesInit = <V extends TVersion>(version: V, request: ApiRequest): PricingTableVersionedMethods<V> => {
+  switch (version) {
+    case Version.V2:
+      return v2PricingTableMethods(request) as PricingTableVersionedMethods<V>;
+    default:
+      throw new Error('Unsupported version');
   }
-}
+};

@@ -1,0 +1,587 @@
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native"]
+}
+
+model Product {
+  uuid                               String                          @id @default(uuid())
+  name                               String
+  description                        String?                         @db.Text
+  logoUrl                            String?                         @db.Text
+  displayName                        String
+  slug                               String                          @default("")
+  organisation                       String
+  status                             String
+  paid                               Boolean                         @default(false)
+  organisationPaymentIntegration     OrganisationPaymentIntegration? @relation(fields: [organisationPaymentIntegrationUuid], references: [uuid], onUpdate: NoAction)
+  organisationPaymentIntegrationUuid String                          @default("free")
+  paymentIntegrationProductId        String?
+  appType                            String                          @default("custom")
+  plans                              Plan[]
+  capabilities                       Capability[]
+  features                           Feature[]
+  pricingTables                      PricingTable[]
+  licenses                           License[]
+  subscriptions                      Subscription[]
+  currencies                         CurrenciesOnProduct[]
+  updatedAt                          DateTime                        @default(now()) @updatedAt
+  isTest                             Boolean                         @default(false)
+
+  @@index([organisation])
+  @@index([organisationPaymentIntegrationUuid])
+}
+
+model Plan {
+  uuid                   String                 @id @default(uuid())
+  name                   String
+  description            String?                @db.Text
+  displayName            String
+  slug                   String                 @default("")
+  status                 String
+  isTest                 Boolean                @default(false)
+  trialDays              Int?
+  evaluation             Boolean                @default(false)
+  evalDays               Int                    @default(0)
+  organisation           String
+  visibility             String
+  licenseType            String
+  perSeatAmount          Int                    @default(1)
+  maxSeatAmount          Int                    @default(-1)
+  interval               String
+  length                 Int
+  active                 Boolean
+  planType               String
+  pricingType            String                 @default("free")
+  environment            String
+  paddlePlanId           Int?
+  product                Product                @relation(fields: [productUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  productUuid            String
+  featuredOnPricingTable PricingTable?
+  currencies             CurrenciesOnPlans[]
+  features               FeaturesOnPlans[]
+  usage                  LicensesUsageOnPlans[]
+  pricingTables          PlansOnPricingTables[]
+  capabilities           CapabilitiesOnPlans[]
+  licenses               License[]
+  subscription           Subscription[]
+  salablePlan            Boolean                @default(false)
+  updatedAt              DateTime               @default(now()) @updatedAt
+  flags                  FlagsOnPlans[]
+  hasAcceptedTransaction Boolean                @default(false)
+  licensesUsage          LicensesUsage[]
+}
+
+model Capability {
+  uuid        String                @id @default(uuid())
+  name        String
+  description String?               @db.Text
+  status      String
+  product     Product               @relation(fields: [productUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  productUuid String
+  plan        CapabilitiesOnPlans[]
+  updatedAt   DateTime              @default(now()) @updatedAt
+
+  @@index([productUuid])
+}
+
+model Feature {
+  uuid               String                    @id @default(uuid())
+  name               String
+  description        String?                   @db.Text
+  displayName        String
+  variableName       String?                   @default("")
+  status             String
+  visibility         String
+  valueType          String                    @default("numerical")
+  defaultValue       String                    @default("0")
+  showUnlimited      Boolean                   @default(false)
+  product            Product?                  @relation(fields: [productUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  productUuid        String?
+  plans              FeaturesOnPlans[]
+  featureEnumOptions FeatureEnumOption[]
+  pricingTables      FeaturesOnPricingTables[]
+  updatedAt          DateTime                  @default(now()) @updatedAt
+  licenses           FeaturesOnLicenses[]
+  sortOrder          Int                       @default(0)
+
+  @@index([productUuid])
+}
+
+model FeatureEnumOption {
+  uuid           String            @id @default(uuid())
+  name           String
+  feature        Feature           @relation(fields: [featureUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  featureUuid    String
+  featureOnPlans FeaturesOnPlans[]
+  updatedAt      DateTime          @default(now()) @updatedAt
+
+  @@index([featureUuid])
+}
+
+model FeaturesOnPlans {
+  plan          Plan               @relation(fields: [planUuid], references: [uuid], onDelete: Cascade, onUpdate: NoAction)
+  planUuid      String
+  feature       Feature            @relation(fields: [featureUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  featureUuid   String
+  value         String
+  enumValue     FeatureEnumOption? @relation(fields: [enumValueUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  enumValueUuid String?
+  isUnlimited   Boolean            @default(false)
+  isUsage       Boolean            @default(false)
+  pricePerUnit  Float?
+  minUsage      Int?
+  maxUsage      Int?
+  updatedAt     DateTime           @default(now()) @updatedAt
+
+  @@id([planUuid, featureUuid])
+  @@index([planUuid])
+  @@index([featureUuid])
+  @@index([enumValueUuid])
+}
+
+model FeaturesOnPricingTables {
+  pricingTable     PricingTable @relation(fields: [pricingTableUuid], references: [uuid], onDelete: Cascade, onUpdate: NoAction)
+  pricingTableUuid String
+  feature          Feature      @relation(fields: [featureUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  featureUuid      String
+  sortOrder        Int
+  updatedAt        DateTime     @default(now()) @updatedAt
+
+  @@id([pricingTableUuid, featureUuid])
+  @@index([pricingTableUuid])
+  @@index([featureUuid])
+}
+
+model PricingTable {
+  uuid             String                    @id @default(uuid())
+  name             String
+  status           String                    @default("ACTIVE")
+  title            String?
+  text             String?                   @db.Text
+  theme            String                    @default("light")
+  featureOrder     String                    @default("default")
+  product          Product                   @relation(fields: [productUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  productUuid      String
+  plans            PlansOnPricingTables[]
+  features         FeaturesOnPricingTables[]
+  customTheme      Json?
+  featuredPlan     Plan?                     @relation(fields: [featuredPlanUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  featuredPlanUuid String?                   @unique
+  updatedAt        DateTime                  @default(now()) @updatedAt
+
+  @@index([productUuid])
+}
+
+model PlansOnPricingTables {
+  plan             Plan         @relation(fields: [planUuid], references: [uuid], onDelete: Cascade, onUpdate: NoAction)
+  planUuid         String
+  pricingTable     PricingTable @relation(fields: [pricingTableUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  pricingTableUuid String
+  sortOrder        Int          @default(0)
+  updatedAt        DateTime     @default(now()) @updatedAt
+
+  @@id([pricingTableUuid, planUuid])
+  @@index([planUuid])
+  @@index([pricingTableUuid])
+}
+
+enum ApiKeyType {
+  PUBLISHABLE
+  SECRET
+  WEB_COMPONENT /// @deprecated This API Key type isn't supported, use another type
+  RESTRICTED
+}
+
+model ApiKey {
+  uuid         String     @id @default(uuid())
+  name         String
+  description  String?    @db.Text
+  status       String
+  value        String     @unique
+  scopes       Json
+  organisation String
+  sub          String     @default("n/a")
+  awsId        String     @default("n/a")
+  updatedAt    DateTime   @updatedAt
+  createdAt    DateTime   @default(now())
+  isTest       Boolean    @default(false)
+  expiresAt    DateTime?
+  lastUsedAt   DateTime?
+  type         ApiKeyType @default(RESTRICTED)
+
+  @@index([organisation, value])
+}
+
+model Session {
+  uuid           String       @id @default(uuid())
+  value          String       @unique
+  scope          String
+  metadata       Json
+  organisation   Organisation @relation(fields: [organisationId], references: [clerkOrgId], onUpdate: NoAction, onDelete: NoAction)
+  organisationId String
+  isTest         Boolean      @default(false)
+  expiresAt      DateTime
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
+
+model License {
+  uuid              String                 @id @default(uuid())
+  name              String?
+  email             String?
+  subscription      Subscription?          @relation(fields: [subscriptionUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  subscriptionUuid  String?
+  status            String
+  granteeId         String?
+  paymentService    String
+  purchaser         String
+  type              String
+  product           Product                @relation(fields: [productUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  productUuid       String
+  plan              Plan                   @relation(fields: [planUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  planUuid          String
+  capabilities      Json
+  metadata          Json?
+  startTime         DateTime               @default(now())
+  endTime           DateTime
+  updatedAt         DateTime               @default(now()) @updatedAt
+  features          FeaturesOnLicenses[] /// @deprecated Use `usage` instead.
+  usage             LicensesUsageOnPlans[]
+  usageRecords     LicensesUsage[]
+  isTest            Boolean                @default(false)
+  cancelAtPeriodEnd Boolean                @default(false)
+
+  @@index([productUuid])
+  @@index([planUuid])
+  @@index([granteeId])
+  @@index([status])
+  @@index([endTime(sort: Asc)])
+  @@index([purchaser])
+  @@index([subscriptionUuid])
+  @@index([cancelAtPeriodEnd])
+}
+
+model Subscription {
+  uuid                             String             @id @default(uuid())
+  paymentIntegrationSubscriptionId String             @unique
+  product                          Product            @relation(fields: [productUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  productUuid                      String
+  type                             PaymentIntegration
+  email                            String?
+  organisation                     String
+  status                           String
+  cancelAtPeriodEnd                Boolean            @default(false)
+  quantity                         Int                @default(1)
+  createdAt                        DateTime
+  updatedAt                        DateTime           @updatedAt
+  expiryDate                       DateTime
+  lineItemIds                      Json?
+  license                          License[]
+  plan                             Plan               @relation(fields: [planUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  planUuid                         String
+  isTest                           Boolean            @default(false)
+
+  @@index([paymentIntegrationSubscriptionId])
+  @@index([productUuid])
+  @@index([planUuid])
+  @@index([organisation])
+}
+
+model CapabilitiesOnPlans {
+  plan           Plan       @relation(fields: [planUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  planUuid       String
+  capability     Capability @relation(fields: [capabilityUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  capabilityUuid String
+  updatedAt      DateTime   @default(now()) @updatedAt
+
+  @@id([planUuid, capabilityUuid])
+  @@index([planUuid])
+  @@index([capabilityUuid])
+}
+
+model Currency {
+  uuid      String                @id @default(uuid())
+  shortName String                @unique
+  longName  String
+  symbol    String
+  products  CurrenciesOnProduct[]
+  plans     CurrenciesOnPlans[]
+}
+
+model CurrenciesOnProduct {
+  product         Product  @relation(fields: [productUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  productUuid     String
+  currency        Currency @relation(fields: [currencyUuid], references: [uuid], onUpdate: NoAction)
+  currencyUuid    String
+  defaultCurrency Boolean
+
+  @@id([productUuid, currencyUuid])
+  @@index([productUuid])
+  @@index([currencyUuid])
+}
+
+model CurrenciesOnPlans {
+  plan                     Plan     @relation(fields: [planUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  planUuid                 String
+  currency                 Currency @relation(fields: [currencyUuid], references: [uuid], onUpdate: NoAction)
+  currencyUuid             String
+  price                    Float
+  paymentIntegrationPlanId String?
+  hasAcceptedTransaction   Boolean  @default(false)
+
+  @@id([planUuid, currencyUuid])
+  @@index([planUuid])
+  @@index([currencyUuid])
+}
+
+model OrganisationUsage {
+  organisation String @id
+  usage        Json
+}
+
+enum PaymentIntegrationStatus {
+  pending
+  active
+  cancelled
+}
+
+model OrganisationPaymentIntegration {
+  uuid              String                    @id @default(uuid())
+  organisation      String
+  integrationName   PaymentIntegration
+  products          Product[]
+  webhooks          Webhook[]
+  accountName       String
+  accountData       Json
+  status            PaymentIntegrationStatus?
+  accountId         String?
+  updatedAt         DateTime                  @default(now()) @updatedAt
+  isTest            Boolean                   @default(false)
+  newPaymentEnabled Boolean                   @default(false)
+}
+
+model Webhook {
+  uuid                               String                         @id @default(uuid())
+  value                              String
+  organisation                       String
+  type                               PaymentIntegration
+  organisationPaymentIntegration     OrganisationPaymentIntegration @relation(fields: [organisationPaymentIntegrationUuid], references: [uuid], onUpdate: NoAction)
+  organisationPaymentIntegrationUuid String
+  verifySignature                    String?                        @db.VarChar(1000)
+  hookdeckUrl                        String
+  paymentIntegrationWebhookId        String?
+  updatedAt                          DateTime                       @default(now()) @updatedAt
+
+  @@index([organisationPaymentIntegrationUuid])
+}
+
+model LicensesUsage {
+  uuid        String                    @id @default(uuid())
+  license     License                   @relation(fields: [licenseUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  licenseUuid String
+  plan        Plan                      @relation(fields: [planUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  planUuid    String
+  unitCount   Int                       @default(0)
+  type        LicensesUsageRecordType
+  recordedAt  DateTime?
+  resetAt     DateTime?
+  createdAt   DateTime                  @default(now())
+  updatedAt   DateTime                  @default(now()) @updatedAt
+
+  @@index([licenseUuid])
+  @@index([planUuid])
+  @@index([resetAt(sort: Asc)])
+  @@index([createdAt(sort: Asc)])
+}
+
+enum LicensesUsageRecordType {
+    recorded
+    current
+    final
+}
+
+/// @deprecated model deprecated to use LicensesUsage instead
+model LicensesUsageOnPlans {
+  license     License   @relation(fields: [licenseUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  licenseUuid String
+  plan        Plan      @relation(fields: [planUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  planUuid    String
+  unitCount   Int       @default(0)
+  resetAt     DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now()) @updatedAt
+
+  @@id([licenseUuid, planUuid])
+  @@index([licenseUuid])
+  @@index([planUuid])
+}
+
+model FeaturesOnLicenses {
+  license     License @relation(fields: [licenseUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  licenseUuid String
+  feature     Feature @relation(fields: [featureUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  featureUuid String
+  planUuid    String
+  unitCount   Int     @default(0)
+
+  @@id([licenseUuid, featureUuid])
+  @@index([licenseUuid])
+  @@index([featureUuid])
+}
+
+enum PaymentIntegration {
+  stripe
+  stripe_existing
+  paddle
+  salable
+}
+
+model Organisation {
+  clerkOrgId      String       @id
+  addressDetails  Json?
+  metadata        Json?
+  svixAppId       String
+  logoUrl         String?
+  salablePlanUuid String?
+  billingEmailId  String
+  signingKeys     SigningKey[]
+  updatedAt       DateTime     @default(now()) @updatedAt
+  sessions        Session[]
+}
+
+model Flag {
+  uuid         String         @id @default(uuid())
+  name         String
+  description  String?        @db.Text
+  valueType    FlagValueType  @default(boolean)
+  defaultValue String         @default("true")
+  status       String
+  organisation String
+  isTest       Boolean        @default(false)
+  updatedAt    DateTime       @default(now()) @updatedAt
+  createdAt    DateTime       @default(now())
+  plans        FlagsOnPlans[]
+
+  @@index([organisation])
+}
+
+enum FlagValueType {
+  boolean
+  string
+  number
+}
+
+model Permission {
+  uuid         String                   @id @default(uuid())
+  value        String
+  type         String?
+  description  String?                  @db.Text
+  dependencies Json?
+  organisation String
+  createdAt    DateTime                 @default(now())
+  updatedAt    DateTime                 @default(now()) @updatedAt
+  rbacUsers    PermissionsOnRbacUsers[]
+  roles        PermissionsOnRoles[]
+}
+
+model Role {
+  uuid         String               @id @default(uuid())
+  name         String
+  description  String?              @db.Text
+  organisation String
+  users        RBACUser[]
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @default(now()) @updatedAt
+  permissions  PermissionsOnRoles[]
+}
+
+model PermissionsOnRoles {
+  permission     Permission @relation(fields: [permissionUuid], references: [uuid], onDelete: Cascade)
+  role           Role       @relation(fields: [roleUuid], references: [uuid], onDelete: Cascade)
+  permissionUuid String
+  roleUuid       String
+
+  @@id([permissionUuid, roleUuid])
+  @@index([permissionUuid])
+  @@index([roleUuid])
+}
+
+model RBACUser {
+  id           String                   @id
+  name         String?
+  organisation String
+  role         Role?                    @relation(fields: [roleUuid], references: [uuid], onUpdate: NoAction)
+  roleUuid     String?
+  createdAt    DateTime                 @default(now())
+  updatedAt    DateTime                 @default(now()) @updatedAt
+  permissions  PermissionsOnRbacUsers[]
+
+  @@index([roleUuid])
+}
+
+model PermissionsOnRbacUsers {
+  permission     Permission @relation(fields: [permissionUuid], references: [uuid], onDelete: Cascade)
+  rbacUser       RBACUser   @relation(fields: [rbacUserId], references: [id], onDelete: Cascade)
+  permissionUuid String
+  rbacUserId     String
+
+  @@id([permissionUuid, rbacUserId])
+  @@index([permissionUuid])
+  @@index([rbacUserId])
+}
+
+model ProofKeys {
+  codeChallenge String
+  codeVerifier  String   @unique
+  createdAt     DateTime @default(now())
+}
+
+model FlagsOnPlans {
+  plan     Plan   @relation(fields: [planUuid], references: [uuid], onDelete: Cascade, onUpdate: NoAction)
+  planUuid String
+  flag     Flag   @relation(fields: [flagUuid], references: [uuid], onDelete: Cascade, onUpdate: NoAction)
+  flagUuid String
+
+  @@id([flagUuid, planUuid])
+  @@index([planUuid])
+  @@index([flagUuid])
+}
+
+enum EventStatus {
+  queued
+  retrying
+  pending
+  success
+  failed
+  incomplete
+}
+
+model Event {
+  uuid         String      @id @default(uuid())
+  type         String
+  organisation String
+  status       EventStatus
+  isTest       Boolean
+  retries      Int         @default(0)
+  errorMessage String?
+  errorCode    String?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @default(now()) @updatedAt
+}
+
+model SigningKey {
+  uuid           String       @id @default(uuid())
+  privateKey     Bytes
+  publicKey      String
+  organisationId String
+  organisation   Organisation @relation(fields: [organisationId], references: [clerkOrgId], onDelete: Cascade, onUpdate: NoAction)
+  createdAt      DateTime     @default(now())
+
+  @@index([organisationId])
+}

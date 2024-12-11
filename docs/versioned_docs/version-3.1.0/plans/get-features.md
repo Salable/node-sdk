@@ -26,4 +26,4 @@ The `uuid` of the Plan to return the Currencies from
 
 ## Return Type
 
-For more information about this request see our API documentation on [Plan Feature Object](https://docs.salable.app/api#tag/Plans/operation/getPlanFeatures)
+For more information about this request see our API documentation on [Plan Feature Object](https://docs.salable.app/api/v2#tag/Plans/operation/getPlanFeatures)
