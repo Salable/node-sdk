@@ -1,3 +1,15 @@
+# [4.0.0-beta.1](https://github.com/Salable/node-sdk/compare/v3.4.0...v4.0.0-beta.1) (2024-12-11)
+
+
+### Features
+
+* v4 ([0bfd077](https://github.com/Salable/node-sdk/commit/0bfd0773f76fbedfc8da75503d09b7dd4c137234))
+
+
+### BREAKING CHANGES
+
+* v4 update
+
 ## [3.4.1](https://github.com/Salable/node-sdk/compare/v3.4.0...v3.4.1) (2024-10-10)
 
 ### Bug Fixes
