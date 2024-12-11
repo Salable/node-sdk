@@ -26,4 +26,4 @@ The `uuid` of the Product to be returned
 
 ## Return Type
 
-For more information about this request see our API documentation on [product object](https://docs.salable.app/api#tag/Products/operation/getProductByUuid)
+For more information about this request see our API documentation on [product object](https://docs.salable.app/api/v2#tag/Products/operation/getProductByUuid)

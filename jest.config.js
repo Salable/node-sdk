@@ -1,25 +1,7 @@
 module.exports = {
-  preset: 'ts-jest',
-  moduleNameMapper: {
-    '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
-      '<rootDir>/__mocks__/fileMock.js',
-    '\\.(css|less|scss)$': 'identity-obj-proxy',
-    '^@/(.*)$': '<rootDir>/$1',
-  },
-  testMatch: ['**/*.(spec|test).{ts,tsx}'],
-  transform: {
-    '^.+\\.tsx?$': 'ts-jest',
-  },
-  collectCoverageFrom: [
-    '**/*.{ts,tsx}',
-    '!**/*stories.{ts,tsx}',
-    '!**/node_modules/**',
-    '!**/dist/**',
-    '!**/.storybook/**',
-    '!**/index.{ts,tsx}',
-    '!**/styled.ts',
-    '!**/assets/**',
-  ],
+  testTimeout: 30000,
+  testEnvironment: 'node',
+  collectCoverageFrom: ['<rootDir>/src/**/*.ts'],
   coverageThreshold: {
     global: {
       branches: 0,
@@ -28,8 +10,23 @@ module.exports = {
       statements: 0,
     },
   },
-  modulePathIgnorePatterns: ['./dist'],
-  globals: {
-    diagnostics: false,
+  testMatch: ['<rootDir>/src/**/*.test.ts'],
+  transform: {
+    '^.+\\.ts$': [
+      'ts-jest',
+      {
+        useESM: true,
+        isolatedModules: true,
+      },
+    ],
   },
+  extensionsToTreatAsEsm: ['.ts'],
+  moduleFileExtensions: ['node', 'js', 'ts'],
+  transformIgnorePatterns: ['<rootDir>/node_modules/'],
+  moduleDirectories: ['node_modules', '<rootDir>'],
+  moduleNameMapper: {
+    '^(\\.{1,2}/.*)\\.js$': '$1',
+  },
+  globalSetup: '<rootDir>/__tests__/_setup/setup-test-envs.ts',
+  setupFilesAfterEnv: ['<rootDir>/__tests__/_setup/test-setup.ts'],
 };

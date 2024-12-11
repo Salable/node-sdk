@@ -179,4 +179,4 @@ See [code example](#individual-plans) for individual plans
 
 ## Return Type
 
-For more information about this request see our API documentation on [Product Pricing Table](https://docs.salable.app/api#tag/Products/operation/getProductPricingTable)
+For more information about this request see our API documentation on [Product Pricing Table](https://docs.salable.app/api/v2#tag/Products/operation/getProductPricingTable)

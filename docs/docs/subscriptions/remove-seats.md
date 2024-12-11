@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 13
 ---
 
 # Remove Subscription Seats
@@ -11,23 +11,28 @@ Remove seats from a Subscription. Seats can only be removed if they are unassign
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}');
+const salable = new Salable('{{API_KEY}}', 'v2');
 
-await salable.subscriptions.removeSeats('{{SUBSCRIPTION_UUID}}', { decrement: 2 });
+await salable.subscriptions.removeSeats('subscription_1', { decrement: 1 });
 ```
 
 ## Parameters
 
-##### subscriptionId (_required_)
+#### subscriptionUuid (_required_)
 
 _Type:_ `string`
 
-The `uuid` of the Subscription the seats will be removed from
+The UUID of the Subscription
 
-##### config (_required_)
+#### Options (_required_)
 
-_Type:_ `ISubscriptionRemoveSeatsParams`
+_Type:_ `RemoveSubscriptionSeatsOption`
 
-| Option    | Description                       |
-| --------- | --------------------------------- |
-| decrement | The number of seats to be removed |
+| Option    | Type   | Description                                                                                                                                                                                                        | Required |
+| --------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
+| decrement | number | The number of seats to be created                                                                                                                                                                                  | ✅       |
+| proration | string | `create_prorations`: Will cause proration invoice items to be created when applicable (default). `none`: Disable creating prorations in this request. `always_invoice`: Always invoice immediately for prorations. | ❌       |
+
+## Return Type
+
+For more information about this request see our API documentation on [Subscription Seat Object](https://docs.salable.app/api/v2#tag/Subscriptions/operation/decrementSubscriptionSeats)
