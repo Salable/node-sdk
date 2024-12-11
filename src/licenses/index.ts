@@ -6,7 +6,7 @@ export type LicenseVersions = {
     /**
      *  Get all licenses
      *
-     * @param {GetLicenseOptions} options - (Optional) Filter parameters. See https://docs.salable.app/api#tag/Licenses/operation/getLicenses
+     * @param {GetLicenseOptions} options - (Optional) Filter parameters. See https://docs.salable.app/api/v2#tag/Licenses/operation/getLicenses
      *
      * @returns {Promise<GetAllLicensesResponse>} All licenses present on the account
      */
@@ -15,7 +15,7 @@ export type LicenseVersions = {
      *  Get one license
      *
      *  @param {string} uuid - The UUID of the license
-     *  @param {{ expand: string[] }} options - (Optional) Filter parameters. See https://docs.salable.app/api#tag/Licenses/operation/getLicenseByUuid
+     *  @param {{ expand: string[] }} options - (Optional) Filter parameters. See https://docs.salable.app/api/v2#tag/Licenses/operation/getLicenseByUuid
      *
      *  @returns { Promise<License>}
      */
@@ -23,7 +23,7 @@ export type LicenseVersions = {
     /**
      *  Get License's Count
      *
-     * @param {GetLicenseCountOptions} options - (Optional) Filter parameters. See https://docs.salable.app/api#tag/Licenses/operation/getLicensesCount
+     * @param {GetLicenseCountOptions} options - (Optional) Filter parameters. See https://docs.salable.app/api/v2#tag/Licenses/operation/getLicensesCount
      *
      * @returns {Promise<GetLicenseCountResponse>}
      */
@@ -43,7 +43,7 @@ export type LicenseVersions = {
      *  Get licenses for granteeId
      *
      *  @param {string} granteeId - The granteeId for the licenses
-     *  @param {{ expand: string[] }} options - (Optional) Filter parameters. See https://docs.salable.app/api#tag/Licenses/operation/getLicensesByGranteeId
+     *  @param {{ expand: string[] }} options - (Optional) Filter parameters. See https://docs.salable.app/api/v2#tag/Licenses/operation/getLicensesByGranteeId
      *
      *  @returns {Promise<License[]>}
      */
@@ -57,6 +57,7 @@ export type LicenseVersions = {
      * @param {CreateAdhocLicenseInput} data.granteeId - (Optional) The grantee ID for the license.
      * @param {CreateAdhocLicenseInput} data.status - (Optional) The status of the created license, e.g. "ACTIVE" "TRIALING"
      * @param {CreateAdhocLicenseInput} data.endTime - (Optional) Provide a custom end time for the license; this will override the plan's default interval.
+     * @param {CreateAdhocLicenseInput} data.cancelAtPeriodEnd - (Optional) If set to true the license will not renew once the endTime date has passed.
      *
      * @returns {Promise<License>} The data for the new license created
      */

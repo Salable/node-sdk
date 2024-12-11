@@ -19,6 +19,7 @@ export type CreateAdhocLicenseInput = {
   granteeId?: string;
   status?: 'ACTIVE' | 'TRIALING';
   endTime?: string;
+  cancelAtPeriodEnd?: boolean
 };
 
 export type GetLicenseOptions = {
@@ -26,6 +27,9 @@ export type GetLicenseOptions = {
   cursor?: string;
   take?: string;
   subscriptionUuid?: string;
+  granteeId?: string;
+  planUuid?: string;
+  productUuid?: string;
 };
 
 export type GetPurchasersLicensesOptions = {
@@ -290,6 +294,36 @@ export type IDefaultCheckoutInputParams = {
 
 export type PlanCheckout = {
   checkoutUrl: string;
+};
+
+export type GetPlanOptions = {
+  expand?: string[];
+  successUrl?: string;
+  cancelUrl?: string;
+  granteeId?: string;
+  member?: string;
+  promoCode?: string;
+  allowPromoCode?: boolean;
+  customerEmail?: string;
+  customerId?: string;
+  currency?: string;
+  automaticTax?: string;
+};
+
+export type GetPlanCheckoutOptions = {
+  successUrl: string;
+  cancelUrl: string;
+  granteeId: string;
+  member: string;
+  promoCode?: string;
+  allowPromoCode?: boolean;
+  customerEmail?: string;
+  customerId?: string;
+  currency?: string;
+  automaticTax?: string;
+  quantity?: string;
+  changeQuantity?: string;
+  requirePaymentMethod?: boolean;
 };
 
 export type PlanFeature = {
