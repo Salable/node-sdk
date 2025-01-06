@@ -1,3 +1,10 @@
+# [4.0.0-beta.2](https://github.com/Salable/node-sdk/compare/v4.0.0-beta.1...v4.0.0-beta.2) (2025-01-06)
+
+
+### Bug Fixes
+
+* fixed path to types in build ([62b093c](https://github.com/Salable/node-sdk/commit/62b093c634572e11d7ee344ff6e3a6b35dc7e977))
+
 # [4.0.0-beta.1](https://github.com/Salable/node-sdk/compare/v3.4.0...v4.0.0-beta.1) (2024-12-11)
 
 
