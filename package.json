@@ -4,7 +4,7 @@
   "description": "Node.js SDK to interact with Salable APIs",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/src/index.d.ts",
   "repository": "https://github.com/Salable/node-sdk.git",
   "author": "Salable",
   "license": "MIT",
