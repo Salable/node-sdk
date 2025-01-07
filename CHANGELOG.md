@@ -1,3 +1,10 @@
+# [4.0.0-beta.3](https://github.com/Salable/node-sdk/compare/v4.0.0-beta.2...v4.0.0-beta.3) (2025-01-07)
+
+
+### Bug Fixes
+
+* amending the correct response type for get subscriptions ([e7f4044](https://github.com/Salable/node-sdk/commit/e7f40444ff717770048e3445412a095c3ec1cacf))
+
 # [4.0.0-beta.2](https://github.com/Salable/node-sdk/compare/v4.0.0-beta.1...v4.0.0-beta.2) (2025-01-06)
 
 
