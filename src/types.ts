@@ -139,10 +139,9 @@ export type Subscription = {
   cancelAtPeriodEnd: boolean;
 };
 
-export type AllSubscription = {
+export type GetAllSubscriptionResponse = {
   first: string;
   last: string;
-  hasMore: boolean;
   data: Subscription[];
 };
 
