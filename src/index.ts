@@ -5,6 +5,7 @@ import { plansInit, PlanVersionedMethods } from '../src/plans';
 import { productsInit, ProductVersionedMethods } from '../src/products';
 import { pricingTablesInit, PricingTableVersionedMethods } from '../src/pricing-tables';
 import { UsageVersionedMethods, usageInit } from './usage';
+import { eventsInit, EventVersionedMethods } from './events';
 
 export const Version = {
   V2: 'v2',
@@ -57,6 +58,7 @@ export default class Salable<V extends TVersion> {
   subscriptions: SubscriptionVersionedMethods<V>;
   licenses: LicenseVersionedMethods<V>;
   usage: UsageVersionedMethods<V>;
+  events: EventVersionedMethods<V>;
 
   constructor(apiKey: string, version: V) {
     const request = initRequest(apiKey, version);
@@ -67,5 +69,6 @@ export default class Salable<V extends TVersion> {
     this.subscriptions = subscriptionsInit(version, request);
     this.licenses = licensesInit(version, request);
     this.usage = usageInit(version, request);
+    this.events = eventsInit(version, request);
   }
 }

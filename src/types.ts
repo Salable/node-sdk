@@ -886,3 +886,16 @@ type Card = {
 export type SubscriptionSeatResponse = {
   eventUuid: string;
 };
+
+export type Event = {
+  uuid: string;
+  type: string;
+  organisation: string;
+  status: string;
+  isTest: boolean;
+  retries: number;
+  errorMessage: string;
+  errorCode: string;
+  createdAt: string;
+  updatedAt: string;
+};
