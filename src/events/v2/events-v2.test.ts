@@ -1,8 +1,9 @@
 import Salable from '../..';
-import { Event, Version } from '../../types';
+import { Event, EventTypeEnum, Version } from '../../types';
 import prismaClient from '../../../test-utils/prisma/prisma-client';
 import { testUuids } from '../../../test-utils/scripts/create-test-data';
 import { v4 as uuidv4 } from 'uuid';
+import { EventStatus } from '@prisma/client';
 
 const version = Version.V2;
 
@@ -23,9 +24,9 @@ describe('Events V2 Tests', () => {
 
 const eventSchema: Event = {
   uuid: expect.any(String),
-  type: expect.any(String),
+  type: expect.toBeOneOf(Object.values(EventTypeEnum)) as EventTypeEnum,
   organisation: expect.any(String),
-  status: expect.any(String),
+  status: expect.toBeOneOf(Object.values(EventStatus)) as EventStatus,
   isTest: expect.any(Boolean),
   retries: expect.any(Number),
   errorMessage: expect.toBeOneOf([expect.any(String), null]),
