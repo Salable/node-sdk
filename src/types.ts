@@ -1,3 +1,5 @@
+import { EventStatus } from '@prisma/client';
+
 export const Version = {
   V2: 'v2',
 } as const;
@@ -19,7 +21,7 @@ export type CreateAdhocLicenseInput = {
   granteeId?: string;
   status?: 'ACTIVE' | 'TRIALING';
   endTime?: string;
-  cancelAtPeriodEnd?: boolean
+  cancelAtPeriodEnd?: boolean;
 };
 
 export type GetLicenseOptions = {
@@ -79,7 +81,7 @@ export type GetUsageOptions = {
 export type GetAllUsageRecordsResponse = {
   first: string;
   last: string;
-  data: UsageRecord[]
+  data: UsageRecord[];
 };
 
 export type UsageRecord = {
@@ -92,7 +94,7 @@ export type UsageRecord = {
   licenseUuid: string;
   createdAt: string;
   updatedAt: string;
-}
+};
 
 export type License = {
   uuid: string;
@@ -887,11 +889,19 @@ export type SubscriptionSeatResponse = {
   eventUuid: string;
 };
 
+export enum EventTypeEnum {
+  CreateSeats = 'Create seats',
+  RemoveSeats = 'Remove seats',
+  ChangePlan = 'Change plan',
+  UpdateUsage = 'Update usage',
+  CancelSubscription = 'Cancel subscription',
+}
+
 export type Event = {
   uuid: string;
-  type: string;
+  type: EventTypeEnum;
   organisation: string;
-  status: string;
+  status: EventStatus;
   isTest: boolean;
   retries: number;
   errorMessage: string;
