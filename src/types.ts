@@ -550,7 +550,7 @@ export type SubscriptionInvoice = {
   data: Invoice[];
 };
 
-type Invoice = {
+export type Invoice = {
   id: string;
   object: string;
   account_country: string;
@@ -567,8 +567,12 @@ type Invoice = {
   auto_advance: boolean;
   automatic_tax: {
     enabled: boolean;
-    status: string;
+    status: string | null;
+    disabled_reason: null | string;
+    liability: null | null;
   };
+  issuer: Record<string, unknown>;
+  automatically_finalizes_at: number | null;
   billing_reason: string;
   charge: string;
   collection_method: string;
@@ -668,9 +672,10 @@ type Invoice = {
   total: number;
   total_discount_amounts: string[];
   total_excluding_tax: number;
+  total_pretax_credit_amounts: object | null;
   total_tax_amounts: string[];
   transfer_data: string;
-  webhooks_delivered_at: number;
+  webhooks_delivered_at: number | null;
 };
 
 type LineItem = {
@@ -689,28 +694,29 @@ type LineItem = {
   period: {
     end: number;
     start: number;
-  };
-  plan: {
-    id: string;
-    object: string;
-    active: boolean;
-    aggregate_usage: string;
-    amount: number;
-    amount_decimal: string;
-    billing_scheme: string;
-    created: number;
-    currency: string;
-    interval: string;
-    interval_count: number;
-    livemode: boolean;
-    metadata: Record<string, unknown>;
-    nickname: string;
-    product: string;
-    tiers_mode: string;
-    transform_usage: string;
-    trial_period_days: string;
-    usage_type: string;
-  };
+  }[];
+  // plan: {
+  //   id: string;
+  //   object: string;
+  //   active: boolean;
+  //   aggregate_usage: string;
+  //   amount: number;
+  //   amount_decimal: string;
+  //   billing_scheme: string;
+  //   created: number;
+  //   currency: string;
+  //   interval: string;
+  //   interval_count: number;
+  //   livemode: boolean;
+  //   metadata: Record<string, unknown>;
+  //   nickname: string;
+  //   product: string;
+  //   tiers_mode: string;
+  //   transform_usage: string;
+  //   trial_period_days: string;
+  //   usage_type: string;
+  // };
+  plan: Record<string, unknown>;
   price: {
     id: string;
     object: string;
@@ -752,6 +758,7 @@ type LineItem = {
   tax_rates: string[];
   type: string;
   unit_amount_excluding_tax: string;
+  webhooks_delivered_at: number;
 };
 
 export type SubscriptionPlan = {
