@@ -283,7 +283,7 @@ const invoiceSchema: Invoice = {
   total_pretax_credit_amounts: expect.toBeOneOf([expect.toBeArray(), null]),
   total_tax_amounts: expect.toBeArray(),
   transfer_data: expect.toBeOneOf([expect.toBeObject(), null]),
-  webhooks_delivered_at: expect.toBeOneOf([Number, null]),
+  webhooks_delivered_at: expect.toBeOneOf([expect.any(Number), null]),
 };
 
 const stripeInvoiceSchema: SubscriptionInvoice = {
