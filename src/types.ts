@@ -695,27 +695,6 @@ type LineItem = {
     end: number;
     start: number;
   }[];
-  // plan: {
-  //   id: string;
-  //   object: string;
-  //   active: boolean;
-  //   aggregate_usage: string;
-  //   amount: number;
-  //   amount_decimal: string;
-  //   billing_scheme: string;
-  //   created: number;
-  //   currency: string;
-  //   interval: string;
-  //   interval_count: number;
-  //   livemode: boolean;
-  //   metadata: Record<string, unknown>;
-  //   nickname: string;
-  //   product: string;
-  //   tiers_mode: string;
-  //   transform_usage: string;
-  //   trial_period_days: string;
-  //   usage_type: string;
-  // };
   plan: Record<string, unknown>;
   price: {
     id: string;
