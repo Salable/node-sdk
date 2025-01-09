@@ -13,7 +13,7 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}', 'v2');
 
-await salable.licenses.cancel('license_1');
+await salable.licenses.cancel('8ea5c243-7052-4906-acc5-a84690e2cad9');
 ```
 
 ## Parameters

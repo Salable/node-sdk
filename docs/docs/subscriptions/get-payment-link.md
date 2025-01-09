@@ -13,7 +13,7 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}', 'v2');
 
-const subscription = await salable.subscriptions.getPortalLink('subscription_1');
+const subscription = await salable.subscriptions.getPortalLink('4264d425-697c-4b65-b189-0e747050bfff');
 ```
 
 ## Parameters

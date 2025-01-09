@@ -13,7 +13,7 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}', 'v2');
 
-const license = await salable.licenses.getOne('license_1', { expand: 'plan' });
+const license = await salable.licenses.getOne('dba43177-43a7-4639-9dba-7b0ff9fcee0a', { expand: 'plan' });
 ```
 
 ## Parameters

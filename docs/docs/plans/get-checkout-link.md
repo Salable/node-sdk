@@ -15,7 +15,7 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}', 'v2');
 
-const checkoutLink = await salable.plans.getCheckoutLink('plan_1', {
+const checkoutLink = await salable.plans.getCheckoutLink('1de11022-ef14-4e22-94e6-c5b0652e497f', {
   cancelUrl: 'https://example.com/cancel',
   successUrl: 'https://example.com/success',
   granteeId: 'userId-1',
@@ -30,7 +30,7 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}');
 
-const checkoutLink = await salable.plans.getCheckoutLink('plan_1', {
+const checkoutLink = await salable.plans.getCheckoutLink('15914694-5ff1-40d7-8ccb-7acc00586508', {
   cancelUrl: 'https://example.com/cancel',
   successUrl: 'https://example.com/success',
   granteeId: 'userId-1',

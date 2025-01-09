@@ -13,7 +13,7 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}', 'v2');
 
-const product = await salable.products.getOne('product_1');
+const product = await salable.products.getOne('3fe29048-28bf-461c-8498-c42c3572359c');
 ```
 
 ## Parameters

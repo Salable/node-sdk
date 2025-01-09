@@ -13,7 +13,7 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}', 'v2');
 
-const plan = await salable.plans.getCapabilities('plan_1');
+const plan = await salable.plans.getCapabilities('2141fada-4b65-477d-b369-afb24dea94e6');
 ```
 
 ## Parameters
