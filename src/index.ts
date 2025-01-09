@@ -7,6 +7,9 @@ import { pricingTablesInit, PricingTableVersionedMethods } from '../src/pricing-
 import { UsageVersionedMethods, usageInit } from './usage';
 import { eventsInit, EventVersionedMethods } from './events';
 
+export { ErrorCodes, SalableParseError, SalableRequestError, SalableResponseError, SalableUnknownError, SalableValidationError } from './exceptions/salable-error';
+export type { ResponseError, ValidationError } from './exceptions/salable-error';
+
 export const Version = {
   V2: 'v2',
 } as const;
