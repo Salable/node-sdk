@@ -78,7 +78,7 @@ export type GetUsageOptions = {
   take?: string;
 };
 
-export type GetAllUsageRecordsResponse = {
+export type PaginatedUsageRecords = {
   first: string;
   last: string;
   data: UsageRecord[];
@@ -117,7 +117,7 @@ export type License = {
   cancelAtPeriodEnd: boolean;
 };
 
-export type GetAllLicensesResponse = {
+export type PaginatedLicenses = {
   first: string;
   last: string;
   data: License[];
@@ -141,7 +141,7 @@ export type Subscription = {
   cancelAtPeriodEnd: boolean;
 };
 
-export type GetAllSubscriptionResponse = {
+export type PaginatedSubscription = {
   first: string;
   last: string;
   data: Subscription[];
@@ -234,7 +234,7 @@ export type ICheckoutVatParams = {
   vatPostcode?: string;
 };
 
-export type PricingTableResponse = {
+export type PricingTable = {
   uuid: string;
   name: string;
   status: ProductStatus;
@@ -543,7 +543,7 @@ export type LicenseGetUsage = {
   unitCount: number;
 };
 
-export type SubscriptionInvoice = {
+export type PaginatedSubscriptionInvoice = {
   first: string;
   last: string;
   hasMore: boolean;
@@ -871,7 +871,7 @@ type Card = {
   wallet: string;
 };
 
-export type SubscriptionSeatResponse = {
+export type SubscriptionSeat = {
   eventUuid: string;
 };
 

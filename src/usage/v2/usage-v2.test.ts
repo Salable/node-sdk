@@ -1,5 +1,5 @@
 import Salable, { Version } from '../..';
-import { UsageRecord } from '../../types';
+import { PaginatedUsageRecords, UsageRecord } from '../../types';
 import prismaClient from '../../../test-utils/prisma/prisma-client';
 import { testUuids } from '../../../test-utils/scripts/create-test-data';
 import { v4 as uuidv4 } from 'uuid';
@@ -21,13 +21,7 @@ describe('Usage V2 Tests', () => {
   it('getAllUsageRecords: Should successfully fetch the grantees usage records', async () => {
     const data = await salable.usage.getAllUsageRecords(testGrantee);
 
-    expect(data).toEqual(
-      expect.objectContaining({
-        first: expect.toBeOneOf([expect.any(String), null]),
-        last: expect.toBeOneOf([expect.any(String), null]),
-        data: expect.arrayContaining([usageRecordSchema]),
-      }),
-    );
+    expect(data).toEqual(paginatedUsageRecordsSchema);
   });
 
   it('getAllUsageRecords (w/ search params): Should successfully fetch the grantees usage records', async () => {
@@ -75,6 +69,12 @@ const usageRecordSchema: UsageRecord = {
   licenseUuid: expect.any(String),
   createdAt: expect.any(String),
   updatedAt: expect.any(String),
+};
+
+const paginatedUsageRecordsSchema: PaginatedUsageRecords = {
+  first: expect.toBeOneOf([expect.any(String), null]),
+  last: expect.toBeOneOf([expect.any(String), null]),
+  data: expect.arrayContaining([usageRecordSchema]),
 };
 
 const generateTestData = async () => {

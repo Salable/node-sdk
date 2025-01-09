@@ -12,13 +12,13 @@ describe('Plans V2 Tests', () => {
 
   it('getOne: should successfully fetch all products', async () => {
     const data = await salable.plans.getOne(planUuid);
-    expect(data).toEqual(PlanSchema);
+    expect(data).toEqual(planSchema);
   });
 
   it('getOne (w / search params): should successfully fetch a plan', async () => {
     const data = await salable.plans.getOne(planUuid, { expand: ['capabilities', 'capabilities.capability', 'features', 'features.feature', 'features.enumValue', 'currencies', 'currencies.currency'] });
 
-    expect(data).toEqual(PlanSchema);
+    expect(data).toEqual(planSchema);
   });
 
   it('getCheckoutLink (w / required params): should successfully fetch checkout link for plan', async () => {
@@ -68,7 +68,7 @@ describe('Plans V2 Tests', () => {
   });
 });
 
-const PlanSchema: Plan = {
+const planSchema: Plan = {
   uuid: expect.any(String),
   name: expect.any(String),
   slug: expect.any(String),

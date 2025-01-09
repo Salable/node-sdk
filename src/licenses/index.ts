@@ -1,4 +1,4 @@
-import { CheckLicenseInput, CheckLicensesCapabilitiesResponse, CreateAdhocLicenseInput, GetAllLicensesResponse, GetLicenseOptions, License, GetLicenseCountResponse, UpdateManyLicenseInput, GetLicenseCountOptions, GetPurchasersLicensesOptions, ApiRequest, TVersion, Version } from '../types';
+import { CheckLicenseInput, CheckLicensesCapabilitiesResponse, CreateAdhocLicenseInput, PaginatedLicenses, GetLicenseOptions, License, GetLicenseCountResponse, UpdateManyLicenseInput, GetLicenseCountOptions, GetPurchasersLicensesOptions, ApiRequest, TVersion, Version } from '../types';
 import { v2LicenseMethods } from './v2';
 
 export type LicenseVersions = {
@@ -8,9 +8,9 @@ export type LicenseVersions = {
      *
      * @param {GetLicenseOptions} options - (Optional) Filter parameters. See https://docs.salable.app/api/v2#tag/Licenses/operation/getLicenses
      *
-     * @returns {Promise<GetAllLicensesResponse>} All licenses present on the account
+     * @returns {Promise<PaginatedLicenses>} All licenses present on the account
      */
-    getAll: (options?: GetLicenseOptions) => Promise<GetAllLicensesResponse>;
+    getAll: (options?: GetLicenseOptions) => Promise<PaginatedLicenses>;
     /**
      *  Get one license
      *

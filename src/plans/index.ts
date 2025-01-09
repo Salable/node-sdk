@@ -10,7 +10,7 @@ export type PlanVersions = {
      *
      * Docs - https://docs.salable.app/api/v2#tag/Plans/operation/getPlanByUuid
      *
-     * @returns {Promise<IPlan>}
+     * @returns {Promise<Plan>}
      */
     getOne: (
       planUuid: string,

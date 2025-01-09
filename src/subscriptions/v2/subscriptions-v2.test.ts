@@ -1,6 +1,6 @@
 import prismaClient from '../../../test-utils/prisma/prisma-client';
 import Salable from '../..';
-import { GetAllSubscriptionResponse, Invoice, Plan, Subscription, SubscriptionInvoice, Version } from '../../types';
+import { PaginatedSubscription, Invoice, Plan, Subscription, PaginatedSubscriptionInvoice, Version } from '../../types';
 import getEndTime from '../../../test-utils/helpers/get-end-time';
 import { v4 as uuidv4 } from 'uuid';
 import { testUuids } from '../../../test-utils/scripts/create-test-data';
@@ -194,7 +194,7 @@ const subscriptionSchema: Subscription = {
   planUuid: expect.any(String),
 };
 
-const paginationSubscriptionSchema: GetAllSubscriptionResponse = {
+const paginationSubscriptionSchema: PaginatedSubscription = {
   first: expect.any(String),
   last: expect.any(String),
   data: expect.arrayContaining([subscriptionSchema]),
@@ -286,7 +286,7 @@ const invoiceSchema: Invoice = {
   webhooks_delivered_at: expect.toBeOneOf([expect.any(Number), null]),
 };
 
-const stripeInvoiceSchema: SubscriptionInvoice = {
+const stripeInvoiceSchema: PaginatedSubscriptionInvoice = {
   first: expect.any(String),
   last: expect.any(String),
   hasMore: expect.any(Boolean),

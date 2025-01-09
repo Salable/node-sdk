@@ -1,5 +1,5 @@
 import Salable from '../..';
-import { Capability, License, Plan, Version } from '../../types';
+import { Capability, License, PaginatedLicenses, Plan, Version } from '../../types';
 import prismaClient from '../../../test-utils/prisma/prisma-client';
 import { testUuids } from '../../../test-utils/scripts/create-test-data';
 import getEndTime from '../../../test-utils/helpers/get-end-time';
@@ -48,11 +48,7 @@ describe('Licenses V2 Tests', () => {
   it('getAll: Should successfully fetch licenses', async () => {
     const data = await salable.licenses.getAll();
 
-    expect(data).toEqual({
-      first: expect.toBeOneOf([expect.any(String), null]),
-      last: expect.toBeOneOf([expect.any(String), null]),
-      data: expect.arrayContaining([licenseSchema]),
-    });
+    expect(data).toEqual(paginatedLicensesSchema);
   });
 
   it('getAll (w/ search params): Should successfully fetch licenses', async () => {
@@ -290,6 +286,12 @@ const licenseSchema: License = {
   updatedAt: expect.any(String),
   isTest: expect.any(Boolean),
   cancelAtPeriodEnd: expect.any(Boolean),
+};
+
+const paginatedLicensesSchema: PaginatedLicenses = {
+  first: expect.toBeOneOf([expect.any(String), null]),
+  last: expect.toBeOneOf([expect.any(String), null]),
+  data: expect.arrayContaining([licenseSchema]),
 };
 
 const planSchema: Plan = {

@@ -1,5 +1,5 @@
 import Salable from '../..';
-import { PricingTableResponse, Version } from '../../types';
+import { PricingTable, Version } from '../../types';
 import prismaClient from '../../../test-utils/prisma/prisma-client';
 import { testUuids } from '../../../test-utils/scripts/create-test-data';
 
@@ -17,11 +17,11 @@ describe('Pricing Table V2 Tests', () => {
   it('getAll: should successfully fetch all products', async () => {
     const data = await salable.pricingTables.getOne(pricingTableUuid);
 
-    expect(data).toEqual(expect.objectContaining(PricingTableSchema));
+    expect(data).toEqual(expect.objectContaining(pricingTableSchema));
   });
 });
 
-const PricingTableSchema: PricingTableResponse = {
+const pricingTableSchema: PricingTable = {
   customTheme: expect.toBeOneOf([expect.any(String), null]),
   productUuid: expect.any(String),
   featuredPlanUuid: expect.toBeOneOf([expect.any(String), null]),
