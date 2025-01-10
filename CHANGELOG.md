@@ -1,3 +1,17 @@
+# [4.0.0-beta.4](https://github.com/Salable/node-sdk/compare/v4.0.0-beta.3...v4.0.0-beta.4) (2025-01-10)
+
+
+### Bug Fixes
+
+* amend the options type for create and update license resource ([9287b0a](https://github.com/Salable/node-sdk/commit/9287b0ac5da316de34a615a1f8ad317061011d36))
+* subscription invoice schema mismatch ([0c9d6db](https://github.com/Salable/node-sdk/commit/0c9d6db65bca21a48947dadaec0e2e3d928f3dfc))
+
+
+### Features
+
+* event resource and methods with documentation ([71c23b1](https://github.com/Salable/node-sdk/commit/71c23b12974556b51ab80defe6368eb2b2ad9b83))
+* export salable errors ([1f23502](https://github.com/Salable/node-sdk/commit/1f23502a73029613d221c0b519532ac1ec82f858))
+
 # [4.0.0-beta.3](https://github.com/Salable/node-sdk/compare/v4.0.0-beta.2...v4.0.0-beta.3) (2025-01-07)
 
 
