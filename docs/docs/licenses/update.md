@@ -30,9 +30,10 @@ The `uuid` of the license to be updated
 
 _Type:_ `{ granteeId: string }`
 
-| Option    | Type   | Description              | Required |
-| --------- | ------ | ------------------------ | -------- |
-| granteeId | string | The new grantee ID value | ✅        |
+| Option    | Type           | Description                                                                        | Required |
+| --------- | -------------- | ---------------------------------------------------------------------------------- | -------- |
+| granteeId | string or null | The new grantee ID for the license                                                 | ✅       |
+| endTime   | string         | Custom DateTime string for the license which overrides the plan's default interval | ❌       |
 
 ## Return Type
 

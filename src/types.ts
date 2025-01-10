@@ -18,7 +18,7 @@ export type SubscriptionStatus = 'ACTIVE' | 'CANCELED' | 'PAUSED' | 'TRIALING' |
 export type CreateAdhocLicenseInput = {
   planUuid: string;
   member: string;
-  granteeId?: string;
+  granteeId: string | null;
   status?: 'ACTIVE' | 'TRIALING';
   endTime?: string;
   cancelAtPeriodEnd?: boolean;

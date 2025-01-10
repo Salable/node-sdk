@@ -171,9 +171,9 @@ describe('Licenses V2 Tests', () => {
   });
 
   it('update: Should successfully update a license', async () => {
-    const data = await salable.licenses.update(noSubLicenseUuid, { granteeId: 'updated-grantee-id' });
+    const data = await salable.licenses.update(noSubLicenseUuid, { granteeId: null });
 
-    expect(data.granteeId).toEqual('updated-grantee-id');
+    expect(data.granteeId).toEqual(null);
   });
 
   it('updateMany: Should successfully update multiple licenses', async () => {

@@ -79,12 +79,11 @@ export type LicenseVersions = {
      *  Update a license
      *
      * @param {string} uuid - The UUID of the license
-     * @param {{granteeId: string}} data
-     * @param {{granteeId: string}} data.granteeId - The value of the new granteeId
+     * @param {{ granteeId?: string; endTime: string;}} data - The value of the new granteeId
      *
      * @returns {Promise<License>} The data of the updated license
      */
-    update: (uuid: string, data: { granteeId: string }) => Promise<License>;
+    update: (uuid: string, data?: { granteeId: string | null, endTime?: string }) => Promise<License>;
     /**
      *  Update many license's
      *
