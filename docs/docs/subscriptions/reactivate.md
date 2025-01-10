@@ -13,7 +13,7 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}', 'v2');
 
-const subscription = await salable.subscriptions.reactivateSubscription('subscription_1');
+const subscription = await salable.subscriptions.reactivateSubscription('9237877c-baae-46d0-b482-cb0147179e30');
 ```
 
 ## Parameters

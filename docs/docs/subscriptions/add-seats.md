@@ -13,7 +13,7 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}', 'v2');
 
-await salable.subscriptions.addSeats('subscription_1', { increment: 2 });
+await salable.subscriptions.addSeats('d18642b3-6dc0-40c4-aaa5-6315ed37c744', { increment: 2 });
 ```
 
 ## Parameters

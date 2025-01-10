@@ -13,7 +13,7 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}', 'v2');
 
-const plan = await salable.plans.getCurrencies('plan_1');
+const plan = await salable.plans.getCurrencies('8494c276-ad2d-4341-bba0-f0fd416b7cec');
 ```
 
 ## Parameters

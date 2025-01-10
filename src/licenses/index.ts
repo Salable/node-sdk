@@ -1,4 +1,4 @@
-import { CheckLicenseInput, CheckLicensesCapabilitiesResponse, CreateAdhocLicenseInput, GetAllLicensesResponse, GetLicenseOptions, License, GetLicenseCountResponse, UpdateManyLicenseInput, GetLicenseCountOptions, GetPurchasersLicensesOptions, ApiRequest, TVersion, Version } from '../types';
+import { CheckLicenseInput, CheckLicensesCapabilitiesResponse, CreateAdhocLicenseInput, PaginatedLicenses, GetLicenseOptions, License, GetLicenseCountResponse, UpdateManyLicenseInput, GetLicenseCountOptions, GetPurchasersLicensesOptions, ApiRequest, TVersion, Version } from '../types';
 import { v2LicenseMethods } from './v2';
 
 export type LicenseVersions = {
@@ -8,9 +8,9 @@ export type LicenseVersions = {
      *
      * @param {GetLicenseOptions} options - (Optional) Filter parameters. See https://docs.salable.app/api/v2#tag/Licenses/operation/getLicenses
      *
-     * @returns {Promise<GetAllLicensesResponse>} All licenses present on the account
+     * @returns {Promise<PaginatedLicenses>} All licenses present on the account
      */
-    getAll: (options?: GetLicenseOptions) => Promise<GetAllLicensesResponse>;
+    getAll: (options?: GetLicenseOptions) => Promise<PaginatedLicenses>;
     /**
      *  Get one license
      *
@@ -79,12 +79,11 @@ export type LicenseVersions = {
      *  Update a license
      *
      * @param {string} uuid - The UUID of the license
-     * @param {{granteeId: string}} data
-     * @param {{granteeId: string}} data.granteeId - The value of the new granteeId
+     * @param {{ granteeId?: string; endTime: string;}} data - The value of the new granteeId
      *
      * @returns {Promise<License>} The data of the updated license
      */
-    update: (uuid: string, data: { granteeId: string }) => Promise<License>;
+    update: (uuid: string, data?: { granteeId: string | null, endTime?: string }) => Promise<License>;
     /**
      *  Update many license's
      *

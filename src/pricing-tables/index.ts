@@ -1,4 +1,4 @@
-import { PricingTableResponse, ApiRequest, TVersion, Version } from '../types';
+import { PricingTable, ApiRequest, TVersion, Version } from '../types';
 import { v2PricingTableMethods } from './v2';
 
 export type PricingTableVersions = {
@@ -9,9 +9,9 @@ export type PricingTableVersions = {
      *  @param {string} pricingTableUuid - The UUID for the pricingTable
      *  @param {{ granteeId?: string; currency?: string;}} options - (Optional) Filter parameters. See https://docs.salable.app/api/v2#tag/Pricing-Tables/operation/getPricingTableByUuid
      *
-     * @returns {Promise<PricingTableResponse>}
+     * @returns {Promise<PricingTable>}
      */
-    getOne: (pricingTableUuid: string, options?: { granteeId?: string; currency?: string }) => Promise<PricingTableResponse>;
+    getOne: (pricingTableUuid: string, options?: { granteeId?: string; currency?: string }) => Promise<PricingTable>;
   };
 };
 

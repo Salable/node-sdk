@@ -1,3 +1,5 @@
+import { EventStatus } from '@prisma/client';
+
 export const Version = {
   V2: 'v2',
 } as const;
@@ -16,10 +18,10 @@ export type SubscriptionStatus = 'ACTIVE' | 'CANCELED' | 'PAUSED' | 'TRIALING' |
 export type CreateAdhocLicenseInput = {
   planUuid: string;
   member: string;
-  granteeId?: string;
+  granteeId: string | null;
   status?: 'ACTIVE' | 'TRIALING';
   endTime?: string;
-  cancelAtPeriodEnd?: boolean
+  cancelAtPeriodEnd?: boolean;
 };
 
 export type GetLicenseOptions = {
@@ -76,10 +78,10 @@ export type GetUsageOptions = {
   take?: string;
 };
 
-export type GetAllUsageRecordsResponse = {
+export type PaginatedUsageRecords = {
   first: string;
   last: string;
-  data: UsageRecord[]
+  data: UsageRecord[];
 };
 
 export type UsageRecord = {
@@ -92,7 +94,7 @@ export type UsageRecord = {
   licenseUuid: string;
   createdAt: string;
   updatedAt: string;
-}
+};
 
 export type License = {
   uuid: string;
@@ -115,7 +117,7 @@ export type License = {
   cancelAtPeriodEnd: boolean;
 };
 
-export type GetAllLicensesResponse = {
+export type PaginatedLicenses = {
   first: string;
   last: string;
   data: License[];
@@ -139,7 +141,7 @@ export type Subscription = {
   cancelAtPeriodEnd: boolean;
 };
 
-export type GetAllSubscriptionResponse = {
+export type PaginatedSubscription = {
   first: string;
   last: string;
   data: Subscription[];
@@ -232,7 +234,7 @@ export type ICheckoutVatParams = {
   vatPostcode?: string;
 };
 
-export type PricingTableResponse = {
+export type PricingTable = {
   uuid: string;
   name: string;
   status: ProductStatus;
@@ -541,14 +543,14 @@ export type LicenseGetUsage = {
   unitCount: number;
 };
 
-export type SubscriptionInvoice = {
+export type PaginatedSubscriptionInvoice = {
   first: string;
   last: string;
   hasMore: boolean;
   data: Invoice[];
 };
 
-type Invoice = {
+export type Invoice = {
   id: string;
   object: string;
   account_country: string;
@@ -565,8 +567,12 @@ type Invoice = {
   auto_advance: boolean;
   automatic_tax: {
     enabled: boolean;
-    status: string;
+    status: string | null;
+    disabled_reason: null | string;
+    liability: null | null;
   };
+  issuer: Record<string, unknown>;
+  automatically_finalizes_at: number | null;
   billing_reason: string;
   charge: string;
   collection_method: string;
@@ -666,9 +672,10 @@ type Invoice = {
   total: number;
   total_discount_amounts: string[];
   total_excluding_tax: number;
+  total_pretax_credit_amounts: object | null;
   total_tax_amounts: string[];
   transfer_data: string;
-  webhooks_delivered_at: number;
+  webhooks_delivered_at: number | null;
 };
 
 type LineItem = {
@@ -687,28 +694,8 @@ type LineItem = {
   period: {
     end: number;
     start: number;
-  };
-  plan: {
-    id: string;
-    object: string;
-    active: boolean;
-    aggregate_usage: string;
-    amount: number;
-    amount_decimal: string;
-    billing_scheme: string;
-    created: number;
-    currency: string;
-    interval: string;
-    interval_count: number;
-    livemode: boolean;
-    metadata: Record<string, unknown>;
-    nickname: string;
-    product: string;
-    tiers_mode: string;
-    transform_usage: string;
-    trial_period_days: string;
-    usage_type: string;
-  };
+  }[];
+  plan: Record<string, unknown>;
   price: {
     id: string;
     object: string;
@@ -750,6 +737,7 @@ type LineItem = {
   tax_rates: string[];
   type: string;
   unit_amount_excluding_tax: string;
+  webhooks_delivered_at: number;
 };
 
 export type SubscriptionPlan = {
@@ -883,6 +871,27 @@ type Card = {
   wallet: string;
 };
 
-export type SubscriptionSeatResponse = {
+export type SubscriptionSeat = {
   eventUuid: string;
+};
+
+export enum EventTypeEnum {
+  CreateSeats = 'Create seats',
+  RemoveSeats = 'Remove seats',
+  ChangePlan = 'Change plan',
+  UpdateUsage = 'Update usage',
+  CancelSubscription = 'Cancel subscription',
+}
+
+export type Event = {
+  uuid: string;
+  type: EventTypeEnum;
+  organisation: string;
+  status: EventStatus;
+  isTest: boolean;
+  retries: number;
+  errorMessage: string;
+  errorCode: string;
+  createdAt: string;
+  updatedAt: string;
 };

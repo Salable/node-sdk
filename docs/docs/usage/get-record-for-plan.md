@@ -13,7 +13,7 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}', 'v2');
 
-const records = await salable.usage.getCurrentUsageRecord('grantee_1', 'plan_1');
+const records = await salable.usage.getCurrentUsageRecord('grantee_1', 'a155a63d-4391-4301-b335-8d9d977ebad1');
 ```
 
 ## Parameters

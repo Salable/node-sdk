@@ -15,7 +15,7 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}', 'v2');
 
-const pricingTable = await salable.pricingTables.getOne('pricing_table_1', {
+const pricingTable = await salable.pricingTables.getOne('0c0ee2b7-2f3b-436b-8b4e-b21d0ddbf2a9', {
   granteeId: 'grantee_1',
   currency: 'USD'
 });

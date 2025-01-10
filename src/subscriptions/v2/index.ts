@@ -1,5 +1,5 @@
 import { SubscriptionVersions } from '..';
-import { SubscriptionSeatResponse, ApiRequest } from '../../types';
+import { ApiRequest } from '../../types';
 import { RESOURCE_NAMES, SALABLE_BASE_URL } from '../../constants';
 import getUrl from '../../utils/get-url';
 
@@ -18,7 +18,7 @@ export const v2SubscriptionMethods = (request: ApiRequest): SubscriptionVersions
   getPaymentMethod: (uuid) => request(getUrl(`${baseUrl}/${uuid}/payment-method`, {}), { method: 'GET' }),
   reactivateSubscription: (uuid) => request(getUrl(`${baseUrl}/${uuid}/reactivate`, {}), { method: 'PUT' }),
   addSeats: (uuid, options) => request(`${baseUrl}/${uuid}/seats`, { method: 'POST', body: JSON.stringify(options) }),
-  removeSeats: (uuid, options): Promise<SubscriptionSeatResponse> =>
+  removeSeats: (uuid, options) =>
     request(getUrl(`${baseUrl}/${uuid}/seats`, {}), {
       method: 'PUT',
       body: JSON.stringify(options),

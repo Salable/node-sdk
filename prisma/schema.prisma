@@ -253,7 +253,7 @@ model License {
   updatedAt         DateTime               @default(now()) @updatedAt
   features          FeaturesOnLicenses[] /// @deprecated Use `usage` instead.
   usage             LicensesUsageOnPlans[]
-  usageRecords     LicensesUsage[]
+  usageRecords      LicensesUsage[]
   isTest            Boolean                @default(false)
   cancelAtPeriodEnd Boolean                @default(false)
 
@@ -382,17 +382,17 @@ model Webhook {
 }
 
 model LicensesUsage {
-  uuid        String                    @id @default(uuid())
-  license     License                   @relation(fields: [licenseUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  uuid        String                  @id @default(uuid())
+  license     License                 @relation(fields: [licenseUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
   licenseUuid String
-  plan        Plan                      @relation(fields: [planUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  plan        Plan                    @relation(fields: [planUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
   planUuid    String
-  unitCount   Int                       @default(0)
+  unitCount   Int                     @default(0)
   type        LicensesUsageRecordType
-  recordedAt  DateTime?
   resetAt     DateTime?
-  createdAt   DateTime                  @default(now())
-  updatedAt   DateTime                  @default(now()) @updatedAt
+  recordedAt  DateTime?
+  createdAt   DateTime                @default(now())
+  updatedAt   DateTime                @default(now()) @updatedAt
 
   @@index([licenseUuid])
   @@index([planUuid])
@@ -401,21 +401,20 @@ model LicensesUsage {
 }
 
 enum LicensesUsageRecordType {
-    recorded
-    current
-    final
+  recorded
+  current
+  final
 }
 
 /// @deprecated model deprecated to use LicensesUsage instead
 model LicensesUsageOnPlans {
-  license     License   @relation(fields: [licenseUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  license     License  @relation(fields: [licenseUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
   licenseUuid String
-  plan        Plan      @relation(fields: [planUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  plan        Plan     @relation(fields: [planUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
   planUuid    String
-  unitCount   Int       @default(0)
-  resetAt     DateTime?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @default(now()) @updatedAt
+  unitCount   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
 
   @@id([licenseUuid, planUuid])
   @@index([licenseUuid])

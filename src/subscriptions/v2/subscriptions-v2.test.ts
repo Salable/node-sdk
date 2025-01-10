@@ -1,6 +1,6 @@
 import prismaClient from '../../../test-utils/prisma/prisma-client';
 import Salable from '../..';
-import { Plan, Subscription, Version } from '../../types';
+import { PaginatedSubscription, Invoice, Plan, Subscription, PaginatedSubscriptionInvoice, Version } from '../../types';
 import getEndTime from '../../../test-utils/helpers/get-end-time';
 import { v4 as uuidv4 } from 'uuid';
 import { testUuids } from '../../../test-utils/scripts/create-test-data';
@@ -35,11 +35,7 @@ describe('Subscriptions V2 Tests', () => {
   it('getAll: Should successfully fetch subscriptions', async () => {
     const data = await salable.subscriptions.getAll();
 
-    expect(data).toEqual({
-      first: expect.any(String),
-      last: expect.any(String),
-      data: expect.arrayContaining([subscriptionSchema]),
-    });
+    expect(data).toEqual(paginationSubscriptionSchema);
   });
 
   it('getAll (w/ search params): Should successfully fetch subscriptions', async () => {
@@ -85,12 +81,7 @@ describe('Subscriptions V2 Tests', () => {
   it('getInvoices: Should successfully fetch a subscriptions invoices', async () => {
     const data = await salable.subscriptions.getInvoices(basicSubscriptionUuid);
 
-    expect(data).toEqual({
-      first: expect.any(String),
-      last: expect.any(String),
-      hasMore: expect.any(Boolean),
-      data: expect.arrayContaining([stripeInvoiceSchema]),
-    });
+    expect(data).toEqual(stripeInvoiceSchema);
   });
 
   it('getSwitchablePlans: Should successfully fetch a subscriptions switchable plans', async () => {
@@ -203,7 +194,13 @@ const subscriptionSchema: Subscription = {
   planUuid: expect.any(String),
 };
 
-const stripeInvoiceSchema = {
+const paginationSubscriptionSchema: PaginatedSubscription = {
+  first: expect.any(String),
+  last: expect.any(String),
+  data: expect.arrayContaining([subscriptionSchema]),
+};
+
+const invoiceSchema: Invoice = {
   id: expect.any(String),
   object: expect.any(String),
   account_country: expect.any(String),
@@ -286,7 +283,14 @@ const stripeInvoiceSchema = {
   total_pretax_credit_amounts: expect.toBeOneOf([expect.toBeArray(), null]),
   total_tax_amounts: expect.toBeArray(),
   transfer_data: expect.toBeOneOf([expect.toBeObject(), null]),
-  webhooks_delivered_at: expect.any(Number),
+  webhooks_delivered_at: expect.toBeOneOf([expect.any(Number), null]),
+};
+
+const stripeInvoiceSchema: PaginatedSubscriptionInvoice = {
+  first: expect.any(String),
+  last: expect.any(String),
+  hasMore: expect.any(Boolean),
+  data: [invoiceSchema],
 };
 
 const stripePaymentMethodSchema = {
