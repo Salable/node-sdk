@@ -1,3 +1,10 @@
+# [4.0.0-beta.5](https://github.com/Salable/node-sdk/compare/v4.0.0-beta.4...v4.0.0-beta.5) (2025-01-17)
+
+
+### Bug Fixes
+
+* added name to error class constructors ([d78a27d](https://github.com/Salable/node-sdk/commit/d78a27da7e469c8ba75b6bc67abaa629dc090785))
+
 # [4.0.0-beta.4](https://github.com/Salable/node-sdk/compare/v4.0.0-beta.3...v4.0.0-beta.4) (2025-01-10)
 
 
