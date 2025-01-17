@@ -38,6 +38,7 @@ export class SalableResponseError extends SalableError {
   constructor(code: ErrorCodes, data?: ResponseError) {
     super(code, data);
     Object.setPrototypeOf(this, SalableResponseError.prototype);
+    this.name = 'SalableResponseError';
   }
 }
 
@@ -45,6 +46,7 @@ export class SalableValidationError extends SalableError {
   constructor(code: ErrorCodes, data: ValidationError) {
     super(code, data);
     Object.setPrototypeOf(this, SalableValidationError.prototype);
+    this.name = 'SalableValidationError';
   }
 }
 
@@ -55,6 +57,7 @@ export class SalableUnknownError extends Error {
   constructor(error?: string) {
     super();
     Object.setPrototypeOf(this, SalableUnknownError.prototype);
+    this.name = 'SalableUnknownError';
     this.code = ErrorCodes.unknown;
     this.error = error ?? 'Salable SDK error';
   }
@@ -67,6 +70,7 @@ export class SalableParseError extends Error {
   constructor(error?: string) {
     super();
     Object.setPrototypeOf(this, SalableParseError.prototype);
+    this.name = 'SalableParseError';
     this.code = ErrorCodes.parse;
     this.error = error ?? 'Unable to parse data';
   }
@@ -79,6 +83,7 @@ export class SalableRequestError extends Error {
   constructor(error?: string) {
     super();
     Object.setPrototypeOf(this, SalableRequestError.prototype);
+    this.name = 'SalableRequestError';
     this.code = ErrorCodes.requestFailed;
     this.error = error ?? 'Unable to complete fetch operation';
   }
