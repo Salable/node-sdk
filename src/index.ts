@@ -37,8 +37,6 @@ export const initRequest: ApiFetch =
 
     if (response.ok) return data;
 
-    console.log('response.status', response.status)
-
     switch (response.status) {
       case 400:
         throw new SalableValidationError(ErrorCodes.validation, data as ValidationError);
