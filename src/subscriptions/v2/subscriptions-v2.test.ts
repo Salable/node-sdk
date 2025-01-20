@@ -4,7 +4,6 @@ import { PaginatedSubscription, Invoice, Plan, Subscription, PaginatedSubscripti
 import getEndTime from '../../../test-utils/helpers/get-end-time';
 import { v4 as uuidv4 } from 'uuid';
 import { testUuids } from '../../../test-utils/scripts/create-test-data';
-import * as console from 'node:console';
 
 const stripeEnvs = JSON.parse(process.env.stripEnvs || '');
 
