@@ -28,8 +28,7 @@ export const initRequest: ApiFetch =
         ...init,
         headers: { 'Content-Type': 'application/json', ...init?.headers, 'x-api-key': apiKey, version },
       });
-      if (response.headers.get('Content-Length') === '0') return undefined as T;
-      data = (await response.json()) as T;
+      data = response.headers.get('Content-Length') === '0' ? undefined as T : (await response.json()) as T;
     } catch (error) {
       if (error instanceof TypeError) throw new SalableRequestError();
       if (error instanceof SyntaxError) throw new SalableParseError();
@@ -37,6 +36,8 @@ export const initRequest: ApiFetch =
     }
 
     if (response.ok) return data;
+
+    console.log('response.status', response.status)
 
     switch (response.status) {
       case 400:

@@ -4,6 +4,7 @@ import { PaginatedSubscription, Invoice, Plan, Subscription, PaginatedSubscripti
 import getEndTime from '../../../test-utils/helpers/get-end-time';
 import { v4 as uuidv4 } from 'uuid';
 import { testUuids } from '../../../test-utils/scripts/create-test-data';
+import * as console from 'node:console';
 
 const stripeEnvs = JSON.parse(process.env.stripEnvs || '');
 
@@ -138,6 +139,39 @@ describe('Subscriptions V2 Tests', () => {
   });
 
   it('cancel: Should successfully cancel the subscription', async () => {
+    await prismaClient.subscription.upsert({
+      where: {
+        paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionId,
+      },
+      update: {
+        uuid: subscriptionUuid,
+        email: testEmail,
+        type: 'salable',
+        status: 'ACTIVE',
+        organisation: testUuids.organisationId,
+        license: { connect: [{ uuid: licenseUuid }] },
+        product: { connect: { uuid: testUuids.productUuid } },
+        plan: { connect: { uuid: testUuids.paidPlanUuid } },
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        expiryDate: new Date(Date.now() + 31536000000),
+      },
+      create: {
+        uuid: subscriptionUuid,
+        lineItemIds: [stripeEnvs.basicSubscriptionLineItemId],
+        paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionId,
+        email: testEmail,
+        type: 'salable',
+        status: 'ACTIVE',
+        organisation: testUuids.organisationId,
+        license: { connect: [{ uuid: licenseUuid }] },
+        product: { connect: { uuid: testUuids.productUuid } },
+        plan: { connect: { uuid: testUuids.paidPlanUuid } },
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        expiryDate: new Date(Date.now() + 31536000000),
+      },
+    });
     const data = await salable.subscriptions.cancel(subscriptionUuid, { when: 'now' });
 
     expect(data).toBeUndefined();
@@ -450,40 +484,6 @@ const generateTestData = async () => {
         },
       ],
       endTime: getEndTime(1, 'years'),
-    },
-  });
-
-  await prismaClient.subscription.upsert({
-    where: {
-      paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionId,
-    },
-    update: {
-      uuid: subscriptionUuid,
-      email: testEmail,
-      type: 'salable',
-      status: 'ACTIVE',
-      organisation: testUuids.organisationId,
-      license: { connect: [{ uuid: licenseUuid }] },
-      product: { connect: { uuid: testUuids.productUuid } },
-      plan: { connect: { uuid: testUuids.paidPlanUuid } },
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      expiryDate: new Date(Date.now() + 31536000000),
-    },
-    create: {
-      lineItemIds: [stripeEnvs.basicSubscriptionLineItemId],
-      paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionId,
-      uuid: subscriptionUuid,
-      email: testEmail,
-      type: 'salable',
-      status: 'ACTIVE',
-      organisation: testUuids.organisationId,
-      license: { connect: [{ uuid: licenseUuid }] },
-      product: { connect: { uuid: testUuids.productUuid } },
-      plan: { connect: { uuid: testUuids.paidPlanUuid } },
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      expiryDate: new Date(Date.now() + 31536000000),
     },
   });
 
