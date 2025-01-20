@@ -265,6 +265,7 @@ model License {
   @@index([purchaser])
   @@index([subscriptionUuid])
   @@index([cancelAtPeriodEnd])
+  @@index([paymentService])
 }
 
 model Subscription {
@@ -291,6 +292,7 @@ model Subscription {
   @@index([productUuid])
   @@index([planUuid])
   @@index([organisation])
+  @@index([email])
 }
 
 model CapabilitiesOnPlans {
@@ -338,6 +340,7 @@ model CurrenciesOnPlans {
   @@id([planUuid, currencyUuid])
   @@index([planUuid])
   @@index([currencyUuid])
+  @@index([paymentIntegrationPlanId])
 }
 
 model OrganisationUsage {
@@ -364,6 +367,8 @@ model OrganisationPaymentIntegration {
   updatedAt         DateTime                  @default(now()) @updatedAt
   isTest            Boolean                   @default(false)
   newPaymentEnabled Boolean                   @default(false)
+
+  @@index([accountId])
 }
 
 model Webhook {
