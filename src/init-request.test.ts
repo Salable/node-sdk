@@ -97,6 +97,21 @@ describe('initRequest', () => {
     await expect(request(input, init)).rejects.toThrow(SalableValidationError);
   });
 
+  it('should throw an error on bad request (404)', async () => {
+    mockFetch.mockResolvedValueOnce({
+      ok: false,
+      status: 404,
+      headers: {
+        get: () => '10',
+      },
+      json: async () => ({}),
+    });
+
+    const request = initRequest(apiKey, version);
+
+    await expect(request(input, init)).rejects.toThrow(SalableResponseError);
+  });
+
   it('should throw an error on unauthenticated (401)', async () => {
     mockFetch.mockResolvedValueOnce({
       ok: false,
