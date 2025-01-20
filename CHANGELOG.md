@@ -1,3 +1,10 @@
+# [4.0.0-beta.6](https://github.com/Salable/node-sdk/compare/v4.0.0-beta.5...v4.0.0-beta.6) (2025-01-20)
+
+
+### Bug Fixes
+
+* throw SalableRequestError if 404 ([dce5bb4](https://github.com/Salable/node-sdk/commit/dce5bb44dbf0b20fad1d4db74860bb92d1b34dd4))
+
 # [4.0.0-beta.5](https://github.com/Salable/node-sdk/compare/v4.0.0-beta.4...v4.0.0-beta.5) (2025-01-17)
 
 
