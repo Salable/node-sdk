@@ -77,8 +77,6 @@ describe('Subscriptions V2 Tests', () => {
       last: expect.any(String),
       data: expect.arrayContaining([{ ...subscriptionSchema, plan: planSchema }]),
     });
-    console.log('stripeEnvs', stripeEnvs);
-    console.log('dataWithSearchParams', dataWithSearchParams)
     expect(dataWithSearchParams.data.length).toEqual(2);
     expect(dataWithSearchParams.data).toEqual(
       expect.arrayContaining([
