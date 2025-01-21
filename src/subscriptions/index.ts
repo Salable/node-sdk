@@ -10,7 +10,7 @@ import {
   ApiRequest,
   TVersion,
   Version,
-  sortOrder
+  SortOrder
 } from '../types';
 import { v2SubscriptionMethods } from './v2';
 
@@ -25,7 +25,7 @@ export type SubscriptionVersions = {
      *
      * @returns {Promise<PaginatedSubscription>} The data of the subscription requested
      */
-    getAll: (options?: { status?: SubscriptionStatus; email?: string; cursor?: string; take?: string; expand?: string[], sort?: sortOrder, productUuid?: string, planUuid?: string}) => Promise<PaginatedSubscription>;
+    getAll: (options?: { status?: SubscriptionStatus; email?: string; cursor?: string; take?: string; expand?: string[], sort?: SortOrder, productUuid?: string, planUuid?: string}) => Promise<PaginatedSubscription>;
 
     /**
      *  Retrieves the subscription data based on the UUID. By default, the response does not contain any relational data. If you want to expand the relational data, you can do so with the `expand` query parameter.

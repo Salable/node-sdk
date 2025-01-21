@@ -10,7 +10,7 @@ export type ApiRequest = <T>(input: string | URL | Request, init: RequestInit | 
 export type Status = 'ACTIVE' | 'CANCELED';
 export type ProductStatus = 'ACTIVE' | 'DEPRECATED';
 export type LicenseStatus = 'ACTIVE' | 'CANCELED' | 'EVALUATION' | 'SCHEDULED' | 'TRIALING' | 'INACTIVE';
-export type sortOrder = 'asc' | 'desc';
+export type SortOrder = 'asc' | 'desc';
 
 export type SearchParamOptions = Record<string, string | string[] | number | boolean>;
 

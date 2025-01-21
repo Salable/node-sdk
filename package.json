@@ -19,9 +19,9 @@
     "pre-commit": "lint-staged",
     "lint": "eslint . -c eslint.config.mjs",
     "lint:fix": "eslint . -c eslint.config.mjs --fix",
-    "test": "jest --passWithNoTests --runInBand",
-    "test:globalCoverage": "jest --coverage --passWithNoTests --runInBand",
-    "test:coverage": "jest --coverage --changedSince=origin/main --passWithNoTests --runInBand",
+    "test": "jest --passWithNoTests",
+    "test:globalCoverage": "jest --coverage --passWithNoTests",
+    "test:coverage": "jest --coverage --changedSince=origin/main --passWithNoTests",
     "build": "rollup -c",
     "preversion": "npm run build"
   },
