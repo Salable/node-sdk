@@ -64,6 +64,36 @@ describe('Subscriptions V2 Tests', () => {
     );
   });
 
+  it('getAll (w/ search params sort, productUuid & planUuid): Should successfully fetch subscriptions', async () => {
+    const dataWithSearchParams = await salable.subscriptions.getAll({
+      expand: ['plan'],
+      sort: 'desc',
+      productUuid: testUuids.productUuid,
+      planUuid: testUuids.paidPlanUuid
+    });
+
+    expect(dataWithSearchParams).toEqual({
+      first: expect.any(String),
+      last: expect.any(String),
+      data: expect.arrayContaining([{ ...subscriptionSchema, plan: planSchema }]),
+    });
+    console.log('stripeEnvs', stripeEnvs);
+    console.log('dataWithSearchParams', dataWithSearchParams)
+    expect(dataWithSearchParams.data.length).toEqual(2);
+    expect(dataWithSearchParams.data).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          ...subscriptionSchema,
+          productUuid: testUuids.productUuid,
+          plan: {
+            ...planSchema,
+            uuid: testUuids.paidPlanUuid
+          },
+        }),
+      ]),
+    );
+  });
+
   it('getOne: Should successfully fetch the specified subscription', async () => {
     const data = await salable.subscriptions.getOne(basicSubscriptionUuid);
 
@@ -138,39 +168,6 @@ describe('Subscriptions V2 Tests', () => {
   });
 
   it('cancel: Should successfully cancel the subscription', async () => {
-    await prismaClient.subscription.upsert({
-      where: {
-        paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionId,
-      },
-      update: {
-        uuid: subscriptionUuid,
-        email: testEmail,
-        type: 'salable',
-        status: 'ACTIVE',
-        organisation: testUuids.organisationId,
-        license: { connect: [{ uuid: licenseUuid }] },
-        product: { connect: { uuid: testUuids.productUuid } },
-        plan: { connect: { uuid: testUuids.paidPlanUuid } },
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        expiryDate: new Date(Date.now() + 31536000000),
-      },
-      create: {
-        uuid: subscriptionUuid,
-        lineItemIds: [stripeEnvs.basicSubscriptionLineItemId],
-        paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionId,
-        email: testEmail,
-        type: 'salable',
-        status: 'ACTIVE',
-        organisation: testUuids.organisationId,
-        license: { connect: [{ uuid: licenseUuid }] },
-        product: { connect: { uuid: testUuids.productUuid } },
-        plan: { connect: { uuid: testUuids.paidPlanUuid } },
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        expiryDate: new Date(Date.now() + 31536000000),
-      },
-    });
     const data = await salable.subscriptions.cancel(subscriptionUuid, { when: 'now' });
 
     expect(data).toBeUndefined();
@@ -486,6 +483,40 @@ const generateTestData = async () => {
     },
   });
 
+  await prismaClient.subscription.upsert({
+    where: {
+      paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionId,
+    },
+    update: {
+      uuid: subscriptionUuid,
+      email: testEmail,
+      type: 'salable',
+      status: 'ACTIVE',
+      organisation: testUuids.organisationId,
+      license: { connect: [{ uuid: licenseUuid }] },
+      product: { connect: { uuid: testUuids.productUuid } },
+      plan: { connect: { uuid: testUuids.paidPlanUuid } },
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      expiryDate: new Date(Date.now() + 31536000000),
+    },
+    create: {
+      uuid: subscriptionUuid,
+      lineItemIds: [stripeEnvs.basicSubscriptionLineItemId],
+      paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionId,
+      email: testEmail,
+      type: 'salable',
+      status: 'ACTIVE',
+      organisation: testUuids.organisationId,
+      license: { connect: [{ uuid: licenseUuid }] },
+      product: { connect: { uuid: testUuids.productUuid } },
+      plan: { connect: { uuid: testUuids.paidPlanUuid } },
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      expiryDate: new Date(Date.now() + 31536000000),
+    },
+  });
+
   await prismaClient.subscription.create({
     data: {
       lineItemIds: [stripeEnvs.basicSubscriptionTwoLineItemId],
@@ -537,7 +568,7 @@ const generateTestData = async () => {
             name: null,
             email: null,
             status: 'ACTIVE',
-            paymentService: 'ad-hoc',
+            paymentService: 'salable',
             purchaser: 'tester@testing.com',
             metadata: undefined,
             startTime: undefined,
