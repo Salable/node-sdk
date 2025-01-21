@@ -96,6 +96,18 @@ export type UsageRecord = {
   updatedAt: string;
 };
 
+export type CurrentUsageRecord = {
+  unitCount: number;
+  updatedAt: string
+}
+
+export type UpdateLicenseUsageOptions = {
+  granteeId: string,
+  planUuid: string,
+  increment: number,
+  idempotencyKey: string
+}
+
 export type License = {
   uuid: string;
   name: string;

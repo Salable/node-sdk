@@ -3,6 +3,7 @@ import { PaginatedUsageRecords, UsageRecord } from '../../types';
 import prismaClient from '../../../test-utils/prisma/prisma-client';
 import { testUuids } from '../../../test-utils/scripts/create-test-data';
 import { v4 as uuidv4 } from 'uuid';
+import { randomUUID } from 'crypto';
 
 const version = Version.V2;
 
@@ -53,7 +54,12 @@ describe('Usage V2 Tests', () => {
   });
 
   it('updateLicenseUsage: Should successfully update the usage of the specified grantee', async () => {
-    const data = await salable.usage.updateLicenseUsage(testGrantee, testUuids.usageBasicMonthlyPlanUuid, 10, uuidv4());
+    const data = await salable.usage.updateLicenseUsage({
+      granteeId: testGrantee,
+      planUuid: testUuids.usageBasicMonthlyPlanUuid,
+      increment: 10,
+      idempotencyKey: randomUUID()
+    });
 
     expect(data).toBeUndefined();
   });
