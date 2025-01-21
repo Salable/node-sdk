@@ -20,13 +20,18 @@ describe('Usage V2 Tests', () => {
   });
 
   it('getAllUsageRecords: Should successfully fetch the grantees usage records', async () => {
-    const data = await salable.usage.getAllUsageRecords(testGrantee);
+    const data = await salable.usage.getAllUsageRecords({
+      granteeId: testGrantee
+    });
 
     expect(data).toEqual(paginatedUsageRecordsSchema);
   });
 
   it('getAllUsageRecords (w/ search params): Should successfully fetch the grantees usage records', async () => {
-    const data = await salable.usage.getAllUsageRecords(testGrantee, { type: 'recorded' });
+    const data = await salable.usage.getAllUsageRecords({
+      granteeId: testGrantee,
+      type: 'recorded'
+    });
 
     expect(data).toEqual(
       expect.objectContaining({
@@ -43,7 +48,10 @@ describe('Usage V2 Tests', () => {
   });
 
   it('getCurrentUsageRecord: Should successfully fetch the current usage record for the grantee on plan', async () => {
-    const data = await salable.usage.getCurrentUsageRecord(testGrantee, testUuids.usageBasicMonthlyPlanUuid);
+    const data = await salable.usage.getCurrentUsageRecord({
+      granteeId: testGrantee,
+      planUuid: testUuids.usageBasicMonthlyPlanUuid
+    });
 
     expect(data).toEqual(
       expect.objectContaining({

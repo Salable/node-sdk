@@ -10,6 +10,7 @@ export type ApiRequest = <T>(input: string | URL | Request, init: RequestInit | 
 export type Status = 'ACTIVE' | 'CANCELED';
 export type ProductStatus = 'ACTIVE' | 'DEPRECATED';
 export type LicenseStatus = 'ACTIVE' | 'CANCELED' | 'EVALUATION' | 'SCHEDULED' | 'TRIALING' | 'INACTIVE';
+export type SortOrder = 'asc' | 'desc'
 
 export type SearchParamOptions = Record<string, string | string[] | number | boolean>;
 
@@ -69,11 +70,12 @@ export type GetLicenseCountResponse = {
 };
 
 export type GetUsageOptions = {
+  granteeId: string
   type?: string;
   status?: string;
   planUuid?: string;
   subscriptionUuid?: string;
-  sort?: 'asc' | 'desc';
+  sort?: SortOrder;
   cursor?: string;
   take?: string;
 };
@@ -95,6 +97,11 @@ export type UsageRecord = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type CurrentUsageOptions = {
+  granteeId: string;
+  planUuid: string
+}
 
 export type CurrentUsageRecord = {
   unitCount: number;

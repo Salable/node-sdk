@@ -1,5 +1,11 @@
 import { ApiRequest, TVersion, Version } from '..';
-import { CurrentUsageRecord, GetUsageOptions, PaginatedUsageRecords, UpdateLicenseUsageOptions } from '../../src/types';
+import {
+  CurrentUsageOptions,
+  CurrentUsageRecord,
+  GetUsageOptions,
+  PaginatedUsageRecords,
+  UpdateLicenseUsageOptions
+} from '../../src/types';
 import { v2UsageMethods } from './v2';
 
 export type UsageVersions = {
@@ -12,7 +18,7 @@ export type UsageVersions = {
      *
      *  @returns {Promise<PaginatedUsageRecords>}
      */
-    getAllUsageRecords: (granteeId: string, options?: GetUsageOptions) => Promise<PaginatedUsageRecords>;
+    getAllUsageRecords: (options: GetUsageOptions) => Promise<PaginatedUsageRecords>;
     /**
      *  Gets current usage record for grantee on plan
      *
@@ -21,7 +27,7 @@ export type UsageVersions = {
      *
      *  @returns {Promise<{ unitCount: number, updatedAt: string }>}
      */
-    getCurrentUsageRecord: (granteeId: string, planUuid: string) => Promise<CurrentUsageRecord>;
+    getCurrentUsageRecord: (options: CurrentUsageOptions) => Promise<CurrentUsageRecord>;
 
     /**
      *  Updates a license's usage
