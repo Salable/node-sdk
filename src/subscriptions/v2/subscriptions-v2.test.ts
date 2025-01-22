@@ -483,9 +483,9 @@ const generateTestData = async () => {
 
   await prismaClient.subscription.create({
     data: {
-      lineItemIds: [stripeEnvs.basicSubscriptionTwoLineItemId],
-      paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionTwoId,
       uuid: basicSubscriptionUuid,
+      paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionTwoId,
+      lineItemIds: [stripeEnvs.basicSubscriptionTwoLineItemId],
       email: testEmail,
       type: 'salable',
       status: 'ACTIVE',
@@ -519,9 +519,9 @@ const generateTestData = async () => {
 
   await prismaClient.subscription.create({
     data: {
-      lineItemIds: [stripeEnvs.proSubscriptionLineItemId],
-      paymentIntegrationSubscriptionId: stripeEnvs.proSubscriptionId,
       uuid: proSubscriptionUuid,
+      paymentIntegrationSubscriptionId: stripeEnvs.proSubscriptionId,
+      lineItemIds: [stripeEnvs.proSubscriptionLineItemId],
       email: testEmail,
       type: 'salable',
       status: 'ACTIVE',
