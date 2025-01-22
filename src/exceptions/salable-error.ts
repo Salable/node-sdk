@@ -24,7 +24,7 @@ export type ResponseError = {
 };
 
 export class SalableError extends Error {
-  code: string;
+  code: ErrorCodes;
   data?: Record<string, unknown> | null;
 
   constructor(code: ErrorCodes, data?: Record<string, unknown> | null) {

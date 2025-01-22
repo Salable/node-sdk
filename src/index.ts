@@ -6,6 +6,7 @@ import { productsInit, ProductVersionedMethods } from '../src/products';
 import { pricingTablesInit, PricingTableVersionedMethods } from '../src/pricing-tables';
 import { UsageVersionedMethods, usageInit } from './usage';
 import { eventsInit, EventVersionedMethods } from './events';
+import * as console from 'node:console';
 
 export { ErrorCodes, SalableParseError, SalableRequestError, SalableResponseError, SalableUnknownError, SalableValidationError } from './exceptions/salable-error';
 export type { ResponseError, ValidationError } from './exceptions/salable-error';
@@ -30,6 +31,7 @@ export const initRequest: ApiFetch =
       });
       data = response.headers.get('Content-Length') === '0' ? undefined as T : (await response.json()) as T;
     } catch (error) {
+      console.log('error', error);
       if (error instanceof TypeError) throw new SalableRequestError();
       if (error instanceof SyntaxError) throw new SalableParseError();
       throw new SalableUnknownError();
