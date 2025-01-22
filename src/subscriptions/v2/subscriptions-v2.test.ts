@@ -64,6 +64,34 @@ describe('Subscriptions V2 Tests', () => {
     );
   });
 
+  it('getAll (w/ search params sort, productUuid & planUuid): Should successfully fetch subscriptions', async () => {
+    const dataWithSearchParams = await salable.subscriptions.getAll({
+      expand: ['plan'],
+      sort: 'desc',
+      productUuid: testUuids.productUuid,
+      planUuid: testUuids.paidPlanTwoUuid
+    });
+
+    expect(dataWithSearchParams).toEqual({
+      first: expect.any(String),
+      last: expect.any(String),
+      data: expect.arrayContaining([{ ...subscriptionSchema, plan: planSchema }]),
+    });
+    expect(dataWithSearchParams.data.length).toEqual(2);
+    expect(dataWithSearchParams.data).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          ...subscriptionSchema,
+          productUuid: testUuids.productUuid,
+          plan: {
+            ...planSchema,
+            uuid: testUuids.paidPlanTwoUuid
+          },
+        }),
+      ]),
+    );
+  });
+
   it('getOne: Should successfully fetch the specified subscription', async () => {
     const data = await salable.subscriptions.getOne(basicSubscriptionUuid);
 
@@ -356,7 +384,7 @@ const generateTestData = async () => {
       type: 'user',
       uuid: licenseUuid,
       metadata: undefined,
-      plan: { connect: { uuid: testUuids.paidPlanUuid } },
+      plan: { connect: { uuid: testUuids.paidPlanTwoUuid } },
       product: { connect: { uuid: testUuids.productUuid } },
       startTime: undefined,
       capabilities: [
@@ -455,6 +483,24 @@ const generateTestData = async () => {
 
   await prismaClient.subscription.create({
     data: {
+      uuid: basicSubscriptionUuid,
+      paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionTwoId,
+      lineItemIds: [stripeEnvs.basicSubscriptionTwoLineItemId],
+      email: testEmail,
+      type: 'salable',
+      status: 'ACTIVE',
+      organisation: testUuids.organisationId,
+      license: { connect: [{ uuid: licenseUuid }] },
+      product: { connect: { uuid: testUuids.productUuid } },
+      plan: { connect: { uuid: testUuids.paidPlanTwoUuid } },
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      expiryDate: new Date(Date.now() + 31536000000),
+    },
+  });
+
+  await prismaClient.subscription.create({
+    data: {
       uuid: subscriptionUuid,
       paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionThreeId,
       lineItemIds: [stripeEnvs.basicSubscriptionThreeLineItemId],
@@ -464,7 +510,7 @@ const generateTestData = async () => {
       organisation: testUuids.organisationId,
       license: { connect: [{ uuid: licenseUuid }] },
       product: { connect: { uuid: testUuids.productUuid } },
-      plan: { connect: { uuid: testUuids.paidPlanUuid } },
+      plan: { connect: { uuid: testUuids.paidPlanTwoUuid } },
       createdAt: new Date(),
       updatedAt: new Date(),
       expiryDate: new Date(Date.now() + 31536000000),
@@ -473,27 +519,9 @@ const generateTestData = async () => {
 
   await prismaClient.subscription.create({
     data: {
-      lineItemIds: [stripeEnvs.basicSubscriptionTwoLineItemId],
-      paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionTwoId,
-      uuid: basicSubscriptionUuid,
-      email: testEmail,
-      type: 'salable',
-      status: 'ACTIVE',
-      organisation: testUuids.organisationId,
-      license: { connect: [{ uuid: licenseUuid }] },
-      product: { connect: { uuid: testUuids.productUuid } },
-      plan: { connect: { uuid: testUuids.paidPlanUuid } },
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      expiryDate: new Date(Date.now() + 31536000000),
-    },
-  });
-
-  await prismaClient.subscription.create({
-    data: {
-      lineItemIds: [stripeEnvs.proSubscriptionLineItemId],
-      paymentIntegrationSubscriptionId: stripeEnvs.proSubscriptionId,
       uuid: proSubscriptionUuid,
+      paymentIntegrationSubscriptionId: stripeEnvs.proSubscriptionId,
+      lineItemIds: [stripeEnvs.proSubscriptionLineItemId],
       email: testEmail,
       type: 'salable',
       status: 'ACTIVE',
@@ -522,7 +550,7 @@ const generateTestData = async () => {
             name: null,
             email: null,
             status: 'ACTIVE',
-            paymentService: 'ad-hoc',
+            paymentService: 'salable',
             purchaser: 'tester@testing.com',
             metadata: undefined,
             startTime: undefined,

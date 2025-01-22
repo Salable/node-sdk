@@ -11,7 +11,6 @@ export type Status = 'ACTIVE' | 'CANCELED';
 export type ProductStatus = 'ACTIVE' | 'DEPRECATED';
 export type LicenseStatus = 'ACTIVE' | 'CANCELED' | 'EVALUATION' | 'SCHEDULED' | 'TRIALING' | 'INACTIVE';
 export type SortOrder = 'asc' | 'desc'
-
 export type SearchParamOptions = Record<string, string | string[] | number | boolean>;
 
 export type SubscriptionStatus = 'ACTIVE' | 'CANCELED' | 'PAUSED' | 'TRIALING' | 'DELETED' | 'PAST_DUE' | 'INCOMPLETE';
