@@ -69,7 +69,7 @@ describe('Subscriptions V2 Tests', () => {
       expand: ['plan'],
       sort: 'desc',
       productUuid: testUuids.productUuid,
-      planUuid: testUuids.paidPlanUuid
+      planUuid: testUuids.paidPlanUuidTwo
     });
 
     expect(dataWithSearchParams).toEqual({
@@ -85,7 +85,7 @@ describe('Subscriptions V2 Tests', () => {
           productUuid: testUuids.productUuid,
           plan: {
             ...planSchema,
-            uuid: testUuids.paidPlanUuid
+            uuid: testUuids.paidPlanUuidTwo
           },
         }),
       ]),
@@ -166,39 +166,6 @@ describe('Subscriptions V2 Tests', () => {
   });
 
   it('cancel: Should successfully cancel the subscription', async () => {
-    await prismaClient.subscription.upsert({
-      where: {
-        paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionId,
-      },
-      update: {
-        uuid: subscriptionUuid,
-        email: testEmail,
-        type: 'salable',
-        status: 'ACTIVE',
-        organisation: testUuids.organisationId,
-        license: { connect: [{ uuid: licenseUuid }] },
-        product: { connect: { uuid: testUuids.productUuid } },
-        plan: { connect: { uuid: testUuids.paidPlanUuid } },
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        expiryDate: new Date(Date.now() + 31536000000),
-      },
-      create: {
-        uuid: subscriptionUuid,
-        lineItemIds: [stripeEnvs.basicSubscriptionLineItemId],
-        paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionId,
-        email: testEmail,
-        type: 'salable',
-        status: 'ACTIVE',
-        organisation: testUuids.organisationId,
-        license: { connect: [{ uuid: licenseUuid }] },
-        product: { connect: { uuid: testUuids.productUuid } },
-        plan: { connect: { uuid: testUuids.paidPlanUuid } },
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        expiryDate: new Date(Date.now() + 31536000000),
-      },
-    });
     const data = await salable.subscriptions.cancel(subscriptionUuid, { when: 'now' });
 
     expect(data).toBeUndefined();
@@ -417,7 +384,7 @@ const generateTestData = async () => {
       type: 'user',
       uuid: licenseUuid,
       metadata: undefined,
-      plan: { connect: { uuid: testUuids.paidPlanUuid } },
+      plan: { connect: { uuid: testUuids.paidPlanUuidTwo } },
       product: { connect: { uuid: testUuids.productUuid } },
       startTime: undefined,
       capabilities: [
@@ -517,7 +484,7 @@ const generateTestData = async () => {
   await prismaClient.subscription.create({
     data: {
       lineItemIds: [stripeEnvs.basicSubscriptionTwoLineItemId],
-      paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionIdTwo,
+      paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionTwoId,
       uuid: basicSubscriptionUuid,
       email: testEmail,
       type: 'salable',
@@ -525,11 +492,29 @@ const generateTestData = async () => {
       organisation: testUuids.organisationId,
       license: { connect: [{ uuid: licenseUuid }] },
       product: { connect: { uuid: testUuids.productUuid } },
-      plan: { connect: { uuid: testUuids.paidPlanUuid } },
+      plan: { connect: { uuid: testUuids.paidPlanUuidTwo } },
       createdAt: new Date(),
       updatedAt: new Date(),
       expiryDate: new Date(Date.now() + 31536000000),
     },
+  });
+
+  await prismaClient.subscription.create({
+    data: {
+      uuid: subscriptionUuid,
+      paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionThreeId,
+      lineItemIds: [stripeEnvs.basicSubscriptionThreeLineItemId],
+      email: testEmail,
+      type: 'salable',
+      status: 'ACTIVE',
+      organisation: testUuids.organisationId,
+      license: { connect: [{ uuid: licenseUuid }] },
+      product: { connect: { uuid: testUuids.productUuid } },
+      plan: { connect: { uuid: testUuids.paidPlanUuidTwo } },
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      expiryDate: new Date(Date.now() + 31536000000),
+    }
   });
 
   await prismaClient.subscription.create({

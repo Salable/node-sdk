@@ -3,6 +3,7 @@ import { PaginatedUsageRecords, UsageRecord } from '../../types';
 import prismaClient from '../../../test-utils/prisma/prisma-client';
 import { testUuids } from '../../../test-utils/scripts/create-test-data';
 import { v4 as uuidv4 } from 'uuid';
+import { randomUUID } from 'crypto';
 
 const version = Version.V2;
 
@@ -19,13 +20,18 @@ describe('Usage V2 Tests', () => {
   });
 
   it('getAllUsageRecords: Should successfully fetch the grantees usage records', async () => {
-    const data = await salable.usage.getAllUsageRecords(testGrantee);
+    const data = await salable.usage.getAllUsageRecords({
+      granteeId: testGrantee
+    });
 
     expect(data).toEqual(paginatedUsageRecordsSchema);
   });
 
   it('getAllUsageRecords (w/ search params): Should successfully fetch the grantees usage records', async () => {
-    const data = await salable.usage.getAllUsageRecords(testGrantee, { type: 'recorded' });
+    const data = await salable.usage.getAllUsageRecords({
+      granteeId: testGrantee,
+      type: 'recorded'
+    });
 
     expect(data).toEqual(
       expect.objectContaining({
@@ -42,7 +48,10 @@ describe('Usage V2 Tests', () => {
   });
 
   it('getCurrentUsageRecord: Should successfully fetch the current usage record for the grantee on plan', async () => {
-    const data = await salable.usage.getCurrentUsageRecord(testGrantee, testUuids.usageBasicMonthlyPlanUuid);
+    const data = await salable.usage.getCurrentUsageRecord({
+      granteeId: testGrantee,
+      planUuid: testUuids.usageBasicMonthlyPlanUuid
+    });
 
     expect(data).toEqual(
       expect.objectContaining({
@@ -53,7 +62,12 @@ describe('Usage V2 Tests', () => {
   });
 
   it('updateLicenseUsage: Should successfully update the usage of the specified grantee', async () => {
-    const data = await salable.usage.updateLicenseUsage(testGrantee, testUuids.usageBasicMonthlyPlanUuid, 10, uuidv4());
+    const data = await salable.usage.updateLicenseUsage({
+      granteeId: testGrantee,
+      planUuid: testUuids.usageBasicMonthlyPlanUuid,
+      increment: 10,
+      idempotencyKey: randomUUID()
+    });
 
     expect(data).toBeUndefined();
   });
