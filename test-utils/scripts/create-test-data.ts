@@ -14,7 +14,7 @@ export type TestDbData = {
   productTwoUuid: string;
   freeMonthlyPlanUuid: string;
   paidPlanUuid: string;
-  paidPlanUuidTwo: string;
+  paidPlanTwoUuid: string;
   perSeatPaidPlanUuid: string;
   paidYearlyPlanUuid: string;
   freeYearlyPlanUuid: string;
@@ -39,7 +39,7 @@ const productUuid = '29c9a7c8-9a41-4e87-9e7e-7c62d293c131';
 const productTwoUuid = '2e0ac383-ee7e-44ba-90cb-ab3eabd56722';
 const freeMonthlyPlanUuid = '5a866dba-20c9-466f-88ac-e05c8980c90b';
 const paidPlanUuid = '351eefac-9b21-4299-8cde-302249d6fb1e';
-const paidPlanUuidTwo = 'bcd626d6-9507-42dd-9105-40c149853403';
+const paidPlanTwoUuid = 'bcd626d6-9507-42dd-9105-40c149853403';
 const perSeatPaidPlanUuid = 'cee50a36-c012-4a78-8e1a-b2bab93830ba';
 const paidYearlyPlanUuid = '111eefac-9b21-4299-8cde-302249d6f111';
 const freeYearlyPlanUuid = '22266dba-20c9-466f-88ac-e05c8980c222';
@@ -63,7 +63,7 @@ export const testUuids: TestDbData = {
   productTwoUuid,
   freeMonthlyPlanUuid,
   paidPlanUuid,
-  paidPlanUuidTwo,
+  paidPlanTwoUuid,
   perSeatPaidPlanUuid,
   paidYearlyPlanUuid,
   freeYearlyPlanUuid,
@@ -416,7 +416,7 @@ export default async function createTestData(stripeEnvs: StripeEnvsTypes) {
       name: 'Basic Monthly Plan Two Name',
       description: 'Basic Monthly Plan Two description',
       displayName: 'Basic Monthly Plan Two Display Name',
-      uuid: paidPlanUuidTwo,
+      uuid: paidPlanTwoUuid,
       product: { connect: { uuid: product.uuid } },
       status: 'ACTIVE',
       trialDays: 0,
@@ -434,7 +434,7 @@ export default async function createTestData(stripeEnvs: StripeEnvsTypes) {
         create: product.currencies.map((c) => ({
           currency: { connect: { uuid: c.currencyUuid } },
           price: 1000,
-          paymentIntegrationPlanId: c.currency.shortName === 'GBP' ? stripeEnvs.planBasicMonthlyGbpId : stripeEnvs.planBasicMonthlyUsdId,
+          paymentIntegrationPlanId: c.currency.shortName === 'GBP' ? stripeEnvs.planTwoBasicMonthlyGbpId : stripeEnvs.planTwoBasicMonthlyUsdId,
         })),
       },
       features: {

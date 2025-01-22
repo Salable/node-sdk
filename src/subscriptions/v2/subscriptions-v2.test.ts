@@ -69,7 +69,7 @@ describe('Subscriptions V2 Tests', () => {
       expand: ['plan'],
       sort: 'desc',
       productUuid: testUuids.productUuid,
-      planUuid: testUuids.paidPlanUuidTwo
+      planUuid: testUuids.paidPlanTwoUuid
     });
 
     expect(dataWithSearchParams).toEqual({
@@ -85,7 +85,7 @@ describe('Subscriptions V2 Tests', () => {
           productUuid: testUuids.productUuid,
           plan: {
             ...planSchema,
-            uuid: testUuids.paidPlanUuidTwo
+            uuid: testUuids.paidPlanTwoUuid
           },
         }),
       ]),
@@ -384,7 +384,7 @@ const generateTestData = async () => {
       type: 'user',
       uuid: licenseUuid,
       metadata: undefined,
-      plan: { connect: { uuid: testUuids.paidPlanUuidTwo } },
+      plan: { connect: { uuid: testUuids.paidPlanTwoUuid } },
       product: { connect: { uuid: testUuids.productUuid } },
       startTime: undefined,
       capabilities: [
@@ -492,7 +492,7 @@ const generateTestData = async () => {
       organisation: testUuids.organisationId,
       license: { connect: [{ uuid: licenseUuid }] },
       product: { connect: { uuid: testUuids.productUuid } },
-      plan: { connect: { uuid: testUuids.paidPlanUuidTwo } },
+      plan: { connect: { uuid: testUuids.paidPlanTwoUuid } },
       createdAt: new Date(),
       updatedAt: new Date(),
       expiryDate: new Date(Date.now() + 31536000000),
@@ -510,7 +510,7 @@ const generateTestData = async () => {
       organisation: testUuids.organisationId,
       license: { connect: [{ uuid: licenseUuid }] },
       product: { connect: { uuid: testUuids.productUuid } },
-      plan: { connect: { uuid: testUuids.paidPlanUuidTwo } },
+      plan: { connect: { uuid: testUuids.paidPlanTwoUuid } },
       createdAt: new Date(),
       updatedAt: new Date(),
       expiryDate: new Date(Date.now() + 31536000000),

@@ -12,6 +12,7 @@ export interface StripeEnvsTypes {
   customerId: string;
   productWidgetOneId: string;
   planBasicMonthlyGbpId: string;
+  planTwoBasicMonthlyGbpId: string;
   planBasicYearlyGbpId: string;
   planPerSeatBasicMonthlyGbpId: string;
   planUsageProMonthlyGbpId: string;
@@ -20,15 +21,14 @@ export interface StripeEnvsTypes {
   usageBasicSubscriptionId: string;
   planProMonthlyGbpId: string;
   planBasicMonthlyUsdId: string;
+  planTwoBasicMonthlyUsdId: string;
   planProMonthlyUsdId: string;
   basicSubscriptionId: string;
   basicSubscriptionTwoId: string;
   basicSubscriptionThreeId: string;
-  basicSubscriptionFourId: string;
   basicSubscriptionLineItemId: string;
   basicSubscriptionTwoLineItemId: string;
   basicSubscriptionThreeLineItemId: string;
-  basicSubscriptionFourLineItemId: string;
   perSeatBasicSubscriptionId: string;
   perSeatBasicSubscriptionLineItemId: string;
   proSubscriptionId: string;
@@ -135,6 +135,12 @@ export default async function createStripeData(): Promise<StripeEnvsTypes> {
     product: stripeProductWidgetOne.id,
     amount: 10000,
   });
+  const stripePlanTwoBasicMonthlyGbp = await stripeConnect.plans.create({
+    currency: 'gbp',
+    interval: 'month',
+    product: stripeProductWidgetOne.id,
+    amount: 10000,
+  });
   const stripePlanBasicYearlyGbp = await stripeConnect.plans.create({
     currency: 'gbp',
     interval: 'year',
@@ -153,7 +159,7 @@ export default async function createStripeData(): Promise<StripeEnvsTypes> {
     customer: stripeCustomer.id,
     items: [{
       quantity: 1,
-      price: stripePlanBasicMonthlyGbp.id,
+      price: stripePlanTwoBasicMonthlyGbp.id,
     }],
     default_payment_method: stripePaymentMethod.id,
   });
@@ -161,15 +167,7 @@ export default async function createStripeData(): Promise<StripeEnvsTypes> {
     customer: stripeCustomer.id,
     items: [{
       quantity: 1,
-      price: stripePlanBasicMonthlyGbp.id,
-    }],
-    default_payment_method: stripePaymentMethod.id,
-  });
-  const stripeBasicSubscriptionFour = await stripeConnect.subscriptions.create({
-    customer: stripeCustomer.id,
-    items: [{
-      quantity: 1,
-      price: stripePlanBasicMonthlyGbp.id,
+      price: stripePlanTwoBasicMonthlyGbp.id,
     }],
     default_payment_method: stripePaymentMethod.id,
   });
@@ -188,6 +186,12 @@ export default async function createStripeData(): Promise<StripeEnvsTypes> {
     default_payment_method: stripePaymentMethod.id
   });
   const stripePlanBasicUsdMonthly = await stripeConnect.plans.create({
+    currency: 'usd',
+    interval: 'month',
+    product: stripeProductWidgetOne.id,
+    amount: 1000,
+  });
+  const stripePlanTwoBasicUsdMonthly = await stripeConnect.plans.create({
     currency: 'usd',
     interval: 'month',
     product: stripeProductWidgetOne.id,
@@ -234,6 +238,7 @@ export default async function createStripeData(): Promise<StripeEnvsTypes> {
     planPerSeatRangeMonthlyGbpId: stripePlanPerSeatRangeMonthlyGbp.id,
     planPerSeatMinimumMonthlyGbpId: stripePlanPerSeatMinimumMonthlyGbp.id,
     planBasicMonthlyGbpId: stripePlanBasicMonthlyGbp.id,
+    planTwoBasicMonthlyGbpId: stripePlanTwoBasicMonthlyGbp.id,
     planBasicYearlyGbpId: stripePlanBasicYearlyGbp.id,
     perSeatBasicSubscriptionId: stripePerSeatBasicSubscription.id,
     perSeatBasicSubscriptionLineItemId: stripePerSeatBasicSubscription.items.data[0].id,
@@ -243,10 +248,9 @@ export default async function createStripeData(): Promise<StripeEnvsTypes> {
     basicSubscriptionTwoLineItemId: stripeBasicSubscriptionTwo.items.data[0].id,
     basicSubscriptionThreeId: stripeBasicSubscriptionThree.id,
     basicSubscriptionThreeLineItemId: stripeBasicSubscriptionThree.items.data[0].id,
-    basicSubscriptionFourId: stripeBasicSubscriptionFour.id,
-    basicSubscriptionFourLineItemId: stripeBasicSubscriptionFour.items.data[0].id,
     planProMonthlyGbpId: stripePlanProGbpMonthly.id,
     planBasicMonthlyUsdId: stripePlanBasicUsdMonthly.id,
+    planTwoBasicMonthlyUsdId: stripePlanTwoBasicUsdMonthly.id,
     planProMonthlyUsdId: stripePlanProUsdMonthly.id,
     proSubscriptionId: stripeProSubscription.id,
     proSubscriptionLineItemId: stripeProSubscription.items.data[0].id,
