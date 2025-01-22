@@ -583,24 +583,8 @@ const generateTestData = async () => {
     },
   });
 
-  await prismaClient.subscription.upsert({
-    where: {
-      paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionId,
-    },
-    update: {
-      uuid: subscriptionUuid,
-      email: 'tester@testing.com',
-      type: 'salable',
-      status: 'ACTIVE',
-      organisation: testUuids.organisationId,
-      license: { connect: [{ uuid: licenseUuid }, { uuid: licenseTwoUuid }, { uuid: licenseThreeUuid }] },
-      product: { connect: { uuid: testUuids.productUuid } },
-      plan: { connect: { uuid: testUuids.paidPlanUuid } },
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      expiryDate: new Date(Date.now() + 31536000000),
-    },
-    create: {
+  await prismaClient.subscription.create({
+    data: {
       lineItemIds: [stripeEnvs.basicSubscriptionLineItemId],
       paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionId,
       uuid: subscriptionUuid,

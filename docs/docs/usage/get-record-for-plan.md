@@ -13,22 +13,22 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}', 'v2');
 
-const records = await salable.usage.getCurrentUsageRecord('grantee_1', 'a155a63d-4391-4301-b335-8d9d977ebad1');
+const records = await salable.usage.getCurrentUsageRecord({
+  granteeId: 'grantee_1', 
+  planUuid: 'a155a63d-4391-4301-b335-8d9d977ebad1'
+});
 ```
 
 ## Parameters
 
-#### granteeId (_required_)
+#### options (_required_)
 
-_Type:_ `string`
+_Type:_ `CurrentUsageOptions`
 
-The granteeId of the license
-
-#### planUuid (_required_)
-
-_Type:_ `string`
-
-The UUID of the plan the license belongs to
+| Option         | Type   | Description                                     | Required |
+|----------------|--------|-------------------------------------------------|----------|
+| granteeId      | string | The granteeId of the license                    | ✅        |
+| planUuid       | string | The UUID of the plan the license belongs to     | ✅        |
 
 ## Return Type
 
