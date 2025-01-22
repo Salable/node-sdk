@@ -1,3 +1,18 @@
+# [4.0.0-beta.7](https://github.com/Salable/node-sdk/compare/v4.0.0-beta.6...v4.0.0-beta.7) (2025-01-22)
+
+
+### Bug Fixes
+
+* added type for current usage. Changed update usage params to an object ([0b5f41a](https://github.com/Salable/node-sdk/commit/0b5f41aa8228e57576f363875d618bd8df749a44))
+* updated usage methods to follow params in an object pattern. Removed upsert from tests ([a0a5151](https://github.com/Salable/node-sdk/commit/a0a5151420abe85ca530ad9f6d76982575996cea))
+
+# [4.0.0-beta.6](https://github.com/Salable/node-sdk/compare/v4.0.0-beta.5...v4.0.0-beta.6) (2025-01-20)
+
+
+### Bug Fixes
+
+* throw SalableRequestError if 404 ([dce5bb4](https://github.com/Salable/node-sdk/commit/dce5bb44dbf0b20fad1d4db74860bb92d1b34dd4))
+
 # [4.0.0-beta.5](https://github.com/Salable/node-sdk/compare/v4.0.0-beta.4...v4.0.0-beta.5) (2025-01-17)
 
 
