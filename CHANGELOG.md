@@ -1,3 +1,13 @@
+# [4.0.0-beta.8](https://github.com/Salable/node-sdk/compare/v4.0.0-beta.7...v4.0.0-beta.8) (2025-01-22)
+
+
+### Bug Fixes
+
+* created more test data ([0a8dfd7](https://github.com/Salable/node-sdk/commit/0a8dfd770798200ad2327104eeb9714d1721247c))
+* get all subscriptions new params. Run tests sequentially ([a14ba58](https://github.com/Salable/node-sdk/commit/a14ba58efd8aa149b9ef8cdd30865c6f1b329135))
+* removed console log ([9d2d7e0](https://github.com/Salable/node-sdk/commit/9d2d7e03eacd18d8a619091006c0da7030e38597))
+* run coverage tests sequentially ([e0196df](https://github.com/Salable/node-sdk/commit/e0196df45263d0f919d662b9fb03ef51884ece56))
+
 # [4.0.0-beta.7](https://github.com/Salable/node-sdk/compare/v4.0.0-beta.6...v4.0.0-beta.7) (2025-01-22)
 
 
