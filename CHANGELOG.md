@@ -1,3 +1,10 @@
+# [4.0.0-beta.9](https://github.com/Salable/node-sdk/compare/v4.0.0-beta.8...v4.0.0-beta.9) (2025-01-23)
+
+
+### Bug Fixes
+
+* updated schema with new indexes ([f89f3b0](https://github.com/Salable/node-sdk/commit/f89f3b00e3d61a55d995bc6659c2b2a1d741a70f))
+
 # [4.0.0-beta.8](https://github.com/Salable/node-sdk/compare/v4.0.0-beta.7...v4.0.0-beta.8) (2025-01-22)
 
 
