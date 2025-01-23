@@ -119,6 +119,7 @@ describe('Subscriptions V2 Tests', () => {
     );
 
     expect(data).toEqual(stripeInvoiceSchema);
+    expect(data.data.length).toEqual(1);
   });
 
   it('getSwitchablePlans: Should successfully fetch a subscriptions switchable plans', async () => {
