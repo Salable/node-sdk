@@ -11,28 +11,27 @@ Cancels a Subscription with options for when it terminates.
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}');
+const salable = new Salable('{{API_KEY}}', 'v2');
 
-await salable.subscriptions.cancel('{{SUBSCRIPTION_UUID}}', 'end');
+await salable.subscriptions.cancel('ce8cc0cb-a180-4d90-985b-0890d5ac6cbb', { when: 'end' });
 ```
 
 ## Parameters
 
-##### subscriptionId (_required_)
+#### subscriptionUuid (_required_)
 
 _Type:_ `string`
 
-The `uuid` of the Subscription to be canceled
+The UUID of the Subscription to be canceled
 
-##### when (_required_)
+##### options (_required_)
 
-_Type:_ `end` | `now`
+_Type:_ `CancelSubscriptionOptions`
 
-| When | Description                                                |
-| ---- | ---------------------------------------------------------- |
-| now  | Immediately cancels the Subscription                       |
-| end  | Cancels the Subscription at the end of it's billing period |
+| Option | Type | Description                                                                                                    | Required |
+| ------ | ---- | -------------------------------------------------------------------------------------------------------------- | -------- |
+| when   | enum | `now`: Immediately cancels the Subscription. `end`: Cancels the Subscription at the end of it's billing period | ✅       |
 
 ## Return Type
 
-Return void
+Returns void

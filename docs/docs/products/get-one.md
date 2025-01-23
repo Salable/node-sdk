@@ -11,19 +11,29 @@ Returns the details of a single product.
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}');
+const salable = new Salable('{{API_KEY}}', 'v2');
 
-const product = await salable.products.getOne('{{PRODUCT_UUID}}');
+const product = await salable.products.getOne('3fe29048-28bf-461c-8498-c42c3572359c');
 ```
 
 ## Parameters
 
-##### productUuid (_required_)
+#### productUuid (_required_)
 
 _Type:_ `string`
 
-The `uuid` of the Product to be returned
+The UUID of the Product to be returned
+
+---
+
+#### options
+
+_Type:_ `GetProductOptions`
+
+| Option | Type     | Description                                                                  | Required |
+| ------ | -------- | ---------------------------------------------------------------------------- | -------- |
+| expand | string[] | Specify which properties to expand. e.g. `{ expand: ['features', 'plans'] }` | ❌       |
 
 ## Return Type
 
-For more information about this request see our API documentation on [product object](https://docs.salable.app/api#tag/Products/operation/getProductByUuid)
+For more information about this request see our API documentation on [Product Object](https://docs.salable.app/api/v2#tag/Products/operation/getProductByUuid)

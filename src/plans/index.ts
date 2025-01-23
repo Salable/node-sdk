@@ -1,108 +1,79 @@
-import { Base } from '../base';
-import { RESOURCE_NAMES } from '../constants';
-import {
-  IPlan,
-  IPlanCapabilityResponse,
-  IPlanCheckoutInputParams,
-  IPlanCheckoutParams,
-  IPlanCheckoutResponse,
-  IPlanCurrencyResponse,
-  IPlanFeatureResponse,
-  PlanCheckoutKey,
-} from '../types';
-import defaultParametersCheckoutFactory from '../utils/default-parameters-checkout-factory';
+import { Plan, PlanCheckout, PlanFeature, PlanCapability, PlanCurrency, ApiRequest, TVersion, Version, GetPlanOptions, GetPlanCheckoutOptions } from '../types';
+import { v2PlanMethods } from './v2';
 
-/**
- * Salable Node SDK Plan Class
- *
- * Contains the Salable plsn methods
- */
-export default class Plans extends Base {
-  /**
-   * Get a single plan
-   *
-   * @param  {string} planId The uuid of the plan
-   *
-   * @returns {Promise<IPlan>} The data of the subscription requested
-   */
-  public getOne(planId: string): Promise<IPlan> {
-    return this._request<IPlan>(`${RESOURCE_NAMES.PLANS}/${planId}`);
+export type PlanVersions = {
+  [Version.V2]: {
+    /**
+     *  Retrieves information about a plan by its UUID. By default, the response does not contain any relational data. If you want to expand the relational data, you can do so with the `expand` query parameter.
+     *
+     *  @param {string} planUuid - The UUID of the plan
+     *
+     * Docs - https://docs.salable.app/api/v2#tag/Plans/operation/getPlanByUuid
+     *
+     * @returns {Promise<Plan>}
+     */
+    getOne: (
+      planUuid: string,
+      options?: GetPlanOptions
+    ) => Promise<Plan>;
+
+    /**
+
+    /**
+     * Retrieves a checkout link for a specific plan. The checkout link can be used by customers to purchase the plan.
+     *
+     * @param  {string} planUuid The UUID of the plan
+     * @param {GetPlanCheckoutOptions} options - (Optional) Filter parameters. See https://docs.salable.app/api/v2#tag/Plans/operation/getPlanCheckoutLink
+     *
+     * @returns {Promise<ProductCapability[]>}
+     */
+    getCheckoutLink: (
+      planUuid: string,
+      options: GetPlanCheckoutOptions
+    ) => Promise<PlanCheckout>;
+
+    /**
+     * Retrieve the list of features for a specific plan
+     *
+     * @param  {string} planUuid The UUID of the plan
+     *
+     * Docs - https://docs.salable.app/api/v2#tag/Plans/operation/getPlanFeatures
+     *
+     * @returns {Promise<PlanFeature[]>}
+     */
+    getFeatures: (planUuid: string) => Promise<PlanFeature[]>;
+
+    /**
+     * Retrieve the list of capabilities for a specific plan
+     *
+     * @param  {string} planUuid The UUID of the plan
+     *
+     * Docs - https://docs.salable.app/api/v2#tag/Plans/operation/getPlanCapabilities
+     *
+     * @returns {Promise<PlanCapability[]>}
+     */
+    getCapabilities: (planUuid: string) => Promise<PlanCapability[]>;
+
+    /**
+     * Retrieve the list of currencies for a specific plan
+     *
+     * @param  {string} planUuid The UUID of the plan
+     *
+     * Docs - https://docs.salable.app/api/v2#tag/Plans/operation/getPlanCurrencies
+     *
+     * @returns {Promise<PlanCurrency[]>}
+     */
+    getCurrencies: (planUuid: string) => Promise<PlanCurrency[]>;
+  };
+};
+
+export type PlanVersionedMethods<V extends TVersion> = V extends keyof PlanVersions ? PlanVersions[V] : never;
+
+export const plansInit = <V extends TVersion>(version: V, request: ApiRequest): PlanVersionedMethods<V> => {
+  switch (version) {
+    case Version.V2:
+      return v2PlanMethods(request) as PlanVersionedMethods<V>;
+    default:
+      throw new Error('Unsupported version');
   }
-
-  /**
-   * Get a plan's checkout link
-   *
-   * @param  {string} planId The uuid of the plan
-   * @param  {string} queryParams The query parameters for the checkout options
-   *
-   * @returns {Promise<IPlanCheckoutResponse>}
-   */
-
-  public getCheckoutLink(
-    planId: string,
-    queryParams: IPlanCheckoutInputParams
-  ): Promise<IPlanCheckoutResponse> {
-    const encodedParams = new URLSearchParams();
-
-    const flatCheckoutDefaultParams = defaultParametersCheckoutFactory(queryParams);
-    const flatParams: IPlanCheckoutParams = Object.assign(
-      {
-        granteeId: queryParams.granteeId,
-        member: queryParams.member,
-        successUrl: queryParams.successUrl,
-        cancelUrl: queryParams.cancelUrl,
-        contactUsLink: queryParams.contactUsLink,
-        quantity: queryParams.quantity,
-      },
-      flatCheckoutDefaultParams
-    );
-
-    for (const key of Object.keys(flatParams)) {
-      const itemKey = key as PlanCheckoutKey;
-      const itemValue = flatParams[itemKey];
-      if (itemValue) encodedParams.set(itemKey, String(itemValue));
-    }
-
-    return this._request<IPlanCheckoutResponse>(
-      `${RESOURCE_NAMES.PLANS}/${planId}/checkoutlink?${encodedParams.toString()}`
-    );
-  }
-
-  /**
-   * Get a plan's features
-   *
-   * @param  {string} planId The uuid of the plan
-   *
-   * @returns {Promise<IPlanFeatureResponse[]>}
-   */
-
-  public getFeatures(planId: string) {
-    return this._request<IPlanFeatureResponse[]>(`${RESOURCE_NAMES.PLANS}/${planId}/features`);
-  }
-
-  /**
-   * Get a plan's capabilities
-   *
-   * @param  {string} planId The uuid of the plan
-   *
-   * @returns {Promise<IPlanCapabilityResponse[]>}
-   */
-
-  public getCapabilities(planId: string) {
-    return this._request<IPlanCapabilityResponse[]>(
-      `${RESOURCE_NAMES.PLANS}/${planId}/capabilities`
-    );
-  }
-
-  /**
-   * Get a plan's currencies
-   *
-   * @param  {string} planId The uuid of the plan
-   *
-   * @returns {Promise<IPlanCurrencyResponse[]>}
-   */
-
-  public getCurrencies(planId: string) {
-    return this._request<IPlanCurrencyResponse[]>(`${RESOURCE_NAMES.PLANS}/${planId}/currencies`);
-  }
-}
+};

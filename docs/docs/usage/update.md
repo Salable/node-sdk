@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 # Update Usage
@@ -11,31 +11,29 @@ Increments usage count on a License
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}');
+const salable = new Salable('{{API_KEY}}', 'v2');
 
-await salable.usage.update('{{LICENSE_UUID}}', '{{FEATURE_VARIABLE_NAME}}', {
-  increment: 2,
+await salable.usage.updateLicenseUsage({
+  granteeId: 'grantee_1', 
+  planUuid: 'bc4e485c-cdd6-4cd2-9d61-7d0f6a6ce53c', 
+  increment: 1,
+  idempotencyKey: '63f37318-c5a5-4e56-b338-cadccc7162e7'
 });
 ```
 
 ## Parameters
 
-##### licenseUuid (_required_)
+#### options (_required_)
 
-_Type:_ `string`
+_Type:_ `UpdateLicenseUsageOptions`
 
-The `uuid` of the License to update the usage on
+| Option         | Type   | Description                                     | Required |
+|----------------|--------|-------------------------------------------------|----------|
+| granteeId      | string | The granteeId of the license                    | ✅        |
+| planUuid       | string | The UUID of the plan the license belongs to     | ✅        |
+| increment      | string | The value to increment the usage on the license | ✅        |
+| idempotencyKey | string | A unique key for idempotent requests            | ✅        |
 
-##### featureVariableName (_required_)
+## Return Type
 
-_Type:_ `string`
-
-The variable name of the feature to be updated
-
-##### countOptions (_required_)
-
-_Type:_ `ICountOptions`
-
-| Option    | Description                          |
-| --------- | ------------------------------------ |
-| increment | The number to increment the count by |
+Returns void

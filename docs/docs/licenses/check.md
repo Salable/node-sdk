@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 10
 ---
 
 # Check License
@@ -11,35 +11,26 @@ Retrieves the capabilities the grantee(s) have access to.
 ```typescript
 import { Salable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}');
+const salable = new Salable('{{API_KEY}}', 'v2');
 
-const check = await salable.licenses.check('{{PRODUCT_UUID}}', ['userId_1', 'userId_2']);
+const check = await salable.licenses.check({
+    productUuid: 'product1',
+    granteeIds: ['grantee_1', 'grantee_2'],
+});
 ```
 
 ## Parameters
 
-##### productUuid (_required_)
+#### checkLicenseParams (_required_)
 
-_Type:_ `string`
+_Type:_ `CheckLicenseInput`
 
-Product `uuid`
-
----
-
-##### granteeIds (_required_)
-
-_Type:_ `string[]`
-
-A String array of the grantee Ids you wish to check against
-
----
-
-##### grace
-
-_Type:_ `number`
-
-The number of days to extend the end dates of capabilities
+| Option               | Type     | Description                        | Required |
+| -------------------- | -------- | ---------------------------------- | -------- |
+| grantproductUuideeId | string   | The UUID of the product            | ✅        |
+| granteeIds           | string[] | An array of grantee IDs            | ✅        |
+| grace                | number   | Optional grace period to filter by | ❌        |
 
 ## Return Type
 
-For more information about this request see our API documentation on [License Check Object](https://docs.salable.app/api#tag/Licenses/operation/getLicenseCheck)
+For more information about this request see our API documentation on [License Check Object](https://docs.salable.app/api/v2#tag/Licenses/operation/getLicenseCheck)

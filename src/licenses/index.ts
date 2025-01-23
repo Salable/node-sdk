@@ -1,221 +1,146 @@
-import { Base } from '../base';
-import { RESOURCE_NAMES } from '../constants';
-import {
-  ICheckLicensesCapabilities,
-  ILicense,
-  ICreateAdhocLicenseInput,
-  IUpdateLicenseInput,
-  IUpdateManyLicenseInput,
-  ILicenseCountResponse,
-  Status,
-  LicenseCancelManyBody,
-  LicenseGetByPurchaserOptions,
-  LicenseGetUsage,
-} from '../types';
-import jsrsasign from 'jsrsasign';
+import { CheckLicenseInput, CheckLicensesCapabilitiesResponse, CreateAdhocLicenseInput, PaginatedLicenses, GetLicenseOptions, License, GetLicenseCountResponse, UpdateManyLicenseInput, GetLicenseCountOptions, GetPurchasersLicensesOptions, ApiRequest, TVersion, Version } from '../types';
+import { v2LicenseMethods } from './v2';
 
-/**
- * Salable Node SDK License Class
- *
- * Contains the Salable license methods
- */
-export default class Licenses extends Base {
-  /**
-   *  Get all licenses
-   *
-   * @returns {Promise<ILicense[]>} All licenses present on the account
-   */
-  public getAll(): Promise<ILicense[]> {
-    return this._request<ILicense[]>(RESOURCE_NAMES.LICENSES);
+export type LicenseVersions = {
+  [Version.V2]: {
+    /**
+     *  Get all licenses
+     *
+     * @param {GetLicenseOptions} options - (Optional) Filter parameters. See https://docs.salable.app/api/v2#tag/Licenses/operation/getLicenses
+     *
+     * @returns {Promise<PaginatedLicenses>} All licenses present on the account
+     */
+    getAll: (options?: GetLicenseOptions) => Promise<PaginatedLicenses>;
+    /**
+     *  Get one license
+     *
+     *  @param {string} uuid - The UUID of the license
+     *  @param {{ expand: string[] }} options - (Optional) Filter parameters. See https://docs.salable.app/api/v2#tag/Licenses/operation/getLicenseByUuid
+     *
+     *  @returns { Promise<License>}
+     */
+    getOne: (uuid: string, options?: { expand: string[] }) => Promise<License>;
+    /**
+     *  Get License's Count
+     *
+     * @param {GetLicenseCountOptions} options - (Optional) Filter parameters. See https://docs.salable.app/api/v2#tag/Licenses/operation/getLicensesCount
+     *
+     * @returns {Promise<GetLicenseCountResponse>}
+     */
+    getCount: (options?: GetLicenseCountOptions) => Promise<GetLicenseCountResponse>;
+    /**
+     *  Get Purchasers Licenses
+     *
+     *  @param {GetPurchasersLicensesOptions} options
+     *  @param {GetPurchasersLicensesOptions} options.purchaser - The purchaser of the licenses
+     *  @param {GetPurchasersLicensesOptions} options.productUuid - The UUID of the product that the licenses are on
+     *  @param {GetPurchasersLicensesOptions} options.status - (Optional) The status of the licenses to filter by
+     *
+     * @returns {Promise<License[]>}
+     */
+    getForPurchaser: (options: GetPurchasersLicensesOptions) => Promise<License[]>;
+    /**
+     *  Get licenses for granteeId
+     *
+     *  @param {string} granteeId - The granteeId for the licenses
+     *  @param {{ expand: string[] }} options - (Optional) Filter parameters. See https://docs.salable.app/api/v2#tag/Licenses/operation/getLicensesByGranteeId
+     *
+     *  @returns {Promise<License[]>}
+     */
+    getForGranteeId: (granteeId: string, options?: { expand?: string[] }) => Promise<License[]>;
+    /**
+     *  Creates a single license with the details provided
+     *
+     * @param {CreateAdhocLicenseInput} data - The details to create the new license with
+     * @param {CreateAdhocLicenseInput} data.planUuid - The UUID of the plan associated with the license. The planUuid can be found on the Plan view in the Salable dashboard
+     * @param {CreateAdhocLicenseInput} data.member - The ID of the member who will manage the license.
+     * @param {CreateAdhocLicenseInput} data.granteeId - (Optional) The grantee ID for the license.
+     * @param {CreateAdhocLicenseInput} data.status - (Optional) The status of the created license, e.g. "ACTIVE" "TRIALING"
+     * @param {CreateAdhocLicenseInput} data.endTime - (Optional) Provide a custom end time for the license; this will override the plan's default interval.
+     * @param {CreateAdhocLicenseInput} data.cancelAtPeriodEnd - (Optional) If set to true the license will not renew once the endTime date has passed.
+     *
+     * @returns {Promise<License>} The data for the new license created
+     */
+    create: (data: CreateAdhocLicenseInput) => Promise<License>;
+    /**
+     *  Creates many licenses with the details provided
+     *
+     * @param {CreateAdhocLicenseInput[]} data - The details to create the new license with
+     * @param {CreateAdhocLicenseInput[]} data.planUuid - The UUID of the plan associated with the license. The planUuid can be found on the Plan view in the Salable dashboard
+     * @param {CreateAdhocLicenseInput[]} data.member - The ID of the member who will manage the license.
+     * @param {CreateAdhocLicenseInput[]} data.granteeId - (Optional) The grantee ID for the license.
+     * @param {CreateAdhocLicenseInput[]} data.status - (Optional) The status of the created license, e.g. "ACTIVE" "TRIALING"
+     * @param {CreateAdhocLicenseInput[]} data.endTime - (Optional) Provide a custom end time for the license; this will override the plan's default interval.
+     *
+     * @returns {Promise<License[]>} The data for the new license or licenses created
+     */
+    createMany: (data: CreateAdhocLicenseInput[]) => Promise<License[]>;
+    /**
+     *  Update a license
+     *
+     * @param {string} uuid - The UUID of the license
+     * @param {{ granteeId?: string; endTime: string;}} data - The value of the new granteeId
+     *
+     * @returns {Promise<License>} The data of the updated license
+     */
+    update: (uuid: string, data?: { granteeId: string | null, endTime?: string }) => Promise<License>;
+    /**
+     *  Update many license's
+     *
+     * @param {UpdateManyLicenseInput[]} data - The config array of all the licenses you wish to update
+     * @param {UpdateManyLicenseInput[]} data.uuid - The UUID of the license to update
+     * @param {UpdateManyLicenseInput[]} data.granteeId - The new granteeId of the license
+     *
+     * @returns {Promise<License[]>} The data of the updated license
+     */
+    updateMany: (data: UpdateManyLicenseInput[]) => Promise<License[]>;
+    /**
+     *  Cancel a license
+     *
+     * @param {string} uuid - The UUID of the license
+     *
+     * @returns {Promise<void>}
+     */
+    cancel: (uuid: string) => Promise<void>;
+    /**
+     *  Cancel many licenses
+     *
+     * @param {uuids} uuids - Array of license uuids to be canceled
+     *
+     * @returns {Promise<void>}
+     */
+    cancelMany: (data: { uuids: string[] }) => Promise<void>;
+    /**
+     *  Checks a license's capabilities
+     *
+     * @param {CheckLicenseInput} options
+     * @param {CheckLicenseInput} options.productUuid - The UUID of the product to check the license against
+     * @param {CheckLicenseInput} options.granteeIds - The grantee IDs to check the license for
+     * @param {CheckLicenseInput} options.grace - (Optional) The number of days to extend the end dates of capabilities
+     *
+     * @returns {Promise<CheckLicensesCapabilitiesResponse>} The capabilities of the license passed
+     */
+    check: (options: CheckLicenseInput) => Promise<CheckLicensesCapabilitiesResponse>;
+    /**
+     *  Verifies a license check
+     *
+     * @param {string} publicKey - The public key belonging to your organisation
+     * @param {string} signature - The signature returned from a license check
+     * @param {string} payload - The capabilities returned from a license check
+     *
+     * @returns {boolean} The result of the verification
+     */
+    verify: (options: { publicKey: string; signature: string; payload: string }) => boolean;
+  };
+};
+
+export type LicenseVersionedMethods<V extends TVersion> = V extends keyof LicenseVersions ? LicenseVersions[V] : never;
+
+export const licensesInit = <V extends TVersion>(version: V, request: ApiRequest): LicenseVersionedMethods<V> => {
+  switch (version) {
+    case Version.V2:
+      return v2LicenseMethods(request) as LicenseVersionedMethods<V>;
+    default:
+      throw new Error('Unsupported version');
   }
-
-  /**
-   *  Get one license
-   *  @param {string} licenseUuid - The UUID of the license
-   *
-   * @returns {ILicense}
-   */
-  public getOne(licenseUuid: string): Promise<ILicense> {
-    return this._request<ILicense>(`${RESOURCE_NAMES.LICENSES}/${licenseUuid}`);
-  }
-
-  /**
-   *  Get licenses for purchaser
-   *  @param {string} purchaser - The purchaser of the licenses
-   *  @param {string} productUuid - The UUID of the product that the licenses are on
-   *  @param {LicenseGetByPurchaserOptions} options - (Optional) extra options for filtering or additional data
-   *
-   * @returns {ILicense[]}
-   */
-  public getForPurchaser(
-    purchaser: string,
-    productUuid: string,
-    options?: LicenseGetByPurchaserOptions
-  ): Promise<ILicense[]> {
-    let params = '';
-    if (options) {
-      if (options.cancelLink) params += '&expand=cancelLink';
-      if (options.status) params += `&status=${options.status}`;
-    }
-    params = encodeURI(params);
-    return this._request<ILicense[]>(
-      `${RESOURCE_NAMES.LICENSES}/purchaser?purchaser=${purchaser}&productUuid=${productUuid}${params}`
-    );
-  }
-
-  /**
-   *  Get licenses for granteeId
-   *  @param {string} granteeId - The granteeId for the licenses
-   *
-   * @returns {ILicense[]}
-   */
-  public getForGranteeId(granteeId: string): Promise<ILicense[]> {
-    return this._request<ILicense[]>(`${RESOURCE_NAMES.LICENSES}/granteeId/${granteeId}`);
-  }
-
-  /**
-   *  Get usage on license
-   *  @param {string} licenseUuid - The uuid of the license
-   *
-   * @returns {ILicense[]}
-   */
-  public getUsage(licenseUuid: string): Promise<LicenseGetUsage[]> {
-    return this._request<LicenseGetUsage[]>(`${RESOURCE_NAMES.LICENSES}/${licenseUuid}/usage`);
-  }
-
-  /**
-   *  Get License's Count
-   *
-   * @param {string} subscriptionUuid - The uuid of the subscription to filter the license count
-   * @param {Status} status - The status of the license to filter by
-   *
-   * @returns {Promise<ILicenseCountResponse>} The capabilities of the license passed
-   */
-
-  public getCount(subscriptionUuid?: string, status?: Status): Promise<ILicenseCountResponse> {
-    let url = `${RESOURCE_NAMES.LICENSES}/count`;
-    if (subscriptionUuid) {
-      url += `?subscriptionUuid=${subscriptionUuid}`;
-    }
-    if (status) {
-      url += `${subscriptionUuid ? '&' : '?'}status=${status}`;
-    }
-    return this._request<ILicenseCountResponse>(url);
-  }
-
-  /**
-   *  Checks a license's capabilities
-   *
-   * @param {string} productUuid - The UUID of the product to check the license against
-   * @param {string[]} granteeIds - The grantee IDs to check the license for
-   * @param {number} grace - The number of days to extend the end dates of capabilities
-   *
-   * @returns {Promise<ICheckLicensesCapabilities>} The capabilities of the license passed
-   */
-  public check(
-    productUuid: string,
-    granteeIds: string[],
-    grace?: number
-  ): Promise<ICheckLicensesCapabilities> {
-    let params = `productUuid=${productUuid}&granteeIds=${granteeIds.toString()}`;
-    if (grace) params += `&grace=${grace}`;
-    return this._request<ICheckLicensesCapabilities>(`${RESOURCE_NAMES.LICENSES}/check?${params}`);
-  }
-
-  /**
-   *  Verifies a license check
-   *
-   * @param {string} publicKeyPem - The public key belonging to your organisation in PEM format
-   * @param {string} signature - The signature returned from a license check
-   * @param {string} payload - The capabilities returned from a license check
-   *
-   * @returns {boolean} The result of the verification
-   */
-  public verifyLicenseCheck(publicKeyPem: string, signature: string, payload: string): boolean {
-    const signatureObject = new jsrsasign.KJUR.crypto.Signature({ alg: 'SHA256withECDSA' });
-    signatureObject.init(publicKeyPem);
-    signatureObject.updateString(payload);
-    return signatureObject.verify(signature);
-  }
-
-  /**
-   *  Creates a single license or many licenses with the details provided
-   *
-   * @param {ICreateAdhocLicenseInput | ICreateAdhocLicenseInput[]} licenseDetails - The details to create the new license with
-   *
-   * @returns {Promise<ILicense | ILicense[]>} The data for the new license or licenses created
-   */
-
-  public create(licenseDetails: ICreateAdhocLicenseInput): Promise<ILicense>;
-  public create(licenseDetails: ICreateAdhocLicenseInput[]): Promise<ILicense[]>;
-  public create(
-    licenseDetails: ICreateAdhocLicenseInput | ICreateAdhocLicenseInput[]
-  ): Promise<ILicense | ILicense[]> {
-    return this._request<ILicense, ICreateAdhocLicenseInput | ICreateAdhocLicenseInput[]>(
-      RESOURCE_NAMES.LICENSES,
-      {
-        method: 'POST',
-        body: licenseDetails,
-      }
-    );
-  }
-
-  /**
-   *  Update a license
-   *
-   * @param {string} licenseUuid - The UUID of the license
-   * @param {string} granteeId - The value of the new granteeId
-   *
-   * @returns {Promise<ILicense>} The data of the updated license
-   */
-  public update(licenseUuid: string, granteeId: string): Promise<ILicense> {
-    return this._request<ILicense, IUpdateLicenseInput>(
-      `${RESOURCE_NAMES.LICENSES}/${licenseUuid}`,
-      {
-        method: 'PUT',
-        body: { granteeId },
-      }
-    );
-  }
-
-  /**
-   *  Update many license's
-   *
-   * @param {IUpdateManyLicenseInput[]} updateManyConfig - The config array of all the licenses you wish to update
-   *
-   * @returns {Promise<ILicense[]>} The data of the updated license
-   */
-  public updateMany(updateManyConfig: IUpdateManyLicenseInput[]): Promise<ILicense[]> {
-    return this._request<ILicense[], IUpdateManyLicenseInput[]>(`${RESOURCE_NAMES.LICENSES}`, {
-      method: 'PUT',
-      body: updateManyConfig,
-    });
-  }
-
-  /**
-   *  Cancel a license
-   *
-   * @param {string} licenseUuid - The UUID of the license
-   *
-   * @returns {Promise<void>}
-   */
-  public cancel(licenseUuid: string) {
-    return this._request<void>(`${RESOURCE_NAMES.LICENSES}/${licenseUuid}`, {
-      method: 'DELETE',
-    });
-  }
-
-  /**
-   *  Cancel many licenses
-   *
-   * @param {string[]} licenseUuids - Array of license uuids to be canceled
-   *
-   * @returns {Promise<void>}
-   */
-  public cancelMany(licenseUuids: string[]) {
-    return this._request<void, LicenseCancelManyBody>(`${RESOURCE_NAMES.LICENSES}/cancel`, {
-      method: 'POST',
-      body: { uuids: licenseUuids },
-    });
-  }
-}
+};

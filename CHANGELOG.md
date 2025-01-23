@@ -1,56 +1,143 @@
-## [3.4.1](https://github.com/Salable/node-sdk/compare/v3.4.0...v3.4.1) (2024-10-10)
+# [4.0.0-beta.11](https://github.com/Salable/node-sdk/compare/v4.0.0-beta.10...v4.0.0-beta.11) (2025-01-23)
+
+
+### Bug Fixes
+
+* changed take to number type. Added pagination to invoices ([35b05c9](https://github.com/Salable/node-sdk/commit/35b05c902c2dbd61244ac7b024cb36cc793899b3))
+* updated get invoices test ([a87cd26](https://github.com/Salable/node-sdk/commit/a87cd26e5ca830b58ad8d66ced6a6d8da9b0b638))
+
+# [4.0.0-beta.10](https://github.com/Salable/node-sdk/compare/v4.0.0-beta.9...v4.0.0-beta.10) (2025-01-23)
 
 
 ### Bug Fixes
 
 * deprecate rbac ([b75d464](https://github.com/Salable/node-sdk/commit/b75d464d1d01a9d801f097920bdf89758aadaecd))
+* resolved conflicts ([4fdd63c](https://github.com/Salable/node-sdk/commit/4fdd63cda50c04abb93bf7f902fbba49e5c5bc84))
+
+# [4.0.0-beta.9](https://github.com/Salable/node-sdk/compare/v4.0.0-beta.8...v4.0.0-beta.9) (2025-01-23)
+
+
+### Bug Fixes
+
+* updated schema with new indexes ([f89f3b0](https://github.com/Salable/node-sdk/commit/f89f3b00e3d61a55d995bc6659c2b2a1d741a70f))
+
+# [4.0.0-beta.8](https://github.com/Salable/node-sdk/compare/v4.0.0-beta.7...v4.0.0-beta.8) (2025-01-22)
+
+
+### Bug Fixes
+
+* created more test data ([0a8dfd7](https://github.com/Salable/node-sdk/commit/0a8dfd770798200ad2327104eeb9714d1721247c))
+* get all subscriptions new params. Run tests sequentially ([a14ba58](https://github.com/Salable/node-sdk/commit/a14ba58efd8aa149b9ef8cdd30865c6f1b329135))
+* removed console log ([9d2d7e0](https://github.com/Salable/node-sdk/commit/9d2d7e03eacd18d8a619091006c0da7030e38597))
+* run coverage tests sequentially ([e0196df](https://github.com/Salable/node-sdk/commit/e0196df45263d0f919d662b9fb03ef51884ece56))
+
+# [4.0.0-beta.7](https://github.com/Salable/node-sdk/compare/v4.0.0-beta.6...v4.0.0-beta.7) (2025-01-22)
+
+
+### Bug Fixes
+
+* added type for current usage. Changed update usage params to an object ([0b5f41a](https://github.com/Salable/node-sdk/commit/0b5f41aa8228e57576f363875d618bd8df749a44))
+* updated usage methods to follow params in an object pattern. Removed upsert from tests ([a0a5151](https://github.com/Salable/node-sdk/commit/a0a5151420abe85ca530ad9f6d76982575996cea))
+
+# [4.0.0-beta.6](https://github.com/Salable/node-sdk/compare/v4.0.0-beta.5...v4.0.0-beta.6) (2025-01-20)
+
+
+### Bug Fixes
+
+* throw SalableRequestError if 404 ([dce5bb4](https://github.com/Salable/node-sdk/commit/dce5bb44dbf0b20fad1d4db74860bb92d1b34dd4))
+
+# [4.0.0-beta.5](https://github.com/Salable/node-sdk/compare/v4.0.0-beta.4...v4.0.0-beta.5) (2025-01-17)
+
+
+### Bug Fixes
+
+* added name to error class constructors ([d78a27d](https://github.com/Salable/node-sdk/commit/d78a27da7e469c8ba75b6bc67abaa629dc090785))
+
+# [4.0.0-beta.4](https://github.com/Salable/node-sdk/compare/v4.0.0-beta.3...v4.0.0-beta.4) (2025-01-10)
+
+
+### Bug Fixes
+
+* amend the options type for create and update license resource ([9287b0a](https://github.com/Salable/node-sdk/commit/9287b0ac5da316de34a615a1f8ad317061011d36))
+* subscription invoice schema mismatch ([0c9d6db](https://github.com/Salable/node-sdk/commit/0c9d6db65bca21a48947dadaec0e2e3d928f3dfc))
+
+
+### Features
+
+* event resource and methods with documentation ([71c23b1](https://github.com/Salable/node-sdk/commit/71c23b12974556b51ab80defe6368eb2b2ad9b83))
+* export salable errors ([1f23502](https://github.com/Salable/node-sdk/commit/1f23502a73029613d221c0b519532ac1ec82f858))
+
+# [4.0.0-beta.3](https://github.com/Salable/node-sdk/compare/v4.0.0-beta.2...v4.0.0-beta.3) (2025-01-07)
+
+
+### Bug Fixes
+
+* amending the correct response type for get subscriptions ([e7f4044](https://github.com/Salable/node-sdk/commit/e7f40444ff717770048e3445412a095c3ec1cacf))
+
+# [4.0.0-beta.2](https://github.com/Salable/node-sdk/compare/v4.0.0-beta.1...v4.0.0-beta.2) (2025-01-06)
+
+
+### Bug Fixes
+
+* fixed path to types in build ([62b093c](https://github.com/Salable/node-sdk/commit/62b093c634572e11d7ee344ff6e3a6b35dc7e977))
+
+# [4.0.0-beta.1](https://github.com/Salable/node-sdk/compare/v3.4.0...v4.0.0-beta.1) (2024-12-11)
+
+
+### Features
+
+* v4 ([0bfd077](https://github.com/Salable/node-sdk/commit/0bfd0773f76fbedfc8da75503d09b7dd4c137234))
+
+
+### BREAKING CHANGES
+
+* v4 update
+
+## [3.4.1](https://github.com/Salable/node-sdk/compare/v3.4.0...v3.4.1) (2024-10-10)
+
+### Bug Fixes
+
+- deprecate rbac ([b75d464](https://github.com/Salable/node-sdk/commit/b75d464d1d01a9d801f097920bdf89758aadaecd))
 
 # [3.4.0](https://github.com/Salable/node-sdk/compare/v3.3.0...v3.4.0) (2024-07-12)
 
-
 ### Features
 
-* **SD-168:** added verify-signature method ([c8b4a42](https://github.com/Salable/node-sdk/commit/c8b4a42a83fa72e6884adcfac96cefbddaf0dc20))
+- **SD-168:** added verify-signature method ([c8b4a42](https://github.com/Salable/node-sdk/commit/c8b4a42a83fa72e6884adcfac96cefbddaf0dc20))
 
 # [3.3.0](https://github.com/Salable/node-sdk/compare/v3.2.1...v3.3.0) (2024-02-01)
 
-
 ### Bug Fixes
 
-* fixed licenses cancelMany method ([3cf5fe7](https://github.com/Salable/node-sdk/commit/3cf5fe7c052befd466f94c034214d4dec5043700))
-
+- fixed licenses cancelMany method ([3cf5fe7](https://github.com/Salable/node-sdk/commit/3cf5fe7c052befd466f94c034214d4dec5043700))
 
 ### Features
 
-* currency and quantity parameters added checkout link and pricing table methods ([f822750](https://github.com/Salable/node-sdk/commit/f82275015c83fac69df2b0ab7b6b681821334c24))
+- currency and quantity parameters added checkout link and pricing table methods ([f822750](https://github.com/Salable/node-sdk/commit/f82275015c83fac69df2b0ab7b6b681821334c24))
 
 ## [3.2.1](https://github.com/Salable/node-sdk/compare/v3.2.0...v3.2.1) (2023-12-05)
 
-
 ### Bug Fixes
 
-* added isTest to the response types ([46ba143](https://github.com/Salable/node-sdk/commit/46ba14365b7393b43a4d0417ecf6785d60633bc6))
+- added isTest to the response types ([46ba143](https://github.com/Salable/node-sdk/commit/46ba14365b7393b43a4d0417ecf6785d60633bc6))
 
 # [3.2.0](https://github.com/Salable/node-sdk/compare/v3.1.0...v3.2.0) (2023-11-27)
 
-
 ### Features
 
-* added grace as an optional parameter to license check ([39105e8](https://github.com/Salable/node-sdk/commit/39105e806c7dfc4ddbafc0e825e19a8628532457))
+- added grace as an optional parameter to license check ([39105e8](https://github.com/Salable/node-sdk/commit/39105e806c7dfc4ddbafc0e825e19a8628532457))
 
 # [3.1.0](https://github.com/Salable/node-sdk/compare/v3.0.1...v3.1.0) (2023-11-24)
 
-
 ### Bug Fixes
 
-* updated getByGranteeId response type comment ([143a3a8](https://github.com/Salable/node-sdk/commit/143a3a883339aa8992cfecb74ba807c6e16e3705))
-
+- updated getByGranteeId response type comment ([143a3a8](https://github.com/Salable/node-sdk/commit/143a3a883339aa8992cfecb74ba807c6e16e3705))
 
 ### Features
 
-* create licenses updated to be able to create many licenses ([d0b7f43](https://github.com/Salable/node-sdk/commit/d0b7f4382e38fd7d774bf5eef7e4ac25f80a3978))
-* create licenses updated to be able to create many licenses ([9b43b3a](https://github.com/Salable/node-sdk/commit/9b43b3a69be7d9e529766e0e465647dce93dcf7a))
-* licenses endpoints up to date ([e0972da](https://github.com/Salable/node-sdk/commit/e0972dacceea6d9723b2969ba5d9e5948bcea133))
+- create licenses updated to be able to create many licenses ([d0b7f43](https://github.com/Salable/node-sdk/commit/d0b7f4382e38fd7d774bf5eef7e4ac25f80a3978))
+- create licenses updated to be able to create many licenses ([9b43b3a](https://github.com/Salable/node-sdk/commit/9b43b3a69be7d9e529766e0e465647dce93dcf7a))
+- licenses endpoints up to date ([e0972da](https://github.com/Salable/node-sdk/commit/e0972dacceea6d9723b2969ba5d9e5948bcea133))
 
 ## [3.0.1](https://github.com/Salable/node-sdk/compare/v3.0.0...v3.0.1) (2023-11-24)
 

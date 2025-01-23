@@ -112,4 +112,4 @@ See [code example](#vat-paddle-only) with VAT parameters
 
 ## Return Type
 
-For more information about this request see our API documentation on [Plan checkout link](https://docs.salable.app/api#tag/Plans/operation/getPlanCheckoutLink)
+For more information about this request see our API documentation on [Plan checkout link](https://docs.salable.app/api/v2#tag/Plans/operation/getPlanCheckoutLink)

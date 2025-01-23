@@ -18,4 +18,4 @@ const products = await salable.products.getAll();
 
 ## Return Type
 
-For more information about this request see our API documentation on [Product Object](https://docs.salable.app/api#tag/Products/operation/getProductByUuid)
+For more information about this request see our API documentation on [Product Object](https://docs.salable.app/api/v2#tag/Products/operation/getProductByUuid)
