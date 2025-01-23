@@ -60,8 +60,12 @@ describe('initRequest', () => {
     mockFetch.mockRejectedValueOnce(new TypeError('Network error'));
 
     const request = initRequest(apiKey, version);
+    const result = request(input, init)
 
-    await expect(request(input, init)).rejects.toThrow(SalableRequestError);
+    await expect(result).rejects.toThrow(SalableRequestError);
+    await expect(result).rejects.toMatchObject({
+      code: 'S1008'
+    });
   });
 
   it('should throw an error on invalid JSON response', async () => {
@@ -75,11 +79,13 @@ describe('initRequest', () => {
         throw new SyntaxError('Invalid JSON');
       },
     });
-
     const request = initRequest(apiKey, version);
+    const result = request(input, init)
 
-      await expect(request(input, init)).rejects.toThrow(SalableParseError);
-
+    await expect(result).rejects.toThrow(SalableParseError);
+    await expect(result).rejects.toMatchObject({
+      code: 'S1007'
+    });
   });
 
   it('should throw an error on bad request (400)', async () => {
@@ -89,12 +95,20 @@ describe('initRequest', () => {
       headers: {
         get: () => '10',
       },
-      json: async () => ({}),
+      json: async () => ({
+        error: 'A known bad request message from the salable api'
+      }),
     });
-
     const request = initRequest(apiKey, version);
+    const result = request(input, init)
 
-    await expect(request(input, init)).rejects.toThrow(SalableValidationError);
+    await expect(result).rejects.toThrow(SalableValidationError);
+    await expect(result).rejects.toMatchObject({
+      code: 'S1004',
+      data: {
+        error: 'A known bad request message from the salable api'
+      }
+    });
   });
 
   it('should throw an error on bad request (404)', async () => {
@@ -106,10 +120,13 @@ describe('initRequest', () => {
       },
       json: async () => ({}),
     });
-
     const request = initRequest(apiKey, version);
+    const result = request(input, init)
 
-    await expect(request(input, init)).rejects.toThrow(SalableResponseError);
+    await expect(result).rejects.toThrow(SalableResponseError);
+    await expect(result).rejects.toMatchObject({
+      code: 'S1002'
+    });
   });
 
   it('should throw an error on unauthenticated (401)', async () => {
@@ -121,10 +138,13 @@ describe('initRequest', () => {
       },
       json: async () => ({}),
     });
-
     const request = initRequest(apiKey, version);
+    const result = request(input, init)
 
-    await expect(request(input, init)).rejects.toThrow(SalableResponseError);
+    await expect(result).rejects.toThrow(SalableResponseError);
+    await expect(result).rejects.toMatchObject({
+      code: 'S1001'
+    });
   });
 
   it('should throw an error on unauthorized (403)', async () => {
@@ -136,10 +156,13 @@ describe('initRequest', () => {
       },
       json: async () => ({}),
     });
-
     const request = initRequest(apiKey, version);
+    const result = request(input, init)
 
-    await expect(request(input, init)).rejects.toThrow(SalableResponseError);
+    await expect(result).rejects.toThrow(SalableResponseError);
+    await expect(result).rejects.toMatchObject({
+      code: 'S1000'
+    });
   });
 
   it('should throw an error on internal server error (500)', async () => {
@@ -151,9 +174,12 @@ describe('initRequest', () => {
       },
       json: async () => ({}),
     });
-
     const request = initRequest(apiKey, version);
+    const result = request(input, init)
 
-    await expect(request(input, init)).rejects.toThrow(SalableResponseError);
+    await expect(result).rejects.toThrow(SalableResponseError);
+    await expect(result).rejects.toMatchObject({
+      code: 'S1005'
+    });
   });
 });
