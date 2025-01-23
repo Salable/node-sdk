@@ -41,7 +41,7 @@ describe('Subscriptions V2 Tests', () => {
   it('getAll (w/ search params): Should successfully fetch subscriptions', async () => {
     const dataWithSearchParams = await salable.subscriptions.getAll({
       status: 'ACTIVE',
-      take: '3',
+      take: 3,
       email: testEmail,
       expand: ['plan'],
     });
@@ -110,6 +110,16 @@ describe('Subscriptions V2 Tests', () => {
     const data = await salable.subscriptions.getInvoices(basicSubscriptionUuid);
 
     expect(data).toEqual(stripeInvoiceSchema);
+  });
+
+  it('getInvoices (w/ search params): Should successfully fetch a subscriptions invoices', async () => {
+    const data = await salable.subscriptions.getInvoices(
+      basicSubscriptionUuid,
+      { take: 1 }
+    );
+
+    expect(data).toEqual(stripeInvoiceSchema);
+    expect(data.data.length).toEqual(1);
   });
 
   it('getSwitchablePlans: Should successfully fetch a subscriptions switchable plans', async () => {

@@ -24,6 +24,15 @@ _Type:_ `string`
 
 The UUID of the subscription
 
+#### options
+
+_Type:_ `GetAllInvoicesOptions`
+
+| Option      | Type   | Description                                         | Required |
+|-------------|--------|-----------------------------------------------------| -------- |
+| cursor      | string | Cursor value, used for pagination                   | ❌       |
+| take        | number | The amount of subscriptions to fetch. Default: `10` | ❌       |
+
 ## Return Type
 
-For more information about this request see our API documentation on [Subscription Object](https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptionInvoices)
+For more information about this request see our API documentation on [Subscription Invoice Object](https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptionInvoices)

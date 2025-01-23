@@ -27,7 +27,7 @@ export type CreateAdhocLicenseInput = {
 export type GetLicenseOptions = {
   status?: LicenseStatus;
   cursor?: string;
-  take?: string;
+  take?: number;
   subscriptionUuid?: string;
   granteeId?: string;
   planUuid?: string;
@@ -76,7 +76,7 @@ export type GetUsageOptions = {
   subscriptionUuid?: string;
   sort?: SortOrder;
   cursor?: string;
-  take?: string;
+  take?: number;
 };
 
 export type PaginatedUsageRecords = {
@@ -158,6 +158,17 @@ export type Subscription = {
   isTest: boolean;
   cancelAtPeriodEnd: boolean;
 };
+
+export type GetAllSubscriptionsOptions = {
+  status?: SubscriptionStatus;
+  email?: string;
+  cursor?: string;
+  take?: number;
+  expand?: string[],
+  sort?: SortOrder,
+  productUuid?: string,
+  planUuid?: string
+}
 
 export type PaginatedSubscription = {
   first: string;
@@ -560,6 +571,11 @@ export type LicenseGetUsage = {
   planUuid: string;
   unitCount: number;
 };
+
+export type GetAllInvoicesOptions = {
+  cursor?: string;
+  take?: number;
+}
 
 export type PaginatedSubscriptionInvoice = {
   first: string;
