@@ -1,3 +1,11 @@
+# [4.0.0-beta.10](https://github.com/Salable/node-sdk/compare/v4.0.0-beta.9...v4.0.0-beta.10) (2025-01-23)
+
+
+### Bug Fixes
+
+* deprecate rbac ([b75d464](https://github.com/Salable/node-sdk/commit/b75d464d1d01a9d801f097920bdf89758aadaecd))
+* resolved conflicts ([4fdd63c](https://github.com/Salable/node-sdk/commit/4fdd63cda50c04abb93bf7f902fbba49e5c5bc84))
+
 # [4.0.0-beta.9](https://github.com/Salable/node-sdk/compare/v4.0.0-beta.8...v4.0.0-beta.9) (2025-01-23)
 
 
