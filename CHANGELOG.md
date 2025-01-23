@@ -1,3 +1,11 @@
+# [4.0.0-beta.11](https://github.com/Salable/node-sdk/compare/v4.0.0-beta.10...v4.0.0-beta.11) (2025-01-23)
+
+
+### Bug Fixes
+
+* changed take to number type. Added pagination to invoices ([35b05c9](https://github.com/Salable/node-sdk/commit/35b05c902c2dbd61244ac7b024cb36cc793899b3))
+* updated get invoices test ([a87cd26](https://github.com/Salable/node-sdk/commit/a87cd26e5ca830b58ad8d66ced6a6d8da9b0b638))
+
 # [4.0.0-beta.10](https://github.com/Salable/node-sdk/compare/v4.0.0-beta.9...v4.0.0-beta.10) (2025-01-23)
 
 
