@@ -1,3 +1,37 @@
+# [4.0.0](https://github.com/Salable/node-sdk/compare/v3.4.1...v4.0.0) (2025-01-23)
+
+
+### Bug Fixes
+
+* added name to error class constructors ([d78a27d](https://github.com/Salable/node-sdk/commit/d78a27da7e469c8ba75b6bc67abaa629dc090785))
+* added type for current usage. Changed update usage params to an object ([0b5f41a](https://github.com/Salable/node-sdk/commit/0b5f41aa8228e57576f363875d618bd8df749a44))
+* amend the options type for create and update license resource ([9287b0a](https://github.com/Salable/node-sdk/commit/9287b0ac5da316de34a615a1f8ad317061011d36))
+* amending the correct response type for get subscriptions ([e7f4044](https://github.com/Salable/node-sdk/commit/e7f40444ff717770048e3445412a095c3ec1cacf))
+* changed take to number type. Added pagination to invoices ([35b05c9](https://github.com/Salable/node-sdk/commit/35b05c902c2dbd61244ac7b024cb36cc793899b3))
+* created more test data ([0a8dfd7](https://github.com/Salable/node-sdk/commit/0a8dfd770798200ad2327104eeb9714d1721247c))
+* fixed path to types in build ([62b093c](https://github.com/Salable/node-sdk/commit/62b093c634572e11d7ee344ff6e3a6b35dc7e977))
+* get all subscriptions new params. Run tests sequentially ([a14ba58](https://github.com/Salable/node-sdk/commit/a14ba58efd8aa149b9ef8cdd30865c6f1b329135))
+* removed console log ([9d2d7e0](https://github.com/Salable/node-sdk/commit/9d2d7e03eacd18d8a619091006c0da7030e38597))
+* resolved conflicts ([4fdd63c](https://github.com/Salable/node-sdk/commit/4fdd63cda50c04abb93bf7f902fbba49e5c5bc84))
+* run coverage tests sequentially ([e0196df](https://github.com/Salable/node-sdk/commit/e0196df45263d0f919d662b9fb03ef51884ece56))
+* subscription invoice schema mismatch ([0c9d6db](https://github.com/Salable/node-sdk/commit/0c9d6db65bca21a48947dadaec0e2e3d928f3dfc))
+* throw SalableRequestError if 404 ([dce5bb4](https://github.com/Salable/node-sdk/commit/dce5bb44dbf0b20fad1d4db74860bb92d1b34dd4))
+* updated get invoices test ([a87cd26](https://github.com/Salable/node-sdk/commit/a87cd26e5ca830b58ad8d66ced6a6d8da9b0b638))
+* updated schema with new indexes ([f89f3b0](https://github.com/Salable/node-sdk/commit/f89f3b00e3d61a55d995bc6659c2b2a1d741a70f))
+* updated usage methods to follow params in an object pattern. Removed upsert from tests ([a0a5151](https://github.com/Salable/node-sdk/commit/a0a5151420abe85ca530ad9f6d76982575996cea))
+
+
+### Features
+
+* event resource and methods with documentation ([71c23b1](https://github.com/Salable/node-sdk/commit/71c23b12974556b51ab80defe6368eb2b2ad9b83))
+* export salable errors ([1f23502](https://github.com/Salable/node-sdk/commit/1f23502a73029613d221c0b519532ac1ec82f858))
+* v4 ([0bfd077](https://github.com/Salable/node-sdk/commit/0bfd0773f76fbedfc8da75503d09b7dd4c137234))
+
+
+### BREAKING CHANGES
+
+* v4 update
+
 # [4.0.0-beta.11](https://github.com/Salable/node-sdk/compare/v4.0.0-beta.10...v4.0.0-beta.11) (2025-01-23)
 
 
