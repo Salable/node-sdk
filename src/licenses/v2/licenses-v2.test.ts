@@ -54,7 +54,7 @@ describe('Licenses V2 Tests', () => {
   it('getAll (w/ search params): Should successfully fetch licenses', async () => {
     const dataWithSearchParams = await salable.licenses.getAll({
       status: 'ACTIVE',
-      take: '3',
+      take: 3,
       subscriptionUuid: subscriptionUuid,
     });
 

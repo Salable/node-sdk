@@ -23,10 +23,10 @@ const licenses = await salable.licenses.getAll();
 _Type:_ `GetLicenseOptions`
 
 | Option           | Type   | Description                                                 | Required |
-| ---------------- | ------ | ----------------------------------------------------------- | -------- |
+| ---------------- |--------| ----------------------------------------------------------- | -------- |
 | status           | string | The status of the created license, e.g. "ACTIVE" "TRIALING" | ❌        |
 | cursor           | string | Cursor value, used for pagination                           | ❌        |
-| take             | string | The amount of licenses to fetch                             | ❌        |
+| take             | number | The amount of licenses to fetch                             | ❌        |
 | subscriptionUuid | string | The UUID of the subscription to filter by                   | ❌        |
 | granteeId        | string | The grantee ID to filter by                                 | ❌        |
 | planUuid         | string | The UUID of the plan to filter by                           | ❌        |
