@@ -6,6 +6,7 @@ import { productsInit, ProductVersionedMethods } from '../src/products';
 import { pricingTablesInit, PricingTableVersionedMethods } from '../src/pricing-tables';
 import { UsageVersionedMethods, usageInit } from './usage';
 import { eventsInit, EventVersionedMethods } from './events';
+import { sessionsInit, SessionVersionedMethods } from './sessions';
 
 export { ErrorCodes, SalableParseError, SalableRequestError, SalableResponseError, SalableUnknownError, SalableValidationError } from './exceptions/salable-error';
 export type { ResponseError, ValidationError } from './exceptions/salable-error';
@@ -61,6 +62,7 @@ export default class Salable<V extends TVersion> {
   licenses: LicenseVersionedMethods<V>;
   usage: UsageVersionedMethods<V>;
   events: EventVersionedMethods<V>;
+  sessions: SessionVersionedMethods<V>
 
   constructor(apiKey: string, version: V) {
     const request = initRequest(apiKey, version);
@@ -72,5 +74,6 @@ export default class Salable<V extends TVersion> {
     this.licenses = licensesInit(version, request);
     this.usage = usageInit(version, request);
     this.events = eventsInit(version, request);
+    this.sessions = sessionsInit(version, request);
   }
 }
