@@ -147,6 +147,7 @@ export type Subscription = {
   productUuid: string;
   type: string;
   email: string;
+  owner: string | null;
   quantity: number;
   lineItemIds: string[] | null;
   organisation: string;
