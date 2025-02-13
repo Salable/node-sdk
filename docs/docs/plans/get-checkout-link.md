@@ -53,17 +53,18 @@ _Type:_ `GetPlanCheckoutOptions`
 
 Query parameters to be passed in to the checkout config
 
-| **Parameter** | **Type** | **Description** | **Required** |
-| :------------ |:------| :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------: |
-| successUrl    | string |  The URL to send users if they have successfully completed a purchase                                                                                                                      |      ✅       |
-| cancelUrl     |string | The URL to send users to if the transaction fails.                                                                                                                                        |      ✅       |
-| member        | string |The purchaser of the license                                                                                                                                                              |      ✅       |
-| granteeId     | string |Value to use as granteeId on Plan                                                                                                                                                         |      ✅       |
-| promoCode     | string |Enables the promo code field in Stripe checkout. Cannot be used with promoCode.                                                                                                           |      ❌       |
-| currency      | string |Shortname of the currency to be used in the checkout. The currency must be added to the plan's product in Salable. If not specified, it defaults to the currency selected on the product. |      ❌       |
-| quantity      | string |Only applicable for per seat plans. Set the amount of seats the customer pays for in the checkout.                                                                                        |      ❌       |
-| customerEmail | string |Pre fills email for checkout customer                                                                                                                                                     |      ❌       |
-| automaticTax  | string |Automatically calculate tax on checkout based on customers location and your Stripe settings.                                                                                             |      ❌       |
+| **Parameter** | **Type** | **Description**                                                                                                                                                                           | **Required** |
+|:--------------|:---------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:------------:|
+| successUrl    | string   | The URL to send users if they have successfully completed a purchase                                                                                                                      |      ✅       |
+| cancelUrl     | string   | The URL to send users to if the transaction fails.                                                                                                                                        |      ✅       |
+| granteeId     | string   | Value to use as granteeId on Plan                                                                                                                                                         |      ✅       |
+| member        | string   | The purchaser of the license                                                                                                                                                              |      ✅       |
+| owner         | string   | The ID of the entity who will own the subscription. Default is the value given to member.                                                                                                 |      ❌       |
+| promoCode     | string   | Enables the promo code field in Stripe checkout. Cannot be used with promoCode.                                                                                                           |      ❌       |
+| currency      | string   | Shortname of the currency to be used in the checkout. The currency must be added to the plan's product in Salable. If not specified, it defaults to the currency selected on the product. |      ❌       |
+| quantity      | string   | Only applicable for per seat plans. Set the amount of seats the customer pays for in the checkout.                                                                                        |      ❌       |
+| customerEmail | string   | Pre fills email for checkout customer                                                                                                                                                     |      ❌       |
+| automaticTax  | string   | Automatically calculate tax on checkout based on customers location and your Stripe settings.                                                                                             |      ❌       |
 
 ## Return Type
 
