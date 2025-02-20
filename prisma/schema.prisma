@@ -440,6 +440,7 @@ model FeaturesOnLicenses {
 }
 
 enum PaymentIntegration {
+  none
   stripe
   stripe_existing
   paddle
