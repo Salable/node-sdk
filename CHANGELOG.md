@@ -1,3 +1,10 @@
+# [4.1.0-beta.2](https://github.com/Salable/node-sdk/compare/v4.1.0-beta.1...v4.1.0-beta.2) (2025-02-24)
+
+
+### Features
+
+* session resource with testing ([35f4323](https://github.com/Salable/node-sdk/commit/35f43239e84deb301672d53cbfe55ed99ad9c99b))
+
 # [4.1.0-beta.1](https://github.com/Salable/node-sdk/compare/v4.0.0...v4.1.0-beta.1) (2025-02-13)
 
 
