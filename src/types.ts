@@ -69,7 +69,7 @@ export type GetLicenseCountResponse = {
 };
 
 export type GetUsageOptions = {
-  granteeId: string
+  granteeId: string;
   type?: string;
   status?: string;
   planUuid?: string;
@@ -99,20 +99,20 @@ export type UsageRecord = {
 
 export type CurrentUsageOptions = {
   granteeId: string;
-  planUuid: string
-}
+  planUuid: string;
+};
 
 export type CurrentUsageRecord = {
   unitCount: number;
-  updatedAt: string
-}
+  updatedAt: string;
+};
 
 export type UpdateLicenseUsageOptions = {
-  granteeId: string,
-  planUuid: string,
-  increment: number,
-  idempotencyKey: string
-}
+  granteeId: string;
+  planUuid: string;
+  increment: number;
+  idempotencyKey: string;
+};
 
 export type License = {
   uuid: string;
@@ -928,4 +928,34 @@ export type Event = {
   errorCode: string;
   createdAt: string;
   updatedAt: string;
+};
+
+export enum SessionScope {
+  Invoice = 'web-components:invoices',
+  PricingTable = 'web-components:pricing-table',
+  Checkout = 'web-components:checkout',
+}
+
+export type InvoiceMetadata = {
+  subscriptionUuid: string;
+};
+
+export type PricingTableMetadata =
+  | {
+      productUuid: string;
+      pricingTableUuid?: never;
+    }
+  | {
+      productUuid?: never;
+      pricingTableUuid: string;
+    };
+
+export type CheckoutMetadata = {
+  planUuid: string;
+};
+
+export type SessionMetaData<T extends SessionScope> = T extends SessionScope.Invoice ? InvoiceMetadata : T extends SessionScope.PricingTable ? PricingTableMetadata : T extends SessionScope.Checkout ? CheckoutMetadata : never;
+
+export type Session = {
+  sessionToken: string;
 };
