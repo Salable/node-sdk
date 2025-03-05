@@ -350,7 +350,8 @@ export type GetPlanCheckoutOptions = {
   successUrl: string;
   cancelUrl: string;
   granteeId: string;
-  member: string;
+  member?: string;
+  owner?: string;
   promoCode?: string;
   allowPromoCode?: boolean;
   customerEmail?: string;
