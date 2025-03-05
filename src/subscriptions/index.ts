@@ -9,7 +9,7 @@ import {
   ApiRequest,
   TVersion,
   Version,
-  GetAllSubscriptionsOptions, GetAllInvoicesOptions
+  GetAllSubscriptionsOptions, GetAllInvoicesOptions, CreateAdhocLicenseInput, License, CreateSubscriptionInput
 } from '../types';
 import { v2SubscriptionMethods } from './v2';
 
@@ -41,6 +41,20 @@ export type SubscriptionVersions = {
         expand: string[];
       },
     ) => Promise<Subscription>;
+
+    /**
+     *  Creates a subscription with the details provided
+     *
+     * @param {CreateSubscriptionInput} data - The details to create the new subscription with
+     * @param {CreateSubscriptionInput} data.planUuid - The UUID of the plan associated with the subscription. The planUuid can be found on the Plan view in the Salable dashboard
+     * @param {CreateSubscriptionInput} data.granteeId - (Optional) The grantee ID for the subscription.
+     * @param {CreateSubscriptionInput} data.expiryDate - (Optional) Provide a custom expiry date for the subscription; this will override the plan's default interval.
+     * @param {CreateSubscriptionInput} data.cancelAtPeriodEnd - (Optional) If set to true the subscription will not renew once the endTime date has passed.
+     * @param {CreateSubscriptionInput} data.quantity - (Optional) The amount of seats to create on the subscription. Default is the plan's minimum seat limit. Only applicable to per seat plans.
+     *
+     * @returns {Promise<Subscription>} The data for the new subscription created
+     */
+    create: (data: CreateSubscriptionInput) => Promise<Subscription>;
 
     /**
      *  Changes a subscription's plan based on UUID. If the subscription is usage based the requested subscription will be canceled and a new subscription will be created on the plan you are changing to.

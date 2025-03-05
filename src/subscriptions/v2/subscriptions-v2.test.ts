@@ -32,6 +32,18 @@ describe('Subscriptions V2 Tests', () => {
     await deleteTestData();
   });
 
+  it('create: Should successfully create a subscription without a payment integration', async () => {
+    const data = await salable.subscriptions.create({
+      planUuid: testUuids.paidPlanUuid,
+      owner: 'example',
+      granteeId: 'test-grantee-id',
+      status: 'ACTIVE',
+      endTime: '2025-07-06T12:00:00.000Z',
+    });
+
+    expect(data).toEqual(expect.objectContaining(subscriptionSchema));
+  });
+
   it('getAll: Should successfully fetch subscriptions', async () => {
     const data = await salable.subscriptions.getAll();
 
