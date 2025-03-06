@@ -121,16 +121,6 @@ export type LicenseVersions = {
      * @returns {Promise<CheckLicensesCapabilitiesResponse>} The capabilities of the license passed
      */
     check: (options: CheckLicenseInput) => Promise<CheckLicensesCapabilitiesResponse>;
-    /**
-     *  Verifies a license check
-     *
-     * @param {string} publicKey - The public key belonging to your organisation
-     * @param {string} signature - The signature returned from a license check
-     * @param {string} payload - The capabilities returned from a license check
-     *
-     * @returns {boolean} The result of the verification
-     */
-    verify: (options: { publicKey: string; signature: string; payload: string }) => boolean;
   };
 };
 
