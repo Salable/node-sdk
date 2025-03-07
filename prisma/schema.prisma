@@ -275,6 +275,7 @@ model Subscription {
   productUuid                      String
   type                             PaymentIntegration
   email                            String?
+  owner                            String?
   organisation                     String
   status                           String
   cancelAtPeriodEnd                Boolean            @default(false)
@@ -440,6 +441,7 @@ model FeaturesOnLicenses {
 }
 
 enum PaymentIntegration {
+  none
   stripe
   stripe_existing
   paddle
