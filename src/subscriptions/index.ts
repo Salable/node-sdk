@@ -9,7 +9,7 @@ import {
   ApiRequest,
   TVersion,
   Version,
-  GetAllSubscriptionsOptions, GetAllInvoicesOptions
+  GetAllSubscriptionsOptions, GetAllInvoicesOptions, UpdateSubscriptionInput
 } from '../types';
 import { v2SubscriptionMethods } from './v2';
 
@@ -40,6 +40,22 @@ export type SubscriptionVersions = {
       options?: {
         expand: string[];
       },
+    ) => Promise<Subscription>;
+
+    /**
+     *  Update a subscription.
+     *
+     *  @param {string} subscriptionUuid - The UUID of the subscription
+     *  @param {UpdateSubscriptionInput} data - The properties of the subscription to update
+     *  @param {UpdateSubscriptionInput} data.owner - The ID of the entity that owns the subscription
+     *
+     * Docs - https://docs.salable.app/api/v2#tag/Subscriptions/operation/changeSubscriptionsPlan
+     *
+     * @returns {Promise<Subscription>}
+     */
+    update: (
+      subscriptionUuid: string,
+      data: UpdateSubscriptionInput,
     ) => Promise<Subscription>;
 
     /**

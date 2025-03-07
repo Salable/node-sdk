@@ -17,6 +17,7 @@ const licenseThreeUuid = uuidv4();
 const perSeatBasicLicenseUuids = [uuidv4(), uuidv4(), uuidv4(), uuidv4(), uuidv4(), uuidv4()];
 const testGrantee = '123456';
 const testEmail = 'tester@domain.com';
+const owner = 'subscription-owner'
 
 describe('Subscriptions V2 Tests', () => {
   const apiKey = testUuids.devApiKeyV2;
@@ -90,6 +91,20 @@ describe('Subscriptions V2 Tests', () => {
         }),
       ]),
     );
+  });
+
+  it('getAll (w/ search params owner): Should successfully fetch subscriptions', async () => {
+    const dataWithSearchParams = await salable.subscriptions.getAll({
+      owner: 'different-owner'
+    });
+
+    expect(dataWithSearchParams).toEqual({
+      first: expect.any(String),
+      last: expect.any(String),
+      data: expect.arrayContaining([{ ...subscriptionSchema }]),
+    });
+    expect(dataWithSearchParams.data.length).toEqual(1);
+    expect(dataWithSearchParams.data).toEqual([{...subscriptionSchema, owner: 'different-owner'}]);
   });
 
   it('getOne: Should successfully fetch the specified subscription', async () => {
@@ -173,6 +188,14 @@ describe('Subscriptions V2 Tests', () => {
     });
 
     expect(data).toEqual(expect.objectContaining({ eventUuid: expect.any(String) }));
+  });
+
+  it('update: Should successfully update a subscription owner', async () => {
+    const data = await salable.subscriptions.update(perSeatSubscriptionUuid, {
+      owner: 'updated-owner',
+    });
+
+    expect(data).toEqual({ ...subscriptionSchema, owner: 'updated-owner' });
   });
 
   it('cancel: Should successfully cancel the subscription', async () => {
@@ -498,6 +521,7 @@ const generateTestData = async () => {
       paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionTwoId,
       lineItemIds: [stripeEnvs.basicSubscriptionTwoLineItemId],
       email: testEmail,
+      owner,
       type: 'salable',
       status: 'ACTIVE',
       organisation: testUuids.organisationId,
@@ -516,6 +540,7 @@ const generateTestData = async () => {
       paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionThreeId,
       lineItemIds: [stripeEnvs.basicSubscriptionThreeLineItemId],
       email: testEmail,
+      owner,
       type: 'salable',
       status: 'ACTIVE',
       organisation: testUuids.organisationId,
@@ -534,6 +559,7 @@ const generateTestData = async () => {
       paymentIntegrationSubscriptionId: stripeEnvs.proSubscriptionId,
       lineItemIds: [stripeEnvs.proSubscriptionLineItemId],
       email: testEmail,
+      owner: 'different-owner',
       type: 'salable',
       status: 'ACTIVE',
       organisation: testUuids.organisationId,
@@ -552,6 +578,7 @@ const generateTestData = async () => {
       paymentIntegrationSubscriptionId: stripeEnvs.perSeatBasicSubscriptionId,
       uuid: perSeatSubscriptionUuid,
       email: testEmail,
+      owner,
       type: 'salable',
       status: 'ACTIVE',
       organisation: testUuids.organisationId,

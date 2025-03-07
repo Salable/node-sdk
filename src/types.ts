@@ -163,6 +163,7 @@ export type Subscription = {
 export type GetAllSubscriptionsOptions = {
   status?: SubscriptionStatus;
   email?: string;
+  owner?: string;
   cursor?: string;
   take?: number;
   expand?: string[],
@@ -183,6 +184,10 @@ export type SubscriptionsChangePlan = {
   planUuid: string;
   proration: Proration;
 };
+
+export type UpdateSubscriptionInput = {
+  owner?: string;
+}
 
 export type Plan = {
   uuid: string;
@@ -345,7 +350,8 @@ export type GetPlanCheckoutOptions = {
   successUrl: string;
   cancelUrl: string;
   granteeId: string;
-  member: string;
+  member?: string;
+  owner?: string;
   promoCode?: string;
   allowPromoCode?: boolean;
   customerEmail?: string;
