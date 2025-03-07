@@ -3,6 +3,13 @@
 
 ### Features
 
+* session resource and docs ([e0238f5](https://github.com/Salable/node-sdk/commit/e0238f5df25dc12b390d1c0026a3e6432fbed01e))
+
+# [4.1.0-beta.1](https://github.com/Salable/node-sdk/compare/v4.0.0...v4.1.0-beta.1) (2025-03-07)
+
+
+### Features
+
 * added none to PaymentIntegration in schema ([64a325f](https://github.com/Salable/node-sdk/commit/64a325f49f0b1ecfa7ba7093e704312b30aada34))
 * session resource and docs ([2bb7d44](https://github.com/Salable/node-sdk/commit/2bb7d4415f59a4b62086366724028ccf0ca580d1))
 * subscription owner nullable ([b744b51](https://github.com/Salable/node-sdk/commit/b744b5150d8e6596029c497991a28f1fe5fda297))
