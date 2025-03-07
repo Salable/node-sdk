@@ -1,5 +1,4 @@
 import { SALABLE_BASE_URL } from '../../constants';
-import crypto from 'crypto';
 import { LicenseVersions } from '..';
 import getUrl from '../../utils/get-url';
 import { ApiRequest } from '../../types';
@@ -19,10 +18,4 @@ export const v2LicenseMethods = (request: ApiRequest): LicenseVersions['v2'] => 
   cancel: (uuid) => request(`${baseUrl}/${uuid}`, { method: 'DELETE' }),
   cancelMany: (data) => request(`${baseUrl}/cancel`, { method: 'POST', body: JSON.stringify(data) }),
   check: (options) => request(getUrl(`${baseUrl}/check`, options), { method: 'GET' }),
-  verify: ({ publicKey, signature, payload }) => {
-    const verify = crypto.createVerify('sha256');
-    verify.write(payload);
-    verify.end();
-    return verify.verify(publicKey, signature, 'hex');
-  },
 });

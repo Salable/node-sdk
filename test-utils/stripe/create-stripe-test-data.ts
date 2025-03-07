@@ -26,9 +26,11 @@ export interface StripeEnvsTypes {
   basicSubscriptionId: string;
   basicSubscriptionTwoId: string;
   basicSubscriptionThreeId: string;
+  basicSubscriptionFourId: string;
   basicSubscriptionLineItemId: string;
   basicSubscriptionTwoLineItemId: string;
   basicSubscriptionThreeLineItemId: string;
+  basicSubscriptionFourLineItemId: string;
   perSeatBasicSubscriptionId: string;
   perSeatBasicSubscriptionLineItemId: string;
   proSubscriptionId: string;
@@ -171,6 +173,14 @@ export default async function createStripeData(): Promise<StripeEnvsTypes> {
     }],
     default_payment_method: stripePaymentMethod.id,
   });
+  const stripeBasicSubscriptionFour = await stripeConnect.subscriptions.create({
+    customer: stripeCustomer.id,
+    items: [{
+      quantity: 1,
+      price: stripePlanTwoBasicMonthlyGbp.id,
+    }],
+    default_payment_method: stripePaymentMethod.id,
+  });
   const stripePlanProGbpMonthly = await stripeConnect.plans.create({
     currency: 'gbp',
     interval: 'month',
@@ -247,6 +257,7 @@ export default async function createStripeData(): Promise<StripeEnvsTypes> {
     basicSubscriptionTwoId: stripeBasicSubscriptionTwo.id,
     basicSubscriptionTwoLineItemId: stripeBasicSubscriptionTwo.items.data[0].id,
     basicSubscriptionThreeId: stripeBasicSubscriptionThree.id,
+    basicSubscriptionFourId: stripeBasicSubscriptionFour.id,
     basicSubscriptionThreeLineItemId: stripeBasicSubscriptionThree.items.data[0].id,
     planProMonthlyGbpId: stripePlanProGbpMonthly.id,
     planBasicMonthlyUsdId: stripePlanBasicUsdMonthly.id,
@@ -254,5 +265,6 @@ export default async function createStripeData(): Promise<StripeEnvsTypes> {
     planProMonthlyUsdId: stripePlanProUsdMonthly.id,
     proSubscriptionId: stripeProSubscription.id,
     proSubscriptionLineItemId: stripeProSubscription.items.data[0].id,
+    basicSubscriptionFourLineItemId: stripeBasicSubscriptionFour.items.data[0].id,
   };
 }

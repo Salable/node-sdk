@@ -222,6 +222,7 @@ const subscriptionSchema: Subscription = {
   isTest: expect.any(Boolean),
   cancelAtPeriodEnd: expect.any(Boolean),
   email: expect.toBeOneOf([expect.any(String), null]),
+  owner: expect.toBeOneOf([expect.any(String), null]),
   organisation: expect.any(String),
   quantity: expect.any(Number),
   status: expect.any(String),
