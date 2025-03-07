@@ -1,3 +1,16 @@
+# [4.2.0](https://github.com/Salable/node-sdk/compare/v4.1.0...v4.2.0) (2025-03-07)
+
+
+### Bug Fixes
+
+* added owner to plans get checkout link ([9c384a9](https://github.com/Salable/node-sdk/commit/9c384a9acebe96af17d7bcd851f499e4f9c3af39))
+
+
+### Features
+
+* subscription owner nullable ([b744b51](https://github.com/Salable/node-sdk/commit/b744b5150d8e6596029c497991a28f1fe5fda297))
+* update subscription method ([f12e046](https://github.com/Salable/node-sdk/commit/f12e0464fca277e9f415fb87bc11d5a653cc5d6c))
+
 # [4.1.0](https://github.com/Salable/node-sdk/compare/v4.0.0...v4.1.0) (2025-03-07)
 
 
