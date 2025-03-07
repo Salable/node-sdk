@@ -11,7 +11,6 @@ const subscriptionUuid = uuidv4();
 const basicSubscriptionUuid = uuidv4();
 const proSubscriptionUuid = uuidv4();
 const perSeatSubscriptionUuid = uuidv4();
-const ownerUpdateSubscription = uuidv4();
 const licenseUuid = uuidv4();
 const licenseTwoUuid = uuidv4();
 const licenseThreeUuid = uuidv4();
@@ -191,7 +190,7 @@ describe('Subscriptions V2 Tests', () => {
     expect(data).toEqual(expect.objectContaining({ eventUuid: expect.any(String) }));
   });
 
-  it('updateSeats: Should successfully add seats to the subscription', async () => {
+  it('update: Should successfully update a subscription owner', async () => {
     const data = await salable.subscriptions.update(perSeatSubscriptionUuid, {
       owner: 'updated-owner',
     });
