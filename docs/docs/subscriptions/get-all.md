@@ -23,14 +23,15 @@ const subscription = await salable.subscriptions.getAll();
 _Type:_ `GetSubscriptionOptions`
 
 | Option      | Type   | Description                                                             | Required |
-|-------------|--------|-------------------------------------------------------------------------| -------- |
-| status      | string | The status of the subscription, e.g. "ACTIVE" "CANCELED"                | ❌       |
-| email       | string | The email of who purchased the subscription                             | ❌       |
-| cursor      | string | Cursor value, used for pagination                                       | ❌       |
-| take        | number | The amount of subscriptions to fetch. Default: `20`                     | ❌       |
-| productUuid | string | Filter subscriptions by product                                         | ❌       |
-| planUuid    | string | Filter subscriptions by plan                                            | ❌       |
-| sort             | string | Sorts by expiryDate field. Default (`'asc'`). Enum: `'asc'` \| `'desc'` | ❌       |
+|-------------|--------|-------------------------------------------------------------------------|----------|
+| status      | string | The status of the subscription, e.g. "ACTIVE" "CANCELED"                | ❌        |
+| email       | string | The email of who purchased the subscription                             | ❌        |
+| owner       | string | The owner of the subscription                                           | ❌        |
+| cursor      | string | Cursor value, used for pagination                                       | ❌        |
+| take        | number | The amount of subscriptions to fetch. Default: `20`                     | ❌        |
+| productUuid | string | Filter subscriptions by product                                         | ❌        |
+| planUuid    | string | Filter subscriptions by plan                                            | ❌        |
+| sort        | string | Sorts by expiryDate field. Default (`'asc'`). Enum: `'asc'` \| `'desc'` | ❌        |
 
 
 ## Return Type

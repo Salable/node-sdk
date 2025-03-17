@@ -18,9 +18,11 @@ export type SubscriptionStatus = 'ACTIVE' | 'CANCELED' | 'PAUSED' | 'TRIALING' |
 export type CreateSubscriptionInput = {
   planUuid: string;
   granteeId: string;
+  owner: string;
   expiryDate?: string;
   cancelAtPeriodEnd?: boolean;
   quantity?: number;
+  status?: 'ACTIVE' | 'TRIALING';
 };
 
 export type CreateAdhocLicenseInput = {
@@ -77,7 +79,7 @@ export type GetLicenseCountResponse = {
 };
 
 export type GetUsageOptions = {
-  granteeId: string
+  granteeId: string;
   type?: string;
   status?: string;
   planUuid?: string;
@@ -107,20 +109,20 @@ export type UsageRecord = {
 
 export type CurrentUsageOptions = {
   granteeId: string;
-  planUuid: string
-}
+  planUuid: string;
+};
 
 export type CurrentUsageRecord = {
   unitCount: number;
-  updatedAt: string
-}
+  updatedAt: string;
+};
 
 export type UpdateLicenseUsageOptions = {
-  granteeId: string,
-  planUuid: string,
-  increment: number,
-  idempotencyKey: string
-}
+  granteeId: string;
+  planUuid: string;
+  increment: number;
+  idempotencyKey: string;
+};
 
 export type License = {
   uuid: string;
@@ -155,6 +157,7 @@ export type Subscription = {
   productUuid: string;
   type: string;
   email: string;
+  owner: string | null;
   quantity: number;
   lineItemIds: string[] | null;
   organisation: string;
@@ -170,6 +173,7 @@ export type Subscription = {
 export type GetAllSubscriptionsOptions = {
   status?: SubscriptionStatus;
   email?: string;
+  owner?: string;
   cursor?: string;
   take?: number;
   expand?: string[],
@@ -190,6 +194,10 @@ export type SubscriptionsChangePlan = {
   planUuid: string;
   proration: Proration;
 };
+
+export type UpdateSubscriptionInput = {
+  owner?: string;
+}
 
 export type Plan = {
   uuid: string;
@@ -352,7 +360,8 @@ export type GetPlanCheckoutOptions = {
   successUrl: string;
   cancelUrl: string;
   granteeId: string;
-  member: string;
+  member?: string;
+  owner?: string;
   promoCode?: string;
   allowPromoCode?: boolean;
   customerEmail?: string;
@@ -936,4 +945,34 @@ export type Event = {
   errorCode: string;
   createdAt: string;
   updatedAt: string;
+};
+
+export enum SessionScope {
+  Invoice = 'web-components:invoices',
+  PricingTable = 'web-components:pricing-table',
+  Checkout = 'web-components:checkout',
+}
+
+export type InvoiceMetadata = {
+  subscriptionUuid: string;
+};
+
+export type PricingTableMetadata =
+  | {
+      productUuid: string;
+      pricingTableUuid?: never;
+    }
+  | {
+      productUuid?: never;
+      pricingTableUuid: string;
+    };
+
+export type CheckoutMetadata = {
+  planUuid: string;
+};
+
+export type SessionMetaData<T extends SessionScope> = T extends SessionScope.Invoice ? InvoiceMetadata : T extends SessionScope.PricingTable ? PricingTableMetadata : T extends SessionScope.Checkout ? CheckoutMetadata : never;
+
+export type Session = {
+  sessionToken: string;
 };

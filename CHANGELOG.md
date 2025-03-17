@@ -1,3 +1,60 @@
+# [4.2.0](https://github.com/Salable/node-sdk/compare/v4.1.0...v4.2.0) (2025-03-07)
+
+
+### Bug Fixes
+
+* added owner to plans get checkout link ([9c384a9](https://github.com/Salable/node-sdk/commit/9c384a9acebe96af17d7bcd851f499e4f9c3af39))
+
+
+### Features
+
+* subscription owner nullable ([b744b51](https://github.com/Salable/node-sdk/commit/b744b5150d8e6596029c497991a28f1fe5fda297))
+* update subscription method ([f12e046](https://github.com/Salable/node-sdk/commit/f12e0464fca277e9f415fb87bc11d5a653cc5d6c))
+
+# [4.1.0](https://github.com/Salable/node-sdk/compare/v4.0.0...v4.1.0) (2025-03-07)
+
+
+### Features
+
+* session resource and docs ([e0238f5](https://github.com/Salable/node-sdk/commit/e0238f5df25dc12b390d1c0026a3e6432fbed01e))
+
+# [4.1.0-beta.1](https://github.com/Salable/node-sdk/compare/v4.0.0...v4.1.0-beta.1) (2025-03-07)
+
+
+### Features
+
+* session resource and docs ([e0238f5](https://github.com/Salable/node-sdk/commit/e0238f5df25dc12b390d1c0026a3e6432fbed01e))
+
+# [4.1.0-beta.1](https://github.com/Salable/node-sdk/compare/v4.0.0...v4.1.0-beta.1) (2025-03-07)
+
+
+### Features
+
+* added none to PaymentIntegration in schema ([64a325f](https://github.com/Salable/node-sdk/commit/64a325f49f0b1ecfa7ba7093e704312b30aada34))
+* session resource and docs ([2bb7d44](https://github.com/Salable/node-sdk/commit/2bb7d4415f59a4b62086366724028ccf0ca580d1))
+* subscription owner nullable ([b744b51](https://github.com/Salable/node-sdk/commit/b744b5150d8e6596029c497991a28f1fe5fda297))
+
+# [4.1.0-beta.1](https://github.com/Salable/node-sdk/compare/v4.0.0...v4.1.0-beta.1) (2025-03-07)
+
+
+### Features
+
+* session resource and docs ([2bb7d44](https://github.com/Salable/node-sdk/commit/2bb7d4415f59a4b62086366724028ccf0ca580d1))
+
+# [4.1.0-beta.2](https://github.com/Salable/node-sdk/compare/v4.1.0-beta.1...v4.1.0-beta.2) (2025-02-24)
+
+
+### Features
+
+* session resource with testing ([35f4323](https://github.com/Salable/node-sdk/commit/35f43239e84deb301672d53cbfe55ed99ad9c99b))
+
+# [4.1.0-beta.1](https://github.com/Salable/node-sdk/compare/v4.0.0...v4.1.0-beta.1) (2025-02-13)
+
+
+### Features
+
+* **SD-1479:** deleted verify method from licenses ([4f50a85](https://github.com/Salable/node-sdk/commit/4f50a850979e337ee76a16b44218b008168a4977))
+
 # [4.0.0](https://github.com/Salable/node-sdk/compare/v3.4.1...v4.0.0) (2025-01-23)
 
 

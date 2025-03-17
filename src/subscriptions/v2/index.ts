@@ -10,6 +10,7 @@ export const v2SubscriptionMethods = (request: ApiRequest): SubscriptionVersions
   getAll: (options) => request(getUrl(baseUrl, options), { method: 'GET' }),
   getOne: (uuid, options) => request(getUrl(`${baseUrl}/${uuid}`, options), { method: 'GET' }),
   changePlan: (uuid, options) => request(getUrl(`${baseUrl}/${uuid}/change-plan`, options), { method: 'PUT', body: JSON.stringify(options) }),
+  update: (uuid, data) => request(getUrl(`${baseUrl}/${uuid}`, data), { method: 'PUT', body: JSON.stringify(data) }),
   getInvoices: (uuid) => request(getUrl(`${baseUrl}/${uuid}/invoices`, {}), { method: 'GET' }),
   getSwitchablePlans: (uuid) => request(getUrl(`${baseUrl}/${uuid}/updateplan/listplans`, {}), { method: 'GET' }),
   cancel: (uuid, options) => request(getUrl(`${baseUrl}/${uuid}/cancel`, options), { method: 'PUT' }),
