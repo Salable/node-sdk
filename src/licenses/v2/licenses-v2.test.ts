@@ -19,6 +19,7 @@ const noSubLicenseThreeUuid = uuidv4();
 const subscriptionUuid = uuidv4();
 const testPurchaser = 'tester@testing.com';
 const testGrantee = '123456';
+const owner = 'subscription-owner'
 
 describe('Licenses V2 Tests', () => {
   const salable = new Salable(testUuids.devApiKeyV2, version);
@@ -571,6 +572,7 @@ const generateTestData = async () => {
       createdAt: new Date(),
       updatedAt: new Date(),
       expiryDate: new Date(Date.now() + 31536000000),
+      owner,
     },
   });
 };
