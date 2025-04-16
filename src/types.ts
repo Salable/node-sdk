@@ -600,6 +600,7 @@ export type Invoice = {
   amount_due: number;
   amount_paid: number;
   amount_remaining: number;
+  amount_overpaid: number;
   amount_shipping: number;
   application: string;
   application_fee_amount: string;
