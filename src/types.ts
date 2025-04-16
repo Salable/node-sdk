@@ -10,7 +10,7 @@ export type ApiRequest = <T>(input: string | URL | Request, init: RequestInit | 
 export type Status = 'ACTIVE' | 'CANCELED';
 export type ProductStatus = 'ACTIVE' | 'DEPRECATED';
 export type LicenseStatus = 'ACTIVE' | 'CANCELED' | 'EVALUATION' | 'SCHEDULED' | 'TRIALING' | 'INACTIVE';
-export type SortOrder = 'asc' | 'desc'
+export type SortOrder = 'asc' | 'desc';
 export type SearchParamOptions = Record<string, string | string[] | number | boolean>;
 
 export type SubscriptionStatus = 'ACTIVE' | 'CANCELED' | 'PAUSED' | 'TRIALING' | 'DELETED' | 'PAST_DUE' | 'INCOMPLETE';
@@ -166,11 +166,11 @@ export type GetAllSubscriptionsOptions = {
   owner?: string;
   cursor?: string;
   take?: number;
-  expand?: string[],
-  sort?: SortOrder,
-  productUuid?: string,
-  planUuid?: string
-}
+  expand?: string[];
+  sort?: SortOrder;
+  productUuid?: string;
+  planUuid?: string;
+};
 
 export type PaginatedSubscription = {
   first: string;
@@ -187,7 +187,7 @@ export type SubscriptionsChangePlan = {
 
 export type UpdateSubscriptionInput = {
   owner?: string;
-}
+};
 
 export type Plan = {
   uuid: string;
@@ -582,7 +582,7 @@ export type LicenseGetUsage = {
 export type GetAllInvoicesOptions = {
   cursor?: string;
   take?: number;
-}
+};
 
 export type PaginatedSubscriptionInvoice = {
   first: string;
@@ -662,6 +662,14 @@ export type Invoice = {
   next_payment_attempt: string;
   number: string;
   on_behalf_of: string;
+  parent: {
+    quote_details: string | null;
+    subscription_details: {
+      metadata: { [key: string]: string };
+      subscription: string;
+    };
+    type: string;
+  };
   paid: boolean;
   paid_out_of_band: boolean;
   payment_intent: string;
@@ -687,7 +695,7 @@ export type Invoice = {
   quote: string;
   receipt_number: string;
   rendering: string;
-  rendering_options: string;
+  rendering_options?: string | null;
   shipping_cost: string;
   shipping_details: string;
   starting_balance: number;
@@ -715,6 +723,7 @@ export type Invoice = {
   total_excluding_tax: number;
   total_pretax_credit_amounts: object | null;
   total_tax_amounts: string[];
+  total_taxes: string[];
   transfer_data: string;
   webhooks_delivered_at: number | null;
 };
