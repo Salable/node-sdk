@@ -206,6 +206,8 @@ export type SubscriptionVersions = {
     *  Applies the specified coupon to the subscription.
     *
     * @param {string} subscriptionUuid - The UUID of the subscription
+    * 
+    * Docs - https://docs.salable.app/api/v2#tag/Subscriptions/operation/addCoupon
     *
     * @returns {Promise<void>}
     */
@@ -221,6 +223,8 @@ export type SubscriptionVersions = {
     *
     * @param {string} subscriptionUuid - The UUID of the subscription
     *
+    * Docs - https://docs.salable.app/api/v2#tag/Subscriptions/operation/removeCoupon
+    * 
     * @returns {Promise<void>}
     */
     removeCoupon: (
