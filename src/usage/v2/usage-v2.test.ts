@@ -11,6 +11,7 @@ const stripeEnvs = JSON.parse(process.env.stripEnvs || '');
 const meteredLicenseUuid = uuidv4();
 const usageSubscriptionUuid = uuidv4();
 const testGrantee = 'userId_metered';
+const owner = 'subscription-owner'
 
 describe('Usage V2 Tests', () => {
   const salable = new Salable(testUuids.devApiKeyV2, version);
@@ -142,6 +143,7 @@ const generateTestData = async () => {
           endTime: new Date(),
         },
       },
+      owner,
       product: { connect: { uuid: testUuids.productTwoUuid } },
       plan: { connect: { uuid: testUuids.usageBasicMonthlyPlanUuid } },
       createdAt: new Date(),

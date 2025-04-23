@@ -600,6 +600,7 @@ export type Invoice = {
   amount_due: number;
   amount_paid: number;
   amount_remaining: number;
+  amount_overpaid: number;
   amount_shipping: number;
   application: string;
   application_fee_amount: string;
@@ -662,6 +663,14 @@ export type Invoice = {
   next_payment_attempt: string;
   number: string;
   on_behalf_of: string;
+  parent: {
+    quote_details: string | null;
+    subscription_details: {
+      metadata: {[key: string]: string}
+      subscription: string;
+    };
+    type: string;
+  };
   paid: boolean;
   paid_out_of_band: boolean;
   payment_intent: string;
@@ -687,7 +696,7 @@ export type Invoice = {
   quote: string;
   receipt_number: string;
   rendering: string;
-  rendering_options: string;
+  rendering_options?: string | null;
   shipping_cost: string;
   shipping_details: string;
   starting_balance: number;
@@ -715,6 +724,7 @@ export type Invoice = {
   total_excluding_tax: number;
   total_pretax_credit_amounts: object | null;
   total_tax_amounts: string[];
+  total_taxes: string[];
   transfer_data: string;
   webhooks_delivered_at: number | null;
 };

@@ -104,7 +104,7 @@ describe('Subscriptions V2 Tests', () => {
       data: expect.arrayContaining([{ ...subscriptionSchema }]),
     });
     expect(dataWithSearchParams.data.length).toEqual(1);
-    expect(dataWithSearchParams.data).toEqual([{...subscriptionSchema, owner: 'different-owner'}]);
+    expect(dataWithSearchParams.data).toEqual([{ ...subscriptionSchema, owner: 'different-owner' }]);
   });
 
   it('getOne: Should successfully fetch the specified subscription', async () => {
@@ -198,6 +198,25 @@ describe('Subscriptions V2 Tests', () => {
     expect(data).toEqual({ ...subscriptionSchema, owner: 'updated-owner' });
   });
 
+  it('addCoupon: Should successfully add the specified coupon to the subscription', async () => {
+    const data = await salable.subscriptions.addCoupon(subscriptionUuid, { couponUuid: stripeEnvs.couponId });
+
+    expect(data).toBeUndefined();
+  });
+
+  it('removeCoupon: Should successfully remove the specified coupon from the subscription', async () => {
+    await prismaClient.couponsOnSubscriptions.create({
+      data: {
+        subscriptionUuid,
+        couponUuid: stripeEnvs.couponId
+      }
+    });
+
+    const data = await salable.subscriptions.removeCoupon(subscriptionUuid, { couponUuid: stripeEnvs.couponId });
+
+    expect(data).toBeUndefined();
+  });
+  
   it('cancel: Should successfully cancel the subscription', async () => {
     const data = await salable.subscriptions.cancel(subscriptionUuid, { when: 'now' });
 
@@ -270,6 +289,7 @@ const invoiceSchema: Invoice = {
   account_tax_ids: expect.toBeOneOf([expect.toBeArray(), null]),
   amount_due: expect.any(Number),
   amount_paid: expect.any(Number),
+  amount_overpaid: expect.any(Number),
   amount_remaining: expect.any(Number),
   amount_shipping: expect.any(Number),
   application: expect.toBeOneOf([expect.any(String), null]),
@@ -317,6 +337,7 @@ const invoiceSchema: Invoice = {
   on_behalf_of: expect.toBeOneOf([expect.any(String), null]),
   paid: expect.any(Boolean),
   paid_out_of_band: expect.any(Boolean),
+  parent: expect.toBeObject(),
   payment_intent: expect.any(String),
   payment_settings: expect.toBeObject(),
   period_end: expect.any(Number),
@@ -326,7 +347,7 @@ const invoiceSchema: Invoice = {
   quote: expect.toBeOneOf([expect.any(String), null]),
   receipt_number: expect.toBeOneOf([expect.any(String), null]),
   rendering: expect.toBeOneOf([expect.toBeObject(), null]),
-  rendering_options: expect.toBeOneOf([expect.toBeObject(), null]),
+  rendering_options: expect.toBeOneOf([expect.toBeObject(), undefined]),
   shipping_cost: expect.toBeOneOf([expect.toBeObject(), null]),
   shipping_details: expect.toBeOneOf([expect.toBeObject(), null]),
   starting_balance: expect.any(Number),
@@ -344,6 +365,7 @@ const invoiceSchema: Invoice = {
   total_excluding_tax: expect.any(Number),
   total_pretax_credit_amounts: expect.toBeOneOf([expect.toBeArray(), null]),
   total_tax_amounts: expect.toBeArray(),
+  total_taxes: expect.toBeArray(),
   transfer_data: expect.toBeOneOf([expect.toBeObject(), null]),
   webhooks_delivered_at: expect.toBeOneOf([expect.any(Number), null]),
 };
@@ -403,6 +425,7 @@ const stripePaymentMethodSchema = {
 
 const deleteTestData = async () => {
   await prismaClient.license.deleteMany({});
+  await prismaClient.couponsOnSubscriptions.deleteMany({});
   await prismaClient.subscription.deleteMany({});
 };
 
@@ -625,6 +648,33 @@ const generateTestData = async () => {
       updatedAt: new Date(),
       expiryDate: new Date(Date.now() + 31536000000),
       quantity: 2,
+    },
+  });
+
+  await prismaClient.coupon.create({
+    data: {
+      uuid: stripeEnvs.couponId,
+      name: 'Percentage Coupon',
+      duration: 'ONCE',
+      discountType: 'PERCENTAGE',
+      percentOff: 10,
+      expiresAt: null,
+      maxRedemptions: null,
+      isTest: false,
+      durationInMonths: 1,
+      status: 'ACTIVE',
+      product: {
+        connect: {
+          uuid: testUuids.productUuid,
+        },
+      },
+      appliesTo: {
+        create: {
+          plan: {
+            connect: { uuid: testUuids.paidPlanTwoUuid },
+          },
+        },
+      },
     },
   });
 };
