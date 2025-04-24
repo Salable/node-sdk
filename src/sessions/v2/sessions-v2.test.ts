@@ -102,6 +102,7 @@ const generateTestData = async () => {
       paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionFourId,
       uuid: subscriptionUuid,
       email: 'tester@testing.com',
+      owner: 'owner_12345',
       type: 'salable',
       status: 'ACTIVE',
       organisation: testUuids.organisationId,

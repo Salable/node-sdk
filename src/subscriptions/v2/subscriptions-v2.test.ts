@@ -17,7 +17,7 @@ const licenseThreeUuid = uuidv4();
 const perSeatBasicLicenseUuids = [uuidv4(), uuidv4(), uuidv4(), uuidv4(), uuidv4(), uuidv4()];
 const testGrantee = '123456';
 const testEmail = 'tester@domain.com';
-const owner = 'subscription-owner'
+const owner = 'subscription-owner';
 
 describe('Subscriptions V2 Tests', () => {
   const apiKey = testUuids.devApiKeyV2;
@@ -70,7 +70,7 @@ describe('Subscriptions V2 Tests', () => {
       expand: ['plan'],
       sort: 'desc',
       productUuid: testUuids.productUuid,
-      planUuid: testUuids.paidPlanTwoUuid
+      planUuid: testUuids.paidPlanTwoUuid,
     });
 
     expect(dataWithSearchParams).toEqual({
@@ -86,7 +86,7 @@ describe('Subscriptions V2 Tests', () => {
           productUuid: testUuids.productUuid,
           plan: {
             ...planSchema,
-            uuid: testUuids.paidPlanTwoUuid
+            uuid: testUuids.paidPlanTwoUuid,
           },
         }),
       ]),
@@ -95,7 +95,7 @@ describe('Subscriptions V2 Tests', () => {
 
   it('getAll (w/ search params owner): Should successfully fetch subscriptions', async () => {
     const dataWithSearchParams = await salable.subscriptions.getAll({
-      owner: 'different-owner'
+      owner: 'different-owner',
     });
 
     expect(dataWithSearchParams).toEqual({
@@ -104,7 +104,7 @@ describe('Subscriptions V2 Tests', () => {
       data: expect.arrayContaining([{ ...subscriptionSchema }]),
     });
     expect(dataWithSearchParams.data.length).toEqual(1);
-    expect(dataWithSearchParams.data).toEqual([{...subscriptionSchema, owner: 'different-owner'}]);
+    expect(dataWithSearchParams.data).toEqual([{ ...subscriptionSchema, owner: 'different-owner' }]);
   });
 
   it('getOne: Should successfully fetch the specified subscription', async () => {
@@ -128,10 +128,7 @@ describe('Subscriptions V2 Tests', () => {
   });
 
   it('getInvoices (w/ search params): Should successfully fetch a subscriptions invoices', async () => {
-    const data = await salable.subscriptions.getInvoices(
-      basicSubscriptionUuid,
-      { take: 1 }
-    );
+    const data = await salable.subscriptions.getInvoices(basicSubscriptionUuid, { take: 1 });
 
     expect(data).toEqual(stripeInvoiceSchema);
     expect(data.data.length).toEqual(1);
@@ -271,6 +268,7 @@ const invoiceSchema: Invoice = {
   amount_due: expect.any(Number),
   amount_paid: expect.any(Number),
   amount_remaining: expect.any(Number),
+  amount_overpaid: expect.any(Number),
   amount_shipping: expect.any(Number),
   application: expect.toBeOneOf([expect.any(String), null]),
   application_fee_amount: expect.toBeOneOf([expect.any(Number), null]),
@@ -326,7 +324,7 @@ const invoiceSchema: Invoice = {
   quote: expect.toBeOneOf([expect.any(String), null]),
   receipt_number: expect.toBeOneOf([expect.any(String), null]),
   rendering: expect.toBeOneOf([expect.toBeObject(), null]),
-  rendering_options: expect.toBeOneOf([expect.toBeObject(), null]),
+  rendering_options: expect.toBeOneOf([expect.toBeObject(), undefined]),
   shipping_cost: expect.toBeOneOf([expect.toBeObject(), null]),
   shipping_details: expect.toBeOneOf([expect.toBeObject(), null]),
   starting_balance: expect.any(Number),
@@ -339,11 +337,13 @@ const invoiceSchema: Invoice = {
   subtotal_excluding_tax: expect.any(Number),
   tax: expect.toBeOneOf([expect.any(Number), null]),
   test_clock: expect.toBeOneOf([expect.any(String), null]),
+  parent: expect.toBeObject(),
   total: expect.any(Number),
   total_discount_amounts: expect.toBeOneOf([expect.toBeArray(), null]),
   total_excluding_tax: expect.any(Number),
   total_pretax_credit_amounts: expect.toBeOneOf([expect.toBeArray(), null]),
   total_tax_amounts: expect.toBeArray(),
+  total_taxes: expect.toBeArray(),
   transfer_data: expect.toBeOneOf([expect.toBeObject(), null]),
   webhooks_delivered_at: expect.toBeOneOf([expect.any(Number), null]),
 };
@@ -550,7 +550,7 @@ const generateTestData = async () => {
       createdAt: new Date(),
       updatedAt: new Date(),
       expiryDate: new Date(Date.now() + 31536000000),
-    }
+    },
   });
 
   await prismaClient.subscription.create({

@@ -564,6 +564,7 @@ const generateTestData = async () => {
       email: 'tester@testing.com',
       type: 'salable',
       status: 'ACTIVE',
+      owner: 'owner_12345',
       organisation: testUuids.organisationId,
       license: { connect: [{ uuid: licenseUuid }, { uuid: licenseTwoUuid }, { uuid: licenseThreeUuid }] },
       product: { connect: { uuid: testUuids.productUuid } },
