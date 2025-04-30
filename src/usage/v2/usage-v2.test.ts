@@ -97,6 +97,7 @@ const generateTestData = async () => {
       lineItemIds: [stripeEnvs.usageBasicSubscriptionLineItemId],
       paymentIntegrationSubscriptionId: stripeEnvs.usageBasicSubscriptionId,
       uuid: usageSubscriptionUuid,
+      owner: randomUUID(),
       email: 'tester@testing.com',
       owner: 'owner_12345',
       type: 'salable',

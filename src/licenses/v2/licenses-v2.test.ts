@@ -4,6 +4,7 @@ import prismaClient from '../../../test-utils/prisma/prisma-client';
 import { testUuids } from '../../../test-utils/scripts/create-test-data';
 import getEndTime from '../../../test-utils/helpers/get-end-time';
 import { v4 as uuidv4 } from 'uuid';
+import { randomUUID } from 'crypto';
 
 const stripeEnvs = JSON.parse(process.env.stripEnvs || '');
 
@@ -561,6 +562,7 @@ const generateTestData = async () => {
       lineItemIds: [stripeEnvs.basicSubscriptionLineItemId],
       paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionId,
       uuid: subscriptionUuid,
+      owner: randomUUID(),
       email: 'tester@testing.com',
       type: 'salable',
       status: 'ACTIVE',
