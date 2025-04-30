@@ -658,6 +658,7 @@ model Coupon {
   expiresAt                  DateTime?
   maxRedemptions             Int?
   paymentIntegrationCouponId String?
+  isRestricted               Boolean                  @default(false)
   status                     CouponStatus             @default(ACTIVE)
   isTest                     Boolean                  @default(false)
   createdAt                  DateTime                 @default(now())
