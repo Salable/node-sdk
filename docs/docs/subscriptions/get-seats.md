@@ -22,10 +22,10 @@ const subscription = await salable.subscriptions.getSeats('{{SUBSCRIPTION_UUID}}
 
 _Type:_ `GetSubscriptionSeatsOptions`
 
-| Option      | Type   | Description                                                             | Required |
-|-------------|--------|-------------------------------------------------------------------------|----------|
-| cursor      | string | Cursor value, used for pagination                                       | ❌        |
-| take        | number | The amount of subscriptions to fetch. Default: `20`                     | ❌        |
+| Option      | Type   | Description                                 | Required |
+|-------------|--------|---------------------------------------------|----------|
+| cursor      | string | Cursor value, used for pagination           | ❌        |
+| take        | number | The number of seats to fetch. Default: `20` | ❌        |
 
 
 ## Return Type

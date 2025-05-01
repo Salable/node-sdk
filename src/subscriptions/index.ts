@@ -50,7 +50,9 @@ export type SubscriptionVersions = {
      *  Retrieves a list of a subscription's seats. Seats with the status "CANCELED" are ignored.
      *
      *  @param {string} subscriptionUuid - The UUID of the subscription
-     *  @param {{ cursor?: string; take?: string }} options - Filter and pagination options
+     *  @param {GetSubscriptionSeatsOptions} data - The properties for cursor pagination
+     *  @param {GetSubscriptionSeatsOptions} data.cursor - The ID (cursor) of the record to take from in the request
+     *  @param {GetSubscriptionSeatsOptions} data.take - The number of records to fetch. Default 20.
      *
      * Docs - https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptionsSeats
      *
