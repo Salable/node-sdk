@@ -206,7 +206,7 @@ export type GetAllSubscriptionsOptions = {
   planUuid?: string;
 };
 
-export type GetSubscriptionSeats = {
+export type GetSubscriptionSeatsOptions = {
   cursor?: string;
   take?: number;
 };

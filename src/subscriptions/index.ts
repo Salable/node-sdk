@@ -12,9 +12,8 @@ import {
   GetAllSubscriptionsOptions,
   GetAllInvoicesOptions,
   UpdateSubscriptionInput,
-  PaginatedLicenses,
-  GetSubscriptionSeats,
-  GetLicenseCountResponse, PaginatedSeats, GetSeatCountResponse
+  GetSubscriptionSeatsOptions,
+  PaginatedSeats, GetSeatCountResponse
 } from '../types';
 import { v2SubscriptionMethods } from './v2';
 
@@ -57,7 +56,7 @@ export type SubscriptionVersions = {
      *
      * @returns {Promise<PaginatedSeats>} The seats of the subscription requested
      */
-    getSeats: (subscriptionUuid: string, options?: GetSubscriptionSeats) => Promise<PaginatedSeats>;
+    getSeats: (subscriptionUuid: string, options?: GetSubscriptionSeatsOptions) => Promise<PaginatedSeats>;
 
     /**
      *  Retrieves the aggregate number of seats. The response is broken down by assigned, unassigned and the total. Seats with the status `CANCELED` are ignored.
