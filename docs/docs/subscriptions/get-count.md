@@ -13,7 +13,7 @@ import { Salable } from '@salable/node-sdk';
 
 const salable = new Salable('{{API_KEY}}', 'v2');
 
-const seatCount = await salable.subscriptions.getSeatCount('{{SUBCRIPTION_UUID}}');
+const seatCount = await salable.subscriptions.getSeatCount('ef946d3d-f2fa-46f2-96d3-d67162540493');
 ```
 
 ## Parameters
