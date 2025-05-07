@@ -141,6 +141,23 @@ export type PaginatedLicenses = {
   data: License[];
 };
 
+export enum SeatActionType {
+  assign = 'assign',
+  unassign = 'unassign',
+  replace = 'replace',
+}
+
+export type ManageSeatsOptions =
+  | {
+  type: SeatActionType.assign | SeatActionType.unassign;
+  granteeId: string;
+}
+  | {
+  type: SeatActionType.replace;
+  granteeId: string;
+  newGranteeId: string;
+};
+
 export type Subscription = {
   uuid: string;
   paymentIntegrationSubscriptionId: string;

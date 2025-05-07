@@ -9,7 +9,7 @@ import {
   ApiRequest,
   TVersion,
   Version,
-  GetAllSubscriptionsOptions, GetAllInvoicesOptions, UpdateSubscriptionInput
+  GetAllSubscriptionsOptions, GetAllInvoicesOptions, UpdateSubscriptionInput, ManageSeatsOptions
 } from '../types';
 import { v2SubscriptionMethods } from './v2';
 
@@ -167,6 +167,20 @@ export type SubscriptionVersions = {
      * @returns {Promise<void>}
      */
     reactivateSubscription: (subscriptionUuid: string) => Promise<void>;
+
+    /**
+     *  Manage seats on a subscription
+     *
+     *  @param {string} subscriptionUuid - The UUID of the subscription
+     *
+     * Docs - https://docs.salable.app/api/v2#tag/Subscriptions/operation/manageSubscriptionSeats
+     *
+     * @returns {Promise<SubscriptionSeat>}
+     */
+    manageSeats: (
+      subscriptionUuid: string,
+      options: ManageSeatsOptions[],
+    ) => Promise<void>;
 
     /**
      *  Incrementing will create unassigned licenses.
