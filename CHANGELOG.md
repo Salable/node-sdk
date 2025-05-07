@@ -1,3 +1,10 @@
+# [4.4.0](https://github.com/Salable/node-sdk/compare/v4.3.0...v4.4.0) (2025-05-07)
+
+
+### Features
+
+* new subscription methods getSeats and getSeatCount ([9b557d9](https://github.com/Salable/node-sdk/commit/9b557d926e0c5ec44e039664a11235d268d76309))
+
 # [4.3.0](https://github.com/Salable/node-sdk/compare/v4.2.0...v4.3.0) (2025-04-24)
 
 
