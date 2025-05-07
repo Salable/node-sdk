@@ -28,7 +28,7 @@ _Type:_ `GetSubscriptionOptions`
 | email       | string | The email of who purchased the subscription                             | ❌        |
 | owner       | string | The owner of the subscription                                           | ❌        |
 | cursor      | string | Cursor value, used for pagination                                       | ❌        |
-| take        | number | The amount of subscriptions to fetch. Default: `20`                     | ❌        |
+| take        | number | The number of subscriptions to fetch. Default: `20`                     | ❌        |
 | productUuid | string | Filter subscriptions by product                                         | ❌        |
 | planUuid    | string | Filter subscriptions by plan                                            | ❌        |
 | sort        | string | Sorts by expiryDate field. Default (`'asc'`). Enum: `'asc'` \| `'desc'` | ❌        |

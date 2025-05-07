@@ -1,6 +1,9 @@
 import prismaClient from '../../../test-utils/prisma/prisma-client';
 import Salable from '../..';
-import { Invoice, PaginatedSubscription, PaginatedSubscriptionInvoice, Plan, SeatActionType, Subscription, Version } from '../../types';
+import { Invoice, PaginatedSubscription, PaginatedSubscriptionInvoice, Plan, SeatActionType, Subscription,
+  Version,
+  PaginatedLicenses, Capability, License
+} from '../../types';
 import getEndTime from '../../../test-utils/helpers/get-end-time';
 import { v4 as uuidv4 } from 'uuid';
 import { testUuids } from '../../../test-utils/scripts/create-test-data';
@@ -107,6 +110,20 @@ describe('Subscriptions V2 Tests', () => {
     expect(dataWithSearchParams.data).toEqual([{ ...subscriptionSchema, owner: 'different-owner' }]);
   });
 
+  it('getSeats: Should successfully fetch a subscription\'s seats', async () => {
+    const data = await salable.subscriptions.getSeats(perSeatSubscriptionUuid);
+    expect(data).toEqual(paginatedLicensesSchema);
+  });
+
+  it('getSeatCount: Should successfully fetch a subscription\'s seat count', async () => {
+    const data = await salable.subscriptions.getSeatCount(perSeatSubscriptionUuid);
+    expect(data).toEqual({
+      count: expect.any(Number),
+      assigned: expect.any(Number),
+      unassigned: expect.any(Number),
+    });
+  });
+
   it('getOne: Should successfully fetch the specified subscription', async () => {
     const data = await salable.subscriptions.getOne(basicSubscriptionUuid);
 
@@ -211,6 +228,42 @@ describe('Subscriptions V2 Tests', () => {
     expect(data).toBeUndefined();
   });
 });
+
+const licenseCapabilitySchema: Capability = {
+  uuid: expect.any(String),
+  productUuid: expect.any(String),
+  name: expect.any(String),
+  status: expect.any(String),
+  description: expect.toBeOneOf([expect.any(String), null]),
+  updatedAt: expect.any(String),
+};
+
+const licenseSchema: License = {
+  uuid: expect.any(String),
+  name: expect.toBeOneOf([expect.any(String), null]),
+  email: expect.toBeOneOf([expect.any(String), null]),
+  subscriptionUuid: expect.toBeOneOf([expect.any(String), null]),
+  status: expect.toBeOneOf(['ACTIVE', 'CANCELED', 'EVALUATION', 'SCHEDULED', 'TRIALING', 'INACTIVE']),
+  granteeId: expect.toBeOneOf([expect.any(String), null]),
+  paymentService: expect.toBeOneOf(['ad-hoc', 'salable', 'stripe_existing']),
+  purchaser: expect.any(String),
+  type: expect.toBeOneOf(['licensed', 'metered', 'perSeat', 'customId', 'user']),
+  productUuid: expect.any(String),
+  planUuid: expect.any(String),
+  capabilities: expect.arrayContaining([licenseCapabilitySchema]),
+  metadata: expect.toBeOneOf([expect.anything(), null]),
+  startTime: expect.any(String),
+  endTime: expect.any(String),
+  updatedAt: expect.any(String),
+  isTest: expect.any(Boolean),
+  cancelAtPeriodEnd: expect.any(Boolean),
+};
+
+const paginatedLicensesSchema: PaginatedLicenses = {
+  first: expect.toBeOneOf([expect.any(String), null]),
+  last: expect.toBeOneOf([expect.any(String), null]),
+  data: expect.arrayContaining([licenseSchema]),
+};
 
 const planSchema: Plan = {
   uuid: expect.any(String),
@@ -584,9 +637,9 @@ const generateTestData = async () => {
 
   await prismaClient.subscription.create({
     data: {
+      uuid: perSeatSubscriptionUuid,
       lineItemIds: [stripeEnvs.perSeatBasicSubscriptionLineItemId],
       paymentIntegrationSubscriptionId: stripeEnvs.perSeatBasicSubscriptionId,
-      uuid: perSeatSubscriptionUuid,
       email: testEmail,
       owner,
       type: 'salable',
