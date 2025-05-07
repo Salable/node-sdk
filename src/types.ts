@@ -68,6 +68,13 @@ export type GetLicenseCountResponse = {
   unassigned: number;
 };
 
+export type GetSeatCountResponse = {
+  count: number;
+  assigned: number;
+  unassigned: number;
+};
+
+
 export type GetUsageOptions = {
   granteeId: string;
   type?: string;
@@ -135,10 +142,37 @@ export type License = {
   cancelAtPeriodEnd: boolean;
 };
 
+export type Seat = {
+  uuid: string;
+  name: string;
+  email: string;
+  status: string;
+  granteeId: string;
+  paymentService: string;
+  purchaser: string;
+  type: string;
+  productUuid: string;
+  planUuid: string;
+  capabilities: Capability[];
+  metadata: IMetadata | null;
+  startTime: string;
+  endTime: string;
+  updatedAt: string;
+  subscriptionUuid: string | null;
+  isTest: boolean;
+  cancelAtPeriodEnd: boolean;
+};
+
 export type PaginatedLicenses = {
   first: string;
   last: string;
   data: License[];
+};
+
+export type PaginatedSeats = {
+  first: string;
+  last: string;
+  data: Seat[];
 };
 
 export type Subscription = {
@@ -171,6 +205,12 @@ export type GetAllSubscriptionsOptions = {
   productUuid?: string;
   planUuid?: string;
 };
+
+export type GetSubscriptionSeatsOptions = {
+  cursor?: string;
+  take?: number;
+};
+
 
 export type PaginatedSubscription = {
   first: string;
