@@ -603,18 +603,18 @@ enum PromotionCodeStatus {
 }
 
 model PromotionCodes {
-  uuid                          String              @id @default(uuid())
-  coupon                        Coupon              @relation(fields: [couponUuid], references: [uuid], onDelete: Cascade)
-  couponUuid                    String
-  name                          String
-  code                          String
-  expiresAt                     DateTime?
-  maxRedemptions                Int?
-  paymentIntegrationPromoCodeId String?
-  status                        PromotionCodeStatus
-  isTest                        Boolean             @default(false)
-  createdAt                     DateTime            @default(now())
-  updatedAt                     DateTime            @updatedAt
+  uuid                              String              @id @default(uuid())
+  coupon                            Coupon              @relation(fields: [couponUuid], references: [uuid], onDelete: Cascade)
+  couponUuid                        String
+  name                              String
+  code                              String
+  expiresAt                         DateTime?
+  maxRedemptions                    Int?
+  paymentIntegrationPromotionCodeId String?
+  status                            PromotionCodeStatus
+  isTest                            Boolean             @default(false)
+  createdAt                         DateTime            @default(now())
+  updatedAt                         DateTime            @updatedAt
 
   @@index([couponUuid])
 }
