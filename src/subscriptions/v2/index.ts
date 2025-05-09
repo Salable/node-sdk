@@ -20,6 +20,7 @@ export const v2SubscriptionMethods = (request: ApiRequest): SubscriptionVersions
   getCancelSubscriptionLink: (uuid) => request(getUrl(`${baseUrl}/${uuid}/cancelpaymentlink`, {}), { method: 'GET' }),
   getPaymentMethod: (uuid) => request(getUrl(`${baseUrl}/${uuid}/payment-method`, {}), { method: 'GET' }),
   reactivateSubscription: (uuid) => request(getUrl(`${baseUrl}/${uuid}/reactivate`, {}), { method: 'PUT' }),
+  manageSeats: (uuid, options) => request(`${baseUrl}/${uuid}/manage-seats`, { method: 'PUT', body: JSON.stringify(options) }),
   addSeats: (uuid, options) => request(`${baseUrl}/${uuid}/seats`, { method: 'POST', body: JSON.stringify(options) }),
   removeSeats: (uuid, options) =>
     request(getUrl(`${baseUrl}/${uuid}/seats`, {}), {

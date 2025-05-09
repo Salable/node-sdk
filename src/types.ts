@@ -175,6 +175,24 @@ export type PaginatedSeats = {
   data: Seat[];
 };
 
+
+export enum SeatActionType {
+  assign = 'assign',
+  unassign = 'unassign',
+  replace = 'replace',
+}
+
+export type ManageSeatOptions =
+  | {
+  type: SeatActionType.assign | SeatActionType.unassign;
+  granteeId: string;
+}
+  | {
+  type: SeatActionType.replace;
+  granteeId: string;
+  newGranteeId: string;
+};
+
 export type Subscription = {
   uuid: string;
   paymentIntegrationSubscriptionId: string;
