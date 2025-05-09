@@ -191,8 +191,8 @@ describe('Subscriptions V2 Tests', () => {
   it('manageSeats: Should successfully perform multiple seat actions', async () => {
     const data = await salable.subscriptions.manageSeats(perSeatSubscriptionUuid, [
       { type: SeatActionType.assign, granteeId: 'assign_grantee_id' },
-      { type: SeatActionType.unassign, granteeId: 'userId_' + '0' },
-      { type: SeatActionType.replace, granteeId: 'userId_' + '1', newGranteeId: 'replace_grantee_id' },
+      { type: SeatActionType.unassign, granteeId: 'userId_0' },
+      { type: SeatActionType.replace, granteeId: 'userId_1', newGranteeId: 'replace_grantee_id' },
     ]);
 
     expect(data).toBeUndefined();
