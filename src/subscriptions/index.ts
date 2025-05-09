@@ -203,12 +203,12 @@ export type SubscriptionVersions = {
      *
      * Docs - https://docs.salable.app/api/v2#tag/Subscriptions/operation/manageSubscriptionSeats
      *
-     * @returns {Promise<undefined>}
+     * @returns {Promise<void>}
      */
     manageSeats: (
       subscriptionUuid: string,
       options: ManageSeatsOptions[],
-    ) => Promise<undefined>;
+    ) => Promise<void>;
 
     /**
      *  Incrementing will create unassigned licenses.
