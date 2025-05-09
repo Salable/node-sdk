@@ -229,6 +229,15 @@ describe('Licenses V2 Tests', () => {
       }),
     );
   });
+
+  it('check: Should return undefined if grantee is not licensed', async () => {
+    const data = await salable.licenses.check({
+      productUuid: testUuids.productUuid,
+      granteeIds: ['not-licensed-grantee'],
+    });
+
+    expect(data).toBeUndefined();
+  });
 });
 
 const licenseCapabilitySchema: Capability = {
