@@ -13,12 +13,25 @@ import {
   GetAllInvoicesOptions,
   UpdateSubscriptionInput,
   GetSubscriptionSeatsOptions,
-  PaginatedSeats, GetSeatCountResponse, ManageSeatOptions
+  PaginatedSeats, GetSeatCountResponse, ManageSeatOptions, CreateSubscriptionInput
 } from '../types';
 import { v2SubscriptionMethods } from './v2';
 
 export type SubscriptionVersions = {
   [Version.V2]: {
+    /**
+     *  Creates a subscription with the details provided
+     *
+     * @param {CreateSubscriptionInput} data - The details to create the new subscription with
+     * @param {CreateSubscriptionInput} data.planUuid - The UUID of the plan associated with the subscription. The planUuid can be found on the Plan view in the Salable dashboard
+     * @param {CreateSubscriptionInput} data.granteeId - (Optional) The grantee ID for the subscription.
+     * @param {CreateSubscriptionInput} data.expiryDate - (Optional) Provide a custom expiry date for the subscription; this will override the plan's default interval.
+     * @param {CreateSubscriptionInput} data.cancelAtPeriodEnd - (Optional) If set to true the subscription will not renew once the endTime date has passed.
+     * @param {CreateSubscriptionInput} data.quantity - (Optional) The number of seats to create on the subscription. Default is the plan's minimum seat limit. Only applicable to per seat plans.
+     *
+     * @returns {Promise<Subscription>} The data for the new subscription created
+     */
+    create: (data: CreateSubscriptionInput) => Promise<Subscription>;
     /**
      *  Retrieves a list of all subscriptions.
      *
