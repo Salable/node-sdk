@@ -118,9 +118,9 @@ export type LicenseVersions = {
      * @param {CheckLicenseInput} options.granteeIds - The grantee IDs to check the license for
      * @param {CheckLicenseInput} options.grace - (Optional) The number of days to extend the end dates of capabilities
      *
-     * @returns {Promise<CheckLicensesCapabilitiesResponse>} The capabilities of the license passed
+     * @returns {Promise<CheckLicensesCapabilitiesResponse | void>} The capabilities of the license passed
      */
-    check: (options: CheckLicenseInput) => Promise<CheckLicensesCapabilitiesResponse>;
+    check: (options: CheckLicenseInput) => Promise<CheckLicensesCapabilitiesResponse | void>;
   };
 };
 

@@ -7,7 +7,7 @@ import {
   Subscription,
   PaginatedSubscriptionInvoice,
   Version,
-  PaginatedLicenses, Capability, License
+  PaginatedLicenses, Capability, License, SeatActionType
 } from '../../types';
 import getEndTime from '../../../test-utils/helpers/get-end-time';
 import { v4 as uuidv4 } from 'uuid';
@@ -189,6 +189,16 @@ describe('Subscriptions V2 Tests', () => {
     const data = await salable.subscriptions.changePlan(basicSubscriptionUuid, {
       planUuid: testUuids.perSeatPaidPlanUuid,
     });
+
+    expect(data).toBeUndefined();
+  });
+
+  it('manageSeats: Should successfully perform multiple seat actions', async () => {
+    const data = await salable.subscriptions.manageSeats(perSeatSubscriptionUuid, [
+      { type: SeatActionType.assign, granteeId: 'assign_grantee_id' },
+      { type: SeatActionType.unassign, granteeId: 'userId_0' },
+      { type: SeatActionType.replace, granteeId: 'userId_1', newGranteeId: 'replace_grantee_id' },
+    ]);
 
     expect(data).toBeUndefined();
   });
