@@ -1,3 +1,10 @@
+# [4.5.0](https://github.com/Salable/node-sdk/compare/v4.4.0...v4.5.0) (2025-05-12)
+
+
+### Features
+
+* new subscriptions manageSeats method ([fe40853](https://github.com/Salable/node-sdk/commit/fe4085328db83f54e9b0810ae58eee7701a5be5f))
+
 # [4.4.0](https://github.com/Salable/node-sdk/compare/v4.3.0...v4.4.0) (2025-05-07)
 
 
