@@ -21,7 +21,7 @@ describe('Usage V2 Tests', () => {
 
   it('getAllUsageRecords: Should successfully fetch the grantees usage records', async () => {
     const data = await salable.usage.getAllUsageRecords({
-      granteeId: testGrantee
+      granteeId: testGrantee,
     });
 
     expect(data).toEqual(paginatedUsageRecordsSchema);
@@ -30,7 +30,7 @@ describe('Usage V2 Tests', () => {
   it('getAllUsageRecords (w/ search params): Should successfully fetch the grantees usage records', async () => {
     const data = await salable.usage.getAllUsageRecords({
       granteeId: testGrantee,
-      type: 'recorded'
+      type: 'recorded',
     });
 
     expect(data).toEqual(
@@ -50,7 +50,7 @@ describe('Usage V2 Tests', () => {
   it('getCurrentUsageRecord: Should successfully fetch the current usage record for the grantee on plan', async () => {
     const data = await salable.usage.getCurrentUsageRecord({
       granteeId: testGrantee,
-      planUuid: testUuids.usageBasicMonthlyPlanUuid
+      planUuid: testUuids.usageBasicMonthlyPlanUuid,
     });
 
     expect(data).toEqual(
@@ -66,7 +66,7 @@ describe('Usage V2 Tests', () => {
       granteeId: testGrantee,
       planUuid: testUuids.usageBasicMonthlyPlanUuid,
       increment: 10,
-      idempotencyKey: randomUUID()
+      idempotencyKey: randomUUID(),
     });
 
     expect(data).toBeUndefined();
@@ -99,6 +99,7 @@ const generateTestData = async () => {
       uuid: usageSubscriptionUuid,
       owner: randomUUID(),
       email: 'tester@testing.com',
+      owner: 'owner_12345',
       type: 'salable',
       status: 'ACTIVE',
       organisation: testUuids.organisationId,

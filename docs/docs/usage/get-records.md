@@ -26,14 +26,14 @@ _Type:_ `GetLicenseOptions`
 
 | Option           | Type   | Description                                                                          | Required |
 |------------------|--------|--------------------------------------------------------------------------------------|----------|
-| granteeId        | string | The granteeId of the license                                                  | ✅        |
+| granteeId        | string | The granteeId of the license                                                         | ✅        |
 | type             | string | Filter by the type of usage record                                                   | ❌        |
 | status           | string | Filter by the status of the license                                                  | ❌        |
 | planUuid         | string | The UUID of the plan the license belongs to                                          | ❌        |
 | subscriptionUuid | string | Filters usage records by their license's subscription                                | ❌        |
 | sort             | string | Sorts usage records by createdAt field. Default (`'asc'`). Enum: `'asc'` \| `'desc'` | ❌        |
 | cursor           | string | Cursor value, used for pagination                                                    | ❌        |
-| take             | string | The amount of licenses to fetch                                                      | ❌        |
+| take             | string | The number of licenses to fetch                                                      | ❌        |
 
 ## Return Type
 

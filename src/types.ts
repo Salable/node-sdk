@@ -10,7 +10,7 @@ export type ApiRequest = <T>(input: string | URL | Request, init: RequestInit | 
 export type Status = 'ACTIVE' | 'CANCELED';
 export type ProductStatus = 'ACTIVE' | 'DEPRECATED';
 export type LicenseStatus = 'ACTIVE' | 'CANCELED' | 'EVALUATION' | 'SCHEDULED' | 'TRIALING' | 'INACTIVE';
-export type SortOrder = 'asc' | 'desc'
+export type SortOrder = 'asc' | 'desc';
 export type SearchParamOptions = Record<string, string | string[] | number | boolean>;
 
 export type SubscriptionStatus = 'ACTIVE' | 'CANCELED' | 'PAUSED' | 'TRIALING' | 'DELETED' | 'PAST_DUE' | 'INCOMPLETE';
@@ -77,6 +77,13 @@ export type GetLicenseCountResponse = {
   assigned: number;
   unassigned: number;
 };
+
+export type GetSeatCountResponse = {
+  count: number;
+  assigned: number;
+  unassigned: number;
+};
+
 
 export type GetUsageOptions = {
   granteeId: string;
@@ -145,10 +152,55 @@ export type License = {
   cancelAtPeriodEnd: boolean;
 };
 
+export type Seat = {
+  uuid: string;
+  name: string;
+  email: string;
+  status: string;
+  granteeId: string;
+  paymentService: string;
+  purchaser: string;
+  type: string;
+  productUuid: string;
+  planUuid: string;
+  capabilities: Capability[];
+  metadata: IMetadata | null;
+  startTime: string;
+  endTime: string;
+  updatedAt: string;
+  subscriptionUuid: string | null;
+  isTest: boolean;
+  cancelAtPeriodEnd: boolean;
+};
+
 export type PaginatedLicenses = {
   first: string;
   last: string;
   data: License[];
+};
+
+export type PaginatedSeats = {
+  first: string;
+  last: string;
+  data: Seat[];
+};
+
+
+export enum SeatActionType {
+  assign = 'assign',
+  unassign = 'unassign',
+  replace = 'replace',
+}
+
+export type ManageSeatOptions =
+  | {
+  type: SeatActionType.assign | SeatActionType.unassign;
+  granteeId: string;
+}
+  | {
+  type: SeatActionType.replace;
+  granteeId: string;
+  newGranteeId: string;
 };
 
 export type Subscription = {
@@ -176,11 +228,17 @@ export type GetAllSubscriptionsOptions = {
   owner?: string;
   cursor?: string;
   take?: number;
-  expand?: string[],
-  sort?: SortOrder,
-  productUuid?: string,
-  planUuid?: string
-}
+  expand?: string[];
+  sort?: SortOrder;
+  productUuid?: string;
+  planUuid?: string;
+};
+
+export type GetSubscriptionSeatsOptions = {
+  cursor?: string;
+  take?: number;
+};
+
 
 export type PaginatedSubscription = {
   first: string;
@@ -197,7 +255,7 @@ export type SubscriptionsChangePlan = {
 
 export type UpdateSubscriptionInput = {
   owner?: string;
-}
+};
 
 export type Plan = {
   uuid: string;
@@ -592,7 +650,7 @@ export type LicenseGetUsage = {
 export type GetAllInvoicesOptions = {
   cursor?: string;
   take?: number;
-}
+};
 
 export type PaginatedSubscriptionInvoice = {
   first: string;
@@ -610,6 +668,7 @@ export type Invoice = {
   amount_due: number;
   amount_paid: number;
   amount_remaining: number;
+  amount_overpaid: number;
   amount_shipping: number;
   application: string;
   application_fee_amount: string;
@@ -672,6 +731,14 @@ export type Invoice = {
   next_payment_attempt: string;
   number: string;
   on_behalf_of: string;
+  parent: {
+    quote_details: string | null;
+    subscription_details: {
+      metadata: { [key: string]: string };
+      subscription: string;
+    };
+    type: string;
+  };
   paid: boolean;
   paid_out_of_band: boolean;
   payment_intent: string;
@@ -697,7 +764,7 @@ export type Invoice = {
   quote: string;
   receipt_number: string;
   rendering: string;
-  rendering_options: string;
+  rendering_options?: string | null;
   shipping_cost: string;
   shipping_details: string;
   starting_balance: number;
@@ -725,6 +792,7 @@ export type Invoice = {
   total_excluding_tax: number;
   total_pretax_credit_amounts: object | null;
   total_tax_amounts: string[];
+  total_taxes: string[];
   transfer_data: string;
   webhooks_delivered_at: number | null;
 };

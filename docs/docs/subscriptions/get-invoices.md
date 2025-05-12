@@ -31,7 +31,7 @@ _Type:_ `GetAllInvoicesOptions`
 | Option      | Type   | Description                                         | Required |
 |-------------|--------|-----------------------------------------------------| -------- |
 | cursor      | string | Cursor value, used for pagination                   | ❌       |
-| take        | number | The amount of subscriptions to fetch. Default: `10` | ❌       |
+| take        | number | The number of subscriptions to fetch. Default: `10` | ❌       |
 
 ## Return Type
 

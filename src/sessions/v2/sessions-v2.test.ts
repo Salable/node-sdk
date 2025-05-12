@@ -104,6 +104,7 @@ const generateTestData = async () => {
       uuid: subscriptionUuid,
       owner: randomUUID(),
       email: 'tester@testing.com',
+      owner: 'owner_12345',
       type: 'salable',
       status: 'ACTIVE',
       organisation: testUuids.organisationId,

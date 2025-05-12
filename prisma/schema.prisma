@@ -32,6 +32,7 @@ model Product {
   currencies                         CurrenciesOnProduct[]
   updatedAt                          DateTime                        @default(now()) @updatedAt
   isTest                             Boolean                         @default(false)
+  coupons                            Coupon[]
 
   @@index([organisation])
   @@index([organisationPaymentIntegrationUuid])
@@ -74,6 +75,7 @@ model Plan {
   updatedAt              DateTime               @default(now()) @updatedAt
   flags                  FlagsOnPlans[]
   hasAcceptedTransaction Boolean                @default(false)
+  coupons                CouponsOnPlans[]
   licensesUsage          LicensesUsage[]
 }
 
@@ -223,7 +225,7 @@ model Session {
   value          String       @unique
   scope          String
   metadata       Json
-  organisation   Organisation @relation(fields: [organisationId], references: [clerkOrgId], onUpdate: NoAction, onDelete: NoAction)
+  organisation   Organisation @relation(fields: [organisationId], references: [clerkOrgId], onUpdate: NoAction, onDelete: Cascade)
   organisationId String
   isTest         Boolean      @default(false)
   expiresAt      DateTime
@@ -257,6 +259,7 @@ model License {
   isTest            Boolean                @default(false)
   cancelAtPeriodEnd Boolean                @default(false)
 
+  @@index([status, paymentService])
   @@index([productUuid])
   @@index([planUuid])
   @@index([granteeId])
@@ -269,25 +272,26 @@ model License {
 }
 
 model Subscription {
-  uuid                             String             @id @default(uuid())
-  paymentIntegrationSubscriptionId String             @unique
-  product                          Product            @relation(fields: [productUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  uuid                             String                   @id @default(uuid())
+  paymentIntegrationSubscriptionId String                   @unique
+  product                          Product                  @relation(fields: [productUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
   productUuid                      String
   type                             PaymentIntegration
   email                            String?
   owner                            String
   organisation                     String
   status                           String
-  cancelAtPeriodEnd                Boolean            @default(false)
-  quantity                         Int                @default(1)
+  cancelAtPeriodEnd                Boolean                  @default(false)
+  quantity                         Int                      @default(1)
   createdAt                        DateTime
-  updatedAt                        DateTime           @updatedAt
+  updatedAt                        DateTime                 @updatedAt
   expiryDate                       DateTime
   lineItemIds                      Json?
+  coupons                          CouponsOnSubscriptions[]
   license                          License[]
-  plan                             Plan               @relation(fields: [planUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  plan                             Plan                     @relation(fields: [planUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
   planUuid                         String
-  isTest                           Boolean            @default(false)
+  isTest                           Boolean                  @default(false)
 
   @@index([paymentIntegrationSubscriptionId])
   @@index([productUuid])
@@ -315,6 +319,7 @@ model Currency {
   symbol    String
   products  CurrenciesOnProduct[]
   plans     CurrenciesOnPlans[]
+  coupons   CouponCurrency[]
 }
 
 model CurrenciesOnProduct {
@@ -590,4 +595,104 @@ model SigningKey {
   createdAt      DateTime     @default(now())
 
   @@index([organisationId])
+}
+
+enum PromotionCodeStatus {
+  ACTIVE
+  INACTIVE
+}
+
+model PromotionCodes {
+  uuid           String              @id @default(uuid())
+  coupon         Coupon              @relation(fields: [couponUuid], references: [uuid], onDelete: Cascade)
+  couponUuid     String
+  name           String
+  code           String
+  expiresAt      DateTime?
+  maxRedemptions Int?
+  status         PromotionCodeStatus
+  isTest         Boolean             @default(false)
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+
+  @@index([couponUuid])
+}
+
+model CouponCurrency {
+  couponUuid   String
+  coupon       Coupon   @relation(fields: [couponUuid], references: [uuid], onDelete: Cascade)
+  amountOff    Float
+  currencyUuid String
+  currency     Currency @relation(fields: [currencyUuid], references: [uuid], onDelete: Cascade)
+
+  @@id([couponUuid, currencyUuid])
+}
+
+enum DiscountType {
+  FIXED
+  PERCENTAGE
+}
+
+enum CouponDuration {
+  FOREVER
+  ONCE
+  REPEATING
+}
+
+enum CouponStatus {
+  ACTIVE
+  INACTIVE
+}
+
+model Coupon {
+  uuid                   String                   @id @default(uuid())
+  name                   String
+  productUuid            String
+  product                Product                  @relation(fields: [productUuid], references: [uuid], onDelete: Cascade)
+  appliesTo              CouponsOnPlans[]
+  promotionCodes         PromotionCodes[]
+  discountType           DiscountType
+  currencies             CouponCurrency[]
+  percentOff             Float?
+  duration               CouponDuration
+  durationInMonths       Int?
+  expiresAt              DateTime?
+  maxRedemptions         Int?
+  status                 CouponStatus             @default(ACTIVE)
+  isTest                 Boolean                  @default(false)
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime                 @updatedAt
+  couponsOnSubscriptions CouponsOnSubscriptions[]
+}
+
+model CouponsOnPlans {
+  coupon     Coupon @relation(fields: [couponUuid], references: [uuid])
+  couponUuid String
+  plan       Plan   @relation(fields: [planUuid], references: [uuid])
+  planUuid   String
+
+  @@id([couponUuid, planUuid])
+  @@index([couponUuid])
+  @@index([planUuid])
+}
+
+model WebhookEvents {
+  uuid      String   @id @default(uuid())
+  objectId  String
+  eventType String
+  reason    String
+  payload   Json
+  isTest    Boolean
+  createdAt DateTime @default(now())
+}
+
+model CouponsOnSubscriptions {
+  coupon           Coupon       @relation(fields: [couponUuid], references: [uuid])
+  couponUuid       String
+  subscription     Subscription @relation(fields: [subscriptionUuid], references: [uuid])
+  subscriptionUuid String
+
+  @@id([couponUuid, subscriptionUuid])
+  @@index([couponUuid])
+  @@index([subscriptionUuid])
 }

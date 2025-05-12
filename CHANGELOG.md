@@ -1,3 +1,24 @@
+# [4.5.0](https://github.com/Salable/node-sdk/compare/v4.4.0...v4.5.0) (2025-05-12)
+
+
+### Features
+
+* new subscriptions manageSeats method ([fe40853](https://github.com/Salable/node-sdk/commit/fe4085328db83f54e9b0810ae58eee7701a5be5f))
+
+# [4.4.0](https://github.com/Salable/node-sdk/compare/v4.3.0...v4.4.0) (2025-05-07)
+
+
+### Features
+
+* new subscription methods getSeats and getSeatCount ([9b557d9](https://github.com/Salable/node-sdk/commit/9b557d926e0c5ec44e039664a11235d268d76309))
+
+# [4.3.0](https://github.com/Salable/node-sdk/compare/v4.2.0...v4.3.0) (2025-04-24)
+
+
+### Features
+
+* sync prisma schema ([e246c8e](https://github.com/Salable/node-sdk/commit/e246c8e527fcbf13580ed7daa54b2bbe21ca4d27))
+
 # [4.2.0](https://github.com/Salable/node-sdk/compare/v4.1.0...v4.2.0) (2025-03-07)
 
 

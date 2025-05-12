@@ -9,7 +9,12 @@ import {
   ApiRequest,
   TVersion,
   Version,
-  GetAllSubscriptionsOptions, GetAllInvoicesOptions, UpdateSubscriptionInput, CreateSubscriptionInput
+  GetAllSubscriptionsOptions,
+  GetAllInvoicesOptions,
+  UpdateSubscriptionInput,
+  GetSubscriptionSeatsOptions,
+  PaginatedSeats, GetSeatCountResponse, ManageSeatOptions,
+  CreateSubscriptionInput
 } from '../types';
 import { v2SubscriptionMethods } from './v2';
 
@@ -23,7 +28,7 @@ export type SubscriptionVersions = {
      * @param {CreateSubscriptionInput} data.granteeId - (Optional) The grantee ID for the subscription.
      * @param {CreateSubscriptionInput} data.expiryDate - (Optional) Provide a custom expiry date for the subscription; this will override the plan's default interval.
      * @param {CreateSubscriptionInput} data.cancelAtPeriodEnd - (Optional) If set to true the subscription will not renew once the endTime date has passed.
-     * @param {CreateSubscriptionInput} data.quantity - (Optional) The amount of seats to create on the subscription. Default is the plan's minimum seat limit. Only applicable to per seat plans.
+     * @param {CreateSubscriptionInput} data.quantity - (Optional) The number of seats to create on the subscription. Default is the plan's minimum seat limit. Only applicable to per seat plans.
      *
      * @returns {Promise<Subscription>} The data for the new subscription created
      */
@@ -56,6 +61,29 @@ export type SubscriptionVersions = {
     ) => Promise<Subscription>;
 
     /**
+     *  Retrieves a list of a subscription's seats. Seats with the status "CANCELED" are ignored.
+     *
+     *  @param {string} subscriptionUuid - The UUID of the subscription
+     *  @param {GetSubscriptionSeatsOptions} data - The properties for cursor pagination
+     *  @param {GetSubscriptionSeatsOptions} data.cursor - The ID (cursor) of the record to take from in the request
+     *  @param {GetSubscriptionSeatsOptions} data.take - The number of records to fetch. Default 20.
+     *
+     * Docs - https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptionsSeats
+     *
+     * @returns {Promise<PaginatedSeats>} The seats of the subscription requested
+     */
+    getSeats: (subscriptionUuid: string, options?: GetSubscriptionSeatsOptions) => Promise<PaginatedSeats>;
+
+    /**
+     *  Retrieves the aggregate number of seats. The response is broken down by assigned, unassigned and the total. Seats with the status `CANCELED` are ignored.
+     *
+     * Docs - https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptionsSeatCount
+     *
+     * @returns {Promise<GetSeatCountResponse>}
+     */
+    getSeatCount: (subscriptionUuid: string) => Promise<GetSeatCountResponse>;
+
+    /**
      *  Update a subscription.
      *
      *  @param {string} subscriptionUuid - The UUID of the subscription
@@ -72,7 +100,7 @@ export type SubscriptionVersions = {
     ) => Promise<Subscription>;
 
     /**
-     *  Changes a subscription's plan based on UUID. If the subscription is usage based the requested subscription will be canceled and a new subscription will be created on the plan you are changing to.
+     *  Changes a subscription's plan based on UUID. If the subscription is usage-based, the requested subscription will be canceled and a new subscription will be created on the plan you are changing to.
      *
      *  @param {string} subscriptionUuid - The UUID of the subscription
      *
@@ -180,6 +208,20 @@ export type SubscriptionVersions = {
      * @returns {Promise<void>}
      */
     reactivateSubscription: (subscriptionUuid: string) => Promise<void>;
+
+    /**
+     *  Manage seats on a subscription
+     *
+     *  @param {string} subscriptionUuid - The UUID of the subscription
+     *
+     * Docs - https://docs.salable.app/api/v2#tag/Subscriptions/operation/manageSubscriptionSeats
+     *
+     * @returns {Promise<void>}
+     */
+    manageSeats: (
+      subscriptionUuid: string,
+      options: ManageSeatOptions[],
+    ) => Promise<void>;
 
     /**
      *  Incrementing will create unassigned licenses.
