@@ -1,3 +1,15 @@
+# [4.6.0](https://github.com/Salable/node-sdk/compare/v4.5.0...v4.6.0) (2025-05-13)
+
+
+### Bug Fixes
+
+* typo ([d30eee7](https://github.com/Salable/node-sdk/commit/d30eee7ec955ce6b8e9f2118d9a606441c4d6140))
+
+
+### Features
+
+* **SD-2083:** added paymentIntegrationPromoCodeId column to PromotionCode table ([eb50b43](https://github.com/Salable/node-sdk/commit/eb50b43b4a167055b6e7cc763102485b17b50adc))
+
 # [4.5.0](https://github.com/Salable/node-sdk/compare/v4.4.0...v4.5.0) (2025-05-12)
 
 
