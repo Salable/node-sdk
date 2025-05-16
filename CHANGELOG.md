@@ -1,3 +1,10 @@
+# [4.7.0](https://github.com/Salable/node-sdk/compare/v4.6.0...v4.7.0) (2025-05-16)
+
+
+### Features
+
+* subscriptions create method ([66e1da7](https://github.com/Salable/node-sdk/commit/66e1da7997a37b5a8f990c500d252658803d511f))
+
 # [4.6.0](https://github.com/Salable/node-sdk/compare/v4.5.0...v4.6.0) (2025-05-13)
 
 
