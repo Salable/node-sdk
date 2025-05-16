@@ -15,6 +15,16 @@ export type SearchParamOptions = Record<string, string | string[] | number | boo
 
 export type SubscriptionStatus = 'ACTIVE' | 'CANCELED' | 'PAUSED' | 'TRIALING' | 'DELETED' | 'PAST_DUE' | 'INCOMPLETE';
 
+export type CreateSubscriptionInput = {
+  planUuid: string;
+  granteeId: string;
+  owner: string;
+  expiryDate?: string;
+  cancelAtPeriodEnd?: boolean;
+  quantity?: number;
+  status?: 'ACTIVE' | 'TRIALING';
+};
+
 export type CreateAdhocLicenseInput = {
   planUuid: string;
   member: string;
