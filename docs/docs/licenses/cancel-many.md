@@ -4,7 +4,12 @@ sidebar_position: 12
 
 # Cancel many Licenses
 
-This method will cancel many ad hoc Licenses
+This method will cancel many ad hoc Licenses.
+:::danger
+
+Deprecated. Use [cancel subscription](../subscriptions/cancel.md).
+
+:::
 
 ## Code Sample
 
@@ -26,4 +31,4 @@ _Type:_ `string[]`
 
 ## Return Type
 
-For more information about this request see our API documentation on [cancel many Licenses](https://docs.salable.app/api/v2#tag/Licenses/operation/cancelLicenses)
+For more information about this request, see our API documentation on [cancel many Licenses](https://docs.salable.app/api/v2#tag/Licenses/operation/cancelLicenses)

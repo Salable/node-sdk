@@ -4,7 +4,13 @@ sidebar_position: 2
 
 # Create Many Licenses
 
-This method creates many ad hoc licenses
+This method creates many ad hoc licenses.
+
+:::danger
+
+Deprecated. Use [create subscription](../subscriptions/create.md). To create seats on a per seat subscription use [add seats](../subscriptions/add-seats.md).
+
+:::
 
 ## Code Sample
 
