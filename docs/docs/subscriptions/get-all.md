@@ -1,8 +1,8 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
-# Get All Subscriptions
+# Get all
 
 Returns a list of all the subscriptions created by your Salable organization.
 

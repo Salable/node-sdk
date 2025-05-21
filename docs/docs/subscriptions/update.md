@@ -2,7 +2,7 @@
 sidebar_position: 13
 ---
 
-# Update Subscription
+# Update subscription
 
 Update properties on a subscription.
 
