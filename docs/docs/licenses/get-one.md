@@ -4,7 +4,13 @@ sidebar_position: 4
 
 # Get One License
 
-Returns a single license
+Returns a single license.
+
+:::danger
+
+Deprecated. Use [get subscription](../subscriptions/get-one.md).
+
+:::
 
 ## Code Sample
 

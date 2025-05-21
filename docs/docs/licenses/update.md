@@ -6,6 +6,12 @@ sidebar_position: 8
 
 This method updates specific Licenses with the values passed into the body of the request.
 
+:::danger
+
+Deprecated. Use [update subscription](../subscriptions/update.md). To assign a grantee use [manage seats](../subscriptions/manage-seats.md). 
+
+:::
+
 ## Code Sample
 
 ```typescript
