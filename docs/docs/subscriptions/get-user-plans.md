@@ -4,7 +4,7 @@ sidebar_position: 6
 
 # Get switchable plans
 
-Returns the available plans the customer on the subscription can change to.
+Returns the available plans the customer on the subscription can switch to.
 
 ## Code Sample
 
