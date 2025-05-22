@@ -1,3 +1,50 @@
+# [4.8.0](https://github.com/Salable/node-sdk/compare/v4.7.0...v4.8.0) (2025-05-22)
+
+
+### Features
+
+* add archived columns to product and plan ([4e7b7c5](https://github.com/Salable/node-sdk/commit/4e7b7c551d04e51fd74675b8ecab6592b00cd489))
+
+# [4.7.0](https://github.com/Salable/node-sdk/compare/v4.6.0...v4.7.0) (2025-05-16)
+
+
+### Features
+
+* subscriptions create method ([66e1da7](https://github.com/Salable/node-sdk/commit/66e1da7997a37b5a8f990c500d252658803d511f))
+
+# [4.6.0](https://github.com/Salable/node-sdk/compare/v4.5.0...v4.6.0) (2025-05-13)
+
+
+### Bug Fixes
+
+* typo ([d30eee7](https://github.com/Salable/node-sdk/commit/d30eee7ec955ce6b8e9f2118d9a606441c4d6140))
+
+
+### Features
+
+* **SD-2083:** added paymentIntegrationPromoCodeId column to PromotionCode table ([eb50b43](https://github.com/Salable/node-sdk/commit/eb50b43b4a167055b6e7cc763102485b17b50adc))
+
+# [4.5.0](https://github.com/Salable/node-sdk/compare/v4.4.0...v4.5.0) (2025-05-12)
+
+
+### Features
+
+* new subscriptions manageSeats method ([fe40853](https://github.com/Salable/node-sdk/commit/fe4085328db83f54e9b0810ae58eee7701a5be5f))
+
+# [4.4.0](https://github.com/Salable/node-sdk/compare/v4.3.0...v4.4.0) (2025-05-07)
+
+
+### Features
+
+* new subscription methods getSeats and getSeatCount ([9b557d9](https://github.com/Salable/node-sdk/commit/9b557d926e0c5ec44e039664a11235d268d76309))
+
+# [4.3.0](https://github.com/Salable/node-sdk/compare/v4.2.0...v4.3.0) (2025-04-24)
+
+
+### Features
+
+* sync prisma schema ([e246c8e](https://github.com/Salable/node-sdk/commit/e246c8e527fcbf13580ed7daa54b2bbe21ca4d27))
+
 # [4.2.0](https://github.com/Salable/node-sdk/compare/v4.1.0...v4.2.0) (2025-03-07)
 
 

@@ -33,6 +33,7 @@ model Product {
   updatedAt                          DateTime                        @default(now()) @updatedAt
   isTest                             Boolean                         @default(false)
   coupons                            Coupon[]
+  archivedAt                         DateTime?
 
   @@index([organisation])
   @@index([organisationPaymentIntegrationUuid])
@@ -77,6 +78,7 @@ model Plan {
   hasAcceptedTransaction Boolean                @default(false)
   coupons                CouponsOnPlans[]
   licensesUsage          LicensesUsage[]
+  archivedAt             DateTime?
 }
 
 model Capability {
@@ -259,6 +261,7 @@ model License {
   isTest            Boolean                @default(false)
   cancelAtPeriodEnd Boolean                @default(false)
 
+  @@index([status, paymentService])
   @@index([productUuid])
   @@index([planUuid])
   @@index([granteeId])
@@ -602,17 +605,18 @@ enum PromotionCodeStatus {
 }
 
 model PromotionCodes {
-  uuid           String              @id @default(uuid())
-  coupon         Coupon              @relation(fields: [couponUuid], references: [uuid], onDelete: Cascade)
-  couponUuid     String
-  name           String
-  code           String
-  expiresAt      DateTime?
-  maxRedemptions Int?
-  status         PromotionCodeStatus
-  isTest         Boolean             @default(false)
-  createdAt      DateTime            @default(now())
-  updatedAt      DateTime            @updatedAt
+  uuid                              String              @id @default(uuid())
+  coupon                            Coupon              @relation(fields: [couponUuid], references: [uuid], onDelete: Cascade)
+  couponUuid                        String
+  name                              String
+  code                              String
+  expiresAt                         DateTime?
+  maxRedemptions                    Int?
+  paymentIntegrationPromotionCodeId String?
+  status                            PromotionCodeStatus
+  isTest                            Boolean             @default(false)
+  createdAt                         DateTime            @default(now())
+  updatedAt                         DateTime            @updatedAt
 
   @@index([couponUuid])
 }

@@ -230,6 +230,15 @@ describe('Licenses V2 Tests', () => {
       }),
     );
   });
+
+  it('check: Should return undefined if grantee is not licensed', async () => {
+    const data = await salable.licenses.check({
+      productUuid: testUuids.productUuid,
+      granteeIds: ['not-licensed-grantee'],
+    });
+
+    expect(data).toBeUndefined();
+  });
 });
 
 const licenseCapabilitySchema: Capability = {
@@ -296,6 +305,7 @@ const planSchema: Plan = {
   salablePlan: expect.any(Boolean),
   type: expect.toBeOneOf([expect.any(String), undefined]),
   updatedAt: expect.any(String),
+  archivedAt: expect.toBeOneOf([expect.any(String), null]),
   features: expect.toBeOneOf([expect.anything(), undefined]),
 };
 
@@ -565,6 +575,7 @@ const generateTestData = async () => {
       email: 'tester@testing.com',
       type: 'salable',
       status: 'ACTIVE',
+      owner: 'owner_12345',
       organisation: testUuids.organisationId,
       license: { connect: [{ uuid: licenseUuid }, { uuid: licenseTwoUuid }, { uuid: licenseThreeUuid }] },
       product: { connect: { uuid: testUuids.productUuid } },

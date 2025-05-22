@@ -96,6 +96,7 @@ const planSchema: Plan = {
   salablePlan: expect.any(Boolean),
   type: expect.toBeOneOf([expect.any(String), undefined]),
   updatedAt: expect.any(String),
+  archivedAt: expect.toBeOneOf([expect.any(String), null]),
   features: expect.toBeOneOf([expect.anything(), undefined]),
 };
 
