@@ -1,8 +1,8 @@
 ---
-sidebar_position: 6
+sidebar_position: 17
 ---
 
-# Cancel a Subscription
+# Cancel
 
 Cancels a Subscription with options for when it terminates.
 

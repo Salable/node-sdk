@@ -1,8 +1,8 @@
 ---
-sidebar_position: 1
+sidebar_position: 4
 ---
 
-# Get Subscription Seats
+# Get seats
 
 Returns a list of seats on a subscription. Seats with the status `CANCELED` are ignored. Response uses cursor-based pagination.
 

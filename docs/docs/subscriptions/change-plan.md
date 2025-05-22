@@ -1,10 +1,10 @@
 ---
-sidebar_position: 3
+sidebar_position: 14
 ---
 
-# Change a Subscription's Plan
+# Change plan
 
-Move a Subscription to a new Plan. Proration behaviour can optionally be set.
+Move a Subscription to a new Plan. If the subscription was created through a checkout link, proration behaviour can optionally be set.
 
 ## Code Sample
 

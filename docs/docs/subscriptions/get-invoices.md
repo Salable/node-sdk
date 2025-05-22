@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 7
 ---
 
 # Get Subscription Invoices
@@ -35,4 +35,4 @@ _Type:_ `GetAllInvoicesOptions`
 
 ## Return Type
 
-For more information about this request see our API documentation on [Subscription Invoice Object](https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptionInvoices)
+For more information about this request, see our API documentation on [Subscription Invoice Object](https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptionInvoices)
