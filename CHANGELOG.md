@@ -1,3 +1,10 @@
+# [4.8.0](https://github.com/Salable/node-sdk/compare/v4.7.0...v4.8.0) (2025-05-22)
+
+
+### Features
+
+* add archived columns to product and plan ([4e7b7c5](https://github.com/Salable/node-sdk/commit/4e7b7c551d04e51fd74675b8ecab6592b00cd489))
+
 # [4.7.0](https://github.com/Salable/node-sdk/compare/v4.6.0...v4.7.0) (2025-05-16)
 
 
