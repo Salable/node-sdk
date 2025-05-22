@@ -1,14 +1,6 @@
 import prismaClient from '../../../test-utils/prisma/prisma-client';
 import Salable from '../..';
-import {
-  PaginatedSubscription,
-  Invoice,
-  Plan,
-  Subscription,
-  PaginatedSubscriptionInvoice,
-  Version,
-  PaginatedLicenses, Capability, License, SeatActionType
-} from '../../types';
+import { PaginatedSubscription, Invoice, Plan, Subscription, PaginatedSubscriptionInvoice, Version, PaginatedLicenses, Capability, License, SeatActionType } from '../../types';
 import getEndTime from '../../../test-utils/helpers/get-end-time';
 import { v4 as uuidv4 } from 'uuid';
 import { testUuids } from '../../../test-utils/scripts/create-test-data';
@@ -127,12 +119,12 @@ describe('Subscriptions V2 Tests', () => {
     expect(dataWithSearchParams.data).toEqual([{ ...subscriptionSchema, owner: 'different-owner' }]);
   });
 
-  it('getSeats: Should successfully fetch a subscription\'s seats', async () => {
+  it("getSeats: Should successfully fetch a subscription's seats", async () => {
     const data = await salable.subscriptions.getSeats(perSeatSubscriptionUuid);
     expect(data).toEqual(paginatedLicensesSchema);
   });
 
-  it('getSeatCount: Should successfully fetch a subscription\'s seat count', async () => {
+  it("getSeatCount: Should successfully fetch a subscription's seat count", async () => {
     const data = await salable.subscriptions.getSeatCount(perSeatSubscriptionUuid);
     expect(data).toEqual({
       count: expect.any(Number),
@@ -312,6 +304,7 @@ const planSchema: Plan = {
   updatedAt: expect.any(String),
   features: expect.toBeOneOf([expect.anything(), undefined]),
   currencies: expect.toBeOneOf([expect.anything(), undefined]),
+  archivedAt: expect.toBeOneOf([expect.any(String), null]),
 };
 
 const subscriptionSchema: Subscription = {
