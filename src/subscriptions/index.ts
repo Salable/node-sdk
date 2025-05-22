@@ -255,6 +255,38 @@ export type SubscriptionVersions = {
         proration?: string;
       },
     ) => Promise<SubscriptionSeat>;
+
+    /**
+    *  Applies the specified coupon to the subscription.
+    *
+    * @param {string} subscriptionUuid - The UUID of the subscription
+    * 
+    * Docs - https://docs.salable.app/api/v2#tag/Subscriptions/operation/addCoupon
+    *
+    * @returns {Promise<void>}
+    */
+    addCoupon: (
+      subscriptionUuid: string,
+      options: {
+        couponUuid: string
+      },
+    ) => Promise<void>;
+
+    /**
+    *  Removes the specified coupon from the subscription.
+    *
+    * @param {string} subscriptionUuid - The UUID of the subscription
+    *
+    * Docs - https://docs.salable.app/api/v2#tag/Subscriptions/operation/removeCoupon
+    * 
+    * @returns {Promise<void>}
+    */
+    removeCoupon: (
+      subscriptionUuid: string,
+      options: {
+        couponUuid: string
+      },
+    ) => Promise<void>;
   };
 };
 

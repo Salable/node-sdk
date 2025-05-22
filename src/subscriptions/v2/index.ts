@@ -28,4 +28,6 @@ export const v2SubscriptionMethods = (request: ApiRequest): SubscriptionVersions
       method: 'PUT',
       body: JSON.stringify(options),
     }),
+  addCoupon: (uuid, options) => request(`${baseUrl}/${uuid}/coupons`, { method: 'POST', body: JSON.stringify(options) }),
+  removeCoupon: (uuid, options) => request(`${baseUrl}/${uuid}/coupons`, { method: 'PUT', body: JSON.stringify(options) }),
 });
