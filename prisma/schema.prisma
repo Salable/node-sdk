@@ -33,6 +33,7 @@ model Product {
   updatedAt                          DateTime                        @default(now()) @updatedAt
   isTest                             Boolean                         @default(false)
   coupons                            Coupon[]
+  archivedAt                         DateTime?
 
   @@index([organisation])
   @@index([organisationPaymentIntegrationUuid])
@@ -77,6 +78,7 @@ model Plan {
   hasAcceptedTransaction Boolean                @default(false)
   coupons                CouponsOnPlans[]
   licensesUsage          LicensesUsage[]
+  archivedAt             DateTime?
 }
 
 model Capability {
