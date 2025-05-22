@@ -14,6 +14,7 @@ const perSeatSubscriptionUuid = uuidv4();
 const licenseUuid = uuidv4();
 const licenseTwoUuid = uuidv4();
 const licenseThreeUuid = uuidv4();
+const couponUuid = uuidv4();
 const perSeatBasicLicenseUuids = [uuidv4(), uuidv4(), uuidv4(), uuidv4(), uuidv4(), uuidv4()];
 const testGrantee = '123456';
 const testEmail = 'tester@domain.com';
@@ -232,20 +233,13 @@ describe('Subscriptions V2 Tests', () => {
   });
 
   it('addCoupon: Should successfully add the specified coupon to the subscription', async () => {
-    const data = await salable.subscriptions.addCoupon(subscriptionUuid, { couponUuid: stripeEnvs.couponId });
+    const data = await salable.subscriptions.addCoupon(subscriptionUuid, { couponUuid });
 
     expect(data).toBeUndefined();
   });
 
   it('removeCoupon: Should successfully remove the specified coupon from the subscription', async () => {
-    await prismaClient.couponsOnSubscriptions.create({
-      data: {
-        subscriptionUuid,
-        couponUuid: stripeEnvs.couponId
-      }
-    });
-
-    const data = await salable.subscriptions.removeCoupon(subscriptionUuid, { couponUuid: stripeEnvs.couponId });
+    const data = await salable.subscriptions.removeCoupon(subscriptionUuid, { couponUuid });
 
     expect(data).toBeUndefined();
   });
@@ -723,7 +717,8 @@ const generateTestData = async () => {
 
   await prismaClient.coupon.create({
     data: {
-      uuid: stripeEnvs.couponId,
+      uuid: couponUuid,
+      paymentIntegrationCouponId: stripeEnvs.couponId,
       name: 'Percentage Coupon',
       duration: 'ONCE',
       discountType: 'PERCENTAGE',
