@@ -19,6 +19,7 @@ const noSubLicenseThreeUuid = uuidv4();
 const subscriptionUuid = uuidv4();
 const testPurchaser = 'tester@testing.com';
 const testGrantee = '123456';
+const owner = 'subscription-owner'
 
 describe('Licenses V2 Tests', () => {
   const salable = new Salable(testUuids.devApiKeyV2, version);
@@ -574,7 +575,7 @@ const generateTestData = async () => {
       email: 'tester@testing.com',
       type: 'salable',
       status: 'ACTIVE',
-      owner: 'owner_12345',
+      owner,
       organisation: testUuids.organisationId,
       license: { connect: [{ uuid: licenseUuid }, { uuid: licenseTwoUuid }, { uuid: licenseThreeUuid }] },
       product: { connect: { uuid: testUuids.productUuid } },

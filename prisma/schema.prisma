@@ -648,24 +648,26 @@ enum CouponStatus {
 }
 
 model Coupon {
-  uuid                   String                   @id @default(uuid())
-  name                   String
-  productUuid            String
-  product                Product                  @relation(fields: [productUuid], references: [uuid], onDelete: Cascade)
-  appliesTo              CouponsOnPlans[]
-  promotionCodes         PromotionCodes[]
-  discountType           DiscountType
-  currencies             CouponCurrency[]
-  percentOff             Float?
-  duration               CouponDuration
-  durationInMonths       Int?
-  expiresAt              DateTime?
-  maxRedemptions         Int?
-  status                 CouponStatus             @default(ACTIVE)
-  isTest                 Boolean                  @default(false)
-  createdAt              DateTime                 @default(now())
-  updatedAt              DateTime                 @updatedAt
-  couponsOnSubscriptions CouponsOnSubscriptions[]
+  uuid                       String                   @id @default(uuid())
+  name                       String
+  productUuid                String
+  product                    Product                  @relation(fields: [productUuid], references: [uuid], onDelete: Cascade)
+  appliesTo                  CouponsOnPlans[]
+  promotionCodes             PromotionCodes[]
+  discountType               DiscountType
+  currencies                 CouponCurrency[]
+  percentOff                 Float?
+  duration                   CouponDuration
+  durationInMonths           Int?
+  expiresAt                  DateTime?
+  maxRedemptions             Int?
+  paymentIntegrationCouponId String?
+  isRestricted               Boolean                  @default(false)
+  status                     CouponStatus             @default(ACTIVE)
+  isTest                     Boolean                  @default(false)
+  createdAt                  DateTime                 @default(now())
+  updatedAt                  DateTime                 @updatedAt
+  couponsOnSubscriptions     CouponsOnSubscriptions[]
 }
 
 model CouponsOnPlans {
