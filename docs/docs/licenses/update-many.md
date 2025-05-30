@@ -4,7 +4,7 @@ sidebar_position: 9
 
 # Update Many Licenses
 
-This method updates many Licenses with the values passed into the body of the request.
+Deprecated. Use [manage seats](../subscriptions/manage-seats.md).
 
 ## Code Sample
 
