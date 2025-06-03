@@ -39,6 +39,7 @@ export interface StripeEnvsTypes {
   planPerSeatMaximumMonthlyGbpId: string;
   planPerSeatMinimumMonthlyGbpId: string;
   planPerSeatRangeMonthlyGbpId: string;
+  couponId: string;
 }
 
 export default async function createStripeData(): Promise<StripeEnvsTypes> {
@@ -51,7 +52,7 @@ export default async function createStripeData(): Promise<StripeEnvsTypes> {
   }
 
   const stripeConnect = new Stripe(STRIPE_KEY, {
-    apiVersion: '2023-10-16',
+    apiVersion: '2024-06-20',
     stripeAccount: process.env.STRIPE_ACCOUNT_ID,
   });
   const stripePaymentMethod = await stripeConnect.paymentMethods.create({
@@ -213,6 +214,11 @@ export default async function createStripeData(): Promise<StripeEnvsTypes> {
     product: stripeProductWidgetOne.id,
     amount: 2500,
   });
+  const coupon = await stripeConnect.coupons.create({
+    duration: 'repeating',
+    duration_in_months: 3,
+    percent_off: 10
+  });
   for (let i = 10; i < 10; i++) {
     await stripeConnect.invoiceItems.create({
       customer: stripeCustomer.id,
@@ -266,5 +272,6 @@ export default async function createStripeData(): Promise<StripeEnvsTypes> {
     proSubscriptionId: stripeProSubscription.id,
     proSubscriptionLineItemId: stripeProSubscription.items.data[0].id,
     basicSubscriptionFourLineItemId: stripeBasicSubscriptionFour.items.data[0].id,
+    couponId: coupon.id,
   };
 }
