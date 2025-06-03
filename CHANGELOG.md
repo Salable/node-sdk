@@ -1,3 +1,10 @@
+# [4.9.0](https://github.com/Salable/node-sdk/compare/v4.8.0...v4.9.0) (2025-06-03)
+
+
+### Features
+
+* added add and remove coupons methods to subscription resource ([abce354](https://github.com/Salable/node-sdk/commit/abce354103426a8e76ae9db09dfcf24757a9376c))
+
 # [4.8.0](https://github.com/Salable/node-sdk/compare/v4.7.0...v4.8.0) (2025-05-22)
 
 
