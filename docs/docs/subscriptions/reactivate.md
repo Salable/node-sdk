@@ -1,8 +1,8 @@
 ---
-sidebar_position: 11
+sidebar_position: 15
 ---
 
-# Reactivate a Subscription
+# Reactivate
 
 This method reactivates a subscription scheduled for cancellation before the billing period has passed.
 

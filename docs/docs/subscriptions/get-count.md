@@ -2,7 +2,7 @@
 sidebar_position: 5
 ---
 
-# Get Subscription Seat Count
+# Get seat count
 
 This method returns the aggregate number of seats. The response is broken down by assigned, unassigned and the total. Seats with the status `CANCELED` are ignored.
 

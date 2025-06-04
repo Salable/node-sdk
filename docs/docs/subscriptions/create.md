@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Create Subscription
+# Create
 
 Create a subscription with no payment integration.
 

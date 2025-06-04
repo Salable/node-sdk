@@ -1,8 +1,8 @@
 ---
-sidebar_position: 8
+sidebar_position: 9
 ---
 
-# Get a Customer Portal Link for a Subscription
+# Get customer portal link
 
 Returns the customer portal link for a subscription.
 
@@ -26,4 +26,4 @@ The UUID of the subscription to be returned
 
 ## Return Type
 
-For more information about this request see our API documentation on [Subscription Portal Link Object](https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptionCustomerPortalLink)
+For more information about this request, see our API documentation on [Subscription Portal Link Object](https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptionCustomerPortalLink)

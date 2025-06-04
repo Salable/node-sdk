@@ -1,10 +1,10 @@
 ---
-sidebar_position: 5
+sidebar_position: 6
 ---
 
-# Get Switchable Plans for a Subscribed User
+# Get switchable plans
 
-Returns the details of a single subscription.
+Returns the available plans the customer on the subscription can switch to.
 
 ## Code Sample
 
@@ -26,4 +26,4 @@ The UUID of the subscription
 
 ## Return Type
 
-For more information about this request see our API documentation on [Subscription Object](https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptionUpdatablePlans)
+For more information about this request, see our API documentation on [Subscription Object](https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptionUpdatablePlans)

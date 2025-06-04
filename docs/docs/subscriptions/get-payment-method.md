@@ -1,8 +1,8 @@
 ---
-sidebar_position: 10
+sidebar_position: 8
 ---
 
-# Get a Subscription Payment Method
+# Get payment method
 
 Returns the payment method used to pay for a subscription.
 
@@ -26,4 +26,4 @@ The UUID of the subscription
 
 ## Return Type
 
-For more information about this request see our API documentation on [Subscription Payment Method Object](https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptionPaymentMethod)
+For more information about this request, see our API documentation on [Subscription Payment Method Object](https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptionPaymentMethod)
