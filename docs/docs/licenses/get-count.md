@@ -6,6 +6,12 @@ sidebar_position: 5
 
 This method returns aggregate count number of Licenses.
 
+:::danger
+
+Deprecated. Use [subscription count](../subscriptions/get-count.md).
+
+:::
+
 ## Code Sample
 
 ```typescript
