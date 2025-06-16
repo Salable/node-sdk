@@ -31,9 +31,9 @@ model Product {
   subscriptions                      Subscription[]
   currencies                         CurrenciesOnProduct[]
   updatedAt                          DateTime                        @default(now()) @updatedAt
+  archivedAt                         DateTime?
   isTest                             Boolean                         @default(false)
   coupons                            Coupon[]
-  archivedAt                         DateTime?
 
   @@index([organisation])
   @@index([organisationPaymentIntegrationUuid])
@@ -681,16 +681,6 @@ model CouponsOnPlans {
   @@index([planUuid])
 }
 
-model WebhookEvents {
-  uuid      String   @id @default(uuid())
-  objectId  String
-  eventType String
-  reason    String
-  payload   Json
-  isTest    Boolean
-  createdAt DateTime @default(now())
-}
-
 model CouponsOnSubscriptions {
   coupon           Coupon       @relation(fields: [couponUuid], references: [uuid])
   couponUuid       String
@@ -700,4 +690,80 @@ model CouponsOnSubscriptions {
   @@id([couponUuid, subscriptionUuid])
   @@index([couponUuid])
   @@index([subscriptionUuid])
+}
+
+model WebhookDestinationEventType {
+  uuid            String             @id @default(uuid())
+  event           String
+  destinationUuid String
+  destination     WebhookDestination @relation(fields: [destinationUuid], references: [uuid], onDelete: Cascade)
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+  organisation    String
+
+  @@unique([event, destinationUuid])
+}
+
+model WebhookDestination {
+  uuid         String                        @id @default(uuid())
+  url          String
+  organisation String
+  eventTypes   WebhookDestinationEventType[]
+  secret       Json
+  events       WebhookDestinationEvent[]
+  createdAt    DateTime                      @default(now())
+  updatedAt    DateTime                      @updatedAt
+}
+
+model WebhookEvent {
+  uuid              String                    @id @default(uuid())
+  organisation      String
+  type              String
+  payload           Json
+  destinationEvents WebhookDestinationEvent[]
+  createdAt         DateTime                  @default(now())
+  updatedAt         DateTime                  @updatedAt
+}
+
+model WebhookDestinationEvent {
+  uuid            String                @id @default(uuid())
+  eventUuid       String
+  event           WebhookEvent          @relation(fields: [eventUuid], references: [uuid], onDelete: Cascade)
+  destinationUuid String
+  destination     WebhookDestination    @relation(fields: [destinationUuid], references: [uuid], onDelete: Cascade)
+  attempts        WebhookEventAttempt[]
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+  organisation    String
+
+  @@unique([eventUuid, destinationUuid])
+}
+
+enum WebhookEventAttemptStatus {
+  SUCCESS
+  ERROR
+  PENDING
+}
+
+model WebhookEventAttempt {
+  uuid                 String                    @id @default(uuid())
+  destinationEventUuid String
+  destinationEvent     WebhookDestinationEvent   @relation(fields: [destinationEventUuid], references: [uuid], onDelete: Cascade)
+  attempt              Int
+  status               WebhookEventAttemptStatus @default(PENDING)
+  message              String?
+  createdAt            DateTime                  @default(now())
+  updatedAt            DateTime                  @updatedAt
+  scheduledAt          DateTime?
+  organisation         String
+}
+
+model WebhookEvents {
+  uuid      String   @id @default(uuid())
+  objectId  String
+  eventType String
+  reason    String
+  payload   Json
+  isTest    Boolean
+  createdAt DateTime @default(now())
 }
