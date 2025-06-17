@@ -681,6 +681,16 @@ model CouponsOnPlans {
   @@index([planUuid])
 }
 
+model WebhookEvents {
+  uuid      String   @id @default(uuid())
+  objectId  String
+  eventType String
+  reason    String
+  payload   Json
+  isTest    Boolean
+  createdAt DateTime @default(now())
+}
+
 model CouponsOnSubscriptions {
   coupon           Coupon       @relation(fields: [couponUuid], references: [uuid])
   couponUuid       String
@@ -756,14 +766,4 @@ model WebhookEventAttempt {
   updatedAt            DateTime                  @updatedAt
   scheduledAt          DateTime?
   organisation         String
-}
-
-model WebhookEvents {
-  uuid      String   @id @default(uuid())
-  objectId  String
-  eventType String
-  reason    String
-  payload   Json
-  isTest    Boolean
-  createdAt DateTime @default(now())
 }
