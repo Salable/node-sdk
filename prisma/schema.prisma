@@ -703,7 +703,7 @@ model CouponsOnSubscriptions {
 }
 
 model WebhookDestinationEventType {
-  uuid            String             @id @default(uuid())
+  uuid            String             @id @default(uuid(7))
   event           String
   destinationUuid String
   destination     WebhookDestination @relation(fields: [destinationUuid], references: [uuid], onDelete: Cascade)
@@ -715,7 +715,7 @@ model WebhookDestinationEventType {
 }
 
 model WebhookDestination {
-  uuid         String                        @id @default(uuid())
+  uuid         String                        @id @default(uuid(7))
   url          String
   organisation String
   eventTypes   WebhookDestinationEventType[]
@@ -726,7 +726,7 @@ model WebhookDestination {
 }
 
 model WebhookEvent {
-  uuid              String                    @id @default(uuid())
+  uuid              String                    @id @default(uuid(7))
   organisation      String
   type              String
   payload           Json
@@ -736,7 +736,7 @@ model WebhookEvent {
 }
 
 model WebhookDestinationEvent {
-  uuid            String                @id @default(uuid())
+  uuid            String                @id @default(uuid(7))
   eventUuid       String
   event           WebhookEvent          @relation(fields: [eventUuid], references: [uuid], onDelete: Cascade)
   destinationUuid String
@@ -756,7 +756,7 @@ enum WebhookEventAttemptStatus {
 }
 
 model WebhookEventAttempt {
-  uuid                 String                    @id @default(uuid())
+  uuid                 String                    @id @default(uuid(7))
   destinationEventUuid String
   destinationEvent     WebhookDestinationEvent   @relation(fields: [destinationEventUuid], references: [uuid], onDelete: Cascade)
   attempt              Int
