@@ -1,3 +1,10 @@
+## [4.9.3](https://github.com/Salable/node-sdk/compare/v4.9.2...v4.9.3) (2025-06-30)
+
+
+### Bug Fixes
+
+* pricing table plan type fix ([4fc0ebc](https://github.com/Salable/node-sdk/commit/4fc0ebc0b4c7a79151fedaf562f00293725b1a55))
+
 ## [4.9.2](https://github.com/Salable/node-sdk/compare/v4.9.1...v4.9.2) (2025-06-30)
 
 
