@@ -1,3 +1,10 @@
+## [4.9.4](https://github.com/Salable/node-sdk/compare/v4.9.3...v4.9.4) (2025-06-30)
+
+
+### Bug Fixes
+
+* product pricing table fix ([08019e5](https://github.com/Salable/node-sdk/commit/08019e5dd0333d67eea0ce6a9058c12c7da7127d))
+
 ## [4.9.3](https://github.com/Salable/node-sdk/compare/v4.9.2...v4.9.3) (2025-06-30)
 
 
