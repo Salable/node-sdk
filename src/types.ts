@@ -605,7 +605,7 @@ export type ProductPricingTable = {
   plans: (Plan & {
     features: PlanFeature[];
     currencies: PlanCurrency[];
-  }[]);
+  })[];
 } & Product;
 
 export type CheckLicensesCapabilitiesResponse = {
