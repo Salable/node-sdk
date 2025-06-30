@@ -543,7 +543,7 @@ export type PricingTablePlan = {
   sortOrder: number;
   updatedAt: string;
   plan: Plan & {
-    features: Feature & { featureEnumOptions: FeatureEnumOption[] }[];
+    features: PlanFeature[];
     currencies: PlanCurrency[];
   };
 };
@@ -602,7 +602,7 @@ export type IOrganisationPaymentIntegration = {
 export type ProductPricingTable = {
   features: IFeature[];
   currencies: ICurrency[];
-  plans: (Plan & { features: IFeature[]; currencies: ICurrency[]; checkoutUrl: string })[];
+  plans: PricingTablePlan[];
 } & Product;
 
 export type CheckLicensesCapabilitiesResponse = {
