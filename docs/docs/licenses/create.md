@@ -4,7 +4,13 @@ sidebar_position: 1
 
 # Create License
 
-This method creates an ad hoc license
+This method creates an ad hoc license.
+
+:::danger
+
+Deprecated. Use [create subscription](../subscriptions/create.md).
+
+:::
 
 ## Code Sample
 
