@@ -709,6 +709,7 @@ model WebhookDestinationEventType {
   destination     WebhookDestination @relation(fields: [destinationUuid], references: [uuid], onDelete: Cascade)
   createdAt       DateTime           @default(now())
   updatedAt       DateTime           @updatedAt
+  deletedAt       DateTime?
   organisation    String
 
   @@unique([event, destinationUuid])
