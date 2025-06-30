@@ -602,7 +602,10 @@ export type IOrganisationPaymentIntegration = {
 export type ProductPricingTable = {
   features: IFeature[];
   currencies: ICurrency[];
-  plans: PricingTablePlan[];
+  plans: Plan & {
+    features: PlanFeature[];
+    currencies: PlanCurrency[];
+  }[];
 } & Product;
 
 export type CheckLicensesCapabilitiesResponse = {
