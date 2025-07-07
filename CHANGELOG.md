@@ -1,3 +1,12 @@
+# [4.10.0](https://github.com/Salable/node-sdk/compare/v4.9.4...v4.10.0) (2025-07-07)
+
+
+### Features
+
+* added deletedAt column ([eb5ee6a](https://github.com/Salable/node-sdk/commit/eb5ee6a3ff70212413079e54a066fd1ee40b6e08))
+* **SD-2145:** added required webhook emitters tables ([af27789](https://github.com/Salable/node-sdk/commit/af27789f8e830f7d75fcc446a23fffab091a18c9))
+* using prismas uuid7 function ([15619cb](https://github.com/Salable/node-sdk/commit/15619cb8fe3b1c5744a0f6345b25f865a7257d94))
+
 ## [4.9.4](https://github.com/Salable/node-sdk/compare/v4.9.3...v4.9.4) (2025-06-30)
 
 
