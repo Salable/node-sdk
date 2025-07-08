@@ -1,3 +1,10 @@
+# [4.11.0](https://github.com/Salable/node-sdk/compare/v4.10.0...v4.11.0) (2025-07-08)
+
+
+### Features
+
+* add sentCount column to webhook event attempt table ([6d1c172](https://github.com/Salable/node-sdk/commit/6d1c172edccbec9934b933ee3795de8e271589d9))
+
 # [4.10.0](https://github.com/Salable/node-sdk/compare/v4.9.4...v4.10.0) (2025-07-07)
 
 
