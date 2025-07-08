@@ -767,4 +767,5 @@ model WebhookEventAttempt {
   updatedAt            DateTime                  @updatedAt
   scheduledAt          DateTime?
   organisation         String
+  sentCount            Int                       @default(0)
 }

@@ -40,7 +40,7 @@ describe('Subscriptions V2 Tests', () => {
       owner: 'example',
       granteeId: 'test-grantee-id',
       status: 'ACTIVE',
-      expiryDate: '2025-07-06T12:00:00.000Z',
+      expiryDate: '2045-07-06T12:00:00.000Z',
     });
 
     expect(data).toEqual(expect.objectContaining(subscriptionSchema));
