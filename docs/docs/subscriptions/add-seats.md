@@ -1,10 +1,10 @@
 ---
-sidebar_position: 12
+sidebar_position: 11
 ---
 
-# Increment Subscription Seats
+# Add seats
 
-Adds seats to a Subscription. Initially the seats will be unassigned. To assign granteeIds to the seats use the [update many](../licenses/update-many.md) method.
+Adds seats to a Subscription. Initially, the seats will be unassigned. To assign grantees to the seats, use the [manage seats](./manage-seats.md) method.
 
 ## Code Sample
 

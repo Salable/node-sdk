@@ -1,8 +1,8 @@
 ---
-sidebar_position: 7
+sidebar_position: 10
 ---
 
-# Get a Subscription Update Payment Link
+# Get update payment link
 
 Returns the update payment link for a specific subscription.
 
@@ -26,4 +26,4 @@ The UUID of the subscription
 
 ## Return Type
 
-For more information about this request see our API documentation on [Subscription Payment Link Object](https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptionUpdatePaymentLink)
+For more information about this request, see our API documentation on [Subscription Payment Link Object](https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptionUpdatePaymentLink)

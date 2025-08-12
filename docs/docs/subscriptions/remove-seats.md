@@ -1,8 +1,8 @@
 ---
-sidebar_position: 13
+sidebar_position: 12
 ---
 
-# Remove Subscription Seats
+# Remove seats
 
 Remove seats from a Subscription. Seats can only be removed if they are unassigned. To unassign seats use the [update many](../licenses/update-many.md) method to set the `granteeId` of each seat to `null`.
 

@@ -1,8 +1,8 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 ---
 
-# Get One Subscription
+# Get a subscription
 
 Returns the details of a single subscription.
 

@@ -2,7 +2,7 @@
 sidebar_position: 9
 ---
 
-# Get Cancel Subscription Link
+# Get cancel link
 
 Returns a link to cancel a specific subscription.
 
@@ -26,4 +26,4 @@ The UUID of the subscription
 
 ## Return Type
 
-For more information about this request see our API documentation on [Cancel Subscription Link Object](https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptionCancelLink)
+For more information about this request, see our API documentation on [Cancel Subscription Link Object](https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptionCancelLink)
