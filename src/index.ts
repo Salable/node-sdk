@@ -1,9 +1,9 @@
 import { ErrorCodes, ResponseError, SalableParseError, SalableRequestError, SalableResponseError, SalableUnknownError, SalableValidationError, ValidationError } from './exceptions/salable-error';
 import { licensesInit, LicenseVersionedMethods } from './licenses';
-import { subscriptionsInit, SubscriptionVersionedMethods } from '../src/subscriptions';
-import { plansInit, PlanVersionedMethods } from '../src/plans';
-import { productsInit, ProductVersionedMethods } from '../src/products';
-import { pricingTablesInit, PricingTableVersionedMethods } from '../src/pricing-tables';
+import { subscriptionsInit, SubscriptionVersionedMethods } from './subscriptions';
+import { plansInit, PlanVersionedMethods } from './plans';
+import { productsInit, ProductVersionedMethods } from './products';
+import { pricingTablesInit, PricingTableVersionedMethods } from './pricing-tables';
 import { UsageVersionedMethods, usageInit } from './usage';
 import { eventsInit, EventVersionedMethods } from './events';
 import { sessionsInit, SessionVersionedMethods } from './sessions';
@@ -13,6 +13,7 @@ export type { ResponseError, ValidationError } from './exceptions/salable-error'
 
 export const Version = {
   V2: 'v2',
+  V3: 'v3',
 } as const;
 
 export type TVersion = (typeof Version)[keyof typeof Version];
@@ -59,7 +60,7 @@ export default class Salable<V extends TVersion> {
   plans: PlanVersionedMethods<V>;
   pricingTables: PricingTableVersionedMethods<V>;
   subscriptions: SubscriptionVersionedMethods<V>;
-  licenses: LicenseVersionedMethods<V>;
+  licenses: LicenseVersionedMethods<V> | undefined;
   usage: UsageVersionedMethods<V>;
   events: EventVersionedMethods<V>;
   sessions: SessionVersionedMethods<V>
@@ -71,7 +72,9 @@ export default class Salable<V extends TVersion> {
     this.plans = plansInit(version, request);
     this.pricingTables = pricingTablesInit(version, request);
     this.subscriptions = subscriptionsInit(version, request);
-    this.licenses = licensesInit(version, request);
+    if (version === 'v2') {
+      this.licenses = licensesInit(version, request);
+    }
     this.usage = usageInit(version, request);
     this.events = eventsInit(version, request);
     this.sessions = sessionsInit(version, request);

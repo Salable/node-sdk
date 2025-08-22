@@ -239,6 +239,7 @@ export default async function createTestData(stripeEnvs: StripeEnvsTypes) {
           accountId: process.env.STRIPE_ACCOUNT_ID,
           accountName: 'Widgy Widgets',
           integrationName: 'salable',
+          status: 'active',
           isTest: true,
           accountData: {},
         },
@@ -289,6 +290,7 @@ export default async function createTestData(stripeEnvs: StripeEnvsTypes) {
           integrationName: 'salable',
           isTest: true,
           accountData: {},
+          status: 'active',
         },
       },
       currencies: {

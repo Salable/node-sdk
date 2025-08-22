@@ -1,5 +1,6 @@
 import { Plan, Product, ProductCapability, ProductCurrency, ProductFeature, ProductPricingTable, ApiRequest, TVersion, Version } from '../types';
 import { v2ProductMethods } from './v2';
+import { v3ProductMethods } from './v3';
 
 export type ProductVersions = {
   [Version.V2]: {
@@ -76,6 +77,36 @@ export type ProductVersions = {
      */
     getCurrencies(productUuid: string): Promise<ProductCurrency[]>;
   };
+  [Version.V3]: {
+    /**
+     *  Retrieves a list of all products
+     *
+     * Docs - https://docs.salable.app/api/v2#tag/Products/operation/getProducts
+     *
+     * @returns {Promise<Product[]>} All products present on the account
+     */
+    getAll: () => Promise<Product[]>;
+
+    /**
+     *  Retrieves a specific product by its UUID. By default, the response does not contain any relational data. If you want to expand the relational data, you can do so with the `expand` query parameter.
+     *
+     *  @param {string} productUuid - The UUID for the pricingTable
+     *  @param {{ expand: string[]}} options - (Optional) Filter parameters. See https://docs.salable.app/api/v2#tag/Products/operation/getProductByUuid
+     *
+     * @returns {Promise<Product>}
+     */
+    getOne: (productUuid: string, options?: { expand: ('features' | 'currencies' | 'organisationPaymentIntegration' | 'plans')[] }) => Promise<Product>;
+
+    /**
+     *  Retrieves all the plans associated with a specific product. By default, the response does not contain any relational data. If you want to expand the relational data, you can do so with the expand query parameter.
+     *
+     *  @param {string} productUuid - The UUID for the pricingTable
+     *  @param {{ granteeId?: string; currency?: string }} options - (Optional) Filter parameters. See https://docs.salable.app/api/v2#tag/Products/operation/getProductPricingTable
+     *
+     * @returns {Promise<ProductPricingTable>}
+     */
+    getPricingTable: (productUuid: string, options: { owner: string; currency?: 'GBP' | 'USD' | 'EUR' | 'CAD' }) => Promise<ProductPricingTable>;
+  };
 };
 
 export type ProductVersionedMethods<V extends TVersion> = V extends keyof ProductVersions ? ProductVersions[V] : never;
@@ -84,6 +115,8 @@ export const productsInit = <V extends TVersion>(version: V, request: ApiRequest
   switch (version) {
     case Version.V2:
       return v2ProductMethods(request) as ProductVersionedMethods<V>;
+    case Version.V3:
+      return v3ProductMethods(request) as ProductVersionedMethods<V>;
     default:
       throw new Error('Unsupported version');
   }

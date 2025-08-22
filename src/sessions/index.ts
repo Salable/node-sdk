@@ -14,6 +14,7 @@ export type SessionVersions = {
      */
     create: <T extends SessionScope>(data: { scope: T; metadata: SessionMetaData<T> }) => Promise<Session>;
   };
+  [Version.V3]: SessionVersions['v2']
 };
 
 export type SessionVersionedMethods<V extends TVersion> = V extends keyof SessionVersions ? SessionVersions[V] : never;
@@ -21,6 +22,7 @@ export type SessionVersionedMethods<V extends TVersion> = V extends keyof Sessio
 export const sessionsInit = <V extends TVersion>(version: V, request: ApiRequest): SessionVersionedMethods<V> => {
   switch (version) {
     case Version.V2:
+    case Version.V3:
       return v2SessionMethods(request) as SessionVersionedMethods<V>;
     default:
       throw new Error('Unsupported version');
