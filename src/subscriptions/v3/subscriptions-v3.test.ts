@@ -1,10 +1,8 @@
 import prismaClient from '../../../test-utils/prisma/prisma-client';
-import Salable from '../..';
 import {
   PaginatedSubscription,
   Invoice,
   PaginatedSubscriptionInvoice,
-  Version,
   PaginatedLicenses,
   SeatActionType,
 } from '../../types';
@@ -18,6 +16,7 @@ import {
   PlanSchemaV3, SubscriptionSchema
 } from '../../schemas/v3/schemas-v3';
 import { addMonths } from 'date-fns';
+import { initSalable } from '../../index';
 
 const stripeEnvs = JSON.parse(process.env.stripEnvs || '');
 
@@ -25,14 +24,14 @@ const basicSubscriptionUuid = randomUUID();
 const perSeatSubscriptionUuid = randomUUID();
 const couponUuid = randomUUID();
 const perSeatBasicLicenseUuids = [randomUUID(), randomUUID(), randomUUID(), randomUUID(), randomUUID(), randomUUID()];
-const testGrantee = '123456';
-const testEmail = 'tester@domain.com';
-const owner = 'subscription-owner';
+const testGrantee = randomUUID();
+const testEmail = randomUUID();
+const owner = randomUUID();
+const differentOwner = randomUUID();
 
 describe('Subscriptions V3 Tests', () => {
   const apiKey = testUuids.devApiKeyV2;
-  const version = Version.V3;
-  const salable = new Salable(apiKey, version);
+  const salable = initSalable(apiKey, 'v3');
 
   beforeAll(async () => {
     await generateTestData();
@@ -62,7 +61,7 @@ describe('Subscriptions V3 Tests', () => {
     const dataWithSearchParams = await salable.subscriptions.getAll({
       status: 'ACTIVE',
       take: 3,
-      email: testEmail,
+      owner,
       expand: ['plan'],
     });
     expect(dataWithSearchParams.first).toEqual(expect.any(String))
@@ -73,7 +72,7 @@ describe('Subscriptions V3 Tests', () => {
         {
           ...SubscriptionSchema,
           status: 'ACTIVE',
-          email: testEmail,
+          owner,
           plan: PlanSchemaV3
         },
       ]),
@@ -85,13 +84,14 @@ describe('Subscriptions V3 Tests', () => {
       sort: 'desc',
       productUuid: testUuids.productUuid,
       planUuid: testUuids.paidPlanTwoUuid,
+      take: 4
     });
     expect(dataWithSearchParams).toEqual({
       first: expect.any(String),
       last: expect.any(String),
       data: expect.arrayContaining([SubscriptionSchema]),
     });
-    expect(dataWithSearchParams.data.length).toEqual(2);
+    expect(dataWithSearchParams.data.length).toEqual(4);
     expect(dataWithSearchParams.data).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
@@ -105,7 +105,7 @@ describe('Subscriptions V3 Tests', () => {
 
   it('getAll (w/ search params owner): Should successfully fetch subscriptions', async () => {
     const dataWithSearchParams = await salable.subscriptions.getAll({
-      owner: 'different-owner',
+      owner: differentOwner,
     });
     expect(dataWithSearchParams).toEqual({
       first: expect.any(String),
@@ -113,7 +113,7 @@ describe('Subscriptions V3 Tests', () => {
       data: expect.arrayContaining([SubscriptionSchema]),
     });
     expect(dataWithSearchParams.data.length).toEqual(1);
-    expect(dataWithSearchParams.data).toEqual([{ ...SubscriptionSchema, owner: 'different-owner' }]);
+    expect(dataWithSearchParams.data).toEqual([{ ...SubscriptionSchema, owner: differentOwner }]);
   });
 
   it("getSeats: Should successfully fetch a subscription's seats", async () => {
@@ -217,12 +217,12 @@ describe('Subscriptions V3 Tests', () => {
   });
 
   it('addCoupon: Should successfully add the specified coupon to the subscription', async () => {
-    const data = await salable.subscriptions.addCoupon(testUuids.couponSubscriptionUuid, { couponUuid });
+    const data = await salable.subscriptions.addCoupon(testUuids.couponSubscriptionUuidV3, { couponUuid });
     expect(data).toBeUndefined();
   });
 
   it('removeCoupon: Should successfully remove the specified coupon from the subscription', async () => {
-    const data = await salable.subscriptions.removeCoupon(testUuids.couponSubscriptionUuid, { couponUuid });
+    const data = await salable.subscriptions.removeCoupon(testUuids.couponSubscriptionUuidV3, { couponUuid });
     expect(data).toBeUndefined();
   });
   
@@ -400,6 +400,77 @@ const generateTestData = async () => {
       lineItemIds: [],
       email: testEmail,
       owner,
+      type: 'none',
+      status: 'ACTIVE',
+      organisation: testUuids.organisationId,
+      license: {
+        create: {
+          name: null,
+          email: null,
+          status: 'ACTIVE',
+          granteeId: testGrantee,
+          paymentService: 'ad-hoc',
+          purchaser: 'tester@testing.com',
+          type: 'licensed',
+          metadata: undefined,
+          plan: { connect: { uuid: testUuids.paidPlanTwoUuid } },
+          product: { connect: { uuid: testUuids.productUuid } },
+          startTime: undefined,
+          capabilities: [],
+          endTime: addMonths(new Date(), 1),
+        }
+      },
+      product: { connect: { uuid: testUuids.productUuid } },
+      plan: { connect: { uuid: testUuids.paidPlanTwoUuid } },
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      expiryDate: addMonths(new Date(), 1),
+    },
+  });
+
+  const testSubscriptionUuid = randomUUID();
+  await prismaClient.subscription.create({
+    data: {
+      uuid: testSubscriptionUuid,
+      paymentIntegrationSubscriptionId: testSubscriptionUuid,
+      lineItemIds: [],
+      email: testEmail,
+      owner,
+      type: 'none',
+      status: 'ACTIVE',
+      organisation: testUuids.organisationId,
+      license: {
+        create: {
+          name: null,
+          email: null,
+          status: 'ACTIVE',
+          granteeId: testGrantee,
+          paymentService: 'ad-hoc',
+          purchaser: 'tester@testing.com',
+          type: 'licensed',
+          metadata: undefined,
+          plan: { connect: { uuid: testUuids.paidPlanTwoUuid } },
+          product: { connect: { uuid: testUuids.productUuid } },
+          startTime: undefined,
+          capabilities: [],
+          endTime: addMonths(new Date(), 1),
+        }
+      },
+      product: { connect: { uuid: testUuids.productUuid } },
+      plan: { connect: { uuid: testUuids.paidPlanTwoUuid } },
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      expiryDate: addMonths(new Date(), 1),
+    },
+  });
+  const differentOwnerSubscriptionUuid = randomUUID();
+  await prismaClient.subscription.create({
+    data: {
+      uuid: differentOwnerSubscriptionUuid,
+      paymentIntegrationSubscriptionId: differentOwnerSubscriptionUuid,
+      lineItemIds: [],
+      email: testEmail,
+      owner: differentOwner,
       type: 'none',
       status: 'ACTIVE',
       organisation: testUuids.organisationId,

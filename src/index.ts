@@ -1,12 +1,24 @@
 import { ErrorCodes, ResponseError, SalableParseError, SalableRequestError, SalableResponseError, SalableUnknownError, SalableValidationError, ValidationError } from './exceptions/salable-error';
-import { licensesInit, LicenseVersionedMethods } from './licenses';
-import { subscriptionsInit, SubscriptionVersionedMethods } from './subscriptions';
-import { plansInit, PlanVersionedMethods } from './plans';
-import { productsInit, ProductVersionedMethods } from './products';
-import { pricingTablesInit, PricingTableVersionedMethods } from './pricing-tables';
-import { UsageVersionedMethods, usageInit } from './usage';
-import { eventsInit, EventVersionedMethods } from './events';
-import { sessionsInit, SessionVersionedMethods } from './sessions';
+import { LicenseVersionedMethods } from './licenses';
+import { SubscriptionVersionedMethods } from './subscriptions';
+import { PlanVersionedMethods } from './plans';
+import { ProductVersionedMethods } from './products';
+import { PricingTableVersionedMethods } from './pricing-tables';
+import { UsageVersionedMethods } from './usage';
+import { EventVersionedMethods } from './events';
+import { SessionVersionedMethods } from './sessions';
+import { v2EventMethods } from './events/v2';
+import { v2LicenseMethods } from './licenses/v2';
+import { v2PlanMethods } from './plans/v2';
+import { v2PricingTableMethods } from './pricing-tables/v2';
+import { v2ProductMethods } from './products/v2';
+import { v2SessionMethods } from './sessions/v2';
+import { v2SubscriptionMethods } from './subscriptions/v2';
+import { v2UsageMethods } from './usage/v2';
+import { v3PlanMethods } from './plans/v3';
+import { v3PricingTableMethods } from './pricing-tables/v3';
+import { v3ProductMethods } from './products/v3';
+import { v3SubscriptionMethods } from './subscriptions/v3';
 
 export { ErrorCodes, SalableParseError, SalableRequestError, SalableResponseError, SalableUnknownError, SalableValidationError } from './exceptions/salable-error';
 export type { ResponseError, ValidationError } from './exceptions/salable-error';
@@ -55,38 +67,62 @@ export const initRequest: ApiFetch =
     }
   };
 
+type Methods = {
+  [Version.V2] : {
+    licenses: LicenseVersionedMethods<'v2'>
+    events: EventVersionedMethods<'v2'>
+    subscriptions: SubscriptionVersionedMethods<'v2'>
+    plans: PlanVersionedMethods<'v2'>
+    pricingTables: PricingTableVersionedMethods<'v2'>
+    products: ProductVersionedMethods<'v2'>
+    sessions: SessionVersionedMethods<'v2'>
+    usage: UsageVersionedMethods<'v2'>
+  },
+  [Version.V3] : {
+    events: EventVersionedMethods<'v3'>
+    subscriptions: SubscriptionVersionedMethods<'v3'>
+    plans: PlanVersionedMethods<'v3'>
+    pricingTables: PricingTableVersionedMethods<'v3'>
+    products: ProductVersionedMethods<'v3'>
+    sessions: SessionVersionedMethods<'v3'>
+    usage: UsageVersionedMethods<'v3'>
+  }
+}
+export type VersionedMethods<V extends TVersion> = V extends keyof Methods ? Methods[V] : never;
 
-interface SalableMethods<V extends TVersion> {
-  // version: V;
-  products: ProductVersionedMethods<V>;
-  plans: PlanVersionedMethods<V>;
-  pricingTables: PricingTableVersionedMethods<V>;
-  subscriptions: SubscriptionVersionedMethods<V>;
-  usage: UsageVersionedMethods<V>;
-  events: EventVersionedMethods<V>;
-  sessions: SessionVersionedMethods<V>;
+function versionedMethods(request: ApiRequest): Methods {
+  return {
+    v2: {
+      events: v2EventMethods(request),
+      licenses: v2LicenseMethods(request),
+      subscriptions: v2SubscriptionMethods(request),
+      plans: v2PlanMethods(request),
+      pricingTables: v2PricingTableMethods(request),
+      products: v2ProductMethods(request),
+      sessions: v2SessionMethods(request),
+      usage: v2UsageMethods(request),
+    },
+    v3: {
+      events: v2EventMethods(request),
+      subscriptions: v3SubscriptionMethods(request),
+      plans: v3PlanMethods(request),
+      pricingTables: v3PricingTableMethods(request),
+      products: v3ProductMethods(request),
+      sessions: v2SessionMethods(request),
+      usage: v2UsageMethods(request),
+    },
+  };
 }
 
-
-export default class Salable<V extends TVersion> implements SalableMethods<V> {
-  products: ProductVersionedMethods<V>;
-  plans: PlanVersionedMethods<V>;
-  pricingTables: PricingTableVersionedMethods<V>;
-  subscriptions: SubscriptionVersionedMethods<V>;
-  usage: UsageVersionedMethods<V>;
-  events: EventVersionedMethods<V>;
-  sessions: SessionVersionedMethods<V>;
-
+class SalableBase<V extends TVersion> {
   constructor(apiKey: string, version: V) {
     const request = initRequest(apiKey, version);
-
-    this.products = productsInit(version, request);
-    this.plans = plansInit(version, request);
-    this.pricingTables = pricingTablesInit(version, request);
-    this.subscriptions = subscriptionsInit(version, request);
-    if (version === 'v2') this.licenses = licensesInit(version, request);
-    this.usage = usageInit(version, request);
-    this.events = eventsInit(version, request);
-    this.sessions = sessionsInit(version, request);
+    const versioned = versionedMethods(request)[version];
+    if (!versioned) throw new Error('Unknown Version ' + version);
+    return versioned;
   }
+}
+
+export function initSalable<V extends TVersion>(apiKey: string, version: V): SalableBase<V> & VersionedMethods<V> {
+  return new SalableBase(apiKey, version) as SalableBase<V> & VersionedMethods<V>;
 }

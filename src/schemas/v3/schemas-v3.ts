@@ -1,13 +1,4 @@
-import {
-  EnumValue,
-  FeatureV3, LicenseV3, OrganisationPaymentIntegrationV3,
-  PlanCurrency,
-  PlanFeatureV3,
-  PlanV3,
-  ProductCurrency,
-  ProductPricingTableV3,
-  ProductV3, Subscription
-} from '../../types';
+import { EnumValue, FeatureV3, LicenseV3, OrganisationPaymentIntegrationV3, PlanCurrency, PlanFeatureV3, PlanV3, PricingTableV3, ProductCurrency, ProductPricingTableV3, ProductV3, Subscription } from '../../types';
 
 export const ProductSchemaV3: ProductV3 = {
   uuid: expect.any(String),
@@ -166,4 +157,29 @@ export const SubscriptionSchema: Subscription = {
   expiryDate: expect.any(String),
   lineItemIds: expect.toBeOneOf([expect.toBeArray(), null]),
   planUuid: expect.any(String),
+};
+
+export const PricingTableSchemaV3: PricingTableV3 = {
+  productUuid: expect.any(String),
+  featuredPlanUuid: expect.toBeOneOf([expect.any(String), null]),
+  status: expect.any(String),
+  updatedAt: expect.any(String),
+  uuid: expect.any(String),
+  featureOrder: expect.any(String),
+  product: {
+    ...ProductSchemaV3,
+    features: expect.arrayContaining([FeatureSchemaV3]),
+    currencies: expect.arrayContaining([ProductCurrencySchema]),
+  },
+  plans: expect.arrayContaining([{
+    planUuid: expect.any(String),
+    pricingTableUuid: expect.any(String),
+    sortOrder: expect.any(Number),
+    updatedAt: expect.any(String),
+    plan: {
+      ...PlanSchemaV3,
+      features: expect.arrayContaining([PlanFeatureSchemaV3]),
+      currencies: expect.arrayContaining([PlanCurrencySchema]),
+    }
+  }]),
 };

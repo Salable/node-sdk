@@ -378,14 +378,9 @@ export type PricingTable = {
 
 export type PricingTableV3 = {
   uuid: string;
-  name: string;
   status: ProductStatus;
-  title: string | null;
-  text: string | null;
-  theme: 'light' | 'dark' | string;
   featureOrder: string;
   productUuid: string;
-  customTheme: string;
   featuredPlanUuid: string;
   updatedAt: string;
   product: ProductV3 & { features: Feature[]; currencies: ProductCurrency[] };
@@ -458,6 +453,23 @@ export type GetPlanOptionsV3 = {
 };
 
 export type GetPlanCheckoutOptions = {
+  successUrl: string;
+  cancelUrl: string;
+  granteeId: string;
+  member?: string;
+  owner?: string;
+  promoCode?: string;
+  allowPromoCode?: boolean;
+  customerEmail?: string;
+  customerId?: string;
+  currency?: string;
+  automaticTax?: string;
+  quantity?: string;
+  changeQuantity?: string;
+  requirePaymentMethod?: boolean;
+};
+
+export type GetPlanCheckoutOptionsV3 = {
   successUrl: string;
   cancelUrl: string;
   granteeId: string;

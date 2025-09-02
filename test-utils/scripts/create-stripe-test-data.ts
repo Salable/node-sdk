@@ -23,14 +23,14 @@ export interface StripeEnvsTypes {
   planBasicMonthlyUsdId: string;
   planTwoBasicMonthlyUsdId: string;
   planProMonthlyUsdId: string;
-  basicSubscriptionId: string;
-  basicSubscriptionTwoId: string;
-  basicSubscriptionThreeId: string;
-  basicSubscriptionFourId: string;
-  basicSubscriptionLineItemId: string;
-  basicSubscriptionTwoLineItemId: string;
-  basicSubscriptionThreeLineItemId: string;
-  basicSubscriptionFourLineItemId: string;
+  subscriptionWithInvoicesId: string;
+  subscriptionV2Id: string;
+  subscriptionWithCouponV2Id: string;
+  subscriptionWithCouponV3Id: string;
+  subscriptionWithInvoicesLineItemId: string;
+  subscriptionV2LineItemId: string;
+  subscriptionWithCouponV2LineItemId: string;
+  subscriptionWithCouponV3LineItemId: string;
   perSeatBasicSubscriptionId: string;
   perSeatBasicSubscriptionLineItemId: string;
   proSubscriptionId: string;
@@ -264,20 +264,20 @@ export default async function createStripeData(): Promise<StripeEnvsTypes> {
     planBasicYearlyGbpId: stripePlanBasicYearlyGbp.id,
     perSeatBasicSubscriptionId: stripePerSeatBasicSubscription.id,
     perSeatBasicSubscriptionLineItemId: stripePerSeatBasicSubscription.items.data[0].id,
-    basicSubscriptionId: stripeBasicSubscription.id,
-    basicSubscriptionLineItemId: stripeBasicSubscription.items.data[0].id,
-    basicSubscriptionTwoId: stripeBasicSubscriptionTwo.id,
-    basicSubscriptionTwoLineItemId: stripeBasicSubscriptionTwo.items.data[0].id,
-    basicSubscriptionThreeId: stripeBasicSubscriptionThree.id,
-    basicSubscriptionFourId: stripeBasicSubscriptionFour.id,
-    basicSubscriptionThreeLineItemId: stripeBasicSubscriptionThree.items.data[0].id,
+    subscriptionWithInvoicesId: stripeBasicSubscription.id,
+    subscriptionWithInvoicesLineItemId: stripeBasicSubscription.items.data[0].id,
+    subscriptionV2Id: stripeBasicSubscriptionTwo.id,
+    subscriptionV2LineItemId: stripeBasicSubscriptionTwo.items.data[0].id,
+    subscriptionWithCouponV2Id: stripeBasicSubscriptionThree.id,
+    subscriptionWithCouponV3Id: stripeBasicSubscriptionFour.id,
+    subscriptionWithCouponV2LineItemId: stripeBasicSubscriptionThree.items.data[0].id,
     planProMonthlyGbpId: stripePlanProGbpMonthly.id,
     planBasicMonthlyUsdId: stripePlanBasicUsdMonthly.id,
     planTwoBasicMonthlyUsdId: stripePlanTwoBasicUsdMonthly.id,
     planProMonthlyUsdId: stripePlanProUsdMonthly.id,
     proSubscriptionId: stripeProSubscription.id,
     proSubscriptionLineItemId: stripeProSubscription.items.data[0].id,
-    basicSubscriptionFourLineItemId: stripeBasicSubscriptionFour.items.data[0].id,
+    subscriptionWithCouponV3LineItemId: stripeBasicSubscriptionFour.items.data[0].id,
     couponId: coupon.id,
     couponV3Id: couponV3.id,
   };

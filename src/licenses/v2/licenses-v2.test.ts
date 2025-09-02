@@ -1,28 +1,28 @@
-import Salable from '../..';
-import { Capability, License, PaginatedLicenses, Plan, Version } from '../../types';
+import { Capability, License, PaginatedLicenses, Plan } from '../../types';
 import prismaClient from '../../../test-utils/prisma/prisma-client';
 import { testUuids } from '../../../test-utils/scripts/create-salable-test-data';
 import getEndTime from '../../../test-utils/helpers/get-end-time';
-import { v4 as uuidv4 } from 'uuid';
+import { initSalable } from '../../index';
+import { randomUUID } from 'crypto';
+import { addMonths } from 'date-fns';
 
-const stripeEnvs = JSON.parse(process.env.stripEnvs || '');
-
-const version = Version.V2;
-
-const licenseUuid = uuidv4();
-const licenseTwoUuid = uuidv4();
-const licenseThreeUuid = uuidv4();
-const activeLicenseUuid = uuidv4();
-const noSubLicenseUuid = uuidv4();
-const noSubLicenseTwoUuid = uuidv4();
-const noSubLicenseThreeUuid = uuidv4();
-const subscriptionUuid = uuidv4();
-const testPurchaser = 'tester@testing.com';
-const testGrantee = '123456';
-const owner = 'subscription-owner'
+const licenseUuid = randomUUID();
+const licenseTwoUuid = randomUUID();
+const licenseThreeUuid = randomUUID();
+const activeLicenseUuid = randomUUID();
+const noSubLicenseUuid = randomUUID();
+const noSubLicenseTwoUuid = randomUUID();
+const noSubLicenseThreeUuid = randomUUID();
+const subscriptionUuid = randomUUID();
+const testPurchaser = randomUUID();
+const testGrantee = randomUUID();
+const owner = randomUUID();
+const organisation = randomUUID();
 
 describe('Licenses V2 Tests', () => {
-  const salable = new Salable(testUuids.devApiKeyV2, version);
+  const salable = initSalable(testUuids.devApiKeyV2, 'v2');
+
+  // TODO: add entitlements method for v3
 
   beforeAll(async () => {
     await generateTestData();
@@ -180,7 +180,7 @@ describe('Licenses V2 Tests', () => {
   it('updateMany: Should successfully update multiple licenses', async () => {
     const data = await salable.licenses.updateMany([
       {
-        uuid: noSubLicenseTwoUuid,
+        uuid: noSubLicenseUuid,
         granteeId: 'updated-grantee-id',
       },
       {
@@ -315,274 +315,382 @@ const deleteTestData = async () => {
 };
 
 const generateTestData = async () => {
-  await prismaClient.license.create({
+  await prismaClient.subscription.create({
     data: {
-      name: null,
-      email: null,
+      lineItemIds: [],
+      paymentIntegrationSubscriptionId: randomUUID(),
+      email: 'tester@testing.com',
+      type: 'none',
       status: 'ACTIVE',
-      granteeId: testGrantee,
-      paymentService: 'ad-hoc',
-      purchaser: 'tester@testing.com',
-      type: 'user',
-      uuid: licenseUuid,
-      metadata: undefined,
+      owner,
+      organisation,
+      product: { connect: { uuid: testUuids.productUuid } },
       plan: { connect: { uuid: testUuids.paidPlanUuid } },
-      product: { connect: { uuid: testUuids.productUuid } },
-      startTime: undefined,
-      capabilities: [
-        {
-          name: 'CapabilityOne',
-          uuid: uuidv4(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      expiryDate: addMonths(new Date(), 1),
+      license: {
+        create: {
+          name: null,
+          email: null,
           status: 'ACTIVE',
-          updatedAt: '2022-10-17T11:41:11.626Z',
-          description: null,
-          productUuid: testUuids.productUuid,
+          granteeId: testGrantee,
+          paymentService: 'ad-hoc',
+          purchaser: 'tester@testing.com',
+          type: 'user',
+          uuid: licenseUuid,
+          metadata: undefined,
+          plan: { connect: { uuid: testUuids.paidPlanUuid } },
+          product: { connect: { uuid: testUuids.productUuid } },
+          startTime: undefined,
+          capabilities: [
+            {
+              name: 'CapabilityOne',
+              uuid: randomUUID(),
+              status: 'ACTIVE',
+              updatedAt: '2022-10-17T11:41:11.626Z',
+              description: null,
+              productUuid: testUuids.productUuid,
+            },
+            {
+              name: 'CapabilityTwo',
+              uuid: randomUUID(),
+              status: 'ACTIVE',
+              updatedAt: '2022-10-17T11:41:11.626Z',
+              description: null,
+              productUuid: testUuids.productUuid,
+            },
+          ],
+          endTime: getEndTime(1, 'years'),
         },
-        {
-          name: 'CapabilityTwo',
-          uuid: uuidv4(),
-          status: 'ACTIVE',
-          updatedAt: '2022-10-17T11:41:11.626Z',
-          description: null,
-          productUuid: testUuids.productUuid,
-        },
-      ],
-      endTime: getEndTime(1, 'years'),
-    },
-  });
-
-  await prismaClient.license.create({
+      }
+    }
+  })
+  await prismaClient.subscription.create({
     data: {
-      name: null,
-      email: null,
+      lineItemIds: [],
+      paymentIntegrationSubscriptionId: randomUUID(),
+      email: 'tester@testing.com',
+      type: 'none',
       status: 'ACTIVE',
-      granteeId: testGrantee,
-      paymentService: 'ad-hoc',
-      purchaser: 'tester@testing.com',
-      type: 'user',
-      uuid: licenseTwoUuid,
-      metadata: undefined,
-      plan: { connect: { uuid: testUuids.freeMonthlyPlanUuid } },
+      owner,
+      organisation,
       product: { connect: { uuid: testUuids.productUuid } },
-      startTime: undefined,
-      capabilities: [
-        {
-          name: 'CapabilityOne',
-          uuid: uuidv4(),
-          status: 'ACTIVE',
-          updatedAt: '2022-10-17T11:41:11.626Z',
-          description: null,
-          productUuid: testUuids.productUuid,
-        },
-        {
-          name: 'CapabilityTwo',
-          uuid: uuidv4(),
-          status: 'ACTIVE',
-          updatedAt: '2022-10-17T11:41:11.626Z',
-          description: null,
-          productUuid: testUuids.productUuid,
-        },
-      ],
-      endTime: getEndTime(1, 'years'),
-    },
-  });
-
-  await prismaClient.license.create({
-    data: {
-      name: null,
-      email: null,
-      status: 'ACTIVE',
-      granteeId: testGrantee,
-      paymentService: 'ad-hoc',
-      purchaser: 'tester@testing.com',
-      type: 'user',
-      uuid: licenseThreeUuid,
-      metadata: undefined,
-      plan: { connect: { uuid: testUuids.freeMonthlyPlanUuid } },
-      product: { connect: { uuid: testUuids.productUuid } },
-      startTime: undefined,
-      capabilities: [
-        {
-          name: 'CapabilityOne',
-          uuid: uuidv4(),
-          status: 'ACTIVE',
-          updatedAt: '2022-10-17T11:41:11.626Z',
-          description: null,
-          productUuid: testUuids.productUuid,
-        },
-        {
-          name: 'CapabilityTwo',
-          uuid: uuidv4(),
-          status: 'ACTIVE',
-          updatedAt: '2022-10-17T11:41:11.626Z',
-          description: null,
-          productUuid: testUuids.productUuid,
-        },
-      ],
-      endTime: getEndTime(1, 'years'),
-    },
-  });
-
-  await prismaClient.license.create({
-    data: {
-      name: null,
-      email: null,
-      status: 'ACTIVE',
-      granteeId: 'active-grantee-id',
-      paymentService: 'ad-hoc',
-      purchaser: 'tester@testing.com',
-      type: 'user',
-      uuid: activeLicenseUuid,
-      metadata: undefined,
       plan: { connect: { uuid: testUuids.paidPlanUuid } },
-      product: { connect: { uuid: testUuids.productUuid } },
-      startTime: undefined,
-      capabilities: [
-        {
-          name: 'CapabilityOne',
-          uuid: uuidv4(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      expiryDate: addMonths(new Date(), 1),
+      license: {
+        create: {
+          name: null,
+          email: null,
           status: 'ACTIVE',
-          updatedAt: '2022-10-17T11:41:11.626Z',
-          description: null,
-          productUuid: testUuids.productUuid,
+          granteeId: testGrantee,
+          paymentService: 'ad-hoc',
+          purchaser: 'tester@testing.com',
+          type: 'user',
+          uuid: licenseTwoUuid,
+          metadata: undefined,
+          plan: { connect: { uuid: testUuids.freeMonthlyPlanUuid } },
+          product: { connect: { uuid: testUuids.productUuid } },
+          startTime: undefined,
+          capabilities: [
+            {
+              name: 'CapabilityOne',
+              uuid: randomUUID(),
+              status: 'ACTIVE',
+              updatedAt: '2022-10-17T11:41:11.626Z',
+              description: null,
+              productUuid: testUuids.productUuid,
+            },
+            {
+              name: 'CapabilityTwo',
+              uuid: randomUUID(),
+              status: 'ACTIVE',
+              updatedAt: '2022-10-17T11:41:11.626Z',
+              description: null,
+              productUuid: testUuids.productUuid,
+            },
+          ],
+          endTime: getEndTime(1, 'years'),
         },
-        {
-          name: 'CapabilityTwo',
-          uuid: uuidv4(),
-          status: 'ACTIVE',
-          updatedAt: '2022-10-17T11:41:11.626Z',
-          description: null,
-          productUuid: testUuids.productUuid,
-        },
-      ],
-      endTime: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000),
-    },
-  });
-
-  await prismaClient.license.create({
+      }
+    }
+  })
+  await prismaClient.subscription.create({
     data: {
-      name: null,
-      email: null,
+      lineItemIds: [],
+      paymentIntegrationSubscriptionId: randomUUID(),
+      email: 'tester@testing.com',
+      type: 'none',
       status: 'ACTIVE',
-      granteeId: 'no-sub-license',
-      paymentService: 'ad-hoc',
-      purchaser: 'tester@testing.com',
-      type: 'user',
-      uuid: noSubLicenseUuid,
-      metadata: undefined,
-      plan: { connect: { uuid: testUuids.paidPlanUuid } },
+      owner,
+      organisation,
       product: { connect: { uuid: testUuids.productUuid } },
-      startTime: undefined,
-      capabilities: [
-        {
-          name: 'CapabilityOne',
-          uuid: uuidv4(),
+      plan: { connect: { uuid: testUuids.paidPlanUuid } },
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      expiryDate: addMonths(new Date(), 1),
+      license: {
+        create: {
+          name: null,
+          email: null,
           status: 'ACTIVE',
-          updatedAt: '2022-10-17T11:41:11.626Z',
-          description: null,
-          productUuid: testUuids.productUuid,
+          granteeId: testGrantee,
+          paymentService: 'ad-hoc',
+          purchaser: 'tester@testing.com',
+          type: 'user',
+          uuid: licenseThreeUuid,
+          metadata: undefined,
+          plan: { connect: { uuid: testUuids.freeMonthlyPlanUuid } },
+          product: { connect: { uuid: testUuids.productUuid } },
+          startTime: undefined,
+          capabilities: [
+            {
+              name: 'CapabilityOne',
+              uuid: randomUUID(),
+              status: 'ACTIVE',
+              updatedAt: '2022-10-17T11:41:11.626Z',
+              description: null,
+              productUuid: testUuids.productUuid,
+            },
+            {
+              name: 'CapabilityTwo',
+              uuid: randomUUID(),
+              status: 'ACTIVE',
+              updatedAt: '2022-10-17T11:41:11.626Z',
+              description: null,
+              productUuid: testUuids.productUuid,
+            },
+          ],
+          endTime: getEndTime(1, 'years'),
         },
-        {
-          name: 'CapabilityTwo',
-          uuid: uuidv4(),
-          status: 'ACTIVE',
-          updatedAt: '2022-10-17T11:41:11.626Z',
-          description: null,
-          productUuid: testUuids.productUuid,
-        },
-      ],
-      endTime: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000),
-    },
-  });
-
-  await prismaClient.license.create({
+      }
+    }
+  })
+  await prismaClient.subscription.create({
     data: {
-      name: null,
-      email: null,
+      lineItemIds: [],
+      paymentIntegrationSubscriptionId: randomUUID(),
+      email: 'tester@testing.com',
+      type: 'none',
       status: 'ACTIVE',
-      granteeId: 'no-sub-license',
-      paymentService: 'ad-hoc',
-      purchaser: 'tester@testing.com',
-      type: 'user',
-      uuid: noSubLicenseTwoUuid,
-      metadata: undefined,
-      plan: { connect: { uuid: testUuids.paidPlanUuid } },
+      owner,
+      organisation,
       product: { connect: { uuid: testUuids.productUuid } },
-      startTime: undefined,
-      capabilities: [
-        {
-          name: 'CapabilityOne',
-          uuid: uuidv4(),
+      plan: { connect: { uuid: testUuids.paidPlanUuid } },
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      expiryDate: addMonths(new Date(), 1),
+      license: {
+        create: {
+          name: null,
+          email: null,
           status: 'ACTIVE',
-          updatedAt: '2022-10-17T11:41:11.626Z',
-          description: null,
-          productUuid: testUuids.productUuid,
+          granteeId: 'active-grantee-id',
+          paymentService: 'ad-hoc',
+          purchaser: 'tester@testing.com',
+          type: 'user',
+          uuid: activeLicenseUuid,
+          metadata: undefined,
+          plan: { connect: { uuid: testUuids.paidPlanUuid } },
+          product: { connect: { uuid: testUuids.productUuid } },
+          startTime: undefined,
+          capabilities: [
+            {
+              name: 'CapabilityOne',
+              uuid: randomUUID(),
+              status: 'ACTIVE',
+              updatedAt: '2022-10-17T11:41:11.626Z',
+              description: null,
+              productUuid: testUuids.productUuid,
+            },
+            {
+              name: 'CapabilityTwo',
+              uuid: randomUUID(),
+              status: 'ACTIVE',
+              updatedAt: '2022-10-17T11:41:11.626Z',
+              description: null,
+              productUuid: testUuids.productUuid,
+            },
+          ],
+          endTime: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000),
         },
-        {
-          name: 'CapabilityTwo',
-          uuid: uuidv4(),
-          status: 'ACTIVE',
-          updatedAt: '2022-10-17T11:41:11.626Z',
-          description: null,
-          productUuid: testUuids.productUuid,
-        },
-      ],
-      endTime: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000),
-    },
-  });
-
-  await prismaClient.license.create({
+      }
+    }
+  })
+  await prismaClient.subscription.create({
     data: {
-      name: null,
-      email: null,
+      lineItemIds: [],
+      paymentIntegrationSubscriptionId: randomUUID(),
+      email: 'tester@testing.com',
+      type: 'none',
       status: 'ACTIVE',
-      granteeId: 'no-sub-license',
-      paymentService: 'ad-hoc',
-      purchaser: 'tester@testing.com',
-      type: 'user',
-      uuid: noSubLicenseThreeUuid,
-      metadata: undefined,
-      plan: { connect: { uuid: testUuids.paidPlanUuid } },
+      owner,
+      organisation,
       product: { connect: { uuid: testUuids.productUuid } },
-      startTime: undefined,
-      capabilities: [
-        {
-          name: 'CapabilityOne',
-          uuid: uuidv4(),
+      plan: { connect: { uuid: testUuids.paidPlanUuid } },
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      expiryDate: addMonths(new Date(), 1),
+      license: {
+        create: {
+          name: null,
+          email: null,
           status: 'ACTIVE',
-          updatedAt: '2022-10-17T11:41:11.626Z',
-          description: null,
-          productUuid: testUuids.productUuid,
+          granteeId: 'no-sub-license',
+          paymentService: 'ad-hoc',
+          purchaser: 'tester@testing.com',
+          type: 'user',
+          uuid: noSubLicenseUuid,
+          metadata: undefined,
+          plan: { connect: { uuid: testUuids.paidPlanUuid } },
+          product: { connect: { uuid: testUuids.productUuid } },
+          startTime: undefined,
+          capabilities: [
+            {
+              name: 'CapabilityOne',
+              uuid: randomUUID(),
+              status: 'ACTIVE',
+              updatedAt: '2022-10-17T11:41:11.626Z',
+              description: null,
+              productUuid: testUuids.productUuid,
+            },
+            {
+              name: 'CapabilityTwo',
+              uuid: randomUUID(),
+              status: 'ACTIVE',
+              updatedAt: '2022-10-17T11:41:11.626Z',
+              description: null,
+              productUuid: testUuids.productUuid,
+            },
+          ],
+          endTime: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000),
         },
-        {
-          name: 'CapabilityTwo',
-          uuid: uuidv4(),
-          status: 'ACTIVE',
-          updatedAt: '2022-10-17T11:41:11.626Z',
-          description: null,
-          productUuid: testUuids.productUuid,
-        },
-      ],
-      endTime: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000),
-    },
-  });
+      }
+    }
+  })
 
   await prismaClient.subscription.create({
     data: {
-      lineItemIds: [stripeEnvs.basicSubscriptionLineItemId],
-      paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionId,
-      uuid: subscriptionUuid,
+      lineItemIds: [],
+      paymentIntegrationSubscriptionId: randomUUID(),
       email: 'tester@testing.com',
-      type: 'salable',
+      type: 'none',
+      status: 'ACTIVE',
+      owner: testPurchaser,
+      organisation,
+      product: { connect: { uuid: testUuids.productUuid } },
+      plan: { connect: { uuid: testUuids.paidPlanUuid } },
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      expiryDate: addMonths(new Date(), 1),
+      license: {
+        create: {
+          name: null,
+          email: null,
+          status: 'ACTIVE',
+          granteeId: 'no-sub-license',
+          paymentService: 'ad-hoc',
+          purchaser: testPurchaser,
+          type: 'user',
+          uuid: noSubLicenseTwoUuid,
+          metadata: undefined,
+          plan: { connect: { uuid: testUuids.paidPlanUuid } },
+          product: { connect: { uuid: testUuids.productUuid } },
+          startTime: undefined,
+          capabilities: [
+            {
+              name: 'CapabilityOne',
+              uuid: randomUUID(),
+              status: 'ACTIVE',
+              updatedAt: '2022-10-17T11:41:11.626Z',
+              description: null,
+              productUuid: testUuids.productUuid,
+            },
+            {
+              name: 'CapabilityTwo',
+              uuid: randomUUID(),
+              status: 'ACTIVE',
+              updatedAt: '2022-10-17T11:41:11.626Z',
+              description: null,
+              productUuid: testUuids.productUuid,
+            },
+          ],
+          endTime: new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000),
+        },
+      }
+    }
+  })
+
+  await prismaClient.subscription.create({
+    data: {
+      lineItemIds: [],
+      paymentIntegrationSubscriptionId: randomUUID(),
+      email: 'tester@testing.com',
+      type: 'none',
       status: 'ACTIVE',
       owner,
-      organisation: testUuids.organisationId,
+      organisation,
+      product: { connect: { uuid: testUuids.productUuid } },
+      plan: { connect: { uuid: testUuids.paidPlanUuid } },
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      expiryDate: addMonths(new Date(), 1),
+      license: {
+        create: {
+          name: null,
+          email: null,
+          status: 'ACTIVE',
+          granteeId: 'no-sub-license',
+          paymentService: 'ad-hoc',
+          purchaser: 'tester@testing.com',
+          type: 'user',
+          uuid: noSubLicenseThreeUuid,
+          metadata: undefined,
+          plan: { connect: { uuid: testUuids.paidPlanUuid } },
+          product: { connect: { uuid: testUuids.productUuid } },
+          startTime: undefined,
+          capabilities: [
+            {
+              name: 'CapabilityOne',
+              uuid: randomUUID(),
+              status: 'ACTIVE',
+              updatedAt: '2022-10-17T11:41:11.626Z',
+              description: null,
+              productUuid: testUuids.productUuid,
+            },
+            {
+              name: 'CapabilityTwo',
+              uuid: randomUUID(),
+              status: 'ACTIVE',
+              updatedAt: '2022-10-17T11:41:11.626Z',
+              description: null,
+              productUuid: testUuids.productUuid,
+            },
+          ],
+          endTime: addMonths(new Date(), 1),
+        },
+      }
+    }
+  })
+
+  await prismaClient.subscription.create({
+    data: {
+      uuid: subscriptionUuid,
+      lineItemIds: [],
+      paymentIntegrationSubscriptionId: subscriptionUuid,
+      email: 'tester@testing.com',
+      type: 'none',
+      status: 'ACTIVE',
+      owner,
+      organisation,
       license: { connect: [{ uuid: licenseUuid }, { uuid: licenseTwoUuid }, { uuid: licenseThreeUuid }] },
       product: { connect: { uuid: testUuids.productUuid } },
       plan: { connect: { uuid: testUuids.paidPlanUuid } },
       createdAt: new Date(),
       updatedAt: new Date(),
-      expiryDate: new Date(Date.now() + 31536000000),
+      expiryDate: addMonths(new Date(), 1),
     },
   });
 };

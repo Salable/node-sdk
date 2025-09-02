@@ -1,16 +1,4 @@
-import {
-  Plan,
-  PlanCheckout,
-  PlanFeature,
-  PlanCapability,
-  PlanCurrency,
-  ApiRequest,
-  TVersion,
-  Version,
-  GetPlanOptions,
-  GetPlanCheckoutOptions,
-  PlanFeatureV3, ProductV3, OrganisationPaymentIntegrationV3, GetPlanOptionsV3
-} from '../types';
+import { Plan, PlanCheckout, PlanFeature, PlanCapability, PlanCurrency, ApiRequest, TVersion, Version, GetPlanOptions, GetPlanCheckoutOptions, PlanFeatureV3, ProductV3, OrganisationPaymentIntegrationV3, GetPlanOptionsV3, GetPlanCheckoutOptionsV3, PlanV3 } from '../types';
 import { v2PlanMethods } from './v2';
 import { v3PlanMethods } from './v3';
 
@@ -95,7 +83,7 @@ export type PlanVersions = {
     getOne: (
       planUuid: string,
       options?: GetPlanOptionsV3
-    ) => Promise<Plan & {
+    ) => Promise<PlanV3 & {
       features?: PlanFeatureV3[];
       currencies?: PlanCurrency[];
       product?: ProductV3 & { organisationPaymentIntegration: OrganisationPaymentIntegrationV3 }
@@ -113,7 +101,7 @@ export type PlanVersions = {
      */
     getCheckoutLink: (
       planUuid: string,
-      options: GetPlanCheckoutOptions
+      options: GetPlanCheckoutOptionsV3
     ) => Promise<PlanCheckout>;
   };
 };

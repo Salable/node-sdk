@@ -1,59 +1,22 @@
-import Salable from '../..';
-import { PricingTableV3, Version } from '../../types';
 import prismaClient from '../../../test-utils/prisma/prisma-client';
 import { testUuids } from '../../../test-utils/scripts/create-salable-test-data';
-import {
-  FeatureSchemaV3,
-  PlanFeatureSchemaV3, PlanCurrencySchema,
-  PlanSchemaV3,
-  ProductCurrencySchema,
-  ProductSchemaV3
-} from '../../schemas/v3/schemas-v3';
+import { PricingTableSchemaV3 } from '../../schemas/v3/schemas-v3';
+import { initSalable } from '../../index';
+import { randomUUID } from 'crypto';
 
-const pricingTableUuid = 'aec06de8-3a3e-46eb-bd09-f1094c1b1b8d';
+const pricingTableUuid = randomUUID();
 describe('Pricing Table V3 Tests', () => {
   const apiKey = testUuids.devApiKeyV2;
-  const version = Version.V3;
-  const salable = new Salable(apiKey, version);
+  const salable = initSalable(apiKey, 'v3');
   beforeAll(async() => {
     await generateTestData()
   })
 
-  it('getAll: should successfully fetch all products', async () => {
+  it('getOne: should successfully fetch all products', async () => {
     const data = await salable.pricingTables.getOne(pricingTableUuid, {owner: 'xxxxx'});
-    expect(data).toEqual(expect.objectContaining(pricingTableSchema));
+    expect(data).toEqual(expect.objectContaining(PricingTableSchemaV3));
   });
 });
-
-const pricingTableSchema: PricingTableV3 = {
-  customTheme: expect.toBeOneOf([expect.any(String), null]),
-  productUuid: expect.any(String),
-  featuredPlanUuid: expect.toBeOneOf([expect.any(String), null]),
-  name: expect.any(String),
-  status: expect.any(String),
-  theme: expect.any(String),
-  text: expect.toBeOneOf([expect.any(String), null]),
-  title: expect.toBeOneOf([expect.any(String), null]),
-  updatedAt: expect.any(String),
-  uuid: expect.any(String),
-  featureOrder: expect.any(String),
-  product: {
-    ...ProductSchemaV3,
-    features: expect.arrayContaining([FeatureSchemaV3]),
-    currencies: expect.arrayContaining([ProductCurrencySchema]),
-  },
-  plans: expect.arrayContaining([{
-    planUuid: expect.any(String),
-    pricingTableUuid: expect.any(String),
-    sortOrder: expect.any(Number),
-    updatedAt: expect.any(String),
-    plan: {
-      ...PlanSchemaV3,
-      features: expect.arrayContaining([PlanFeatureSchemaV3]),
-      currencies: expect.arrayContaining([PlanCurrencySchema]),
-    }
-  }]),
-};
 
 
 const generateTestData = async () => {

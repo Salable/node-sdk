@@ -1,14 +1,13 @@
-import Salable from '../..';
-import { PricingTable, Version } from '../../types';
+import { initSalable } from '../..';
+import { PricingTable } from '../../types';
 import prismaClient from '../../../test-utils/prisma/prisma-client';
 import { testUuids } from '../../../test-utils/scripts/create-salable-test-data';
+import { randomUUID } from 'crypto';
 
-const pricingTableUuid = 'aec06de8-3a3e-46eb-bd09-f1094c1b1b8d';
+const pricingTableUuid = randomUUID();
 describe('Pricing Table V2 Tests', () => {
   const apiKey = testUuids.devApiKeyV2;
-  const version = Version.V2;
-
-  const salable = new Salable(apiKey, version);
+  const salable = initSalable(apiKey, 'v2');
 
   beforeAll(async() => {
     await generateTestData()

@@ -30,7 +30,8 @@ export type TestDbData = {
   usageBasicMonthlyPlanUuid: string;
   usageProMonthlyPlanUuid: string;
   subscriptionWithInvoicesUuid: string;
-  couponSubscriptionUuid: string;
+  couponSubscriptionUuidV2: string;
+  couponSubscriptionUuidV3: string;
   currencyUuids: {
     gbp: string;
     usd: string;
@@ -62,7 +63,8 @@ export const testUuids: TestDbData = {
     usd: '6ec1a282-07b3-4716-bc3c-678c40b5d98e'
   },
   subscriptionWithInvoicesUuid: 'b37357c6-bad1-4a6a-8c79-06935c66384f',
-  couponSubscriptionUuid: '893cd5cb-b313-4e8a-8e54-35781e7b0669'
+  couponSubscriptionUuidV2: '893cd5cb-b313-4e8a-8e54-35781e7b0669',
+  couponSubscriptionUuidV3: 'd5b45c18-2a84-49c5-a099-2b2422fd1b80'
 };
 
 const features = [
@@ -159,8 +161,6 @@ const { publicKey, privateKey } = generateKeyPairSync('ec', {
 
 export default async function createSalableTestData(stripeEnvs: StripeEnvsTypes) {
   const loadingWheel = getConsoleLoader('CREATING TEST DATA');
-  console.log('===== testUuids', testUuids)
-
   const encryptedPrivateKey = await kmsSymmetricEncrypt(privateKey);
 
   await prismaClient.currency.create({
@@ -254,8 +254,6 @@ export default async function createSalableTestData(stripeEnvs: StripeEnvsTypes)
       capabilities: true,
     },
   });
-
-  console.log('===== product', product)
 
   const productTwo = await prismaClient.product.create({
     data: {
@@ -1013,8 +1011,8 @@ export default async function createSalableTestData(stripeEnvs: StripeEnvsTypes)
       organisation: testUuids.organisationId,
       type: 'salable',
       status: 'ACTIVE',
-      paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionId,
-      lineItemIds: [stripeEnvs.basicSubscriptionLineItemId],
+      paymentIntegrationSubscriptionId: stripeEnvs.subscriptionWithInvoicesId,
+      lineItemIds: [stripeEnvs.subscriptionWithInvoicesLineItemId],
       productUuid: testUuids.productUuid,
       planUuid: testUuids.paidPlanUuid,
       owner: 'xxxxx',
@@ -1042,9 +1040,43 @@ export default async function createSalableTestData(stripeEnvs: StripeEnvsTypes)
 
   await prismaClient.subscription.create({
     data: {
-      uuid: testUuids.couponSubscriptionUuid,
-      paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionThreeId,
-      lineItemIds: [stripeEnvs.basicSubscriptionThreeLineItemId],
+      uuid: testUuids.couponSubscriptionUuidV2,
+      paymentIntegrationSubscriptionId: stripeEnvs.subscriptionWithCouponV2Id,
+      lineItemIds: [stripeEnvs.subscriptionWithCouponV2LineItemId],
+      email: 'customer@email.com',
+      owner: 'xxxxx',
+      type: 'salable',
+      status: 'ACTIVE',
+      organisation: testUuids.organisationId,
+      license: {
+        create: {
+          name: null,
+          email: null,
+          status: 'ACTIVE',
+          granteeId: null,
+          paymentService: 'salable',
+          purchaser: 'xxxxx',
+          type: 'licensed',
+          plan: { connect: { uuid: testUuids.paidPlanTwoUuid } },
+          product: { connect: { uuid: testUuids.productUuid } },
+          startTime: new Date(),
+          capabilities: [],
+          endTime: addMonths(new Date(), 1),
+        }
+      },
+      product: { connect: { uuid: testUuids.productUuid } },
+      plan: { connect: { uuid: testUuids.paidPlanTwoUuid } },
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      expiryDate: new Date(Date.now() + 31536000000),
+    },
+  });
+
+  await prismaClient.subscription.create({
+    data: {
+      uuid: testUuids.couponSubscriptionUuidV3,
+      paymentIntegrationSubscriptionId: stripeEnvs.subscriptionWithCouponV3Id,
+      lineItemIds: [stripeEnvs.subscriptionWithCouponV3LineItemId],
       email: 'customer@email.com',
       owner: 'xxxxx',
       type: 'salable',

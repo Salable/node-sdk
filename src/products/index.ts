@@ -106,7 +106,7 @@ export type ProductVersions = {
      *
      * @returns {Promise<ProductV3>}
      */
-    getOne: (productUuid: string, options?: { expand: ('features' | 'currencies' | 'organisationPaymentIntegration' | 'plans')[] }) => Promise<Product>;
+    getOne: (productUuid: string, options?: { expand: ('features' | 'currencies' | 'organisationPaymentIntegration' | 'plans')[] }) => Promise<ProductV3>;
 
     /**
      *  Retrieves all the plans associated with a specific product. By default, the response does not contain any relational data. If you want to expand the relational data, you can do so with the expand query parameter.

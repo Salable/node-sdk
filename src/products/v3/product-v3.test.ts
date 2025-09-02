@@ -1,5 +1,3 @@
-import Salable from '../..';
-import { Version } from '../../types';
 import { testUuids } from '../../../test-utils/scripts/create-salable-test-data';
 import {
   EnumValueSchema,
@@ -12,11 +10,11 @@ import {
   ProductPricingTableSchemaV3,
   ProductSchemaV3
 } from '../../schemas/v3/schemas-v3';
+import { initSalable } from '../../index';
 
 describe('Products V3 Tests', () => {
   const apiKey = testUuids.devApiKeyV2;
-  const version = Version.V3;
-  const salable = new Salable(apiKey, version);
+  const salable = initSalable(apiKey, 'v3');
   const productUuid = testUuids.productUuid;
 
   it('getAll: should successfully fetch all products', async () => {

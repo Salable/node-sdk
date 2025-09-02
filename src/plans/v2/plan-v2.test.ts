@@ -1,12 +1,10 @@
-import Salable from '../..';
-import { Plan, PlanCapability, PlanCheckout, PlanCurrency, PlanFeature, Version } from '../../types';
+import { Plan, PlanCapability, PlanCheckout, PlanCurrency, PlanFeature } from '../../types';
 import { testUuids } from '../../../test-utils/scripts/create-salable-test-data';
+import { initSalable } from '../../index';
 
 describe('Plans V2 Tests', () => {
   const apiKey = testUuids.devApiKeyV2;
-  const version = Version.V2;
-
-  const salable = new Salable(apiKey, version);
+  const salable = initSalable(apiKey, 'v2');
 
   const planUuid = testUuids.paidPlanUuid;
 

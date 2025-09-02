@@ -1,4 +1,4 @@
-import { PricingTable, ApiRequest, TVersion, Version } from '../types';
+import { PricingTable, ApiRequest, TVersion, Version, PricingTableV3 } from '../types';
 import { v2PricingTableMethods } from './v2';
 import { v3PricingTableMethods } from './v3';
 
@@ -23,7 +23,7 @@ export type PricingTableVersions = {
      *
      * @returns {Promise<PricingTable>}
      */
-    getOne: (pricingTableUuid: string, options: { owner: string; currency?: string }) => Promise<PricingTable>;
+    getOne: (pricingTableUuid: string, options: { owner: string; currency?: string }) => Promise<PricingTableV3>;
   };
 };
 
