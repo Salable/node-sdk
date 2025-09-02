@@ -1,5 +1,5 @@
 import Stripe from 'stripe';
-import createStripeCustomAccount from '../../test-utils/stripe/create-stripe-custom-account';
+import createStripeCustomAccount from './create-stripe-custom-account';
 import getConsoleLoader from '../helpers/console-loading-wheel';
 import { config } from 'dotenv';
 
@@ -40,6 +40,7 @@ export interface StripeEnvsTypes {
   planPerSeatMinimumMonthlyGbpId: string;
   planPerSeatRangeMonthlyGbpId: string;
   couponId: string;
+  couponV3Id: string;
 }
 
 export default async function createStripeData(): Promise<StripeEnvsTypes> {
@@ -219,6 +220,11 @@ export default async function createStripeData(): Promise<StripeEnvsTypes> {
     duration_in_months: 3,
     percent_off: 10
   });
+  const couponV3 = await stripeConnect.coupons.create({
+    duration: 'repeating',
+    duration_in_months: 3,
+    percent_off: 10
+  });
   for (let i = 10; i < 10; i++) {
     await stripeConnect.invoiceItems.create({
       customer: stripeCustomer.id,
@@ -273,5 +279,6 @@ export default async function createStripeData(): Promise<StripeEnvsTypes> {
     proSubscriptionLineItemId: stripeProSubscription.items.data[0].id,
     basicSubscriptionFourLineItemId: stripeBasicSubscriptionFour.items.data[0].id,
     couponId: coupon.id,
+    couponV3Id: couponV3.id,
   };
 }

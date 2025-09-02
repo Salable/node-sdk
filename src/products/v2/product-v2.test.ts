@@ -1,6 +1,6 @@
 import Salable from '../..';
 import { Plan, Product, ProductCapability, ProductCurrency, ProductFeature, ProductPricingTable, Version } from '../../types';
-import { testUuids } from '../../../test-utils/scripts/create-test-data';
+import { testUuids } from '../../../test-utils/scripts/create-salable-test-data';
 
 describe('Products V2 Tests', () => {
   const apiKey = testUuids.devApiKeyV2;

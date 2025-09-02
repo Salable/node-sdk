@@ -1,7 +1,7 @@
 import Salable, { TVersion } from '../..';
 import { PaginatedUsageRecords, UsageRecord } from '../../types';
 import prismaClient from '../../../test-utils/prisma/prisma-client';
-import { testUuids } from '../../../test-utils/scripts/create-test-data';
+import { testUuids } from '../../../test-utils/scripts/create-salable-test-data';
 import { randomUUID } from 'crypto';
 
 const stripeEnvs = JSON.parse(process.env.stripEnvs || '');

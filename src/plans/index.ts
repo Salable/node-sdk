@@ -86,7 +86,7 @@ export type PlanVersions = {
      *
      * Docs - https://docs.salable.app/api/v3#tag/Plans/operation/getPlanByUuid
      *
-     * @returns {Promise<Plan & {
+     * @returns {Promise<PlanV3 & {
      *       features?: PlanFeatureV3[];
      *       currencies?: PlanCurrency[];
      *       product?: ProductV3 & { organisationPaymentIntegration: OrganisationPaymentIntegrationV3 }

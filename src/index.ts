@@ -55,15 +55,27 @@ export const initRequest: ApiFetch =
     }
   };
 
-export default class Salable<V extends TVersion> {
+
+interface SalableMethods<V extends TVersion> {
+  // version: V;
   products: ProductVersionedMethods<V>;
   plans: PlanVersionedMethods<V>;
   pricingTables: PricingTableVersionedMethods<V>;
   subscriptions: SubscriptionVersionedMethods<V>;
-  licenses: LicenseVersionedMethods<V> | undefined;
   usage: UsageVersionedMethods<V>;
   events: EventVersionedMethods<V>;
-  sessions: SessionVersionedMethods<V>
+  sessions: SessionVersionedMethods<V>;
+}
+
+
+export default class Salable<V extends TVersion> implements SalableMethods<V> {
+  products: ProductVersionedMethods<V>;
+  plans: PlanVersionedMethods<V>;
+  pricingTables: PricingTableVersionedMethods<V>;
+  subscriptions: SubscriptionVersionedMethods<V>;
+  usage: UsageVersionedMethods<V>;
+  events: EventVersionedMethods<V>;
+  sessions: SessionVersionedMethods<V>;
 
   constructor(apiKey: string, version: V) {
     const request = initRequest(apiKey, version);
@@ -72,9 +84,7 @@ export default class Salable<V extends TVersion> {
     this.plans = plansInit(version, request);
     this.pricingTables = pricingTablesInit(version, request);
     this.subscriptions = subscriptionsInit(version, request);
-    if (version === 'v2') {
-      this.licenses = licensesInit(version, request);
-    }
+    if (version === 'v2') this.licenses = licensesInit(version, request);
     this.usage = usageInit(version, request);
     this.events = eventsInit(version, request);
     this.sessions = sessionsInit(version, request);

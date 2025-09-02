@@ -21,7 +21,7 @@ export const v3SubscriptionMethods = (request: ApiRequest): SubscriptionVersions
   getPaymentMethod: (uuid) => request(getUrl(`${baseUrl}/${uuid}/payment-method`, {}), { method: 'GET' }),
   reactivateSubscription: (uuid) => request(getUrl(`${baseUrl}/${uuid}/reactivate`, {}), { method: 'PUT' }),
   manageSeats: (uuid, options) => request(`${baseUrl}/${uuid}/manage-seats`, { method: 'PUT', body: JSON.stringify(options) }),
-  addSeats: (uuid, options) => request(`${baseUrl}/${uuid}/seats`, { method: 'POST', body: JSON.stringify(options) }),
+  updateSeatCount: (uuid, options) => request(`${baseUrl}/${uuid}/seats`, { method: 'POST', body: JSON.stringify(options) }),
   addCoupon: (uuid, options) => request(`${baseUrl}/${uuid}/coupons`, { method: 'POST', body: JSON.stringify(options) }),
   removeCoupon: (uuid, options) => request(`${baseUrl}/${uuid}/coupons`, { method: 'PUT', body: JSON.stringify(options) }),
 });

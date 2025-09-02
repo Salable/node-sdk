@@ -1,7 +1,7 @@
 import Salable from '../..';
 import { Capability, License, PaginatedLicenses, Plan, Version } from '../../types';
 import prismaClient from '../../../test-utils/prisma/prisma-client';
-import { testUuids } from '../../../test-utils/scripts/create-test-data';
+import { testUuids } from '../../../test-utils/scripts/create-salable-test-data';
 import getEndTime from '../../../test-utils/helpers/get-end-time';
 import { v4 as uuidv4 } from 'uuid';
 

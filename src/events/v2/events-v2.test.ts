@@ -1,7 +1,7 @@
 import Salable, { TVersion } from '../..';
 import { Event, EventTypeEnum } from '../../types';
 import prismaClient from '../../../test-utils/prisma/prisma-client';
-import { testUuids } from '../../../test-utils/scripts/create-test-data';
+import { testUuids } from '../../../test-utils/scripts/create-salable-test-data';
 import { v4 as uuidv4 } from 'uuid';
 import { EventStatus } from '@prisma/client';
 import { randomUUID } from 'crypto';

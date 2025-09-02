@@ -1,6 +1,6 @@
 import Salable from '../..';
 import { Version } from '../../types';
-import { testUuids } from '../../../test-utils/scripts/create-test-data';
+import { testUuids } from '../../../test-utils/scripts/create-salable-test-data';
 import {
   EnumValueSchema,
   FeatureSchemaV3,

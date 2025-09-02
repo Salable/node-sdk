@@ -1,6 +1,6 @@
 import Salable, { TVersion } from '../..';
 import { Session, SessionScope } from '../../types';
-import { testUuids } from '../../../test-utils/scripts/create-test-data';
+import { testUuids } from '../../../test-utils/scripts/create-salable-test-data';
 import prismaClient from '../../../test-utils/prisma/prisma-client';
 import { v4 as uuidv4 } from 'uuid';
 import getEndTime from 'test-utils/helpers/get-end-time';

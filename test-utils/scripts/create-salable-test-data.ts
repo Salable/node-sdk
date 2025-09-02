@@ -1,9 +1,11 @@
 import prismaClient from '../../test-utils/prisma/prisma-client';
-import { generateKeyPairSync } from 'crypto';
+import { generateKeyPairSync, randomUUID } from 'crypto';
 import kmsSymmetricEncrypt from '../kms/kms-symmetric-encrypt';
 import getConsoleLoader from '../helpers/console-loading-wheel';
 import { config } from 'dotenv';
-import { StripeEnvsTypes } from '../stripe/create-stripe-test-data';
+import { StripeEnvsTypes } from './create-stripe-test-data';
+import { addMonths } from 'date-fns';
+import * as console from 'node:console';
 
 config({ path: '.env.test' });
 
@@ -27,56 +29,40 @@ export type TestDbData = {
   perSeatRangePlanUuid: string;
   usageBasicMonthlyPlanUuid: string;
   usageProMonthlyPlanUuid: string;
+  subscriptionWithInvoicesUuid: string;
+  couponSubscriptionUuid: string;
   currencyUuids: {
     gbp: string;
     usd: string;
   };
 };
 
-const organisationId = 'test-org';
-const devApiKeyV2 = 'dddf2aa585c285478dae404803335c0013e795aa';
-const productUuid = '29c9a7c8-9a41-4e87-9e7e-7c62d293c131';
-const productTwoUuid = '2e0ac383-ee7e-44ba-90cb-ab3eabd56722';
-const freeMonthlyPlanUuid = '5a866dba-20c9-466f-88ac-e05c8980c90b';
-const paidPlanUuid = '351eefac-9b21-4299-8cde-302249d6fb1e';
-const paidPlanTwoUuid = 'bcd626d6-9507-42dd-9105-40c149853403';
-const perSeatPaidPlanUuid = 'cee50a36-c012-4a78-8e1a-b2bab93830ba';
-const paidYearlyPlanUuid = '111eefac-9b21-4299-8cde-302249d6f111';
-const freeYearlyPlanUuid = '22266dba-20c9-466f-88ac-e05c8980c222';
-const meteredPaidPlanUuid = 'a770ac97-4a36-4815-870c-396586b2d565';
-const meteredPaidPlanTwoUuid = '07cebad1-e2dc-44e0-8585-1ba4c91c032b';
-const comingSoonPlanUuid = '50238f96-4f2e-4fe9-a9a2-f2e917ae78bf';
-const perSeatUnlimitedPlanUuid = 'cab9b1b0-4b0f-4d6e-9dbb-a647ef1f8834';
-const perSeatMaxPlanUuid = 'fe8c96eb-88ea-4261-876c-951cec530e63';
-const perSeatMinPlanUuid = '9cbaf4e7-166a-447d-91ed-662b569b111d';
-const perSeatRangePlanUuid = '4606094a-0cec-40f3-b733-10cf65fdd5ce';
-const usageBasicMonthlyPlanUuid = '14f0c504-489f-4123-8f8d-1612e389c457';
-const usageProMonthlyPlanUuid = '447f2a62-5634-467d-83bb-1b7cead08779';
-const currencyUuids = {
-  gbp: 'b1b12bc9-6da7-4fd9-97e5-401d996c261c',
-  usd: '6ebfb42a-a78b-481c-bd79-9e857b432af9',
-};
 export const testUuids: TestDbData = {
-  organisationId,
-  devApiKeyV2,
-  productUuid,
-  productTwoUuid,
-  freeMonthlyPlanUuid,
-  paidPlanUuid,
-  paidPlanTwoUuid,
-  perSeatPaidPlanUuid,
-  paidYearlyPlanUuid,
-  freeYearlyPlanUuid,
-  meteredPaidPlanUuid,
-  meteredPaidPlanTwoUuid,
-  comingSoonPlanUuid,
-  perSeatUnlimitedPlanUuid,
-  perSeatMaxPlanUuid,
-  perSeatMinPlanUuid,
-  perSeatRangePlanUuid,
-  usageBasicMonthlyPlanUuid,
-  usageProMonthlyPlanUuid,
-  currencyUuids,
+  organisationId: 'c3016597-7677-415f-967e-e45643719141',
+  devApiKeyV2: 'bc4fcc73-de0f-4f65-ab19-ef76cf50f3d1',
+  productUuid: '2a5d3e36-45db-46ff-967e-b969b20718eb',
+  productTwoUuid: '5472a373-ce9c-4723-a467-35cce0bc71f5',
+  freeMonthlyPlanUuid: 'cc46dafa-cb0b-4409-beb8-5b111cb71133',
+  paidPlanUuid: 'f95ffb48-9df5-4cc0-9c0c-c425fb2876d0',
+  paidPlanTwoUuid: '0d2babfd-ab28-4d74-a5bb-6ed6f55e2675',
+  perSeatPaidPlanUuid: '2fc9e0c4-eb8d-4abd-8a66-b14b51e20915',
+  paidYearlyPlanUuid: 'b7964b46-a8bd-44ec-bd86-7225b6fcd384',
+  freeYearlyPlanUuid: '60cd5764-0543-4d47-a6a9-08dde004d263',
+  meteredPaidPlanUuid: 'da9585e1-6cdd-4f70-9a84-7f433e53601a',
+  meteredPaidPlanTwoUuid: 'b67c2d2b-40ef-4ce8-b70c-e81286dc467a',
+  comingSoonPlanUuid: 'c65e0952-6df4-4b9b-89f8-85538a87be04',
+  perSeatUnlimitedPlanUuid: '0f7518a9-c834-4e87-afcc-d3d9918c737b',
+  perSeatMaxPlanUuid: 'e9c8499a-0ab2-4cc0-bbbd-f60c4f0b3684',
+  perSeatMinPlanUuid: '060a6454-ca08-4796-b141-d70e5bbcc834',
+  perSeatRangePlanUuid: '65399089-76df-4cb7-b983-0efeae2976bf',
+  usageBasicMonthlyPlanUuid: 'f21c1c62-5421-4276-82f7-e44653aff400',
+  usageProMonthlyPlanUuid: '8ee7a446-b9bc-4e8c-93aa-8d9571a13707',
+  currencyUuids: {
+    gbp: '4efd9bde-61a6-4306-aed6-04a473496cf7',
+    usd: '6ec1a282-07b3-4716-bc3c-678c40b5d98e'
+  },
+  subscriptionWithInvoicesUuid: 'b37357c6-bad1-4a6a-8c79-06935c66384f',
+  couponSubscriptionUuid: '893cd5cb-b313-4e8a-8e54-35781e7b0669'
 };
 
 const features = [
@@ -171,14 +157,15 @@ const { publicKey, privateKey } = generateKeyPairSync('ec', {
   privateKeyEncoding: { type: 'pkcs8', format: 'pem' },
 });
 
-export default async function createTestData(stripeEnvs: StripeEnvsTypes) {
+export default async function createSalableTestData(stripeEnvs: StripeEnvsTypes) {
   const loadingWheel = getConsoleLoader('CREATING TEST DATA');
+  console.log('===== testUuids', testUuids)
 
   const encryptedPrivateKey = await kmsSymmetricEncrypt(privateKey);
 
   await prismaClient.currency.create({
     data: {
-      uuid: currencyUuids.gbp,
+      uuid: testUuids.currencyUuids.gbp,
       shortName: 'USD',
       longName: 'United States Dollar',
       symbol: '$',
@@ -187,7 +174,7 @@ export default async function createTestData(stripeEnvs: StripeEnvsTypes) {
 
   await prismaClient.currency.create({
     data: {
-      uuid: currencyUuids.usd,
+      uuid: testUuids.currencyUuids.usd,
       shortName: 'GBP',
       longName: 'British Pound',
       symbol: '£',
@@ -196,9 +183,9 @@ export default async function createTestData(stripeEnvs: StripeEnvsTypes) {
 
   await prismaClient.organisation.create({
     data: {
-      clerkOrgId: organisationId,
-      salablePlanUuid: organisationId,
-      svixAppId: organisationId,
+      clerkOrgId: testUuids.organisationId,
+      salablePlanUuid: testUuids.organisationId,
+      svixAppId: testUuids.organisationId,
       logoUrl: 'https://example.com/xxxxx.png',
       billingEmailId: 'xxxxx',
       addressDetails: {},
@@ -214,8 +201,8 @@ export default async function createTestData(stripeEnvs: StripeEnvsTypes) {
   await prismaClient.apiKey.create({
     data: {
       name: 'Sample API Key',
-      organisation: organisationId,
-      value: devApiKeyV2,
+      organisation: testUuids.organisationId,
+      value: testUuids.devApiKeyV2,
       scopes: JSON.stringify(apiKeyScopesV2),
       status: 'ACTIVE',
     },
@@ -227,20 +214,18 @@ export default async function createTestData(stripeEnvs: StripeEnvsTypes) {
       description: 'This is a sample product for testing purposes',
       logoUrl: 'https://example.com/logo.png',
       displayName: 'Sample Product',
-      organisation: organisationId,
+      organisation: testUuids.organisationId,
       status: 'ACTIVE',
       paid: false,
       appType: 'CUSTOM',
-      isTest: false,
-      uuid: productUuid,
+      uuid: testUuids.productUuid,
       organisationPaymentIntegration: {
         create: {
-          organisation: organisationId,
+          organisation: testUuids.organisationId,
           accountId: process.env.STRIPE_ACCOUNT_ID,
           accountName: 'Widgy Widgets',
           integrationName: 'salable',
           status: 'active',
-          isTest: true,
           accountData: {},
         },
       },
@@ -248,11 +233,11 @@ export default async function createTestData(stripeEnvs: StripeEnvsTypes) {
         create: [
           {
             defaultCurrency: true,
-            currency: { connect: { uuid: currencyUuids.gbp } },
+            currency: { connect: { uuid: testUuids.currencyUuids.gbp } },
           },
           {
             defaultCurrency: false,
-            currency: { connect: { uuid: currencyUuids.usd } },
+            currency: { connect: { uuid: testUuids.currencyUuids.usd } },
           },
         ],
       },
@@ -270,25 +255,25 @@ export default async function createTestData(stripeEnvs: StripeEnvsTypes) {
     },
   });
 
+  console.log('===== product', product)
+
   const productTwo = await prismaClient.product.create({
     data: {
       name: 'Sample Product Two',
       description: 'This is a sample product for testing purposes',
       logoUrl: 'https://example.com/logo.png',
       displayName: 'Sample Product Two',
-      organisation: organisationId,
+      organisation: testUuids.organisationId,
       status: 'ACTIVE',
       paid: false,
       appType: 'CUSTOM',
-      isTest: false,
-      uuid: productTwoUuid,
+      uuid: testUuids.productTwoUuid,
       organisationPaymentIntegration: {
         create: {
-          organisation: organisationId,
+          organisation: testUuids.organisationId,
           accountId: process.env.STRIPE_ACCOUNT_ID,
           accountName: 'Widgy Widgets Two',
           integrationName: 'salable',
-          isTest: true,
           accountData: {},
           status: 'active',
         },
@@ -297,7 +282,7 @@ export default async function createTestData(stripeEnvs: StripeEnvsTypes) {
         create: [
           {
             defaultCurrency: true,
-            currency: { connect: { uuid: currencyUuids.gbp } },
+            currency: { connect: { uuid: testUuids.currencyUuids.gbp } },
           },
         ],
       },
@@ -317,14 +302,14 @@ export default async function createTestData(stripeEnvs: StripeEnvsTypes) {
 
   await prismaClient.plan.create({
     data: {
-      organisation: organisationId,
+      organisation: testUuids.organisationId,
       pricingType: 'paid',
       licenseType: 'perSeat',
       perSeatAmount: 2,
       name: 'Per Seat Basic Monthly Plan Name',
       description: 'Per Seat Basic Monthly Plan description',
       displayName: 'Per Seat Basic Monthly Plan Display Name',
-      uuid: perSeatPaidPlanUuid,
+      uuid: testUuids.perSeatPaidPlanUuid,
       product: { connect: { uuid: product.uuid } },
       status: 'ACTIVE',
       trialDays: 0,
@@ -365,13 +350,13 @@ export default async function createTestData(stripeEnvs: StripeEnvsTypes) {
 
   await prismaClient.plan.create({
     data: {
-      organisation: organisationId,
+      organisation: testUuids.organisationId,
       pricingType: 'paid',
       licenseType: 'licensed',
       name: 'Basic Monthly Plan Name',
       description: 'Basic Monthly Plan description',
       displayName: 'Basic Monthly Plan Display Name',
-      uuid: paidPlanUuid,
+      uuid: testUuids.paidPlanUuid,
       product: { connect: { uuid: product.uuid } },
       status: 'ACTIVE',
       trialDays: 0,
@@ -412,13 +397,13 @@ export default async function createTestData(stripeEnvs: StripeEnvsTypes) {
 
   await prismaClient.plan.create({
     data: {
-      organisation: organisationId,
+      organisation: testUuids.organisationId,
       pricingType: 'paid',
       licenseType: 'licensed',
       name: 'Basic Monthly Plan Two Name',
       description: 'Basic Monthly Plan Two description',
       displayName: 'Basic Monthly Plan Two Display Name',
-      uuid: paidPlanTwoUuid,
+      uuid: testUuids.paidPlanTwoUuid,
       product: { connect: { uuid: product.uuid } },
       status: 'ACTIVE',
       trialDays: 0,
@@ -459,13 +444,13 @@ export default async function createTestData(stripeEnvs: StripeEnvsTypes) {
 
   await prismaClient.plan.create({
     data: {
-      organisation: organisationId,
+      organisation: testUuids.organisationId,
       pricingType: 'free',
       licenseType: 'licensed',
       name: 'Free Monthly Plan Name',
       description: 'Free Monthly Plan description',
       displayName: 'Free Monthly Plan Display Name',
-      uuid: freeMonthlyPlanUuid,
+      uuid: testUuids.freeMonthlyPlanUuid,
       product: { connect: { uuid: product.uuid } },
       status: 'ACTIVE',
       trialDays: 0,
@@ -499,13 +484,13 @@ export default async function createTestData(stripeEnvs: StripeEnvsTypes) {
 
   await prismaClient.plan.create({
     data: {
-      organisation: organisationId,
+      organisation: testUuids.organisationId,
       pricingType: 'paid',
       licenseType: 'licensed',
       name: 'Basic Yearly Plan Name',
       description: 'Basic Yearly Plan description',
       displayName: 'Basic Yearly Plan Display Name',
-      uuid: paidYearlyPlanUuid,
+      uuid: testUuids.paidYearlyPlanUuid,
       product: { connect: { uuid: product.uuid } },
       status: 'ACTIVE',
       trialDays: 0,
@@ -546,13 +531,13 @@ export default async function createTestData(stripeEnvs: StripeEnvsTypes) {
 
   await prismaClient.plan.create({
     data: {
-      organisation: organisationId,
+      organisation: testUuids.organisationId,
       pricingType: 'free',
       licenseType: 'licensed',
       name: 'Free Yearly Plan Name',
       description: 'Free Yearly Plan description',
       displayName: 'Free Yearly Plan Display Name',
-      uuid: freeYearlyPlanUuid,
+      uuid: testUuids.freeYearlyPlanUuid,
       product: { connect: { uuid: product.uuid } },
       status: 'ACTIVE',
       trialDays: 0,
@@ -586,14 +571,14 @@ export default async function createTestData(stripeEnvs: StripeEnvsTypes) {
 
   await prismaClient.plan.create({
     data: {
-      organisation: organisationId,
+      organisation: testUuids.organisationId,
       pricingType: 'paid',
       licenseType: 'metered',
       name: 'Usage Basic Monthly Plan Name',
       description: 'Usage Basic Monthly Plan description',
       displayName: 'Usage Basic Monthly Plan Display Name',
-      uuid: meteredPaidPlanUuid,
-      product: { connect: { uuid: productTwoUuid } },
+      uuid: testUuids.meteredPaidPlanUuid,
+      product: { connect: { uuid: testUuids.productTwoUuid } },
       status: 'ACTIVE',
       trialDays: 0,
       evaluation: false,
@@ -633,14 +618,14 @@ export default async function createTestData(stripeEnvs: StripeEnvsTypes) {
 
   await prismaClient.plan.create({
     data: {
-      organisation: organisationId,
+      organisation: testUuids.organisationId,
       pricingType: 'paid',
       licenseType: 'metered',
       name: 'Usage Pro Monthly Plan Name',
       description: 'Usage Pro Monthly Plan description',
       displayName: 'Usage Pro Monthly Plan Display Name',
-      uuid: meteredPaidPlanTwoUuid,
-      product: { connect: { uuid: productTwoUuid } },
+      uuid: testUuids.meteredPaidPlanTwoUuid,
+      product: { connect: { uuid: testUuids.productTwoUuid } },
       status: 'ACTIVE',
       trialDays: 0,
       evaluation: false,
@@ -680,14 +665,14 @@ export default async function createTestData(stripeEnvs: StripeEnvsTypes) {
 
   await prismaClient.plan.create({
     data: {
-      organisation: organisationId,
+      organisation: testUuids.organisationId,
       pricingType: 'free',
       licenseType: 'licensed',
       name: 'Future Plan Name',
       description: 'Future Plan description',
       displayName: 'Future Plan Display Name',
-      uuid: comingSoonPlanUuid,
-      product: { connect: { uuid: productTwoUuid } },
+      uuid: testUuids.comingSoonPlanUuid,
+      product: { connect: { uuid: testUuids.productTwoUuid } },
       status: 'ACTIVE',
       trialDays: 0,
       evaluation: false,
@@ -720,14 +705,14 @@ export default async function createTestData(stripeEnvs: StripeEnvsTypes) {
 
   await prismaClient.plan.create({
     data: {
-      organisation: organisationId,
+      organisation: testUuids.organisationId,
       pricingType: 'paid',
       licenseType: 'perSeat',
       name: 'Per Seat Unlimited Plan',
       description: 'Per Seat Unlimited Plan description',
       displayName: 'Per Seat Unlimited Plan',
-      uuid: perSeatUnlimitedPlanUuid,
-      product: { connect: { uuid: productTwoUuid } },
+      uuid: testUuids.perSeatUnlimitedPlanUuid,
+      product: { connect: { uuid: testUuids.productTwoUuid } },
       status: 'ACTIVE',
       trialDays: 0,
       evaluation: false,
@@ -768,14 +753,14 @@ export default async function createTestData(stripeEnvs: StripeEnvsTypes) {
 
   await prismaClient.plan.create({
     data: {
-      organisation: organisationId,
+      organisation: testUuids.organisationId,
       pricingType: 'paid',
       licenseType: 'perSeat',
       name: 'Per Seat Maximum Plan',
       description: 'Per Seat Maximum Plan description',
       displayName: 'Per Seat Maximum Plan',
-      uuid: perSeatMaxPlanUuid,
-      product: { connect: { uuid: productTwoUuid } },
+      uuid: testUuids.perSeatMaxPlanUuid,
+      product: { connect: { uuid: testUuids.productTwoUuid } },
       status: 'ACTIVE',
       trialDays: 0,
       evaluation: false,
@@ -816,14 +801,14 @@ export default async function createTestData(stripeEnvs: StripeEnvsTypes) {
 
   await prismaClient.plan.create({
     data: {
-      organisation: organisationId,
+      organisation: testUuids.organisationId,
       pricingType: 'paid',
       licenseType: 'perSeat',
       name: 'Per Seat Minimum Plan',
       description: 'Per Seat Minimum Plan description',
       displayName: 'Per Seat Minimum Plan',
-      uuid: perSeatMinPlanUuid,
-      product: { connect: { uuid: productTwoUuid } },
+      uuid: testUuids.perSeatMinPlanUuid,
+      product: { connect: { uuid: testUuids.productTwoUuid } },
       status: 'ACTIVE',
       trialDays: 0,
       evaluation: false,
@@ -864,14 +849,14 @@ export default async function createTestData(stripeEnvs: StripeEnvsTypes) {
 
   await prismaClient.plan.create({
     data: {
-      organisation: organisationId,
+      organisation: testUuids.organisationId,
       pricingType: 'paid',
       licenseType: 'perSeat',
       name: 'Per Seat Range Plan',
       description: 'Per Seat Range Plan description',
       displayName: 'Per Seat Range Plan',
-      uuid: perSeatRangePlanUuid,
-      product: { connect: { uuid: productTwoUuid } },
+      uuid: testUuids.perSeatRangePlanUuid,
+      product: { connect: { uuid: testUuids.productTwoUuid } },
       status: 'ACTIVE',
       trialDays: 0,
       evaluation: false,
@@ -912,14 +897,14 @@ export default async function createTestData(stripeEnvs: StripeEnvsTypes) {
 
   await prismaClient.plan.create({
     data: {
-      organisation: organisationId,
+      organisation: testUuids.organisationId,
       pricingType: 'paid',
       licenseType: 'metered',
       name: 'Usage Basic Monthly Plan Name',
       description: 'Usage Basic Monthly Plan description',
       displayName: 'Usage Basic Monthly Plan Display Name',
-      uuid: usageBasicMonthlyPlanUuid,
-      product: { connect: { uuid: productTwoUuid } },
+      uuid: testUuids.usageBasicMonthlyPlanUuid,
+      product: { connect: { uuid: testUuids.productTwoUuid } },
       status: 'ACTIVE',
       trialDays: 0,
       evaluation: false,
@@ -960,14 +945,14 @@ export default async function createTestData(stripeEnvs: StripeEnvsTypes) {
 
   await prismaClient.plan.create({
     data: {
-      organisation: organisationId,
+      organisation: testUuids.organisationId,
       pricingType: 'paid',
       licenseType: 'metered',
       name: 'Usage Pro Monthly Plan Name',
       description: 'Usage Pro Monthly Plan description',
       displayName: 'Usage Pro Monthly Plan Display Name',
-      uuid: usageProMonthlyPlanUuid,
-      product: { connect: { uuid: productTwoUuid } },
+      uuid: testUuids.usageProMonthlyPlanUuid,
+      product: { connect: { uuid: testUuids.productTwoUuid } },
       status: 'ACTIVE',
       trialDays: 0,
       evaluation: false,
@@ -1008,18 +993,85 @@ export default async function createTestData(stripeEnvs: StripeEnvsTypes) {
 
   await prismaClient.capabilitiesOnPlans.createMany({
     data: [
-      { capabilityUuid: product.capabilities[0].uuid, planUuid: paidPlanUuid },
-      { capabilityUuid: product.capabilities[0].uuid, planUuid: freeMonthlyPlanUuid },
+      { capabilityUuid: product.capabilities[0].uuid, planUuid: testUuids.paidPlanUuid },
+      { capabilityUuid: product.capabilities[0].uuid, planUuid: testUuids.freeMonthlyPlanUuid },
       {
         capabilityUuid: product.capabilities[0].uuid,
-        planUuid: paidYearlyPlanUuid,
+        planUuid: testUuids.paidYearlyPlanUuid,
       },
-      { capabilityUuid: product.capabilities[0].uuid, planUuid: freeYearlyPlanUuid },
+      { capabilityUuid: product.capabilities[0].uuid, planUuid: testUuids.freeYearlyPlanUuid },
       {
         capabilityUuid: product.capabilities[0].uuid,
-        planUuid: perSeatPaidPlanUuid,
+        planUuid: testUuids.perSeatPaidPlanUuid,
       },
     ],
+  });
+
+  await prismaClient.subscription.create({
+    data: {
+      uuid: testUuids.subscriptionWithInvoicesUuid,
+      organisation: testUuids.organisationId,
+      type: 'salable',
+      status: 'ACTIVE',
+      paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionId,
+      lineItemIds: [stripeEnvs.basicSubscriptionLineItemId],
+      productUuid: testUuids.productUuid,
+      planUuid: testUuids.paidPlanUuid,
+      owner: 'xxxxx',
+      quantity: 1,
+      createdAt: new Date(),
+      expiryDate: addMonths(new Date(), 1),
+      license: {
+        create: {
+          name: null,
+          email: null,
+          status: 'ACTIVE',
+          granteeId: null,
+          paymentService: 'salable',
+          purchaser: 'xxxxx',
+          type: 'licensed',
+          plan: { connect: { uuid: testUuids.paidPlanUuid } },
+          product: { connect: { uuid: testUuids.productUuid } },
+          startTime: new Date(),
+          capabilities: [],
+          endTime: addMonths(new Date(), 1),
+        }
+      }
+    }
+  })
+
+  await prismaClient.subscription.create({
+    data: {
+      uuid: testUuids.couponSubscriptionUuid,
+      paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionThreeId,
+      lineItemIds: [stripeEnvs.basicSubscriptionThreeLineItemId],
+      email: 'customer@email.com',
+      owner: 'xxxxx',
+      type: 'salable',
+      status: 'ACTIVE',
+      organisation: testUuids.organisationId,
+      license: {
+        create: {
+          name: null,
+          email: null,
+          status: 'ACTIVE',
+          granteeId: null,
+          paymentService: 'salable',
+          purchaser: 'xxxxx',
+          type: 'licensed',
+          plan: { connect: { uuid: testUuids.paidPlanTwoUuid } },
+          product: { connect: { uuid: testUuids.productUuid } },
+          startTime: new Date(),
+          capabilities: [],
+          endTime: addMonths(new Date(), 1),
+        }
+      },
+      product: { connect: { uuid: testUuids.productUuid } },
+      plan: { connect: { uuid: testUuids.paidPlanTwoUuid } },
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      expiryDate: new Date(Date.now() + 31536000000),
+    },
   });
 
   clearInterval(loadingWheel);

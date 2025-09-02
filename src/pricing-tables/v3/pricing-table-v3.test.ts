@@ -1,7 +1,7 @@
 import Salable from '../..';
 import { PricingTableV3, Version } from '../../types';
 import prismaClient from '../../../test-utils/prisma/prisma-client';
-import { testUuids } from '../../../test-utils/scripts/create-test-data';
+import { testUuids } from '../../../test-utils/scripts/create-salable-test-data';
 import {
   FeatureSchemaV3,
   PlanFeatureSchemaV3, PlanCurrencySchema,

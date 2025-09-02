@@ -3,7 +3,7 @@ import {
   PlanCheckout,
   Version
 } from '../../types';
-import { testUuids } from '../../../test-utils/scripts/create-test-data';
+import { testUuids } from '../../../test-utils/scripts/create-salable-test-data';
 import {
   PlanFeatureSchemaV3,
   OrganisationPaymentIntegrationSchemaV3, PlanCurrencySchema,

@@ -484,21 +484,22 @@ export type SubscriptionVersions = {
     ) => Promise<void>;
 
     /**
-     *  Incrementing will create unassigned licenses.
+     *  Update seat count.
      *
      *  @param {string} subscriptionUuid - The UUID of the subscription
      *
-     * Docs - https://docs.salable.app/api/v2#tag/Subscriptions/operation/incrementSubscriptionSeats
+     * Docs - https://docs.salable.app/api/v2#tag/Subscriptions/operation/updateSubscriptionSeatCount
      *
-     * @returns {Promise<SubscriptionSeat>}
+     * @returns {Promise<SubscriptionSeat | void>}
      */
-    addSeats: (
+    updateSeatCount: (
       subscriptionUuid: string,
       options: {
-        increment: number;
+        increment?: number;
+        decrement?: number;
         proration?: string;
       },
-    ) => Promise<SubscriptionSeat>;
+    ) => Promise<SubscriptionSeat | void>;
 
     /**
      *  Applies the specified coupon to the subscription.
