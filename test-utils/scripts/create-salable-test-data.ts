@@ -1,17 +1,17 @@
 import prismaClient from '../../test-utils/prisma/prisma-client';
-import { generateKeyPairSync, randomUUID } from 'crypto';
+import { generateKeyPairSync } from 'crypto';
 import kmsSymmetricEncrypt from '../kms/kms-symmetric-encrypt';
 import getConsoleLoader from '../helpers/console-loading-wheel';
 import { config } from 'dotenv';
 import { StripeEnvsTypes } from './create-stripe-test-data';
 import { addMonths } from 'date-fns';
-import * as console from 'node:console';
 
 config({ path: '.env.test' });
 
 export type TestDbData = {
   organisationId: string;
   devApiKeyV2: string;
+  devApiKeyV3: string;
   productUuid: string;
   productTwoUuid: string;
   freeMonthlyPlanUuid: string;
@@ -41,6 +41,7 @@ export type TestDbData = {
 export const testUuids: TestDbData = {
   organisationId: 'c3016597-7677-415f-967e-e45643719141',
   devApiKeyV2: 'bc4fcc73-de0f-4f65-ab19-ef76cf50f3d1',
+  devApiKeyV3: '8fb1637b-25cd-45ad-b5d0-5b06ac8da151',
   productUuid: '2a5d3e36-45db-46ff-967e-b969b20718eb',
   productTwoUuid: '5472a373-ce9c-4723-a467-35cce0bc71f5',
   freeMonthlyPlanUuid: 'cc46dafa-cb0b-4409-beb8-5b111cb71133',
@@ -153,6 +154,23 @@ const apiKeyScopesV2 = [
   'usage:write',
 ];
 
+const apiKeyScopesV3 = [
+  'entitlements:check',
+  'events:read',
+  'billing:read',
+  'billing:write',
+  'organisations:read',
+  'organisations:write',
+  'subscriptions:read',
+  'subscriptions:write',
+  'pricing-tables:read',
+  'plans:read',
+  'products:read',
+  'sessions:write',
+  'usage:read',
+  'usage:write',
+];
+
 const { publicKey, privateKey } = generateKeyPairSync('ec', {
   namedCurve: 'P-256',
   publicKeyEncoding: { type: 'spki', format: 'pem' },
@@ -200,10 +218,20 @@ export default async function createSalableTestData(stripeEnvs: StripeEnvsTypes)
 
   await prismaClient.apiKey.create({
     data: {
-      name: 'Sample API Key',
+      name: 'Sample API Key V2',
       organisation: testUuids.organisationId,
       value: testUuids.devApiKeyV2,
       scopes: JSON.stringify(apiKeyScopesV2),
+      status: 'ACTIVE',
+    },
+  });
+
+  await prismaClient.apiKey.create({
+    data: {
+      name: 'Sample API Key V3',
+      organisation: testUuids.organisationId,
+      value: testUuids.devApiKeyV3,
+      scopes: JSON.stringify(apiKeyScopesV3),
       status: 'ACTIVE',
     },
   });

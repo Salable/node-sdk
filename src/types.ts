@@ -739,6 +739,14 @@ export type CheckLicensesCapabilitiesResponse = {
   signature: string;
 };
 
+export type EntitlementCheck = {
+  feature: {
+    feature: string;
+    expiry: Date;
+  }[];
+  signature: string;
+}
+
 export type CapabilitiesEndDates = {
   [key: string]: string;
 };
