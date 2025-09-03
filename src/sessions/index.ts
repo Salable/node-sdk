@@ -1,5 +1,4 @@
-import { ApiRequest, Session, SessionMetaData, SessionScope, TVersion, Version } from '../types';
-import { v2SessionMethods } from './v2';
+import { Session, SessionMetaData, SessionScope, TVersion, Version } from '../types';
 
 export type SessionVersions = {
   [Version.V2]: {
@@ -18,13 +17,3 @@ export type SessionVersions = {
 };
 
 export type SessionVersionedMethods<V extends TVersion> = V extends keyof SessionVersions ? SessionVersions[V] : never;
-
-export const sessionsInit = <V extends TVersion>(version: V, request: ApiRequest): SessionVersionedMethods<V> => {
-  switch (version) {
-    case Version.V2:
-    case Version.V3:
-      return v2SessionMethods(request) as SessionVersionedMethods<V>;
-    default:
-      throw new Error('Unsupported version');
-  }
-};

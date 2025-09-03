@@ -1,6 +1,4 @@
-import { Plan, PlanCheckout, PlanFeature, PlanCapability, PlanCurrency, ApiRequest, TVersion, Version, GetPlanOptions, GetPlanCheckoutOptions, PlanFeatureV3, ProductV3, OrganisationPaymentIntegrationV3, GetPlanOptionsV3, GetPlanCheckoutOptionsV3, PlanV3 } from '../types';
-import { v2PlanMethods } from './v2';
-import { v3PlanMethods } from './v3';
+import { Plan, PlanCheckout, PlanFeature, PlanCapability, PlanCurrency, TVersion, Version, GetPlanOptions, GetPlanCheckoutOptions, PlanFeatureV3, ProductV3, OrganisationPaymentIntegrationV3, GetPlanOptionsV3, GetPlanCheckoutOptionsV3, PlanV3 } from '../types';
 
 export type PlanVersions = {
   [Version.V2]: {
@@ -107,14 +105,3 @@ export type PlanVersions = {
 };
 
 export type PlanVersionedMethods<V extends TVersion> = V extends keyof PlanVersions ? PlanVersions[V] : never;
-
-export const plansInit = <V extends TVersion>(version: V, request: ApiRequest): PlanVersionedMethods<V> => {
-  switch (version) {
-    case Version.V2:
-      return v2PlanMethods(request) as PlanVersionedMethods<V>;
-    case Version.V3:
-      return v3PlanMethods(request) as PlanVersionedMethods<V>;
-    default:
-      throw new Error('Unsupported version');
-  }
-};

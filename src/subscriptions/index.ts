@@ -6,7 +6,6 @@ import {
   SubscriptionPaymentMethod,
   SubscriptionPlan,
   SubscriptionSeat,
-  ApiRequest,
   TVersion,
   Version,
   GetAllSubscriptionsOptions,
@@ -15,8 +14,6 @@ import {
   GetSubscriptionSeatsOptions,
   PaginatedSeats, GetSeatCountResponse, ManageSeatOptions, CreateSubscriptionInput
 } from '../types';
-import { v2SubscriptionMethods } from './v2';
-import { v3SubscriptionMethods } from './v3';
 
 export type SubscriptionVersions = {
   [Version.V2]: {
@@ -536,14 +533,3 @@ export type SubscriptionVersions = {
 };
 
 export type SubscriptionVersionedMethods<V extends TVersion> = V extends keyof SubscriptionVersions ? SubscriptionVersions[V] : never;
-
-export const subscriptionsInit = <V extends TVersion>(version: V, request: ApiRequest): SubscriptionVersionedMethods<V> => {
-  switch (version) {
-    case Version.V2:
-      return v2SubscriptionMethods(request) as SubscriptionVersionedMethods<V>;
-    case Version.V3:
-      return v3SubscriptionMethods(request) as SubscriptionVersionedMethods<V>;
-    default:
-      throw new Error('Unsupported version');
-  }
-};

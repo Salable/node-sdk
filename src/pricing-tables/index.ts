@@ -1,6 +1,4 @@
-import { PricingTable, ApiRequest, TVersion, Version, PricingTableV3 } from '../types';
-import { v2PricingTableMethods } from './v2';
-import { v3PricingTableMethods } from './v3';
+import { PricingTable, TVersion, Version, PricingTableV3 } from '../types';
 
 export type PricingTableVersions = {
   [Version.V2]: {
@@ -28,14 +26,3 @@ export type PricingTableVersions = {
 };
 
 export type PricingTableVersionedMethods<V extends TVersion> = V extends keyof PricingTableVersions ? PricingTableVersions[V] : never;
-
-export const pricingTablesInit = <V extends TVersion>(version: V, request: ApiRequest): PricingTableVersionedMethods<V> => {
-  switch (version) {
-    case Version.V2:
-      return v2PricingTableMethods(request) as PricingTableVersionedMethods<V>;
-    case Version.V3:
-      return v3PricingTableMethods(request) as PricingTableVersionedMethods<V>;
-    default:
-      throw new Error('Unsupported version');
-  }
-};

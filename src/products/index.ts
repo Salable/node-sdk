@@ -5,13 +5,10 @@ import {
   ProductCurrency,
   ProductFeature,
   ProductPricingTable,
-  ApiRequest,
   TVersion,
   Version,
   ProductV3, ProductPricingTableV3
 } from '../types';
-import { v2ProductMethods } from './v2';
-import { v3ProductMethods } from './v3';
 
 export type ProductVersions = {
   [Version.V2]: {
@@ -121,14 +118,3 @@ export type ProductVersions = {
 };
 
 export type ProductVersionedMethods<V extends TVersion> = V extends keyof ProductVersions ? ProductVersions[V] : never;
-
-export const productsInit = <V extends TVersion>(version: V, request: ApiRequest): ProductVersionedMethods<V> => {
-  switch (version) {
-    case Version.V2:
-      return v2ProductMethods(request) as ProductVersionedMethods<V>;
-    case Version.V3:
-      return v3ProductMethods(request) as ProductVersionedMethods<V>;
-    default:
-      throw new Error('Unsupported version');
-  }
-};
