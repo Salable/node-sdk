@@ -28,10 +28,6 @@ describe('Licenses V2 Tests', () => {
     await generateTestData();
   });
 
-  afterAll(async () => {
-    await deleteTestData();
-  });
-
   it('getOne: Should successfully fetch the specified license', async () => {
     const data = await salable.licenses.getOne(licenseUuid);
 
@@ -307,11 +303,6 @@ const planSchema: Plan = {
   updatedAt: expect.any(String),
   archivedAt: expect.toBeOneOf([expect.any(String), null]),
   features: expect.toBeOneOf([expect.anything(), undefined]),
-};
-
-const deleteTestData = async () => {
-  await prismaClient.license.deleteMany({ where: { OR: [{ uuid: licenseUuid }, { uuid: licenseTwoUuid }, { uuid: licenseThreeUuid }, { uuid: activeLicenseUuid }, { uuid: noSubLicenseUuid }, { uuid: noSubLicenseTwoUuid }, { uuid: noSubLicenseThreeUuid }] } });
-  await prismaClient.subscription.deleteMany({ where: { OR: [{ uuid: subscriptionUuid }] } });
 };
 
 const generateTestData = async () => {

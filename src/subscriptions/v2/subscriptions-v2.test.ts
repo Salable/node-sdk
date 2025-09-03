@@ -16,6 +16,8 @@ const testEmail = randomUUID();
 const owner = randomUUID();
 const differentOwner = randomUUID();
 const subscriptionToBeCancelledUuid = randomUUID();
+const differentOwnerSubscriptionUuid = randomUUID()
+const subscriptionUuidTwo = randomUUID();
 
 describe('Subscriptions V2 Tests', () => {
   const apiKey = testUuids.devApiKeyV2;
@@ -23,10 +25,6 @@ describe('Subscriptions V2 Tests', () => {
 
   beforeAll(async () => {
     await generateTestData();
-  });
-
-  afterAll(async () => {
-    await deleteTestData();
   });
 
   it('create: Should successfully create a subscription without a payment integration', async () => {
@@ -466,12 +464,6 @@ const stripePaymentMethodSchema = {
   type: expect.any(String),
 };
 
-const deleteTestData = async () => {
-  await prismaClient.license.deleteMany({});
-  await prismaClient.couponsOnSubscriptions.deleteMany({});
-  await prismaClient.subscription.deleteMany({});
-};
-
 const generateTestData = async () => {
   await prismaClient.subscription.create({
     data: {
@@ -525,7 +517,6 @@ const generateTestData = async () => {
     },
   });
 
-  const differentOwnerSubscriptionUuid = randomUUID()
   await prismaClient.subscription.create({
     data: {
       uuid: differentOwnerSubscriptionUuid,
@@ -580,7 +571,8 @@ const generateTestData = async () => {
 
   await prismaClient.subscription.create({
     data: {
-      paymentIntegrationSubscriptionId: randomUUID(),
+      uuid: subscriptionUuidTwo,
+      paymentIntegrationSubscriptionId: subscriptionUuidTwo,
       lineItemIds: [],
       email: testEmail,
       owner,

@@ -1038,7 +1038,7 @@ export default async function createSalableTestData(stripeEnvs: StripeEnvsTypes)
     }
   })
 
-  await prismaClient.subscription.create({
+  const v2CouponSubscription = await prismaClient.subscription.create({
     data: {
       uuid: testUuids.couponSubscriptionUuidV2,
       paymentIntegrationSubscriptionId: stripeEnvs.subscriptionWithCouponV2Id,
@@ -1072,7 +1072,7 @@ export default async function createSalableTestData(stripeEnvs: StripeEnvsTypes)
     },
   });
 
-  await prismaClient.subscription.create({
+  const v3CouponSubscription = await prismaClient.subscription.create({
     data: {
       uuid: testUuids.couponSubscriptionUuidV3,
       paymentIntegrationSubscriptionId: stripeEnvs.subscriptionWithCouponV3Id,

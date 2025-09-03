@@ -21,11 +21,10 @@ describe('Pricing Table V3 Tests', () => {
 
 const generateTestData = async () => {
 
-  const product = await prismaClient.product.findFirst({
+  const product = await prismaClient.product.findUnique({
     where: { uuid: testUuids.productUuid },
-    select: {
+    include: {
       features: true,
-      uuid: true,
       plans: true,
     },
   });

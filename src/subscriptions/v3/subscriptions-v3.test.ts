@@ -28,6 +28,10 @@ const testGrantee = randomUUID();
 const testEmail = randomUUID();
 const owner = randomUUID();
 const differentOwner = randomUUID();
+const testSubscriptionTwoUuid = randomUUID();
+const differentOwnerSubscriptionUuid = randomUUID();
+
+
 
 describe('Subscriptions V3 Tests', () => {
   const apiKey = testUuids.devApiKeyV2;
@@ -35,11 +39,7 @@ describe('Subscriptions V3 Tests', () => {
 
   beforeAll(async () => {
     await generateTestData();
-  });
-
-  afterAll(async () => {
-    await deleteTestData();
-  });
+  }, 10000);
 
   it('create: Should successfully create a subscription without a payment integration', async () => {
     const data = await salable.subscriptions.create({
@@ -386,12 +386,6 @@ const stripePaymentMethodSchema = {
   type: expect.any(String),
 };
 
-const deleteTestData = async () => {
-  await prismaClient.license.deleteMany({});
-  await prismaClient.couponsOnSubscriptions.deleteMany({});
-  await prismaClient.subscription.deleteMany({});
-};
-
 const generateTestData = async () => {
   await prismaClient.subscription.create({
     data: {
@@ -428,11 +422,10 @@ const generateTestData = async () => {
     },
   });
 
-  const testSubscriptionUuid = randomUUID();
   await prismaClient.subscription.create({
     data: {
-      uuid: testSubscriptionUuid,
-      paymentIntegrationSubscriptionId: testSubscriptionUuid,
+      uuid: testSubscriptionTwoUuid,
+      paymentIntegrationSubscriptionId: testSubscriptionTwoUuid,
       lineItemIds: [],
       email: testEmail,
       owner,
@@ -463,7 +456,6 @@ const generateTestData = async () => {
       expiryDate: addMonths(new Date(), 1),
     },
   });
-  const differentOwnerSubscriptionUuid = randomUUID();
   await prismaClient.subscription.create({
     data: {
       uuid: differentOwnerSubscriptionUuid,

@@ -11,7 +11,7 @@ describe('Pricing Table V2 Tests', () => {
 
   beforeAll(async() => {
     await generateTestData()
-  })
+  }, 10000)
 
   it('getAll: should successfully fetch all products', async () => {
     const data = await salable.pricingTables.getOne(pricingTableUuid);
@@ -40,11 +40,10 @@ const pricingTableSchema: PricingTable = {
 
 const generateTestData = async () => {
 
-  const product = await prismaClient.product.findFirst({
+  const product = await prismaClient.product.findUnique({
     where: { uuid: testUuids.productUuid },
-    select: {
+    include: {
       features: true,
-      uuid: true,
       plans: true,
     },
   });
