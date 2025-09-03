@@ -1,4 +1,4 @@
-import { initSalable, TVersion, VersionedMethods } from '../..';
+import { initSalable, TVersion, VersionedMethodsReturn } from '../..';
 import { PaginatedUsageRecords, UsageRecord } from '../../types';
 import prismaClient from '../../../test-utils/prisma/prisma-client';
 import { testUuids } from '../../../test-utils/scripts/create-salable-test-data';
@@ -11,7 +11,7 @@ const testGrantee = 'userId_metered';
 const owner = 'subscription-owner'
 
 describe('Usage Tests for v2, v3', () => {
-  const salableVersions = {} as Record<TVersion, VersionedMethods<TVersion>>
+  const salableVersions = {} as Record<TVersion, VersionedMethodsReturn<TVersion>>
   const versions: {version: TVersion; scopes: string[]}[] = [
     { version: 'v2', scopes: ['usage:read', 'usage:write'] },
     { version: 'v3', scopes: ['usage:read', 'usage:write'] }

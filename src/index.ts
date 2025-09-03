@@ -94,7 +94,7 @@ type MethodsV3 = {
   entitlements: EntitlementVersionedMethods<'v3'>
 }
 
-type VersionedMethodsReturn<V extends TVersion> =
+export type VersionedMethodsReturn<V extends TVersion> =
   V extends 'v2' ? MethodsV2 :
   V extends 'v3' ? MethodsV3 :
   never;

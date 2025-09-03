@@ -22,8 +22,6 @@ const organisation = randomUUID();
 describe('Licenses V2 Tests', () => {
   const salable = initSalable(testUuids.devApiKeyV2, 'v2');
 
-  // TODO: add entitlements method for v3
-
   beforeAll(async () => {
     await generateTestData();
   });

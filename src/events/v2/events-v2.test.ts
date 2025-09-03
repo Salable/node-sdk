@@ -1,4 +1,4 @@
-import { initSalable, TVersion, Version, VersionedMethods } from '../..';
+import { initSalable, TVersion, Version, VersionedMethodsReturn } from '../..';
 import { Event, EventTypeEnum } from '../../types';
 import prismaClient from '../../../test-utils/prisma/prisma-client';
 import { testUuids } from '../../../test-utils/scripts/create-salable-test-data';
@@ -8,7 +8,7 @@ import { randomUUID } from 'crypto';
 const eventUuid = randomUUID();
 
 describe('Events Tests for v2, v3', () => {
-  const salableVersions = {} as Record<TVersion, VersionedMethods<TVersion>>
+  const salableVersions = {} as Record<TVersion, VersionedMethodsReturn<TVersion>>
   const versions: {version: TVersion; scopes: string[]}[] = [
     { version: Version.V2, scopes: ['events:read'] },
     { version: Version.V3, scopes: ['events:read'] }
