@@ -1,14 +1,6 @@
 import prismaClient from '../../../test-utils/prisma/prisma-client';
 import Salable from '../..';
-import {
-  PaginatedSubscription,
-  Invoice,
-  Plan,
-  Subscription,
-  PaginatedSubscriptionInvoice,
-  Version,
-  PaginatedLicenses, Capability, License, SeatActionType
-} from '../../types';
+import { PaginatedSubscription, Invoice, Plan, Subscription, PaginatedSubscriptionInvoice, Version, PaginatedLicenses, Capability, License, SeatActionType } from '../../types';
 import getEndTime from '../../../test-utils/helpers/get-end-time';
 import { v4 as uuidv4 } from 'uuid';
 import { testUuids } from '../../../test-utils/scripts/create-test-data';
@@ -22,6 +14,7 @@ const perSeatSubscriptionUuid = uuidv4();
 const licenseUuid = uuidv4();
 const licenseTwoUuid = uuidv4();
 const licenseThreeUuid = uuidv4();
+const couponUuid = uuidv4();
 const perSeatBasicLicenseUuids = [uuidv4(), uuidv4(), uuidv4(), uuidv4(), uuidv4(), uuidv4()];
 const testGrantee = '123456';
 const testEmail = 'tester@domain.com';
@@ -47,7 +40,7 @@ describe('Subscriptions V2 Tests', () => {
       owner: 'example',
       granteeId: 'test-grantee-id',
       status: 'ACTIVE',
-      expiryDate: '2025-07-06T12:00:00.000Z',
+      expiryDate: '2045-07-06T12:00:00.000Z',
     });
 
     expect(data).toEqual(expect.objectContaining(subscriptionSchema));
@@ -127,12 +120,12 @@ describe('Subscriptions V2 Tests', () => {
     expect(dataWithSearchParams.data).toEqual([{ ...subscriptionSchema, owner: 'different-owner' }]);
   });
 
-  it('getSeats: Should successfully fetch a subscription\'s seats', async () => {
+  it("getSeats: Should successfully fetch a subscription's seats", async () => {
     const data = await salable.subscriptions.getSeats(perSeatSubscriptionUuid);
     expect(data).toEqual(paginatedLicensesSchema);
   });
 
-  it('getSeatCount: Should successfully fetch a subscription\'s seat count', async () => {
+  it("getSeatCount: Should successfully fetch a subscription's seat count", async () => {
     const data = await salable.subscriptions.getSeatCount(perSeatSubscriptionUuid);
     expect(data).toEqual({
       count: expect.any(Number),
@@ -239,6 +232,18 @@ describe('Subscriptions V2 Tests', () => {
     expect(data).toEqual({ ...subscriptionSchema, owner: 'updated-owner' });
   });
 
+  it('addCoupon: Should successfully add the specified coupon to the subscription', async () => {
+    const data = await salable.subscriptions.addCoupon(subscriptionUuid, { couponUuid });
+
+    expect(data).toBeUndefined();
+  });
+
+  it('removeCoupon: Should successfully remove the specified coupon from the subscription', async () => {
+    const data = await salable.subscriptions.removeCoupon(subscriptionUuid, { couponUuid });
+
+    expect(data).toBeUndefined();
+  });
+  
   it('cancel: Should successfully cancel the subscription', async () => {
     const data = await salable.subscriptions.cancel(subscriptionUuid, { when: 'now' });
 
@@ -312,6 +317,7 @@ const planSchema: Plan = {
   updatedAt: expect.any(String),
   features: expect.toBeOneOf([expect.anything(), undefined]),
   currencies: expect.toBeOneOf([expect.anything(), undefined]),
+  archivedAt: expect.toBeOneOf([expect.any(String), null]),
 };
 
 const subscriptionSchema: Subscription = {
@@ -347,8 +353,8 @@ const invoiceSchema: Invoice = {
   account_tax_ids: expect.toBeOneOf([expect.toBeArray(), null]),
   amount_due: expect.any(Number),
   amount_paid: expect.any(Number),
-  amount_remaining: expect.any(Number),
   amount_overpaid: expect.any(Number),
+  amount_remaining: expect.any(Number),
   amount_shipping: expect.any(Number),
   application: expect.toBeOneOf([expect.any(String), null]),
   application_fee_amount: expect.toBeOneOf([expect.any(Number), null]),
@@ -395,6 +401,7 @@ const invoiceSchema: Invoice = {
   on_behalf_of: expect.toBeOneOf([expect.any(String), null]),
   paid: expect.any(Boolean),
   paid_out_of_band: expect.any(Boolean),
+  parent: expect.toBeObject(),
   payment_intent: expect.any(String),
   payment_settings: expect.toBeObject(),
   period_end: expect.any(Number),
@@ -417,7 +424,6 @@ const invoiceSchema: Invoice = {
   subtotal_excluding_tax: expect.any(Number),
   tax: expect.toBeOneOf([expect.any(Number), null]),
   test_clock: expect.toBeOneOf([expect.any(String), null]),
-  parent: expect.toBeObject(),
   total: expect.any(Number),
   total_discount_amounts: expect.toBeOneOf([expect.toBeArray(), null]),
   total_excluding_tax: expect.any(Number),
@@ -483,6 +489,7 @@ const stripePaymentMethodSchema = {
 
 const deleteTestData = async () => {
   await prismaClient.license.deleteMany({});
+  await prismaClient.couponsOnSubscriptions.deleteMany({});
   await prismaClient.subscription.deleteMany({});
 };
 
@@ -705,6 +712,34 @@ const generateTestData = async () => {
       updatedAt: new Date(),
       expiryDate: new Date(Date.now() + 31536000000),
       quantity: 2,
+    },
+  });
+
+  await prismaClient.coupon.create({
+    data: {
+      uuid: couponUuid,
+      paymentIntegrationCouponId: stripeEnvs.couponId,
+      name: 'Percentage Coupon',
+      duration: 'ONCE',
+      discountType: 'PERCENTAGE',
+      percentOff: 10,
+      expiresAt: null,
+      maxRedemptions: null,
+      isTest: false,
+      durationInMonths: 1,
+      status: 'ACTIVE',
+      product: {
+        connect: {
+          uuid: testUuids.productUuid,
+        },
+      },
+      appliesTo: {
+        create: {
+          plan: {
+            connect: { uuid: testUuids.paidPlanTwoUuid },
+          },
+        },
+      },
     },
   });
 };

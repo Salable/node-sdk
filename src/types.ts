@@ -84,7 +84,6 @@ export type GetSeatCountResponse = {
   unassigned: number;
 };
 
-
 export type GetUsageOptions = {
   granteeId: string;
   type?: string;
@@ -185,7 +184,6 @@ export type PaginatedSeats = {
   data: Seat[];
 };
 
-
 export enum SeatActionType {
   assign = 'assign',
   unassign = 'unassign',
@@ -194,14 +192,14 @@ export enum SeatActionType {
 
 export type ManageSeatOptions =
   | {
-  type: SeatActionType.assign | SeatActionType.unassign;
-  granteeId: string;
-}
+      type: SeatActionType.assign | SeatActionType.unassign;
+      granteeId: string;
+    }
   | {
-  type: SeatActionType.replace;
-  granteeId: string;
-  newGranteeId: string;
-};
+      type: SeatActionType.replace;
+      granteeId: string;
+      newGranteeId: string;
+    };
 
 export type Subscription = {
   uuid: string;
@@ -238,7 +236,6 @@ export type GetSubscriptionSeatsOptions = {
   cursor?: string;
   take?: number;
 };
-
 
 export type PaginatedSubscription = {
   first: string;
@@ -287,6 +284,7 @@ export type Plan = {
   isTest: boolean;
   features: Feature;
   currencies?: Currency;
+  archivedAt?: string;
 };
 
 export type IFeature = {
@@ -491,6 +489,7 @@ export type Product = {
   organisationPaymentIntegrationUuid: string;
   paymentIntegrationProductId?: string;
   updatedAt: string;
+  archivedAt?: string;
   appType: string;
   isTest: boolean;
 };
@@ -544,7 +543,7 @@ export type PricingTablePlan = {
   sortOrder: number;
   updatedAt: string;
   plan: Plan & {
-    features: Feature & { featureEnumOptions: FeatureEnumOption[] }[];
+    features: PlanFeature[];
     currencies: PlanCurrency[];
   };
 };
@@ -603,7 +602,10 @@ export type IOrganisationPaymentIntegration = {
 export type ProductPricingTable = {
   features: IFeature[];
   currencies: ICurrency[];
-  plans: (Plan & { features: IFeature[]; currencies: ICurrency[]; checkoutUrl: string })[];
+  plans: (Plan & {
+    features: PlanFeature[];
+    currencies: PlanCurrency[];
+  })[];
 } & Product;
 
 export type CheckLicensesCapabilitiesResponse = {

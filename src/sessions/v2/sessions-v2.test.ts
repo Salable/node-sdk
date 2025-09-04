@@ -10,6 +10,7 @@ const stripeEnvs = JSON.parse(process.env.stripEnvs || '');
 const licenseUuid = uuidv4();
 const subscriptionUuid = uuidv4();
 const testGrantee = '123456';
+const owner = 'subscription-owner'
 
 describe('Sessions V2 Tests', () => {
   const apiKey = testUuids.devApiKeyV2;
@@ -102,7 +103,6 @@ const generateTestData = async () => {
       paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionFourId,
       uuid: subscriptionUuid,
       email: 'tester@testing.com',
-      owner: 'owner_12345',
       type: 'salable',
       status: 'ACTIVE',
       organisation: testUuids.organisationId,
@@ -112,6 +112,7 @@ const generateTestData = async () => {
       createdAt: new Date(),
       updatedAt: new Date(),
       expiryDate: new Date(Date.now() + 31536000000),
+      owner,
     },
   });
 };

@@ -91,6 +91,7 @@ const ProductSchema: Product = {
   paymentIntegrationProductId: expect.toBeOneOf([expect.any(String), null]),
   appType: expect.any(String),
   updatedAt: expect.any(String),
+  archivedAt: expect.toBeOneOf([expect.any(String), null]),
 };
 
 const ProductPricingTableSchema: ProductPricingTable = {
@@ -131,6 +132,7 @@ const ProductPlanSchema: Plan = {
   type: expect.toBeOneOf([expect.any(String), undefined]),
   updatedAt: expect.any(String),
   features: expect.toBeOneOf([expect.anything(), undefined]),
+  archivedAt: expect.toBeOneOf([expect.any(String), null]),
 };
 
 const ProductFeatureSchema: ProductFeature = {

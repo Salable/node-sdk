@@ -1,3 +1,61 @@
+# [4.11.0](https://github.com/Salable/node-sdk/compare/v4.10.0...v4.11.0) (2025-07-08)
+
+
+### Features
+
+* add sentCount column to webhook event attempt table ([6d1c172](https://github.com/Salable/node-sdk/commit/6d1c172edccbec9934b933ee3795de8e271589d9))
+
+# [4.10.0](https://github.com/Salable/node-sdk/compare/v4.9.4...v4.10.0) (2025-07-07)
+
+
+### Features
+
+* added deletedAt column ([eb5ee6a](https://github.com/Salable/node-sdk/commit/eb5ee6a3ff70212413079e54a066fd1ee40b6e08))
+* **SD-2145:** added required webhook emitters tables ([af27789](https://github.com/Salable/node-sdk/commit/af27789f8e830f7d75fcc446a23fffab091a18c9))
+* using prismas uuid7 function ([15619cb](https://github.com/Salable/node-sdk/commit/15619cb8fe3b1c5744a0f6345b25f865a7257d94))
+
+## [4.9.4](https://github.com/Salable/node-sdk/compare/v4.9.3...v4.9.4) (2025-06-30)
+
+
+### Bug Fixes
+
+* product pricing table fix ([08019e5](https://github.com/Salable/node-sdk/commit/08019e5dd0333d67eea0ce6a9058c12c7da7127d))
+
+## [4.9.3](https://github.com/Salable/node-sdk/compare/v4.9.2...v4.9.3) (2025-06-30)
+
+
+### Bug Fixes
+
+* pricing table plan type fix ([4fc0ebc](https://github.com/Salable/node-sdk/commit/4fc0ebc0b4c7a79151fedaf562f00293725b1a55))
+
+## [4.9.2](https://github.com/Salable/node-sdk/compare/v4.9.1...v4.9.2) (2025-06-30)
+
+
+### Bug Fixes
+
+* product pricing table plans type ([aa8f826](https://github.com/Salable/node-sdk/commit/aa8f826b43f587b4bf529e2eb9bbd73304b0e86b))
+
+## [4.9.1](https://github.com/Salable/node-sdk/compare/v4.9.0...v4.9.1) (2025-06-30)
+
+
+### Bug Fixes
+
+* pricing table plans type ([d6cfaae](https://github.com/Salable/node-sdk/commit/d6cfaae2546d28a19ee5521e0a98be14cba729bb))
+
+# [4.9.0](https://github.com/Salable/node-sdk/compare/v4.8.0...v4.9.0) (2025-06-03)
+
+
+### Features
+
+* added add and remove coupons methods to subscription resource ([abce354](https://github.com/Salable/node-sdk/commit/abce354103426a8e76ae9db09dfcf24757a9376c))
+
+# [4.8.0](https://github.com/Salable/node-sdk/compare/v4.7.0...v4.8.0) (2025-05-22)
+
+
+### Features
+
+* add archived columns to product and plan ([4e7b7c5](https://github.com/Salable/node-sdk/commit/4e7b7c551d04e51fd74675b8ecab6592b00cd489))
+
 # [4.7.0](https://github.com/Salable/node-sdk/compare/v4.6.0...v4.7.0) (2025-05-16)
 
 
