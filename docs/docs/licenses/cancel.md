@@ -6,6 +6,12 @@ sidebar_position: 11
 
 This method will cancel an ad hoc License
 
+:::danger
+
+Deprecated. Use [cancel subscription](../subscriptions/cancel.md).
+
+:::
+
 ## Code Sample
 
 ```typescript
@@ -26,4 +32,4 @@ _Type:_ `string`
 
 ## Return Type
 
-For more information about this request see our API documentation on [cancel License](https://docs.salable.app/api/v2#tag/Licenses/operation/cancelLicense)
+For more information about this request, see our API documentation on [cancel License](https://docs.salable.app/api/v2#tag/Licenses/operation/cancelLicense)

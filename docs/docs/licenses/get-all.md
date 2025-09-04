@@ -4,7 +4,13 @@ sidebar_position: 3
 
 # Get All Licenses
 
-Returns a list of all the licenses created by your Salable organization
+Returns a list of all the licenses created by your Salable organization.
+
+:::danger
+
+Deprecated. Use [get subscriptions](../subscriptions/get-all.md).
+
+:::
 
 ## Code Sample
 
