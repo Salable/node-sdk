@@ -1,9 +1,8 @@
 import { initSalable, TVersion, Version, VersionedMethodsReturn } from '../..';
-import { Event, EventTypeEnum } from '../../types';
 import prismaClient from '../../../test-utils/prisma/prisma-client';
 import { testUuids } from '../../../test-utils/scripts/create-salable-test-data';
-import { EventStatus } from '@prisma/client';
 import { randomUUID } from 'crypto';
+import { EventSchema } from '../../schemas/v2/schemas-v2';
 
 const eventUuid = randomUUID();
 
@@ -31,22 +30,9 @@ describe('Events Tests for v2, v3', () => {
   });
   it.each(versions)('getOne: Should successfully fetch the specified event', async ({ version }) => {
     const data = await salableVersions[version].events.getOne(eventUuid);
-    expect(data).toEqual(eventSchema);
+    expect(data).toEqual(EventSchema);
   });
 });
-
-const eventSchema: Event = {
-  uuid: expect.any(String),
-  type: expect.toBeOneOf(Object.values(EventTypeEnum)) as EventTypeEnum,
-  organisation: expect.any(String),
-  status: expect.toBeOneOf(Object.values(EventStatus)) as EventStatus,
-  isTest: expect.any(Boolean),
-  retries: expect.any(Number),
-  errorMessage: expect.toBeOneOf([expect.any(String), null]),
-  errorCode: expect.toBeOneOf([expect.any(String), null]),
-  createdAt: expect.any(String),
-  updatedAt: expect.any(String),
-};
 
 const generateTestData = async () => {
   await prismaClient.event.create({

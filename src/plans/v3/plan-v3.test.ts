@@ -9,6 +9,7 @@ import {
   ProductSchemaV3
 } from '../../schemas/v3/schemas-v3';
 import { initSalable } from '../../index';
+import { PlanCheckoutLinkSchema } from '../../schemas/v2/schemas-v2';
 
 describe('Plans V3 Tests', () => {
   const apiKey = testUuids.devApiKeyV2;
@@ -62,7 +63,3 @@ describe('Plans V3 Tests', () => {
     expect(data).toEqual(PlanCheckoutLinkSchema);
   });
 });
-
-const PlanCheckoutLinkSchema: PlanCheckout = {
-  checkoutUrl: expect.any(String),
-};

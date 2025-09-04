@@ -1,8 +1,8 @@
 import { initSalable } from '../..';
-import { PricingTable } from '../../types';
 import prismaClient from '../../../test-utils/prisma/prisma-client';
 import { testUuids } from '../../../test-utils/scripts/create-salable-test-data';
 import { randomUUID } from 'crypto';
+import { PricingTableSchema } from '../../schemas/v2/schemas-v2';
 
 const pricingTableUuid = randomUUID();
 describe('Pricing Table V2 Tests', () => {
@@ -16,26 +16,9 @@ describe('Pricing Table V2 Tests', () => {
   it('getAll: should successfully fetch all products', async () => {
     const data = await salable.pricingTables.getOne(pricingTableUuid);
 
-    expect(data).toEqual(expect.objectContaining(pricingTableSchema));
+    expect(data).toEqual(expect.objectContaining(PricingTableSchema));
   });
 });
-
-const pricingTableSchema: PricingTable = {
-  customTheme: expect.toBeOneOf([expect.any(String), null]),
-  productUuid: expect.any(String),
-  featuredPlanUuid: expect.toBeOneOf([expect.any(String), null]),
-  name: expect.any(String),
-  status: expect.any(String),
-  theme: expect.any(String),
-  text: expect.toBeOneOf([expect.any(String), null]),
-  title: expect.toBeOneOf([expect.any(String), null]),
-  updatedAt: expect.any(String),
-  uuid: expect.any(String),
-  featureOrder: expect.any(String),
-  features: expect.toBeOneOf([expect.anything(), undefined]),
-  product: expect.toBeOneOf([expect.anything(), undefined]),
-  plans: expect.toBeOneOf([expect.anything(), undefined]),
-};
 
 
 const generateTestData = async () => {

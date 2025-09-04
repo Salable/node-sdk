@@ -1,8 +1,8 @@
 import { initSalable, TVersion, VersionedMethodsReturn } from '../..';
-import { PaginatedUsageRecords, UsageRecord } from '../../types';
 import prismaClient from '../../../test-utils/prisma/prisma-client';
 import { testUuids } from '../../../test-utils/scripts/create-salable-test-data';
 import { randomUUID } from 'crypto';
+import { PaginatedUsageRecordsSchema, UsageRecordSchema } from '../../schemas/v2/schemas-v2';
 
 const stripeEnvs = JSON.parse(process.env.stripEnvs || '');
 const meteredLicenseUuid = randomUUID();
@@ -37,7 +37,7 @@ describe('Usage Tests for v2, v3', () => {
     const data = await salableVersions[version].usage.getAllUsageRecords({
       granteeId: testGrantee,
     });
-    expect(data).toEqual(paginatedUsageRecordsSchema);
+    expect(data).toEqual(PaginatedUsageRecordsSchema);
   });
   it.each(versions)('getAllUsageRecords (w/ search params): Should successfully fetch the grantees usage records', async ({ version }) => {
     const data = await salableVersions[version].usage.getAllUsageRecords({
@@ -50,7 +50,7 @@ describe('Usage Tests for v2, v3', () => {
         last: expect.toBeOneOf([expect.any(String), null]),
         data: expect.arrayContaining([
           {
-            ...usageRecordSchema,
+            ...UsageRecordSchema,
             type: 'recorded',
           },
         ]),
@@ -79,24 +79,6 @@ describe('Usage Tests for v2, v3', () => {
     expect(data).toBeUndefined();
   });
 });
-
-const usageRecordSchema: UsageRecord = {
-  uuid: expect.any(String),
-  unitCount: expect.any(Number),
-  type: expect.any(String),
-  recordedAt: expect.toBeOneOf([expect.any(String), null]),
-  resetAt: expect.toBeOneOf([expect.any(String), null]),
-  planUuid: expect.any(String),
-  licenseUuid: expect.any(String),
-  createdAt: expect.any(String),
-  updatedAt: expect.any(String),
-};
-
-const paginatedUsageRecordsSchema: PaginatedUsageRecords = {
-  first: expect.toBeOneOf([expect.any(String), null]),
-  last: expect.toBeOneOf([expect.any(String), null]),
-  data: expect.arrayContaining([usageRecordSchema]),
-};
 
 const generateTestData = async () => {
   await prismaClient.subscription.create({

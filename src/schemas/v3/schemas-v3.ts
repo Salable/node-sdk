@@ -1,4 +1,6 @@
-import { EnumValue, FeatureV3, LicenseV3, OrganisationPaymentIntegrationV3, PlanCurrency, PlanFeatureV3, PlanV3, PricingTableV3, ProductCurrency, ProductPricingTableV3, ProductV3, Subscription } from '../../types';
+import { FeatureV3, Invoice, LicenseV3, OrganisationPaymentIntegrationV3,
+  PaginatedLicenses, PaginatedSubscription, PaginatedSubscriptionInvoice, PlanCurrency, PlanFeatureV3, PlanV3, PricingTableV3, ProductCurrency, ProductPricingTableV3, ProductV3, Subscription } from '../../types';
+import { EnumValueSchema, LicenseSchema, SubscriptionSchema } from '../v2/schemas-v2';
 
 export const ProductSchemaV3: ProductV3 = {
   uuid: expect.any(String),
@@ -54,13 +56,6 @@ export const FeatureSchemaV3: FeatureV3 = {
   visibility: expect.any(String),
 };
 
-export const EnumValueSchema: EnumValue = {
-  uuid: expect.any(String),
-  name: expect.any(String),
-  featureUuid: expect.any(String),
-  updatedAt: expect.any(String),
-}
-
 export const PlanFeatureSchemaV3: PlanFeatureV3 = {
   planUuid: expect.any(String),
   featureUuid: expect.any(String),
@@ -70,7 +65,7 @@ export const PlanFeatureSchemaV3: PlanFeatureV3 = {
   updatedAt: expect.any(String),
   feature: FeatureSchemaV3,
   enumValue: EnumValueSchema,
-}
+};
 
 export const ProductCurrencySchema: ProductCurrency = {
   productUuid: expect.any(String),
@@ -81,7 +76,7 @@ export const ProductCurrencySchema: ProductCurrency = {
     shortName: expect.any(String),
     longName: expect.any(String),
     symbol: expect.any(String),
-  }
+  },
 };
 
 export const PlanCurrencySchema: PlanCurrency = {
@@ -95,18 +90,20 @@ export const PlanCurrencySchema: PlanCurrency = {
     shortName: expect.any(String),
     longName: expect.any(String),
     symbol: expect.any(String),
-  }
+  },
 };
 
 export const ProductPricingTableSchemaV3: ProductPricingTableV3 = {
   ...ProductSchemaV3,
   features: expect.arrayContaining([FeatureSchemaV3]),
   currencies: expect.arrayContaining([ProductCurrencySchema]),
-  plans: expect.arrayContaining([{
-    ...PlanSchemaV3,
-    features: expect.arrayContaining([PlanFeatureSchemaV3]),
-    currencies: expect.arrayContaining([PlanCurrencySchema])
-  }]),
+  plans: expect.arrayContaining([
+    {
+      ...PlanSchemaV3,
+      features: expect.arrayContaining([PlanFeatureSchemaV3]),
+      currencies: expect.arrayContaining([PlanCurrencySchema]),
+    },
+  ]),
   status: expect.any(String),
   updatedAt: expect.any(String),
   uuid: expect.any(String),
@@ -122,7 +119,7 @@ export const OrganisationPaymentIntegrationSchemaV3: OrganisationPaymentIntegrat
   isTest: expect.any(Boolean),
   newPaymentEnabled: expect.any(Boolean),
   status: expect.any(String),
-}
+};
 
 export const LicenseSchemaV3: LicenseV3 = {
   uuid: expect.any(String),
@@ -140,23 +137,10 @@ export const LicenseSchemaV3: LicenseV3 = {
   isTest: expect.any(Boolean),
 };
 
-export const SubscriptionSchema: Subscription = {
-  uuid: expect.any(String),
-  paymentIntegrationSubscriptionId: expect.any(String),
-  productUuid: expect.any(String),
-  type: expect.any(String),
-  isTest: expect.any(Boolean),
-  cancelAtPeriodEnd: expect.any(Boolean),
-  email: expect.toBeOneOf([expect.any(String), null]),
-  owner: expect.toBeOneOf([expect.any(String), null]),
-  organisation: expect.any(String),
-  quantity: expect.any(Number),
-  status: expect.any(String),
-  createdAt: expect.any(String),
-  updatedAt: expect.any(String),
-  expiryDate: expect.any(String),
-  lineItemIds: expect.toBeOneOf([expect.toBeArray(), null]),
-  planUuid: expect.any(String),
+export const PaginatedLicensesSchemaV3: PaginatedLicenses = {
+  first: expect.toBeOneOf([expect.any(String), null]),
+  last: expect.toBeOneOf([expect.any(String), null]),
+  data: expect.arrayContaining([LicenseSchemaV3]),
 };
 
 export const PricingTableSchemaV3: PricingTableV3 = {
@@ -171,15 +155,17 @@ export const PricingTableSchemaV3: PricingTableV3 = {
     features: expect.arrayContaining([FeatureSchemaV3]),
     currencies: expect.arrayContaining([ProductCurrencySchema]),
   },
-  plans: expect.arrayContaining([{
-    planUuid: expect.any(String),
-    pricingTableUuid: expect.any(String),
-    sortOrder: expect.any(Number),
-    updatedAt: expect.any(String),
-    plan: {
-      ...PlanSchemaV3,
-      features: expect.arrayContaining([PlanFeatureSchemaV3]),
-      currencies: expect.arrayContaining([PlanCurrencySchema]),
-    }
-  }]),
+  plans: expect.arrayContaining([
+    {
+      planUuid: expect.any(String),
+      pricingTableUuid: expect.any(String),
+      sortOrder: expect.any(Number),
+      updatedAt: expect.any(String),
+      plan: {
+        ...PlanSchemaV3,
+        features: expect.arrayContaining([PlanFeatureSchemaV3]),
+        currencies: expect.arrayContaining([PlanCurrencySchema]),
+      },
+    },
+  ]),
 };

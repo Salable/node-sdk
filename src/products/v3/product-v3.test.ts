@@ -1,16 +1,14 @@
 import { testUuids } from '../../../test-utils/scripts/create-salable-test-data';
 import {
-  EnumValueSchema,
   FeatureSchemaV3,
   PlanFeatureSchemaV3,
   OrganisationPaymentIntegrationSchemaV3,
-  PlanCurrencySchema,
   PlanSchemaV3,
-  ProductCurrencySchema,
   ProductPricingTableSchemaV3,
   ProductSchemaV3
 } from '../../schemas/v3/schemas-v3';
 import { initSalable } from '../../index';
+import { EnumValueSchema, PlanCurrencySchema, ProductCurrencySchema } from '../../schemas/v2/schemas-v2';
 
 describe('Products V3 Tests', () => {
   const apiKey = testUuids.devApiKeyV2;

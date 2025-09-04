@@ -1,12 +1,12 @@
 import { initSalable, TVersion, VersionedMethodsReturn } from '../..';
-import { Session, SessionScope } from '../../types';
+import { SessionScope } from '../../types';
 import { testUuids } from '../../../test-utils/scripts/create-salable-test-data';
 import prismaClient from '../../../test-utils/prisma/prisma-client';
-import { v4 as uuidv4 } from 'uuid';
 import getEndTime from 'test-utils/helpers/get-end-time';
 import { randomUUID } from 'crypto';
+import { SessionSchema } from 'src/schemas/v2/schemas-v2';
 
-const licenseUuid = uuidv4();
+const licenseUuid = randomUUID();
 const testGrantee = '123456';
 
 describe('Sessions Tests for v2, v3', () => {
@@ -39,7 +39,7 @@ describe('Sessions Tests for v2, v3', () => {
         productUuid: testUuids.productUuid,
       },
     });
-    expect(data).toEqual(sessionSchema);
+    expect(data).toEqual(SessionSchema);
   });
   it.each(versions)('createSession: Should successfully create a new session with Checkout scope', async ({ version }) => {
     const data = await salableVersions[version].sessions.create({
@@ -48,7 +48,7 @@ describe('Sessions Tests for v2, v3', () => {
         planUuid: testUuids.paidPlanUuid,
       },
     });
-    expect(data).toEqual(sessionSchema);
+    expect(data).toEqual(SessionSchema);
   });
   it.each(versions)('Should successfully create a new session with Invoice scope', async ({ version }) => {
     const data = await salableVersions[version].sessions.create({
@@ -57,13 +57,9 @@ describe('Sessions Tests for v2, v3', () => {
         subscriptionUuid: testUuids.subscriptionWithInvoicesUuid,
       },
     });
-    expect(data).toEqual(sessionSchema);
+    expect(data).toEqual(SessionSchema);
   });
 });
-
-const sessionSchema: Session = {
-  sessionToken: expect.any(String),
-};
 
 const generateTestData = async () => {
   await prismaClient.license.create({
@@ -83,7 +79,7 @@ const generateTestData = async () => {
       capabilities: [
         {
           name: 'CapabilityOne',
-          uuid: uuidv4(),
+          uuid: randomUUID(),
           status: 'ACTIVE',
           updatedAt: '2022-10-17T11:41:11.626Z',
           description: null,
@@ -91,7 +87,7 @@ const generateTestData = async () => {
         },
         {
           name: 'CapabilityTwo',
-          uuid: uuidv4(),
+          uuid: randomUUID(),
           status: 'ACTIVE',
           updatedAt: '2022-10-17T11:41:11.626Z',
           description: null,
