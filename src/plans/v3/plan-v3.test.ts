@@ -1,6 +1,3 @@
-import {
-  PlanCheckout,
-} from '../../types';
 import { testUuids } from '../../../test-utils/scripts/create-salable-test-data';
 import {
   PlanFeatureSchemaV3,
@@ -10,15 +7,16 @@ import {
 } from '../../schemas/v3/schemas-v3';
 import { initSalable } from '../../index';
 import { PlanCheckoutLinkSchema } from '../../schemas/v2/schemas-v2';
+import * as console from 'node:console';
 
 describe('Plans V3 Tests', () => {
   const apiKey = testUuids.devApiKeyV2;
   const salable = initSalable(apiKey, 'v3');
-
   const planUuid = testUuids.paidPlanUuid;
 
   it('getOne: should successfully fetch one plan', async () => {
     const data = await salable.plans.getOne(planUuid);
+    console.log(data)
     expect(data).toEqual(PlanSchemaV3);
   });
 

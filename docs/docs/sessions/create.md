@@ -9,9 +9,9 @@ This methods creates a new session to use with the Salable web components
 ## Code Sample
 
 ```typescript
-import { Salable } from '@salable/node-sdk';
+import { initSalable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}', 'v2');
+const salable = initSalable('{{API_KEY}}', 'v3');
 
 const event = await salable.sessions.create({
     scope: SessionScope.PricingTable,
@@ -34,4 +34,4 @@ _Type:_ `CreateSessionInput`
 
 ## Return Type
 
-For more information about this request see our API documentation on [License Object](https://docs.salable.app/api/v2#tag/Sessions/operation/createSession)
+For more information about this request see our API documentation on [License Object](https://docs.salable.app/api/v3#tag/Sessions/operation/createSession)

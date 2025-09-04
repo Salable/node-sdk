@@ -9,9 +9,9 @@ Returns a list of seats on a subscription. Seats with the status `CANCELED` are 
 ## Code Sample
 
 ```typescript
-import { Salable } from '@salable/node-sdk';
+import { initSalable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}', 'v2');
+const salable = initSalable('{{API_KEY}}', 'v3');
 
 const subscription = await salable.subscriptions.getSeats('0dfc9ce9-4dfd-4b20-bfe6-57eacbe45389');
 ```
@@ -30,4 +30,4 @@ _Type:_ `GetSubscriptionSeatsOptions`
 
 ## Return Type
 
-For more information about this request, see our API documentation on [get subscription seats](https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptionsSeats).
+For more information about this request, see our API documentation on [get subscription seats](https://docs.salable.app/api/v3#tag/Subscriptions/operation/getSubscriptionsSeats).

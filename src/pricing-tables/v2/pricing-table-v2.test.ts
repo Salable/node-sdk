@@ -13,9 +13,9 @@ describe('Pricing Table V2 Tests', () => {
     await generateTestData()
   }, 10000)
 
-  it('getAll: should successfully fetch all products', async () => {
+  it('getAll: should successfully fetch all pricing tables', async () => {
     const data = await salable.pricingTables.getOne(pricingTableUuid);
-
+    console.dir({depth: null, data});
     expect(data).toEqual(expect.objectContaining(PricingTableSchema));
   });
 });

@@ -32,9 +32,9 @@ model Product {
   currencies                         CurrenciesOnProduct[]
   coupons                            Coupon[]
 
-  name                               String                          /// @deprecated
-  appType                            String                          @default("custom") /// @deprecated
-  capabilities                       Capability[]                    /// @deprecated
+  name         String /// @deprecated
+  appType      String       @default("custom") /// @deprecated
+  capabilities Capability[] /// @deprecated
 
   @@index([organisation])
   @@index([organisationPaymentIntegrationUuid])
@@ -70,17 +70,17 @@ model Plan {
   coupons                CouponsOnPlans[]
   licensesUsage          LicensesUsage[]
 
-  planType               String                 /// @deprecated
-  name                   String                 /// @deprecated
-  trialDays              Int?                   /// @deprecated use `evalDays` instead
-  evaluation             Boolean                @default(false) /// @deprecated
-  active                 Boolean                /// @deprecated use `status` instead
-  environment            String                 /// @deprecated
-  paddlePlanId           Int?                   /// @deprecated
-  salablePlan            Boolean                @default(false) /// @deprecated
-  usage                  LicensesUsageOnPlans[] /// @deprecated
-  capabilities           CapabilitiesOnPlans[]  /// @deprecated
-  flags                  FlagsOnPlans[]         /// @deprecated
+  planType     String /// @deprecated
+  name         String /// @deprecated
+  trialDays    Int? /// @deprecated use `evalDays` instead
+  evaluation   Boolean                @default(false) /// @deprecated
+  active       Boolean /// @deprecated use `status` instead
+  environment  String /// @deprecated
+  paddlePlanId Int? /// @deprecated
+  salablePlan  Boolean                @default(false) /// @deprecated
+  usage        LicensesUsageOnPlans[] /// @deprecated
+  capabilities CapabilitiesOnPlans[] /// @deprecated
+  flags        FlagsOnPlans[] /// @deprecated
 }
 
 /// @deprecated
@@ -115,8 +115,8 @@ model Feature {
   featureEnumOptions FeatureEnumOption[]
   pricingTables      FeaturesOnPricingTables[]
 
-  name               String                    /// @deprecated
-  licenses           FeaturesOnLicenses[]      /// @deprecated
+  name     String /// @deprecated
+  licenses FeaturesOnLicenses[] /// @deprecated
 
   @@index([productUuid])
 }
@@ -143,10 +143,10 @@ model FeaturesOnPlans {
   isUnlimited   Boolean            @default(false)
   updatedAt     DateTime           @default(now()) @updatedAt
 
-  isUsage       Boolean            @default(false) /// @deprecated
-  pricePerUnit  Float?             /// @deprecated
-  minUsage      Int?               /// @deprecated
-  maxUsage      Int?               /// @deprecated
+  isUsage      Boolean @default(false) /// @deprecated
+  pricePerUnit Float? /// @deprecated
+  minUsage     Int? /// @deprecated
+  maxUsage     Int? /// @deprecated
 
   @@id([planUuid, featureUuid])
   @@index([planUuid])
@@ -179,11 +179,11 @@ model PricingTable {
   featuredPlanUuid String?                   @unique
   updatedAt        DateTime                  @default(now()) @updatedAt
 
-  name             String                    /// @deprecated
-  title            String?                   /// @deprecated
-  text             String?                   @db.Text /// @deprecated
-  theme            String                    @default("light") /// @deprecated
-  customTheme      Json?                     /// @deprecated
+  name        String /// @deprecated
+  title       String? /// @deprecated
+  text        String? @db.Text /// @deprecated
+  theme       String  @default("light") /// @deprecated
+  customTheme Json? /// @deprecated
 
   @@index([productUuid])
 }
@@ -242,31 +242,31 @@ model Session {
 }
 
 model License {
-  uuid              String                 @id @default(uuid())
-  subscription      Subscription?          @relation(fields: [subscriptionUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
-  subscriptionUuid  String?
-  status            String
-  granteeId         String?
-  paymentService    String
-  purchaser         String
-  type              String
-  product           Product                @relation(fields: [productUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
-  productUuid       String
-  plan              Plan                   @relation(fields: [planUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
-  planUuid          String
-  startTime         DateTime               @default(now())
-  endTime           DateTime
-  updatedAt         DateTime               @default(now()) @updatedAt
-  usage             LicensesUsageOnPlans[]
-  usageRecords      LicensesUsage[]
-  isTest            Boolean                @default(false)
+  uuid             String                 @id @default(uuid())
+  subscription     Subscription?          @relation(fields: [subscriptionUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  subscriptionUuid String?
+  status           String
+  granteeId        String?
+  paymentService   String
+  purchaser        String
+  type             String
+  product          Product                @relation(fields: [productUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  productUuid      String
+  plan             Plan                   @relation(fields: [planUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  planUuid         String
+  startTime        DateTime               @default(now())
+  endTime          DateTime
+  updatedAt        DateTime               @default(now()) @updatedAt
+  usage            LicensesUsageOnPlans[]
+  usageRecords     LicensesUsage[]
+  isTest           Boolean                @default(false)
 
-  name              String?                /// @deprecated
-  email             String?                /// @deprecated Use subscription `email` instead
-  cancelAtPeriodEnd Boolean                @default(false) /// @deprecated Use subscription `cancelAtPeriodEnd` instead.
-  features          FeaturesOnLicenses[]   /// @deprecated Use `usage` instead.
-  capabilities      Json                  /// @deprecated
-  metadata          Json?                 /// @deprecated
+  name              String? /// @deprecated
+  email             String? /// @deprecated Use subscription `email` instead
+  cancelAtPeriodEnd Boolean              @default(false) /// @deprecated Use subscription `cancelAtPeriodEnd` instead.
+  features          FeaturesOnLicenses[] /// @deprecated Use `usage` instead.
+  capabilities      Json /// @deprecated
+  metadata          Json? /// @deprecated
 
   @@index([status, paymentService])
   @@index([productUuid])
@@ -382,7 +382,7 @@ model OrganisationPaymentIntegration {
   isTest            Boolean                   @default(false)
   newPaymentEnabled Boolean                   @default(false)
 
-  accountData       Json                      /// @deprecated
+  accountData Json /// @deprecated
 
   @@index([accountId])
 }

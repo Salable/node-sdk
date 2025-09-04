@@ -9,9 +9,9 @@ Assign, unassign and replace grantees on seats.
 ## Code Sample
 
 ```typescript
-import { Salable } from '@salable/node-sdk';
+import { initSalable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}', 'v2');
+const salable = initSalable('{{API_KEY}}', 'v3');
 
 await salable.subscriptions.manageSeats('17830730-3214-4dda-8306-9bb8ae0e3a11', [
   {
@@ -50,4 +50,4 @@ _Type:_ `ManageSeatOptions[]`
 
 ## Return Type
 
-For more information about this request, see our API documentation on [subscription manage seats](https://docs.salable.app/api/v2#tag/Subscriptions/operation/manageSubscriptionSeats)
+For more information about this request, see our API documentation on [subscription manage seats](https://docs.salable.app/api/v3#tag/Subscriptions/operation/manageSubscriptionSeats)

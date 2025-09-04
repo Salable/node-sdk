@@ -11,9 +11,9 @@ Returns all necessary data on a display a pricing table.
 #### Required parameters
 
 ```typescript
-import { Salable } from '@salable/node-sdk';
+import { initSalable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}', 'v2');
+const salable = initSalable('{{API_KEY}}', 'v3');
 
 const pricingTable = await salable.pricingTables.getOne('0c0ee2b7-2f3b-436b-8b4e-b21d0ddbf2a9', {
   granteeId: 'grantee_1',
@@ -42,4 +42,4 @@ _Type:_ `{ granteeId: String, currency: String  }`
 
 ## Return Type
 
-For more information about this request see our API documentation on [Pricing Table](https://docs.salable.app/api/v2#tag/Pricing-Tables/operation/getPricingTableByUuid)
+For more information about this request see our API documentation on [Pricing Table](https://docs.salable.app/api/v3#tag/Pricing-Tables/operation/getPricingTableByUuid)

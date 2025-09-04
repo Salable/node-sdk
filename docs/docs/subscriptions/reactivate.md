@@ -9,9 +9,9 @@ This method reactivates a subscription scheduled for cancellation before the bil
 ## Code Sample
 
 ```typescript
-import { Salable } from '@salable/node-sdk';
+import { initSalable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}', 'v2');
+const salable = initSalable('{{API_KEY}}', 'v3');
 
 const subscription = await salable.subscriptions.reactivateSubscription('9237877c-baae-46d0-b482-cb0147179e30');
 ```

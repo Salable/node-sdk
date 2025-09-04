@@ -56,6 +56,7 @@ describe('Subscriptions V3 Tests', () => {
       owner,
       expand: ['plan'],
     });
+    console.log(dataWithSearchParams);
     expect(dataWithSearchParams.first).toEqual(expect.any(String))
     expect(dataWithSearchParams.last).toEqual(expect.any(String))
     expect(dataWithSearchParams.data.length).toEqual(3);

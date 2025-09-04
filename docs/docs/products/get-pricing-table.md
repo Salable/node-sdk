@@ -43,4 +43,4 @@ Below is the list of properties than can be used in the `queryParams` argument.
 
 ## Return Type
 
-For more information about this request see our API documentation on [Product Pricing Table Object](https://docs.salable.app/api/v2#tag/Products/operation/getProductPricingTable)
+For more information about this request see our API documentation on [Product Pricing Table Object](https://docs.salable.app/api/v3#tag/Products/operation/getProductPricingTable)
