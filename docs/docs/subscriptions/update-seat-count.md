@@ -16,7 +16,7 @@ import { initSalable } from '@salable/node-sdk';
 
 const salable = initSalable('{{API_KEY}}', 'v3');
 
-await salable.subscriptions.addSeats('d18642b3-6dc0-40c4-aaa5-6315ed37c744', { increment: 2 });
+await salable.subscriptions.updateSeatCount('d18642b3-6dc0-40c4-aaa5-6315ed37c744', { increment: 2 });
 ```
 
 ### Parameters
@@ -51,7 +51,7 @@ import { initSalable } from '@salable/node-sdk';
 
 const salable = initSalable('{{API_KEY}}', 'v3');
 
-await salable.subscriptions.addSeats('d18642b3-6dc0-40c4-aaa5-6315ed37c744', { decrement: 2 });
+await salable.subscriptions.updateSeatCount('d18642b3-6dc0-40c4-aaa5-6315ed37c744', { decrement: 2 });
 ```
 
 ### Parameters
