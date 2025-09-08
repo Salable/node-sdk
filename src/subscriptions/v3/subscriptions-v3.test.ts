@@ -56,7 +56,6 @@ describe('Subscriptions V3 Tests', () => {
       owner,
       expand: ['plan'],
     });
-    console.log(dataWithSearchParams);
     expect(dataWithSearchParams.first).toEqual(expect.any(String))
     expect(dataWithSearchParams.last).toEqual(expect.any(String))
     expect(dataWithSearchParams.data.length).toEqual(3);
@@ -188,18 +187,36 @@ describe('Subscriptions V3 Tests', () => {
     expect(data).toBeUndefined();
   });
 
-  it('updateSeatCount: Should successfully add seat to the subscription', async () => {
+  it('updateSeatCount: Should successfully add seat to the subscription of type none', async () => {
     const data = await salable.subscriptions.updateSeatCount(perSeatSubscriptionUuid, {
       increment: 1,
     });
     expect(data).toBeUndefined();
   });
 
-  it('updateSeatCount: Should successfully remove seat from the subscription', async () => {
+  it('updateSeatCount: Should successfully add seat to the subscription of type salable', async () => {
+    const data = await salable.subscriptions.updateSeatCount(testUuids.perSeatSubscriptionUuid, {
+      increment: 1,
+    });
+    expect(data).toEqual({
+      eventUuid: expect.any(String),
+    });
+  });
+
+  it('updateSeatCount: Should successfully remove seat from the subscription of type none', async () => {
     const data = await salable.subscriptions.updateSeatCount(perSeatSubscriptionUuid, {
       decrement: 1,
     });
     expect(data).toBeUndefined();
+  });
+
+  it('updateSeatCount: Should successfully remove seat to the subscription of type salable', async () => {
+    const data = await salable.subscriptions.updateSeatCount(testUuids.perSeatSubscriptionUuid, {
+      decrement: 1,
+    });
+    expect(data).toEqual({
+      eventUuid: expect.any(String),
+    });
   });
 
   it('update: Should successfully update a subscription owner', async () => {

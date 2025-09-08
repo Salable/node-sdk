@@ -17,7 +17,6 @@ describe('Products V3 Tests', () => {
 
   it('getAll: should successfully fetch all products', async () => {
     const data = await salable.products.getAll();
-    console.log(data)
     expect(data).toEqual(expect.arrayContaining([ProductSchemaV3]));
   });
   it('getOne: should successfully fetch a product', async () => {

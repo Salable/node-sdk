@@ -202,12 +202,20 @@ describe('Subscriptions V2 Tests', () => {
     expect(data).toBeUndefined();
   });
 
-  it('addSeats: Should successfully add seats to the subscription', async () => {
+  it('addSeats: Should successfully add seats to the subscription of type none', async () => {
     const data = await salable.subscriptions.addSeats(perSeatSubscriptionUuid, {
       increment: 1,
     });
-
     expect(data).toBeUndefined();
+  });
+
+  it('addSeats: Should successfully add seats to the subscription of type salable', async () => {
+    const data = await salable.subscriptions.addSeats(testUuids.perSeatSubscriptionUuid, {
+      increment: 1,
+    });
+    expect(data).toEqual({
+      eventUuid: expect.any(String),
+    });
   });
 
   it('removeSeats: Should successfully remove seats from a subscription', async () => {
@@ -218,7 +226,14 @@ describe('Subscriptions V2 Tests', () => {
     expect(data).toBeUndefined();
   });
 
-  // TODO: paid per seat
+  it('removeSeats: Should successfully remove seats to the subscription of type salable', async () => {
+    const data = await salable.subscriptions.removeSeats(testUuids.perSeatSubscriptionUuid, {
+      decrement: 1,
+    });
+    expect(data).toEqual({
+      eventUuid: expect.any(String),
+    });
+  });
 
   it('update: Should successfully update a subscription owner', async () => {
     const data = await salable.subscriptions.update(perSeatSubscriptionUuid, {

@@ -30,6 +30,7 @@ export type TestDbData = {
   usageBasicMonthlyPlanUuid: string;
   usageProMonthlyPlanUuid: string;
   subscriptionWithInvoicesUuid: string;
+  perSeatSubscriptionUuid: string;
   couponSubscriptionUuidV2: string;
   couponSubscriptionUuidV3: string;
   currencyUuids: {
@@ -64,6 +65,7 @@ export const testUuids: TestDbData = {
     usd: '6ec1a282-07b3-4716-bc3c-678c40b5d98e'
   },
   subscriptionWithInvoicesUuid: 'b37357c6-bad1-4a6a-8c79-06935c66384f',
+  perSeatSubscriptionUuid: '9cd1d096-bd45-45a3-977d-5912895eabf2',
   couponSubscriptionUuidV2: '893cd5cb-b313-4e8a-8e54-35781e7b0669',
   couponSubscriptionUuidV3: 'd5b45c18-2a84-49c5-a099-2b2422fd1b80'
 };
@@ -331,7 +333,7 @@ export default async function createSalableTestData(stripeEnvs: StripeEnvsTypes)
       organisation: testUuids.organisationId,
       pricingType: 'paid',
       licenseType: 'perSeat',
-      perSeatAmount: 2,
+      perSeatAmount: 1,
       name: 'Per Seat Basic Monthly Plan Name',
       description: 'Per Seat Basic Monthly Plan description',
       displayName: 'Per Seat Basic Monthly Plan Display Name',
@@ -738,7 +740,7 @@ export default async function createSalableTestData(stripeEnvs: StripeEnvsTypes)
       description: 'Per Seat Unlimited Plan description',
       displayName: 'Per Seat Unlimited Plan',
       uuid: testUuids.perSeatUnlimitedPlanUuid,
-      product: { connect: { uuid: testUuids.productTwoUuid } },
+      product: { connect: { uuid: testUuids.productUuid } },
       status: 'ACTIVE',
       trialDays: 0,
       evaluation: false,
@@ -753,24 +755,19 @@ export default async function createSalableTestData(stripeEnvs: StripeEnvsTypes)
       maxSeatAmount: -1,
       visibility: 'public',
       currencies: {
-        create: productTwo.currencies.map((c) => ({
+        create: product.currencies.map((c) => ({
           currency: { connect: { uuid: c.currencyUuid } },
-          price: 100,
+          price: 1500,
           paymentIntegrationPlanId: stripeEnvs.planPerSeatUnlimitedMonthlyGbpId,
         })),
       },
       features: {
-        create: productTwo.features.map((f) => ({
+        create: product.features.map((f) => ({
           feature: { connect: { uuid: f.uuid } },
           enumValue: {
             create: { name: 'Access', feature: { connect: { uuid: f.uuid } } },
           },
           value: getFeatureValue(f.variableName!),
-          isUnlimited: undefined as boolean | undefined,
-          isUsage: undefined as boolean | undefined,
-          pricePerUnit: 10,
-          minUsage: 1,
-          maxUsage: 100,
         })),
       },
     },
@@ -1066,7 +1063,42 @@ export default async function createSalableTestData(stripeEnvs: StripeEnvsTypes)
     }
   })
 
-  const v2CouponSubscription = await prismaClient.subscription.create({
+  await prismaClient.subscription.create({
+    data: {
+      uuid: testUuids.perSeatSubscriptionUuid,
+      organisation: testUuids.organisationId,
+      type: 'salable',
+      status: 'ACTIVE',
+      paymentIntegrationSubscriptionId: stripeEnvs.perSeatBasicSubscriptionId,
+      lineItemIds: [stripeEnvs.perSeatBasicSubscriptionLineItemId],
+      productUuid: testUuids.productUuid,
+      planUuid: testUuids.perSeatUnlimitedPlanUuid,
+      owner: 'xxxxx',
+      quantity: 3,
+      createdAt: new Date(),
+      expiryDate: addMonths(new Date(), 1),
+      license: {
+        createMany: {
+          data: Array.from({length: 3}, () => ({
+            name: null,
+            email: null,
+            status: 'ACTIVE',
+            granteeId: null,
+            paymentService: 'salable',
+            purchaser: 'xxxxx',
+            type: 'licensed',
+            planUuid: testUuids.perSeatUnlimitedPlanUuid,
+            productUuid: testUuids.productUuid,
+            startTime: new Date(),
+            capabilities: [],
+            endTime: addMonths(new Date(), 1),
+          }))
+        }
+      }
+    }
+  })
+
+  await prismaClient.subscription.create({
     data: {
       uuid: testUuids.couponSubscriptionUuidV2,
       paymentIntegrationSubscriptionId: stripeEnvs.subscriptionWithCouponV2Id,

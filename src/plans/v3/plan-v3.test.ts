@@ -16,7 +16,6 @@ describe('Plans V3 Tests', () => {
 
   it('getOne: should successfully fetch one plan', async () => {
     const data = await salable.plans.getOne(planUuid);
-    console.log(data)
     expect(data).toEqual(PlanSchemaV3);
   });
 
