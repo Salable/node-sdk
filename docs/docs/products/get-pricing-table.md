@@ -11,12 +11,12 @@ Returns all necessary data on a Product to be able to display a pricing table. E
 #### Required parameters
 
 ```typescript
-import { Salable } from '@salable/node-sdk';
+import { initSalable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}');
+const salable = initSalable('{{API_KEY}}');
 
 const pricingTable = await salable.products.getPricingTable('7827727d-6fa9-46e6-b865-172ccda6f5a4', {
-  granteeId: 'granteeid@email.com',
+  granteeId: 'userId_1',
 });
 ```
 

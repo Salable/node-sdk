@@ -89,7 +89,7 @@ export type ProductVersions = {
     /**
      *  Retrieves a list of all products
      *
-     * Docs - https://docs.salable.app/api/v2#tag/Products/operation/getProducts
+     * Docs - https://docs.salable.app/api/v3#tag/Products/operation/getProducts
      *
      * @returns {Promise<ProductV3[]>} All products present on the account
      */

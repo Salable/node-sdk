@@ -17,7 +17,7 @@ export type PricingTableVersions = {
      *  Retrieves a pricing table by its UUID. This returns all necessary data on a Pricing Table to be able to display it.
      *
      *  @param {string} pricingTableUuid - The UUID for the pricingTable
-     *  @param {{ granteeId?: string; currency?: string;}} options - (Optional) Filter parameters. See https://docs.salable.app/api/v2#tag/Pricing-Tables/operation/getPricingTableByUuid
+     *  @param {{ granteeId?: string; currency?: string;}} options - (Optional) Filter parameters. See https://docs.salable.app/api/v3#tag/Pricing-Tables/operation/getPricingTableByUuid
      *
      * @returns {Promise<PricingTable>}
      */

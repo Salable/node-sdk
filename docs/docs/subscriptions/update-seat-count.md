@@ -38,7 +38,7 @@ _Type:_ `{ increment: number, proration?: string }`
 
 ### Return Type
 
-For more information about this request see our API documentation on [Subscription Seat Object](https://docs.salable.app/api/v3#tag/Subscriptions/operation/incrementSubscriptionSeats)
+For more information about this request see our API documentation on [Subscription Seat Object](https://docs.salable.app/api/v3#tag/Subscriptions/operation/updateSubscriptionSeatCount)
 
 ## Remove seats
 
@@ -73,4 +73,4 @@ _Type:_ `{ decrement: number, proration?: string }`
 
 ### Return Type
 
-For more information about this request see our API documentation on [Subscription Seat Object](https://docs.salable.app/api/v3#tag/Subscriptions/operation/incrementSubscriptionSeats)
+For more information about this request see our API documentation on [Subscription Seat Object](https://docs.salable.app/api/v3#tag/Subscriptions/operation/updateSubscriptionSeatCount)

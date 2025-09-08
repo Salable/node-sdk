@@ -26,7 +26,7 @@ const differentOwnerSubscriptionUuid = randomUUID();
 
 
 describe('Subscriptions V3 Tests', () => {
-  const apiKey = testUuids.devApiKeyV2;
+  const apiKey = testUuids.devApiKeyV3;
   const salable = initSalable(apiKey, 'v3');
 
   beforeAll(async () => {

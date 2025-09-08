@@ -10,7 +10,7 @@ import { PlanCheckoutLinkSchema } from '../../schemas/v2/schemas-v2';
 import * as console from 'node:console';
 
 describe('Plans V3 Tests', () => {
-  const apiKey = testUuids.devApiKeyV2;
+  const apiKey = testUuids.devApiKeyV3;
   const salable = initSalable(apiKey, 'v3');
   const planUuid = testUuids.paidPlanUuid;
 

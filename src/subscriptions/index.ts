@@ -306,7 +306,7 @@ export type SubscriptionVersions = {
      *
      *  @param {{ status?: SubscriptionStatus; email?: string; cursor?: string; take?: string; expand?: string[] }} options - Filter and pagination options
      *
-     * Docs - https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptions
+     * Docs - https://docs.salable.app/api/v3#tag/Subscriptions/operation/getSubscriptions
      *
      * @returns {Promise<PaginatedSubscription>} The data of the subscription requested
      */
@@ -317,7 +317,7 @@ export type SubscriptionVersions = {
      *
      *  @param {string} subscriptionUuid - The UUID of the subscription
      *
-     * Docs - https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptionByUuid
+     * Docs - https://docs.salable.app/api/v3#tag/Subscriptions/operation/getSubscriptionByUuid
      *
      * @returns {Promise<Subscription>} The data of the subscription requested
      */
@@ -336,7 +336,7 @@ export type SubscriptionVersions = {
      *  @param {GetSubscriptionSeatsOptions} data.cursor - The ID (cursor) of the record to take from in the request
      *  @param {GetSubscriptionSeatsOptions} data.take - The number of records to fetch. Default 20.
      *
-     * Docs - https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptionsSeats
+     * Docs - https://docs.salable.app/api/v3#tag/Subscriptions/operation/getSubscriptionsSeats
      *
      * @returns {Promise<PaginatedSeats>} The seats of the subscription requested
      */
@@ -345,7 +345,7 @@ export type SubscriptionVersions = {
     /**
      *  Retrieves the aggregate number of seats. The response is broken down by assigned, unassigned and the total. Seats with the status `CANCELED` are ignored.
      *
-     * Docs - https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptionsSeatCount
+     * Docs - https://docs.salable.app/api/v3#tag/Subscriptions/operation/getSubscriptionsSeatCount
      *
      * @returns {Promise<GetSeatCountResponse>}
      */
@@ -358,7 +358,7 @@ export type SubscriptionVersions = {
      *  @param {UpdateSubscriptionInput} data - The properties of the subscription to update
      *  @param {UpdateSubscriptionInput} data.owner - The ID of the entity that owns the subscription
      *
-     * Docs - https://docs.salable.app/api/v2#tag/Subscriptions/operation/changeSubscriptionsPlan
+     * Docs - https://docs.salable.app/api/v3#tag/Subscriptions/operation/changeSubscriptionsPlan
      *
      * @returns {Promise<Subscription>}
      */
@@ -372,7 +372,7 @@ export type SubscriptionVersions = {
      *
      *  @param {string} subscriptionUuid - The UUID of the subscription
      *
-     * Docs - https://docs.salable.app/api/v2#tag/Subscriptions/operation/changeSubscriptionsPlan
+     * Docs - https://docs.salable.app/api/v3#tag/Subscriptions/operation/changeSubscriptionsPlan
      *
      * @returns {Promise<void>}
      */
@@ -389,7 +389,7 @@ export type SubscriptionVersions = {
      *
      *  @param {string} subscriptionUuid - The UUID of the subscription
      *
-     * Docs - https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptionInvoices
+     * Docs - https://docs.salable.app/api/v3#tag/Subscriptions/operation/getSubscriptionInvoices
      *
      * @returns {Promise<PaginatedSubscriptionInvoice>}
      */
@@ -400,7 +400,7 @@ export type SubscriptionVersions = {
      *
      *  @param {string} subscriptionUuid - The UUID of the subscription to cancel
      *
-     * Docs - https://docs.salable.app/api/v2#tag/Subscriptions/operation/cancelSubscription
+     * Docs - https://docs.salable.app/api/v3#tag/Subscriptions/operation/cancelSubscription
      *
      * @returns {Promise<void>}
      */
@@ -416,7 +416,7 @@ export type SubscriptionVersions = {
      *
      *  @param {string} subscriptionUuid - The UUID of the subscription to cancel
      *
-     * Docs - https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptionUpdatePaymentLink
+     * Docs - https://docs.salable.app/api/v3#tag/Subscriptions/operation/getSubscriptionUpdatePaymentLink
      *
      * @returns {Promise<SubscriptionPaymentLink>}
      */
@@ -427,7 +427,7 @@ export type SubscriptionVersions = {
      *
      *  @param {string} subscriptionUuid - The UUID of the subscription to cancel
      *
-     * Docs - https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptionCustomerPortalLink
+     * Docs - https://docs.salable.app/api/v3#tag/Subscriptions/operation/getSubscriptionCustomerPortalLink
      *
      * @returns {Promise<SubscriptionPaymentLink>}
      */
@@ -438,7 +438,7 @@ export type SubscriptionVersions = {
      *
      *  @param {string} subscriptionUuid - The UUID of the subscription to cancel
      *
-     * Docs - https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptionCancelLink
+     * Docs - https://docs.salable.app/api/v3#tag/Subscriptions/operation/getSubscriptionCancelLink
      *
      * @returns {Promise<SubscriptionPaymentLink>}
      */
@@ -449,7 +449,7 @@ export type SubscriptionVersions = {
      *
      *  @param {string} subscriptionUuid - The UUID of the subscription to cancel
      *
-     * Docs - https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptionPaymentMethod
+     * Docs - https://docs.salable.app/api/v3#tag/Subscriptions/operation/getSubscriptionPaymentMethod
      *
      * @returns {Promise<SubscriptionPaymentMethod>}
      */
@@ -460,7 +460,7 @@ export type SubscriptionVersions = {
      *
      *  @param {string} subscriptionUuid - The UUID of the subscription to cancel
      *
-     * Docs - https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptionReactivate
+     * Docs - https://docs.salable.app/api/v3#tag/Subscriptions/operation/getSubscriptionReactivate
      *
      * @returns {Promise<void>}
      */
@@ -471,7 +471,7 @@ export type SubscriptionVersions = {
      *
      *  @param {string} subscriptionUuid - The UUID of the subscription
      *
-     * Docs - https://docs.salable.app/api/v2#tag/Subscriptions/operation/manageSubscriptionSeats
+     * Docs - https://docs.salable.app/api/v3#tag/Subscriptions/operation/manageSubscriptionSeats
      *
      * @returns {Promise<void>}
      */
@@ -485,7 +485,7 @@ export type SubscriptionVersions = {
      *
      *  @param {string} subscriptionUuid - The UUID of the subscription
      *
-     * Docs - https://docs.salable.app/api/v2#tag/Subscriptions/operation/updateSubscriptionSeatCount
+     * Docs - https://docs.salable.app/api/v3#tag/Subscriptions/operation/updateSubscriptionSeatCount
      *
      * @returns {Promise<SubscriptionSeat | void>}
      */
@@ -503,7 +503,7 @@ export type SubscriptionVersions = {
      *
      * @param {string} subscriptionUuid - The UUID of the subscription
      *
-     * Docs - https://docs.salable.app/api/v2#tag/Subscriptions/operation/addCoupon
+     * Docs - https://docs.salable.app/api/v3#tag/Subscriptions/operation/addCoupon
      *
      * @returns {Promise<void>}
      */
@@ -519,7 +519,7 @@ export type SubscriptionVersions = {
      *
      * @param {string} subscriptionUuid - The UUID of the subscription
      *
-     * Docs - https://docs.salable.app/api/v2#tag/Subscriptions/operation/removeCoupon
+     * Docs - https://docs.salable.app/api/v3#tag/Subscriptions/operation/removeCoupon
      *
      * @returns {Promise<void>}
      */

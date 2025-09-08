@@ -6,7 +6,7 @@ import { randomUUID } from 'crypto';
 
 const pricingTableUuid = randomUUID();
 describe('Pricing Table V3 Tests', () => {
-  const apiKey = testUuids.devApiKeyV2;
+  const apiKey = testUuids.devApiKeyV3;
   const salable = initSalable(apiKey, 'v3');
   beforeAll(async() => {
     await generateTestData()
