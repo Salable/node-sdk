@@ -311,6 +311,28 @@ export type PlanV3 = {
   isSubscribed?: boolean;
 };
 
+export type GetAllPlansOptionsV3 = {
+  cursor?: string;
+  take?: number
+  sort?: 'asc' | 'desc';
+  productUuid?: string;
+  archived?: boolean;
+}
+
+export type GetAllPlansV3 = {
+  first: string;
+  last: string;
+  data: (PlanV3 & {
+    features?: (PlanFeatureV3 & {
+      feature: FeatureV3,
+      enumValue: EnumValue
+    })[]
+    currencies: (PlanCurrency & {
+      currency: Currency
+    })[]
+  })[]
+}
+
 export type IFeature = {
   uuid: string;
   name: string;
@@ -520,6 +542,21 @@ export type FeatureV3 = {
   updatedAt: string;
   sortOrder: string;
   productUuid: string;
+}
+
+export type GetAllFeaturesOptionsV3 = {
+  productUuid: string;
+  cursor?: string;
+  take?: number
+  sort?: 'asc' | 'desc';
+}
+
+export type GetAllFeaturesV3 = {
+  first: string;
+  last: string;
+  data: FeatureV3 & {
+    featureEnumOptions: FeatureEnumOption[]
+  }[]
 }
 
 export type PlanFeatureV3 = {

@@ -1,14 +1,10 @@
 import { testUuids } from '../../../test-utils/scripts/create-salable-test-data';
 import {
-  FeatureSchemaV3,
-  PlanFeatureSchemaV3,
   OrganisationPaymentIntegrationSchemaV3,
-  PlanSchemaV3,
   ProductPricingTableSchemaV3,
   ProductSchemaV3
 } from '../../schemas/v3/schemas-v3';
 import { initSalable } from '../../index';
-import { EnumValueSchema, PlanCurrencySchema, ProductCurrencySchema } from '../../schemas/v2/schemas-v2';
 
 describe('Products V3 Tests', () => {
   const apiKey = testUuids.devApiKeyV2;
@@ -26,20 +22,10 @@ describe('Products V3 Tests', () => {
 
   it('getOne (w / search params): should successfully fetch a product', async () => {
     const data = await salable.products.getOne(productUuid, {
-      expand: ['features', 'plans', 'currencies', 'organisationPaymentIntegration'],
+      expand: ['organisationPaymentIntegration'],
     });
     expect(data).toEqual({
       ...ProductSchemaV3,
-      currencies: expect.arrayContaining([ProductCurrencySchema]),
-      features: expect.arrayContaining([{
-        ...FeatureSchemaV3,
-        featureEnumOptions: expect.arrayContaining([EnumValueSchema])
-      }]),
-      plans: expect.arrayContaining([{
-        ...PlanSchemaV3,
-        features: expect.arrayContaining([PlanFeatureSchemaV3]),
-        currencies: expect.arrayContaining([PlanCurrencySchema])
-      }]),
       organisationPaymentIntegration: OrganisationPaymentIntegrationSchemaV3
     });
   });
@@ -52,7 +38,6 @@ describe('Products V3 Tests', () => {
   it('getPricingTable (w / search params): should successfully fetch a product pricing table', async () => {
     const data = await salable.products.getPricingTable(productUuid, {
       owner: 'xxxxx',
-      currency: 'GBP',
     });
     expect(data).toEqual(ProductPricingTableSchemaV3);
   });

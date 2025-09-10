@@ -4,6 +4,33 @@ sidebar_position: 2
 
 # Changelog
 
+## v5.0.0
+
+### Breaking Changes
+
+### Capabilities deprecated
+Capabilities used to be stored on the License at the point of creation with no way of editing them. We found this to be
+too rigid, for flexibility we have deprecated capabilities in favour of using the plan's feature values which are
+editable in the Salable app.
+#### Deprecated capabilities deprecated
+- `plans.capabilities`
+- `product.capabilities`
+- `licenses.check`
+
+### Licenses deprecated 
+All license methods have been deprecated in favour of managing them through the subscription instead. This gives a
+consistent implementation across all types of subscriptions.
+- `licenses.create` moved to `subscriptions.create` - the `owner` value will be applied to the `purchaser` field of the license.
+- `license.check` moved to `entitlements.check`
+- `licenses.getAll` moved to `subscriptions.getSeats`
+- `licenses.getOne` support removed
+- `licenses.getForPurchaser` moved to `subscriptions.getAll` with the owner filter applied.
+- `licenses.update` moved to `subscriptions.update`
+- `licenses.updateMany` moved to `subscriptions.manageSeats`
+- `licenses.getCount` moved to `subscriptions.getSeatCount`
+- `licenses.cancel` moved to `subscriptions.cancel` - this will cancel all the subscription's child licenses.
+- `licenses.cancelMany` moved to `subscriptions.cancel` - it is not possible to cancel many subscriptions in the same request.
+
 ## v4.0.0
 
 ### Breaking Changes
@@ -17,7 +44,7 @@ sidebar_position: 2
 - `getOne` and `getForGranteeId` now offer an `expand` option to expand certain properties (e.g. `plan` etc)
 - `getForPurchaser` no longer offers `cancelLink` as an option
 - `getUsage` has been deprecated
-- `create` and `createMany` are now seperate methods, `status` and `endTime` have been added as optional parameters
+- `create` and `createMany` are now separate methods, `status` and `endTime` have been added as optional parameters
 - `update` method parameters have been changed to have an object as the second parameter, the `granteeId` property is where the grantee ID value can be assigned 
 - `cancelMany` method parameter has been updated to be an object, the `uuids` property is where an array of license UUIDs to cancel can be assigned 
 - `verifyLicenseCheck` has been renamed to `verify`

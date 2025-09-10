@@ -31,7 +31,7 @@ describe('Subscriptions V3 Tests', () => {
 
   beforeAll(async () => {
     await generateTestData();
-  }, 10000);
+  });
 
   it('create: Should successfully create a subscription without a payment integration', async () => {
     const data = await salable.subscriptions.create({

@@ -159,6 +159,8 @@ const apiKeyScopesV2 = [
 const apiKeyScopesV3 = [
   'entitlements:check',
   'events:read',
+  'features:read',
+  'currencies:read',
   'billing:read',
   'billing:write',
   'organisations:read',

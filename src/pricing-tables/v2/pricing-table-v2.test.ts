@@ -11,7 +11,7 @@ describe('Pricing Table V2 Tests', () => {
 
   beforeAll(async() => {
     await generateTestData()
-  }, 10000)
+  })
 
   it('getAll: should successfully fetch all pricing tables', async () => {
     const data = await salable.pricingTables.getOne(pricingTableUuid);

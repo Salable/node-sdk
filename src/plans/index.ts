@@ -1,4 +1,18 @@
-import { Plan, PlanCheckout, PlanFeature, PlanCapability, PlanCurrency, TVersion, Version, GetPlanOptions, GetPlanCheckoutOptions, PlanFeatureV3, ProductV3, OrganisationPaymentIntegrationV3, GetPlanOptionsV3, GetPlanCheckoutOptionsV3, PlanV3 } from '../types';
+import {
+  Plan,
+  PlanCheckout,
+  PlanFeature,
+  PlanCapability,
+  PlanCurrency,
+  TVersion,
+  Version,
+  GetPlanOptions,
+  GetPlanCheckoutOptions,
+  GetPlanOptionsV3,
+  GetPlanCheckoutOptionsV3,
+  GetAllPlansOptionsV3,
+  GetAllPlansV3,
+} from '../types';
 
 export type PlanVersions = {
   [Version.V2]: {
@@ -66,10 +80,16 @@ export type PlanVersions = {
   };
   [Version.V3]: {
     /**
-     *  Retrieves information about a plan by its UUID. By default, the response does not contain any relational data. If you want to expand the relational data, you can do so with the `expand` query parameter.
+     *  Get all plans
      *
-     *  @param {string} planUuid - The UUID of the plan
+     * @param GetAllPlansOptionsV3
      *
+     *  @returns { Promise<GetAllFeaturesV3>}
+     */
+    getAll: (options?: GetAllPlansOptionsV3) => Promise<GetAllPlansV3>;
+    /**
+     *  Retrieves all plans for an organisation with cursor based pagination. The response does not contain any relational data. If you want to expand the relational data, you can do so with the `expand` parameter.
+     **
      * Docs - https://docs.salable.app/api/v3#tag/Plans/operation/getPlanByUuid
      *
      * @returns {Promise<PlanV3 & {
@@ -81,11 +101,7 @@ export type PlanVersions = {
     getOne: (
       planUuid: string,
       options?: GetPlanOptionsV3
-    ) => Promise<PlanV3 & {
-      features?: PlanFeatureV3[];
-      currencies?: PlanCurrency[];
-      product?: ProductV3 & { organisationPaymentIntegration: OrganisationPaymentIntegrationV3 }
-    }>;
+    ) => Promise<GetAllPlansV3>;
 
     /**
 

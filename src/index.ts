@@ -21,6 +21,8 @@ import { v3ProductMethods } from './products/v3';
 import { v3SubscriptionMethods } from './subscriptions/v3';
 import { EntitlementVersionedMethods } from './entitlements';
 import { v3EntitlementMethods } from './entitlements/v3';
+import { v3FeatureMethods } from './features/v3';
+import { FeatureVersionedMethods } from './features';
 
 export { ErrorCodes, SalableParseError, SalableRequestError, SalableResponseError, SalableUnknownError, SalableValidationError } from './exceptions/salable-error';
 export type { ResponseError, ValidationError } from './exceptions/salable-error';
@@ -92,6 +94,7 @@ type MethodsV3 = {
   sessions: SessionVersionedMethods<'v3'>
   usage: UsageVersionedMethods<'v3'>
   entitlements: EntitlementVersionedMethods<'v3'>
+  features: FeatureVersionedMethods<'v3'>
 }
 
 export type VersionedMethodsReturn<V extends TVersion> =
@@ -126,7 +129,8 @@ function versionedMethods<V extends TVersion>(
         products: v3ProductMethods(request),
         sessions: v2SessionMethods(request),
         usage: v2UsageMethods(request),
-        entitlements: v3EntitlementMethods(request)
+        entitlements: v3EntitlementMethods(request),
+        features: v3FeatureMethods(request),
       } as VersionedMethodsReturn<V>;
     default:
       throw new Error('Unknown version ' + version);

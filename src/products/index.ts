@@ -103,17 +103,16 @@ export type ProductVersions = {
      *
      * @returns {Promise<ProductV3>}
      */
-    getOne: (productUuid: string, options?: { expand: ('features' | 'currencies' | 'organisationPaymentIntegration' | 'plans')[] }) => Promise<ProductV3>;
+    getOne: (productUuid: string, options?: { expand: ('organisationPaymentIntegration')[] }) => Promise<ProductV3>;
 
     /**
      *  Retrieves all the plans associated with a specific product. By default, the response does not contain any relational data. If you want to expand the relational data, you can do so with the expand query parameter.
      *
      *  @param {string} productUuid - The UUID for the pricingTable
-     *  @param {{ owner: string; currency?: string }} options - (Optional) Filter parameters. See https://docs.salable.app/api/v3#tag/Products/operation/getProductPricingTable
      *
      * @returns {Promise<ProductPricingTableV3>}
      */
-    getPricingTable: (productUuid: string, options: { owner: string; currency?: 'GBP' | 'USD' | 'EUR' | 'CAD' }) => Promise<ProductPricingTableV3>;
+    getPricingTable: (productUuid: string, options: { owner: string }) => Promise<ProductPricingTableV3>;
   };
 };
 
