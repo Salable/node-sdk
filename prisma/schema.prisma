@@ -1,12 +1,12 @@
 datasource db {
-  provider     = "mysql"
-  url          = env("DATABASE_URL")
-  relationMode = "prisma"
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  relationMode      = "prisma"
 }
 
 generator client {
-  provider      = "prisma-client-js"
-  binaryTargets = ["native"]
+  provider = "prisma-client-js"
 }
 
 model Product {
@@ -23,6 +23,8 @@ model Product {
   organisationPaymentIntegrationUuid String                          @default("free")
   paymentIntegrationProductId        String?
   appType                            String                          @default("custom")
+  successUrl                         String?                         @db.Text
+  cancelUrl                          String?                         @db.Text
   plans                              Plan[]
   capabilities                       Capability[]
   features                           Feature[]
@@ -31,9 +33,9 @@ model Product {
   subscriptions                      Subscription[]
   currencies                         CurrenciesOnProduct[]
   updatedAt                          DateTime                        @default(now()) @updatedAt
-  archivedAt                         DateTime?
   isTest                             Boolean                         @default(false)
   coupons                            Coupon[]
+  archivedAt                         DateTime?
 
   @@index([organisation])
   @@index([organisationPaymentIntegrationUuid])
