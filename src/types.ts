@@ -636,6 +636,21 @@ export type ProductV3 = {
   isTest: boolean;
 };
 
+export type GetAllProductsOptionsV3 = {
+  cursor?: string;
+  take?: number
+  sort?: 'asc' | 'desc';
+  archived?: boolean;
+}
+
+
+export type GetAllProductsV3 = {
+  first: string;
+  last: string;
+  data: ProductV3[];
+};
+
+
 export type ProductCapability = {
   uuid: string;
   name: string;

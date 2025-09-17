@@ -1,14 +1,4 @@
-import {
-  Plan,
-  Product,
-  ProductCapability,
-  ProductCurrency,
-  ProductFeature,
-  ProductPricingTable,
-  TVersion,
-  Version,
-  ProductV3, ProductPricingTableV3
-} from '../types';
+import { Plan, Product, ProductCapability, ProductCurrency, ProductFeature, ProductPricingTable, TVersion, Version, ProductV3, ProductPricingTableV3, GetAllProductsV3, GetAllProductsOptionsV3 } from '../types';
 
 export type ProductVersions = {
   [Version.V2]: {
@@ -87,13 +77,13 @@ export type ProductVersions = {
   };
   [Version.V3]: {
     /**
-     *  Retrieves a list of all products
+     *  Retrieves a paginated list of all products
      *
      * Docs - https://docs.salable.app/api/v3#tag/Products/operation/getProducts
      *
-     * @returns {Promise<ProductV3[]>} All products present on the account
+     * @returns {Promise<GetAllProductsV3[]>} All products present on the account
      */
-    getAll: () => Promise<ProductV3[]>;
+    getAll: (options?: GetAllProductsOptionsV3) => Promise<GetAllProductsV3[]>;
 
     /**
      *  Retrieves a specific product by its UUID. By default, the response does not contain any relational data. If you want to expand the relational data, you can do so with the `expand` query parameter.
