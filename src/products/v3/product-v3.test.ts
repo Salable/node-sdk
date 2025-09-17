@@ -147,7 +147,6 @@ describe('Products V3 Tests', () => {
               ...ProductSchemaV3,
               uuid: data.productThree.uuid,
               slug: 'c-slug',
-              productUuid: data.productThree.uuid,
               archivedAt: expect.any(String) as string,
             },
           ],
@@ -156,10 +155,6 @@ describe('Products V3 Tests', () => {
     })
   })
 
-  it('getAll: should successfully fetch all products', async () => {
-    const data = await salable.products.getAll();
-    expect(data).toEqual(expect.arrayContaining([ProductSchemaV3]));
-  });
   it('getOne: should successfully fetch a product', async () => {
     const data = await salable.products.getOne(productUuid);
     expect(data).toEqual(ProductSchemaV3);

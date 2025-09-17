@@ -1,5 +1,21 @@
-import { FeatureV3, Invoice, LicenseV3, OrganisationPaymentIntegrationV3,
-  PaginatedLicenses, PaginatedSubscription, PaginatedSubscriptionInvoice, PlanCurrency, PlanFeatureV3, PlanV3, PricingTableV3, ProductCurrency, ProductPricingTableV3, ProductV3, Subscription } from '../../types';
+import {
+  FeatureEnumOption,
+  FeatureV3,
+  Invoice,
+  LicenseV3,
+  OrganisationPaymentIntegrationV3,
+  PaginatedLicenses,
+  PaginatedSubscription,
+  PaginatedSubscriptionInvoice,
+  PlanCurrency,
+  PlanFeatureV3,
+  PlanV3,
+  PricingTableV3,
+  ProductCurrency,
+  ProductPricingTableV3,
+  ProductV3,
+  Subscription,
+} from '../../types';
 import { EnumValueSchema, LicenseSchema, SubscriptionSchema } from '../v2/schemas-v2';
 
 export const ProductSchemaV3: ProductV3 = {
@@ -41,7 +57,9 @@ export const PlanSchemaV3: PlanV3 = {
   isSubscribed: expect.toBeOneOf([expect.any(Boolean), undefined]),
 };
 
-export const FeatureSchemaV3: FeatureV3 = {
+export const FeatureSchemaV3: FeatureV3 & {
+  featureEnumOptions: FeatureEnumOption[]
+} = {
   defaultValue: expect.any(String),
   description: expect.toBeOneOf([expect.any(String), null]),
   displayName: expect.any(String),
@@ -54,6 +72,7 @@ export const FeatureSchemaV3: FeatureV3 = {
   valueType: expect.any(String),
   variableName: expect.any(String),
   visibility: expect.any(String),
+  featureEnumOptions: expect.arrayContaining([EnumValueSchema]) as FeatureEnumOption[]
 };
 
 export const PlanFeatureSchemaV3: PlanFeatureV3 = {

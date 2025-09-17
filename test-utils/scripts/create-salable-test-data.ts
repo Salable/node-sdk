@@ -169,6 +169,7 @@ const apiKeyScopesV3 = [
   'subscriptions:write',
   'pricing-tables:read',
   'plans:read',
+  'features:read',
   'products:read',
   'sessions:write',
   'usage:read',
