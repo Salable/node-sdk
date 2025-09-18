@@ -1,13 +1,13 @@
 import objectBuilder from './object-builder';
 
 export const mockPlan = objectBuilder({
-  name: 'Free Plan Name',
+  name: 'Free Plan Name', // deprecated
   description: 'Free Plan description',
   displayName: 'Free Plan Display Name',
   slug: 'example-slug',
   status: 'ACTIVE',
-  trialDays: 0,
-  evaluation: false,
+  trialDays: 0, // deprecated
+  evaluation: false, // deprecated
   evalDays: 0,
   organisation: 'xxxxx',
   visibility: 'public',
@@ -16,11 +16,11 @@ export const mockPlan = objectBuilder({
   perSeatAmount: 1,
   maxSeatAmount: -1,
   length: 1,
-  active: true,
-  planType: 'Standard',
+  active: true, // deprecated
+  planType: 'Standard', // deprecated
   pricingType: 'free',
-  environment: 'dev',
-  paddlePlanId: null, // Note: deprecated
+  environment: 'dev', // deprecated
+  paddlePlanId: null, // deprecated
   isTest: false,
   hasAcceptedTransaction: false,
   archivedAt: null as Date | null,

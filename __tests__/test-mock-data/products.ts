@@ -10,7 +10,7 @@ export const mockProduct = objectBuilder({
   slug: 'example-slug',
   status: 'ACTIVE',
   paid: false,
-  appType: 'CUSTOM',
+  appType: 'CUSTOM', // deprecated
   isTest: false,
   archivedAt: null as null | Date,
 });
@@ -18,7 +18,7 @@ export const mockProduct = objectBuilder({
 export const mockOrganisationPaymentIntegration = objectBuilder({
   organisation: 'xxxxx',
   integrationName: 'stripe_existing' as PaymentIntegration,
-  accountData: {
+  accountData: { // deprecated
     key: 'xxxxx',
     encryptedData: 'xoxox',
   },

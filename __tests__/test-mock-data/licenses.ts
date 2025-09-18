@@ -1,6 +1,7 @@
 import { LicensesUsageRecordType, Prisma } from '@prisma/client';
 import objectBuilder from './object-builder';
 
+// deprecated
 export const mockLicenseCapability = objectBuilder({
   name: 'Export',
   uuid: '38e63e2a-1269-4e9d-b712-28cfbf087285',
@@ -29,7 +30,7 @@ export const mockLicense = objectBuilder({
   capabilities: [
     mockLicenseCapability({ name: 'CapabilityOne' }),
     mockLicenseCapability({ name: 'CapabilityTwo' }),
-  ] as Prisma.InputJsonObject[],
+  ] as Prisma.InputJsonObject[], // deprecated
   startTime: undefined as undefined | Date,
   endTime: new Date(),
   cancelAtPeriodEnd: false,

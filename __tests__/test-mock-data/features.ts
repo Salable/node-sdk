@@ -16,8 +16,8 @@ export const mockFeature = objectBuilder({
 export const mockPlanFeature = objectBuilder({
   value: 'xxxxx',
   isUnlimited: undefined as boolean | undefined,
-  isUsage: undefined as boolean | undefined,
-  pricePerUnit: 10,
-  minUsage: 1,
-  maxUsage: 100,
+  isUsage: undefined as boolean | undefined, // deprecated
+  pricePerUnit: 10, // deprecated
+  minUsage: 1, // deprecated
+  maxUsage: 100, // deprecated
 });
