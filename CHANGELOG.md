@@ -1,3 +1,10 @@
+# [5.0.0-beta.2](https://github.com/Salable/node-sdk/compare/v5.0.0-beta.1...v5.0.0-beta.2) (2025-09-18)
+
+
+### Bug Fixes
+
+* updated EntitlementsCheck return type ([273b14d](https://github.com/Salable/node-sdk/commit/273b14dcb3269fe4ad987499804065f2253e0051))
+
 # [5.0.0-beta.1](https://github.com/Salable/node-sdk/compare/v4.11.0...v5.0.0-beta.1) (2025-09-18)
 
 
