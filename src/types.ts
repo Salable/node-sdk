@@ -792,7 +792,7 @@ export type CheckLicensesCapabilitiesResponse = {
 };
 
 export type EntitlementCheck = {
-  feature: {
+  features: {
     feature: string;
     expiry: Date;
   }[];
