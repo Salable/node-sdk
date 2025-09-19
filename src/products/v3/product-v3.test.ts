@@ -34,7 +34,7 @@ describe('Products V3 Tests', () => {
       });
       differentOrgSalable = initSalable(value, 'v3');
     })
-    it('getAll: return correct plans', async () => {
+    it('getAll: return correct products', async () => {
       const plans = await differentOrgSalable.products.getAll()
       expect(plans).toEqual(
         {
@@ -70,7 +70,7 @@ describe('Products V3 Tests', () => {
       );
     })
 
-    it('getAll: return correct plans with sort desc', async () => {
+    it('getAll: return correct products with sort desc', async () => {
       const plans = await differentOrgSalable.products.getAll({
         sort: 'desc'
       })
@@ -107,7 +107,7 @@ describe('Products V3 Tests', () => {
         }
       );
     })
-    it('getAll: return correct plans with take set', async () => {
+    it('getAll: return correct products with take set', async () => {
       const plans = await differentOrgSalable.products.getAll({
         take: 2
       })
@@ -134,7 +134,7 @@ describe('Products V3 Tests', () => {
         }
       );
     })
-    it('getAll: return correct plans with archived set', async () => {
+    it('getAll: return correct products with archived set', async () => {
       const plans = await differentOrgSalable.products.getAll({
         archived: true
       })

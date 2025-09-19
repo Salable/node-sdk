@@ -4,14 +4,14 @@ sidebar_position: 2
 
 # Get All Products
 
-Returns a list of all the products created by your Salable organization
+Returns a list of all the products created by your Salable organization.
 
 ## Code Sample
 
 ```typescript
-import { Salable } from '@salable/node-sdk';
+import { initSalable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}');
+const salable = initSalable('{{API_KEY}}', 'v3');
 
 const products = await salable.products.getAll();
 ```

@@ -18,7 +18,7 @@ const plans = await salable.plans.getAll();
 
 ## Parameters
 
-#### options (_required_)
+#### options
 
 _Type:_ `GetAllPlansOptionsV3`
 

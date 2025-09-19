@@ -108,7 +108,7 @@ export type PlanVersions = {
      /**
      * Retrieves a checkout link for a specific plan. The checkout link can be used by customers to purchase the plan.
      *
-     * @param  {string} planUuid The UUID of the plan
+     * @param  {string} - planUuid The UUID of the plan
      * @param {GetPlanCheckoutOptions} options - (Optional) Filter parameters. See https://docs.salable.app/api/v3#tag/Plans/operation/getPlanCheckoutLink
      *
      * @returns {Promise<{checkoutUrl: string;}>}

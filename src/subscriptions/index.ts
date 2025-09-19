@@ -163,7 +163,7 @@ export type SubscriptionVersions = {
     getUpdatePaymentLink: (subscriptionUuid: string) => Promise<SubscriptionPaymentLink>;
 
     /**
-     *  Retrieves the customer portal link for a subscription. The link opens up a subscription management portal for your payment integration that will have an options for the customer to manage their subscription.
+     *  Retrieves the customer portal link for a subscription. The link opens up a subscription management portal for your payment integration that will have options for the customer to manage their subscription.
      *
      *  @param {string} subscriptionUuid - The UUID of the subscription to cancel
      *
@@ -423,7 +423,7 @@ export type SubscriptionVersions = {
     getUpdatePaymentLink: (subscriptionUuid: string) => Promise<SubscriptionPaymentLink>;
 
     /**
-     *  Retrieves the customer portal link for a subscription. The link opens up a subscription management portal for your payment integration that will have an options for the customer to manage their subscription.
+     *  Retrieves the customer portal link for a subscription. The link opens up a subscription management portal for your payment integration that will have options for the customer to manage their subscription.
      *
      *  @param {string} subscriptionUuid - The UUID of the subscription to cancel
      *

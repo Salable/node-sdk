@@ -8,6 +8,7 @@ sidebar_position: 2
 
 ### Breaking Changes
 
+<<<<<<< Updated upstream
 The `Salable` class has been replaced with a new `initSalable` function. Using the new initialise function will enable 
 vendors to use `v2` or `v3` of the API within the same version of the SDK.
 
@@ -29,6 +30,11 @@ too rigid, for flexibility we have deprecated capabilities in favour of using th
 editable in the Salable app.
 
 ##### Deprecated methods that use capabilities
+### Capabilities deprecated
+Capabilities used to be stored on the License at the point of creation with no way of editing them. Instead, we have now
+opted to use the plan's features which allow you to update a grantee’s access on-the-fly through the Salable dashboard.
+
+#### Deprecated capabilities deprecated
 - `plans.capabilities`
 - `products.capabilities`
 - `licenses.check`

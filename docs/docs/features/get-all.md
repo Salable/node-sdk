@@ -26,7 +26,7 @@ _Type:_ `GetAllFeaturesOptionsV3`
 
 | **Parameter** | **Type**        | **Description**                                     | **Required** |
 |:--------------|:----------------|:----------------------------------------------------|:------------:|
-| productUuid   | string          | The product the features belong to                  |      ✅       |
+| productUuid   | string          | The product to retrieve features for                |      ✅       |
 | cursor        | string          | Cursor value, used for pagination                   |      ❌       |
 | take          | number          | The number of subscriptions to fetch. Default: `20` |      ❌       |
 | sort          | `asc` \| `desc` | Default `asc`                                       |      ❌       |

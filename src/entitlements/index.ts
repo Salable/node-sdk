@@ -5,8 +5,8 @@ export type EntitlementVersions = {
     /**
      *  Check entitlements
      *
-     *  @param {string[]} granteeIds - The IDs of the grantee to be checked
-     *  @param {string} productUuid - The ID of the product to be checked
+     *  @param {string[]} granteeIds - The UUIDs of the grantee to be checked
+     *  @param {string} productUuid - The UUID of the product to be checked
      *
      *  @returns { Promise<EntitlementCheck>}
      */

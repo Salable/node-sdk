@@ -9,9 +9,9 @@ Retrieves the features the grantee(s) have access to.
 ## Code Sample
 
 ```typescript
-import { Salable } from '@salable/node-sdk';
+import { initSalable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}');
+const salable = initSalable('{{API_KEY}}', 'v3');
 
 const check = await salable.entitlements.check({
   productUuid: '{{PRODUCT_UUID}}', 
