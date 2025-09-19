@@ -13,12 +13,12 @@ vendors to use `v2` or `v3` of the API within the same version of the SDK.
 
 **v4.0.0 implementation**
 ```typescript
-const salable = new Salable('your-api-key', 'v2')
+const salable = new Salable('your-api-key', 'v2');
 ```
 **v5.0.0 implementation**
 ```typescript
-const salableV2 = initSalable('your-api-key', 'v2') // still supported
-const salableV3 = initSalable('your-api-key', 'v3')
+const salableV2 = initSalable('your-api-key', 'v2'); // v2 still supported
+const salableV3 = initSalable('your-api-key', 'v3');
 ```
 
 ### V3 Breaking changes
@@ -51,6 +51,8 @@ consistent implementation across all types of subscriptions.
 #### Other deprecated endpoints 
 - `products.getFeatures` moved to `features.getAll` with the `productUuid` filter applied.
 - `products.getPlans` moved to `plans.getAll` with the `productUuid` filter applied.
+- `subscriptions.addSeats` moved to `subscriptions.updateSeatCount` with `increment` set.
+- `subscriptions.removeSeats` moved to `subscriptions.updateSeatCount` with `decerement` set.
 
 #### Affected responses
 - `products.getAll` now uses cursor-based pagination in the response.
@@ -59,6 +61,7 @@ consistent implementation across all types of subscriptions.
 #### New methods
 - `features.getAll` - Retrieves all features for an organisation. The response uses cursor-based pagination.
 - `plans.getAll` - Retrieves all plans for an organisation. The response uses cursor-based pagination.
+- `subscriptions.updateSeatCount` - v2 of the API required two different endpoints to add and remove seats on a per-seat subscription. In v3 this has been aligned under one method `subscriptions.updateSeatCount`. 
 - `entitlements.check` - Check grantee access to specific features (replaces `licenses.check`).
 
 **v4.0.0 SDK with API v2**
