@@ -8,28 +8,81 @@ sidebar_position: 2
 
 ### Breaking Changes
 
-### Capabilities deprecated
+The `Salable` class has been replaced with a new `initSalable` function. Using the new initialise function will enable 
+vendors to use `v2` or `v3` of the API within the same version of the SDK.
+
+**v4.0.0 implementation**
+```typescript
+const salable = new Salable('your-api-key', 'v2');
+```
+**v5.0.0 implementation**
+```typescript
+const salableV2 = initSalable('your-api-key', 'v2'); // v2 still supported
+const salableV3 = initSalable('your-api-key', 'v3');
+```
+
+### V3 Breaking changes
+
+#### Capabilities deprecated
 Capabilities used to be stored on the License at the point of creation with no way of editing them. We found this to be
 too rigid, for flexibility we have deprecated capabilities in favour of using the plan's feature values which are
 editable in the Salable app.
-#### Deprecated capabilities deprecated
+
+##### Deprecated methods that use capabilities
 - `plans.capabilities`
-- `product.capabilities`
+- `products.capabilities`
 - `licenses.check`
 
-### Licenses deprecated 
+#### Licenses deprecated 
 All license methods have been deprecated in favour of managing them through the subscription instead. This gives a
 consistent implementation across all types of subscriptions.
 - `licenses.create` moved to `subscriptions.create` - the `owner` value will be applied to the `purchaser` field of the license.
-- `license.check` moved to `entitlements.check`
+- `licenses.check` moved to `entitlements.check`
 - `licenses.getAll` moved to `subscriptions.getSeats`
-- `licenses.getOne` support removed
+- `licenses.getOne` support removed - fetch the parent subscription instead using `subscriptions.getOne`
 - `licenses.getForPurchaser` moved to `subscriptions.getAll` with the owner filter applied.
 - `licenses.update` moved to `subscriptions.update`
+  - To update a seat's grantee use the `subscriptions.manageSeats` method.
 - `licenses.updateMany` moved to `subscriptions.manageSeats`
 - `licenses.getCount` moved to `subscriptions.getSeatCount`
 - `licenses.cancel` moved to `subscriptions.cancel` - this will cancel all the subscription's child licenses.
 - `licenses.cancelMany` moved to `subscriptions.cancel` - it is not possible to cancel many subscriptions in the same request.
+
+#### Other deprecated endpoints 
+- `products.getFeatures` moved to `features.getAll` with the `productUuid` filter applied.
+- `products.getPlans` moved to `plans.getAll` with the `productUuid` filter applied.
+- `subscriptions.addSeats` moved to `subscriptions.updateSeatCount` with `increment` set.
+- `subscriptions.removeSeats` moved to `subscriptions.updateSeatCount` with `decerement` set.
+
+#### Affected responses
+- `products.getAll` now uses cursor-based pagination in the response.
+
+### What's new?
+#### New methods
+- `features.getAll` - Retrieves all features for an organisation. The response uses cursor-based pagination.
+- `plans.getAll` - Retrieves all plans for an organisation. The response uses cursor-based pagination.
+- `subscriptions.updateSeatCount` - v2 of the API required two different endpoints to add and remove seats on a per-seat subscription. In v3 this has been aligned under one method `subscriptions.updateSeatCount`. 
+- `entitlements.check` - Check grantee access to specific features (replaces `licenses.check`).
+
+**v4.0.0 SDK with API v2**
+```typescript
+const salable = new Salable('your-api-key', 'v2');
+const check = await salable.licenses.check({
+  productUuid: 'your-product-uuid',
+  granteeIds: ['your-grantee-id'],
+});
+const hasAccess = check?.capabilities.find((c) => c.capability === 'your-boolean-feature');
+```
+
+**v5.0.0 SDK with API v3**
+```typescript
+const salable = initSalable('your-api-key', 'v3');
+const check = await salable.entitlements.check({
+  productUuid: 'your-product-uuid',
+  granteeIds: ['your-grantee-id'],
+});
+const hasAccess = check.features.find((f) => f.feature === 'your-boolean-feature');
+```
 
 ## v4.0.0
 

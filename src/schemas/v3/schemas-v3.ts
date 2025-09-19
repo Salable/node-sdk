@@ -1,12 +1,9 @@
 import {
   FeatureEnumOption,
   FeatureV3,
-  Invoice,
   LicenseV3,
   OrganisationPaymentIntegrationV3,
   PaginatedLicenses,
-  PaginatedSubscription,
-  PaginatedSubscriptionInvoice,
   PlanCurrency,
   PlanFeatureV3,
   PlanV3,
@@ -14,9 +11,8 @@ import {
   ProductCurrency,
   ProductPricingTableV3,
   ProductV3,
-  Subscription,
 } from '../../types';
-import { EnumValueSchema, LicenseSchema, SubscriptionSchema } from '../v2/schemas-v2';
+import { EnumValueSchema} from '../v2/schemas-v2';
 
 export const ProductSchemaV3: ProductV3 = {
   uuid: expect.any(String),

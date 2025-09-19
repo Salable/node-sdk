@@ -4,13 +4,13 @@ import { testUuids } from '../../../test-utils/scripts/create-salable-test-data'
 import { randomUUID } from 'crypto';
 import { PricingTableSchema } from '../../schemas/v2/schemas-v2';
 
-const pricingTableUuid = randomUUID();
 describe('Pricing Table V2 Tests', () => {
   const apiKey = testUuids.devApiKeyV2;
   const salable = initSalable(apiKey, 'v2');
+  const pricingTableUuid = randomUUID();
 
   beforeAll(async() => {
-    await generateTestData()
+    await generateTestData(pricingTableUuid)
   })
 
   it('getAll: should successfully fetch all pricing tables', async () => {
@@ -20,7 +20,7 @@ describe('Pricing Table V2 Tests', () => {
 });
 
 
-const generateTestData = async () => {
+const generateTestData = async (pricingTableUuid: string) => {
 
   const product = await prismaClient.product.findUnique({
     where: { uuid: testUuids.productUuid },
