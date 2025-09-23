@@ -9,9 +9,9 @@ Increments usage count on a License
 ## Code Sample
 
 ```typescript
-import { Salable } from '@salable/node-sdk';
+import { initSalable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}', 'v2');
+const salable = initSalable('{{API_KEY}}', 'v3');
 
 await salable.usage.updateLicenseUsage({
   granteeId: 'grantee_1', 

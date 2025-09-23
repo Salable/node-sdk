@@ -1,5 +1,4 @@
-import { CheckLicenseInput, CheckLicensesCapabilitiesResponse, CreateAdhocLicenseInput, PaginatedLicenses, GetLicenseOptions, License, GetLicenseCountResponse, UpdateManyLicenseInput, GetLicenseCountOptions, GetPurchasersLicensesOptions, ApiRequest, TVersion, Version } from '../types';
-import { v2LicenseMethods } from './v2';
+import { CheckLicenseInput, CheckLicensesCapabilitiesResponse, CreateAdhocLicenseInput, PaginatedLicenses, GetLicenseOptions, License, GetLicenseCountResponse, UpdateManyLicenseInput, GetLicenseCountOptions, GetPurchasersLicensesOptions, TVersion, Version } from '../types';
 
 export type LicenseVersions = {
   [Version.V2]: {
@@ -125,12 +124,3 @@ export type LicenseVersions = {
 };
 
 export type LicenseVersionedMethods<V extends TVersion> = V extends keyof LicenseVersions ? LicenseVersions[V] : never;
-
-export const licensesInit = <V extends TVersion>(version: V, request: ApiRequest): LicenseVersionedMethods<V> => {
-  switch (version) {
-    case Version.V2:
-      return v2LicenseMethods(request) as LicenseVersionedMethods<V>;
-    default:
-      throw new Error('Unsupported version');
-  }
-};

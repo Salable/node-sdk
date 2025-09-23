@@ -11,12 +11,12 @@ Returns all necessary data on a Product to be able to display a pricing table. E
 #### Required parameters
 
 ```typescript
-import { Salable } from '@salable/node-sdk';
+import { initSalable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}');
+const salable = initSalable('{{API_KEY}}');
 
 const pricingTable = await salable.products.getPricingTable('7827727d-6fa9-46e6-b865-172ccda6f5a4', {
-  granteeId: 'granteeid@email.com',
+  granteeId: 'userId_1',
 });
 ```
 
@@ -43,4 +43,4 @@ Below is the list of properties than can be used in the `queryParams` argument.
 
 ## Return Type
 
-For more information about this request see our API documentation on [Product Pricing Table Object](https://docs.salable.app/api/v2#tag/Products/operation/getProductPricingTable)
+For more information about this request see our API documentation on [Product Pricing Table Object](https://docs.salable.app/api/v3#tag/Products/operation/getProductPricingTable)

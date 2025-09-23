@@ -9,9 +9,9 @@ Removes the specified coupon from the subscription. Removing coupons do not trig
 ## Code Sample
 
 ```typescript
-import { Salable } from '@salable/node-sdk';
+import { initSalable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}', 'v2');
+const salable = initSalable('{{API_KEY}}', 'v3');
 
 await salable.subscriptions.removeCoupon('d18642b3-6dc0-40c4-aaa5-6315ed37c744', { couponUuid: '4c064ace-57c4-4618-bd79-a0e8029f9904' });
 ```

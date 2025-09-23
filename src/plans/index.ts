@@ -1,5 +1,18 @@
-import { Plan, PlanCheckout, PlanFeature, PlanCapability, PlanCurrency, ApiRequest, TVersion, Version, GetPlanOptions, GetPlanCheckoutOptions } from '../types';
-import { v2PlanMethods } from './v2';
+import {
+  Plan,
+  PlanCheckout,
+  PlanFeature,
+  PlanCapability,
+  PlanCurrency,
+  TVersion,
+  Version,
+  GetPlanOptions,
+  GetPlanCheckoutOptions,
+  GetPlanOptionsV3,
+  GetPlanCheckoutOptionsV3,
+  GetAllPlansOptionsV3,
+  GetAllPlansV3,
+} from '../types';
 
 export type PlanVersions = {
   [Version.V2]: {
@@ -65,15 +78,46 @@ export type PlanVersions = {
      */
     getCurrencies: (planUuid: string) => Promise<PlanCurrency[]>;
   };
+  [Version.V3]: {
+    /**
+     *  Get all plans
+     *
+     * @param GetAllPlansOptionsV3
+     *
+     *  @returns { Promise<GetAllFeaturesV3>}
+     */
+    getAll: (options?: GetAllPlansOptionsV3) => Promise<GetAllPlansV3>;
+    /**
+     *  Retrieves all plans for an organisation with cursor based pagination. The response does not contain any relational data. If you want to expand the relational data, you can do so with the `expand` parameter.
+     **
+     * Docs - https://docs.salable.app/api/v3#tag/Plans/operation/getPlanByUuid
+     *
+     * @returns {Promise<PlanV3 & {
+     *       features?: PlanFeatureV3[];
+     *       currencies?: PlanCurrency[];
+     *       product?: ProductV3 & { organisationPaymentIntegration: OrganisationPaymentIntegrationV3 }
+     *     }>}
+     */
+    getOne: (
+      planUuid: string,
+      options?: GetPlanOptionsV3
+    ) => Promise<GetAllPlansV3>;
+
+    /**
+
+     /**
+     * Retrieves a checkout link for a specific plan. The checkout link can be used by customers to purchase the plan.
+     *
+     * @param  {string} - planUuid The UUID of the plan
+     * @param {GetPlanCheckoutOptions} options - (Optional) Filter parameters. See https://docs.salable.app/api/v3#tag/Plans/operation/getPlanCheckoutLink
+     *
+     * @returns {Promise<{checkoutUrl: string;}>}
+     */
+    getCheckoutLink: (
+      planUuid: string,
+      options: GetPlanCheckoutOptionsV3
+    ) => Promise<PlanCheckout>;
+  };
 };
 
 export type PlanVersionedMethods<V extends TVersion> = V extends keyof PlanVersions ? PlanVersions[V] : never;
-
-export const plansInit = <V extends TVersion>(version: V, request: ApiRequest): PlanVersionedMethods<V> => {
-  switch (version) {
-    case Version.V2:
-      return v2PlanMethods(request) as PlanVersionedMethods<V>;
-    default:
-      throw new Error('Unsupported version');
-  }
-};

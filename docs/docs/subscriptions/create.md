@@ -9,9 +9,9 @@ Create a subscription with no payment integration.
 ## Code Sample
 
 ```typescript
-import { Salable } from '@salable/node-sdk';
+import { initSalable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}', 'v2');
+const salable = initSalable('{{API_KEY}}', 'v3');
 
 await salable.subscriptions.create({
   planUuid: '41192f3a-fcfd-46e2-83db-0fd6a288ad5f',
@@ -37,4 +37,4 @@ _Type:_ `CreateSubscriptionInput`
 
 ## Return Type
 
-For more information about this request see our API documentation on [Subscription Create](https://docs.salable.app/api/v2#tag/Subscriptions/operation/createSubscripion)
+For more information about this request see our API documentation on [Subscription Create](https://docs.salable.app/api/v3#tag/Subscriptions/operation/createSubscripion)

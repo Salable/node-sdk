@@ -9,9 +9,9 @@ Returns the update payment link for a specific subscription.
 ## Code Sample
 
 ```typescript
-import { Salable } from '@salable/node-sdk';
+import { initSalable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}', 'v2');
+const salable = initSalable('{{API_KEY}}', 'v3');
 
 const subscription = await salable.subscriptions.getPortalLink('4264d425-697c-4b65-b189-0e747050bfff');
 ```
@@ -26,4 +26,4 @@ The UUID of the subscription
 
 ## Return Type
 
-For more information about this request see our API documentation on [Subscription Payment Link Object](https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptionUpdatePaymentLink)
+For more information about this request see our API documentation on [Subscription Payment Link Object](https://docs.salable.app/api/v3#tag/Subscriptions/operation/getSubscriptionUpdatePaymentLink)

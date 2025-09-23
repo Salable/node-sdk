@@ -9,9 +9,9 @@ Cancels a Subscription with options for when it terminates.
 ## Code Sample
 
 ```typescript
-import { Salable } from '@salable/node-sdk';
+import { initSalable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}', 'v2');
+const salable = initSalable('{{API_KEY}}', 'v3');
 
 await salable.subscriptions.cancel('ce8cc0cb-a180-4d90-985b-0890d5ac6cbb', { when: 'end' });
 ```

@@ -9,17 +9,16 @@ Let’s walk through setting up a project that uses the Salable API Class from t
 1. Create a new Node.js project.
 2. Inside of the project, run: `npm install @salable/node-sdk`. Adding packages results in update in lock file, [yarn.lock](https://yarnpkg.com/getting-started/qa/#should-lockfiles-be-committed-to-the-repository) or [package-lock.json](https://docs.npmjs.com/configuring-npm/package-lock-json). You **should** commit your lock file along with your code to avoid potential breaking changes.
 
-## v4.0.0 Update
+## v5.0.0 Update
 
 The SDK now supports Salable API version selection and developers can choose which version of the Salable API they want to interact with via the SDK
-As such, the Salable API version is now a required argument when instantiating the SDK 
+As such, the Salable API version is now a required argument when instantiating the SDK
 
 ```typescript
-import { Salable } from '@salable/node-sdk';
+import { initSalable } from '@salable/node-sdk';
 
-const salable = new Salable('your_api_key', 'v2');
+const salable = initSalable('your_api_key', 'v3');
 ```
-> **_NOTE:_**  Support for `v1` of the Salable API has been deprecated, `v2` is currently the only supported version
 
 ### General Changes
 
@@ -27,16 +26,16 @@ const salable = new Salable('your_api_key', 'v2');
 - Types and method documentation are dynamic and automatically adjust to the version selected
 
 ```typescript
-import { Salable } from '@salable/node-sdk';
+import { initSalable } from '@salable/node-sdk';
 
-const salableV1 = new Salable('your_api_key', 'v1'); // NOTE: 'v1' is not supported and used for example purposes
-const salableV2 = new Salable('your_api_key', 'v2');
+const salableV2 = initSalable('your_api_key', 'v2');
+const salableV3 = initSalable('your_api_key', 'v3');
 
-// The "licenses.getUsage" method is supported in this version and will work
-await salableV1.licenses.getUsage(): 
+// "licenses.check" method is supported in this version and will work
+await salableV2.licenses.check(); 
 
-// This will error as "licenses.getUsage" has been deprecated in 'v2'
-await salableV2.licenses.getUsage(): // Will error with: "Property 'getUsage' does not exist ..."
+// This will error as all "licenses" methods has been deprecated in 'v3'
+await salableV3.licenses.check(); // Will error with: "Property 'licenses' does not exist ..."
 ```
 #### Pagination
 - All methods are now scope authorized and your API Key must contain the appropriate scopes to user certain methods

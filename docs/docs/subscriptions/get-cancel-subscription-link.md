@@ -9,9 +9,9 @@ Returns a link to cancel a specific subscription.
 ## Code Sample
 
 ```typescript
-import { Salable } from '@salable/node-sdk';
+import { initSalable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}', 'v2');
+const salable = initSalable('{{API_KEY}}', 'v3');
 
 const subscription = await salable.subscriptions.getCancelSubscriptionLink('ecc6868e-3ba5-4f10-b955-5dd46beb9602');
 ```
@@ -26,4 +26,4 @@ The UUID of the subscription
 
 ## Return Type
 
-For more information about this request see our API documentation on [Cancel Subscription Link Object](https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptionCancelLink)
+For more information about this request see our API documentation on [Cancel Subscription Link Object](https://docs.salable.app/api/v3#tag/Subscriptions/operation/getSubscriptionCancelLink)

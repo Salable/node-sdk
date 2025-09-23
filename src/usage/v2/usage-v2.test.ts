@@ -1,59 +1,67 @@
-import Salable, { Version } from '../..';
-import { PaginatedUsageRecords, UsageRecord } from '../../types';
+import { initSalable, TVersion, VersionedMethodsReturn } from '../..';
 import prismaClient from '../../../test-utils/prisma/prisma-client';
-import { testUuids } from '../../../test-utils/scripts/create-test-data';
-import { v4 as uuidv4 } from 'uuid';
+import { testUuids } from '../../../test-utils/scripts/create-salable-test-data';
 import { randomUUID } from 'crypto';
-
-const version = Version.V2;
+import { PaginatedUsageRecordsSchema, UsageRecordSchema } from '../../schemas/v2/schemas-v2';
 
 const stripeEnvs = JSON.parse(process.env.stripEnvs || '');
-const meteredLicenseUuid = uuidv4();
-const usageSubscriptionUuid = uuidv4();
+const meteredLicenseUuid = randomUUID();
+const usageSubscriptionUuid = randomUUID();
 const testGrantee = 'userId_metered';
 const owner = 'subscription-owner'
 
-describe('Usage V2 Tests', () => {
-  const salable = new Salable(testUuids.devApiKeyV2, version);
-
+describe('Usage Tests for v2, v3', () => {
+  const salableVersions = {} as Record<TVersion, VersionedMethodsReturn<TVersion>>
+  const versions: {version: TVersion; scopes: string[]}[] = [
+    { version: 'v2', scopes: ['usage:read', 'usage:write'] },
+    { version: 'v3', scopes: ['usage:read', 'usage:write'] }
+  ];
   beforeAll(async () => {
     await generateTestData();
+    for (const {version, scopes} of versions) {
+      const value = randomUUID()
+      await prismaClient.apiKey.create({
+        data: {
+          name: 'Sample API Key',
+          organisation: testUuids.organisationId,
+          value,
+          scopes: JSON.stringify(scopes),
+          status: 'ACTIVE',
+        },
+      });
+      salableVersions[version] = initSalable(value, version);
+    }
   });
 
-  it('getAllUsageRecords: Should successfully fetch the grantees usage records', async () => {
-    const data = await salable.usage.getAllUsageRecords({
+  it.each(versions)('getAllUsageRecords: Should successfully fetch the grantees usage records', async ({ version }) => {
+    const data = await salableVersions[version].usage.getAllUsageRecords({
       granteeId: testGrantee,
     });
-
-    expect(data).toEqual(paginatedUsageRecordsSchema);
+    expect(data).toEqual(PaginatedUsageRecordsSchema);
   });
-
-  it('getAllUsageRecords (w/ search params): Should successfully fetch the grantees usage records', async () => {
-    const data = await salable.usage.getAllUsageRecords({
+  it.each(versions)('getAllUsageRecords (w/ search params): Should successfully fetch the grantees usage records', async ({ version }) => {
+    const data = await salableVersions[version].usage.getAllUsageRecords({
       granteeId: testGrantee,
       type: 'recorded',
     });
-
     expect(data).toEqual(
       expect.objectContaining({
         first: expect.toBeOneOf([expect.any(String), null]),
         last: expect.toBeOneOf([expect.any(String), null]),
         data: expect.arrayContaining([
           {
-            ...usageRecordSchema,
+            ...UsageRecordSchema,
             type: 'recorded',
           },
         ]),
       }),
     );
   });
-
-  it('getCurrentUsageRecord: Should successfully fetch the current usage record for the grantee on plan', async () => {
-    const data = await salable.usage.getCurrentUsageRecord({
+  it.each(versions)('getCurrentUsageRecord: Should successfully fetch the current usage record for the grantee on plan', async ({ version }) => {
+    const data = await salableVersions[version].usage.getCurrentUsageRecord({
       granteeId: testGrantee,
       planUuid: testUuids.usageBasicMonthlyPlanUuid,
     });
-
     expect(data).toEqual(
       expect.objectContaining({
         unitCount: expect.any(Number),
@@ -61,36 +69,16 @@ describe('Usage V2 Tests', () => {
       }),
     );
   });
-
-  it('updateLicenseUsage: Should successfully update the usage of the specified grantee', async () => {
-    const data = await salable.usage.updateLicenseUsage({
+  it.each(versions)('updateLicenseUsage: Should successfully update the usage of the specified grantee', async ({ version }) => {
+    const data = await salableVersions[version].usage.updateLicenseUsage({
       granteeId: testGrantee,
       planUuid: testUuids.usageBasicMonthlyPlanUuid,
       increment: 10,
       idempotencyKey: randomUUID(),
     });
-
     expect(data).toBeUndefined();
   });
 });
-
-const usageRecordSchema: UsageRecord = {
-  uuid: expect.any(String),
-  unitCount: expect.any(Number),
-  type: expect.any(String),
-  recordedAt: expect.toBeOneOf([expect.any(String), null]),
-  resetAt: expect.toBeOneOf([expect.any(String), null]),
-  planUuid: expect.any(String),
-  licenseUuid: expect.any(String),
-  createdAt: expect.any(String),
-  updatedAt: expect.any(String),
-};
-
-const paginatedUsageRecordsSchema: PaginatedUsageRecords = {
-  first: expect.toBeOneOf([expect.any(String), null]),
-  last: expect.toBeOneOf([expect.any(String), null]),
-  data: expect.arrayContaining([usageRecordSchema]),
-};
 
 const generateTestData = async () => {
   await prismaClient.subscription.create({

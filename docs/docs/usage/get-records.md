@@ -9,9 +9,9 @@ Returns a list of all the usage records for grantee's metered licenses
 ## Code Sample
 
 ```typescript
-import { Salable } from '@salable/node-sdk';
+import { initSalable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}', 'v2');
+const salable = initSalable('{{API_KEY}}', 'v3');
 
 const records = await salable.usage.getAllUsageRecords({
   granteeId: 'grantee_1'
@@ -37,4 +37,4 @@ _Type:_ `GetLicenseOptions`
 
 ## Return Type
 
-For more information about this request see our API documentation on [Usage Record Object](https://docs.salable.app/api/v2#tag/Usage/operation/getLicenseUsage)
+For more information about this request see our API documentation on [Usage Record Object](https://docs.salable.app/api/v3#tag/Usage/operation/getLicenseUsage)
