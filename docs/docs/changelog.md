@@ -8,7 +8,6 @@ sidebar_position: 2
 
 ### Breaking Changes
 
-<<<<<<< Updated upstream
 The `Salable` class has been replaced with a new `initSalable` function. Using the new initialise function will enable 
 vendors to use `v2` or `v3` of the API within the same version of the SDK.
 
