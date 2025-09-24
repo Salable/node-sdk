@@ -1,5 +1,5 @@
-import createStripeData from '../../test-utils/stripe/create-stripe-test-data';
-import createTestData from '../../test-utils/scripts/create-test-data';
+import createStripeData from '../../test-utils/scripts/create-stripe-test-data';
+import createSalableTestData from '../../test-utils/scripts/create-salable-test-data';
 import { config } from 'dotenv';
 import { exec } from 'child_process';
 import { promisify } from 'util';
@@ -20,7 +20,7 @@ const globalSetup = async () => {
   console.log('\n STRIPE ACCOUNT DATA CREATED');
   process.env.stripEnvs = JSON.stringify(obj);
 
-  await createTestData(obj);
+  await createSalableTestData(obj);
   console.log('\n TEST DATA CREATED');
 };
 

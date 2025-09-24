@@ -1,5 +1,4 @@
-import { ApiRequest, TVersion, Version, Event } from '../types';
-import { v2EventMethods } from './v2';
+import { TVersion, Version, Event } from '../types';
 
 export type EventVersions = {
   [Version.V2]: {
@@ -12,15 +11,7 @@ export type EventVersions = {
      */
     getOne: (uuid: string) => Promise<Event>;
   };
+  [Version.V3]: EventVersions['v2'];
 };
 
 export type EventVersionedMethods<V extends TVersion> = V extends keyof EventVersions ? EventVersions[V] : never;
-
-export const eventsInit = <V extends TVersion>(version: V, request: ApiRequest): EventVersionedMethods<V> => {
-  switch (version) {
-    case Version.V2:
-      return v2EventMethods(request) as EventVersionedMethods<V>;
-    default:
-      throw new Error('Unsupported version');
-  }
-};

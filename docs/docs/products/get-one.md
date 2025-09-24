@@ -9,9 +9,9 @@ Returns the details of a single product.
 ## Code Sample
 
 ```typescript
-import { Salable } from '@salable/node-sdk';
+import { initSalable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}', 'v2');
+const salable = initSalable('{{API_KEY}}', 'v3');
 
 const product = await salable.products.getOne('3fe29048-28bf-461c-8498-c42c3572359c');
 ```
@@ -36,4 +36,4 @@ _Type:_ `GetProductOptions`
 
 ## Return Type
 
-For more information about this request see our API documentation on [Product Object](https://docs.salable.app/api/v2#tag/Products/operation/getProductByUuid)
+For more information about this request see our API documentation on [Product Object](https://docs.salable.app/api/v3#tag/Products/operation/getProductByUuid)

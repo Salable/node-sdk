@@ -9,9 +9,9 @@ This method returns the aggregate number of seats. The response is broken down b
 ## Code Sample
 
 ```typescript
-import { Salable } from '@salable/node-sdk';
+import { initSalable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}', 'v2');
+const salable = initSalable('{{API_KEY}}', 'v3');
 
 const seatCount = await salable.subscriptions.getSeatCount('ef946d3d-f2fa-46f2-96d3-d67162540493');
 ```
@@ -26,4 +26,4 @@ _Type:_ `string`
 
 ## Return Type
 
-For more information about this request, see our API documentation on [subscription seat count](https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptionSeatCount).
+For more information about this request, see our API documentation on [subscription seat count](https://docs.salable.app/api/v3#tag/Subscriptions/operation/getSubscriptionSeatCount).

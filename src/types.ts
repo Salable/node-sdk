@@ -2,6 +2,7 @@ import { EventStatus } from '@prisma/client';
 
 export const Version = {
   V2: 'v2',
+  V3: 'v3',
 } as const;
 export type TVersion = (typeof Version)[keyof typeof Version];
 export type ApiFetch = (apiKey: string, version: string) => ApiRequest;
@@ -287,6 +288,51 @@ export type Plan = {
   archivedAt?: string;
 };
 
+export type PlanV3 = {
+  uuid: string;
+  slug: string;
+  description: string | null;
+  perSeatAmount: number;
+  maxSeatAmount: null;
+  displayName: string;
+  hasAcceptedTransaction: boolean;
+  status: string;
+  evalDays: number;
+  organisation: string;
+  visibility: string;
+  licenseType: string;
+  interval: string;
+  length: number;
+  pricingType: string;
+  productUuid: string;
+  updatedAt: string;
+  isTest: boolean;
+  archivedAt: string | null;
+  isSubscribed?: boolean;
+};
+
+export type GetAllPlansOptionsV3 = {
+  cursor?: string;
+  take?: number
+  sort?: 'asc' | 'desc';
+  productUuid?: string;
+  archived?: boolean;
+}
+
+export type GetAllPlansV3 = {
+  first: string;
+  last: string;
+  data: (PlanV3 & {
+    features?: (PlanFeatureV3 & {
+      feature: FeatureV3,
+      enumValue: EnumValue
+    })[]
+    currencies: (PlanCurrency & {
+      currency: Currency
+    })[]
+  })[]
+}
+
 export type IFeature = {
   uuid: string;
   name: string;
@@ -352,6 +398,18 @@ export type PricingTable = {
   plans: PricingTablePlan[];
 };
 
+export type PricingTableV3 = {
+  uuid: string;
+  status: ProductStatus;
+  featureOrder: string;
+  productUuid: string;
+  featuredPlanUuid: string;
+  updatedAt: string;
+  product: ProductV3 & { features: Feature[]; currencies: ProductCurrency[] };
+  plans: PricingTablePlanV3[];
+};
+
+
 export interface IPlanCheckoutParams extends ICheckoutDefaultParams, ICheckoutCustomerParams, ICheckoutVatParams {
   successUrl: string;
   cancelUrl: string;
@@ -412,12 +470,32 @@ export type GetPlanOptions = {
   automaticTax?: string;
 };
 
+export type GetPlanOptionsV3 = {
+  expand?: ('features' | 'product' | 'currencies')[];
+};
+
 export type GetPlanCheckoutOptions = {
   successUrl: string;
   cancelUrl: string;
   granteeId: string;
   member?: string;
   owner?: string;
+  promoCode?: string;
+  allowPromoCode?: boolean;
+  customerEmail?: string;
+  customerId?: string;
+  currency?: string;
+  automaticTax?: string;
+  quantity?: string;
+  changeQuantity?: string;
+  requirePaymentMethod?: boolean;
+};
+
+export type GetPlanCheckoutOptionsV3 = {
+  successUrl: string;
+  cancelUrl: string;
+  granteeId: string;
+  owner: string;
   promoCode?: string;
   allowPromoCode?: boolean;
   customerEmail?: string;
@@ -442,6 +520,54 @@ export type PlanFeature = {
   updatedAt: string;
   feature: IFeature;
   enumValue: string | null;
+};
+
+export type EnumValue = {
+  uuid: string;
+  name: string;
+  featureUuid: string;
+  updatedAt: string;
+}
+
+export type FeatureV3 = {
+  uuid: string;
+  description: string | null;
+  displayName: string;
+  variableName: string;
+  status: string;
+  visibility: string;
+  valueType: string;
+  defaultValue: string;
+  showUnlimited: boolean;
+  updatedAt: string;
+  sortOrder: string;
+  productUuid: string;
+}
+
+export type GetAllFeaturesOptionsV3 = {
+  productUuid: string;
+  cursor?: string;
+  take?: number
+  sort?: 'asc' | 'desc';
+}
+
+export type GetAllFeaturesV3 = {
+  first: string;
+  last: string;
+  data: FeatureV3 & {
+    featureEnumOptions: FeatureEnumOption[]
+  }[]
+}
+
+export type PlanFeatureV3 = {
+  planUuid: string;
+  featureUuid: string;
+  value: string;
+  enumValueUuid: string | null;
+  isUnlimited: boolean;
+  updatedAt: string;
+  feature: FeatureV3;
+  enumValue: EnumValue | null;
 };
 
 export type PlanCapability = {
@@ -493,6 +619,37 @@ export type Product = {
   appType: string;
   isTest: boolean;
 };
+
+export type ProductV3 = {
+  uuid: string;
+  slug: string;
+  description: string | null;
+  logoUrl: string | null;
+  displayName: string;
+  organisation: string;
+  status: string;
+  paid: boolean;
+  organisationPaymentIntegrationUuid: string;
+  paymentIntegrationProductId: string | null;
+  updatedAt: string;
+  archivedAt: string | null;
+  isTest: boolean;
+};
+
+export type GetAllProductsOptionsV3 = {
+  cursor?: string;
+  take?: number
+  sort?: 'asc' | 'desc';
+  archived?: boolean;
+}
+
+
+export type GetAllProductsV3 = {
+  first: string;
+  last: string;
+  data: ProductV3[];
+};
+
 
 export type ProductCapability = {
   uuid: string;
@@ -548,6 +705,17 @@ export type PricingTablePlan = {
   };
 };
 
+export type PricingTablePlanV3 = {
+  planUuid: string;
+  pricingTableUuid: string;
+  sortOrder: number;
+  updatedAt: string;
+  plan: PlanV3 & {
+    features: PlanFeatureV3[];
+    currencies: PlanCurrency[];
+  };
+};
+
 export type PricingTableParameters = {
   globalPlanOptions: {
     granteeId: string;
@@ -585,18 +753,16 @@ export type PricingTableParameters = {
   };
 };
 
-export type IOrganisationPaymentIntegration = {
+export type OrganisationPaymentIntegrationV3 = {
   uuid: string;
   organisation: string;
   integrationName: string;
   accountName: string;
-  accountData: {
-    key: string;
-    encryptedData: string;
-  };
   accountId: string;
   updatedAt: string;
   isTest: boolean;
+  newPaymentEnabled: boolean,
+  status: string;
 };
 
 export type ProductPricingTable = {
@@ -608,6 +774,15 @@ export type ProductPricingTable = {
   })[];
 } & Product;
 
+export type ProductPricingTableV3 = {
+  features: FeatureV3[];
+  currencies: ProductCurrency[];
+  plans: (PlanV3 & {
+    features: PlanFeatureV3[];
+    currencies: PlanCurrency[];
+  })[];
+} & ProductV3;
+
 export type CheckLicensesCapabilitiesResponse = {
   capabilities: {
     capability: string;
@@ -615,6 +790,14 @@ export type CheckLicensesCapabilitiesResponse = {
   }[];
   signature: string;
 };
+
+export type EntitlementCheck = {
+  features: {
+    feature: string;
+    expiry: Date;
+  }[];
+  signature: string;
+}
 
 export type CapabilitiesEndDates = {
   [key: string]: string;
@@ -648,6 +831,22 @@ export type LicenseGetUsage = {
   planUuid: string;
   unitCount: number;
 };
+
+export type LicenseV3 = {
+  uuid: string;
+  subscriptionUuid: string;
+  status: string;
+  granteeId: string | null;
+  paymentService: string;
+  purchaser: string;
+  type: string;
+  productUuid: string;
+  planUuid: string;
+  startTime: string;
+  endTime: string;
+  updatedAt: string;
+  isTest: boolean;
+}
 
 export type GetAllInvoicesOptions = {
   cursor?: string;

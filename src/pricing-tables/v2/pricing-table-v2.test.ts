@@ -1,51 +1,31 @@
-import Salable from '../..';
-import { PricingTable, Version } from '../../types';
+import { initSalable } from '../..';
 import prismaClient from '../../../test-utils/prisma/prisma-client';
-import { testUuids } from '../../../test-utils/scripts/create-test-data';
+import { testUuids } from '../../../test-utils/scripts/create-salable-test-data';
+import { randomUUID } from 'crypto';
+import { PricingTableSchema } from '../../schemas/v2/schemas-v2';
 
-const pricingTableUuid = 'aec06de8-3a3e-46eb-bd09-f1094c1b1b8d';
 describe('Pricing Table V2 Tests', () => {
   const apiKey = testUuids.devApiKeyV2;
-  const version = Version.V2;
-
-  const salable = new Salable(apiKey, version);
+  const salable = initSalable(apiKey, 'v2');
+  const pricingTableUuid = randomUUID();
 
   beforeAll(async() => {
-    await generateTestData()
+    await generateTestData(pricingTableUuid)
   })
 
-  it('getAll: should successfully fetch all products', async () => {
+  it('getAll: should successfully fetch all pricing tables', async () => {
     const data = await salable.pricingTables.getOne(pricingTableUuid);
-
-    expect(data).toEqual(expect.objectContaining(pricingTableSchema));
+    expect(data).toEqual(expect.objectContaining(PricingTableSchema));
   });
 });
 
-const pricingTableSchema: PricingTable = {
-  customTheme: expect.toBeOneOf([expect.any(String), null]),
-  productUuid: expect.any(String),
-  featuredPlanUuid: expect.toBeOneOf([expect.any(String), null]),
-  name: expect.any(String),
-  status: expect.any(String),
-  theme: expect.any(String),
-  text: expect.toBeOneOf([expect.any(String), null]),
-  title: expect.toBeOneOf([expect.any(String), null]),
-  updatedAt: expect.any(String),
-  uuid: expect.any(String),
-  featureOrder: expect.any(String),
-  features: expect.toBeOneOf([expect.anything(), undefined]),
-  product: expect.toBeOneOf([expect.anything(), undefined]),
-  plans: expect.toBeOneOf([expect.anything(), undefined]),
-};
 
+const generateTestData = async (pricingTableUuid: string) => {
 
-const generateTestData = async () => {
-
-  const product = await prismaClient.product.findFirst({
+  const product = await prismaClient.product.findUnique({
     where: { uuid: testUuids.productUuid },
-    select: {
+    include: {
       features: true,
-      uuid: true,
       plans: true,
     },
   });

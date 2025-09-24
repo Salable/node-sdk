@@ -9,9 +9,9 @@ Returns a list of invoices for a subscription.
 ## Code Sample
 
 ```typescript
-import { Salable } from '@salable/node-sdk';
+import { initSalable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}', 'v2');
+const salable = initSalable('{{API_KEY}}', 'v3');
 
 const subscription = await salable.subscriptions.getInvoices('5fa0fbfa-5fbf-4fee-b286-ed1cb25379f9');
 ```
@@ -35,4 +35,4 @@ _Type:_ `GetAllInvoicesOptions`
 
 ## Return Type
 
-For more information about this request see our API documentation on [Subscription Invoice Object](https://docs.salable.app/api/v2#tag/Subscriptions/operation/getSubscriptionInvoices)
+For more information about this request see our API documentation on [Subscription Invoice Object](https://docs.salable.app/api/v3#tag/Subscriptions/operation/getSubscriptionInvoices)

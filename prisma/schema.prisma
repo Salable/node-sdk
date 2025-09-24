@@ -11,7 +11,6 @@ generator client {
 
 model Product {
   uuid                               String                          @id @default(uuid())
-  name                               String
   description                        String?                         @db.Text
   logoUrl                            String?                         @db.Text
   displayName                        String
@@ -22,20 +21,22 @@ model Product {
   organisationPaymentIntegration     OrganisationPaymentIntegration? @relation(fields: [organisationPaymentIntegrationUuid], references: [uuid], onUpdate: NoAction)
   organisationPaymentIntegrationUuid String                          @default("free")
   paymentIntegrationProductId        String?
-  appType                            String                          @default("custom")
   successUrl                         String?                         @db.Text
   cancelUrl                          String?                         @db.Text
+  updatedAt                          DateTime                        @default(now()) @updatedAt
+  isTest                             Boolean                         @default(false)
+  archivedAt                         DateTime?
   plans                              Plan[]
-  capabilities                       Capability[]
   features                           Feature[]
   pricingTables                      PricingTable[]
   licenses                           License[]
   subscriptions                      Subscription[]
   currencies                         CurrenciesOnProduct[]
-  updatedAt                          DateTime                        @default(now()) @updatedAt
-  isTest                             Boolean                         @default(false)
   coupons                            Coupon[]
-  archivedAt                         DateTime?
+
+  name         String /// @deprecated
+  appType      String       @default("custom") /// @deprecated
+  capabilities Capability[] /// @deprecated
 
   @@index([organisation])
   @@index([organisationPaymentIntegrationUuid])
@@ -43,14 +44,11 @@ model Product {
 
 model Plan {
   uuid                   String                 @id @default(uuid())
-  name                   String
   description            String?                @db.Text
   displayName            String
   slug                   String                 @default("")
   status                 String
   isTest                 Boolean                @default(false)
-  trialDays              Int?
-  evaluation             Boolean                @default(false)
   evalDays               Int                    @default(0)
   organisation           String
   visibility             String
@@ -59,30 +57,35 @@ model Plan {
   maxSeatAmount          Int                    @default(-1)
   interval               String
   length                 Int
-  active                 Boolean
-  planType               String
   pricingType            String                 @default("free")
-  environment            String
-  paddlePlanId           Int?
+  archivedAt             DateTime?
+  updatedAt              DateTime               @default(now()) @updatedAt
+  hasAcceptedTransaction Boolean                @default(false)
   product                Product                @relation(fields: [productUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
   productUuid            String
   featuredOnPricingTable PricingTable?
   currencies             CurrenciesOnPlans[]
   features               FeaturesOnPlans[]
-  usage                  LicensesUsageOnPlans[]
   pricingTables          PlansOnPricingTables[]
-  capabilities           CapabilitiesOnPlans[]
   licenses               License[]
   subscription           Subscription[]
-  salablePlan            Boolean                @default(false)
-  updatedAt              DateTime               @default(now()) @updatedAt
-  flags                  FlagsOnPlans[]
-  hasAcceptedTransaction Boolean                @default(false)
   coupons                CouponsOnPlans[]
   licensesUsage          LicensesUsage[]
-  archivedAt             DateTime?
+
+  planType     String /// @deprecated
+  name         String /// @deprecated
+  trialDays    Int? /// @deprecated use `evalDays` instead
+  evaluation   Boolean                @default(false) /// @deprecated
+  active       Boolean /// @deprecated use `status` instead
+  environment  String /// @deprecated
+  paddlePlanId Int? /// @deprecated
+  salablePlan  Boolean                @default(false) /// @deprecated
+  usage        LicensesUsageOnPlans[] /// @deprecated
+  capabilities CapabilitiesOnPlans[] /// @deprecated
+  flags        FlagsOnPlans[] /// @deprecated
 }
 
+/// @deprecated
 model Capability {
   uuid        String                @id @default(uuid())
   name        String
@@ -98,7 +101,6 @@ model Capability {
 
 model Feature {
   uuid               String                    @id @default(uuid())
-  name               String
   description        String?                   @db.Text
   displayName        String
   variableName       String?                   @default("")
@@ -107,14 +109,16 @@ model Feature {
   valueType          String                    @default("numerical")
   defaultValue       String                    @default("0")
   showUnlimited      Boolean                   @default(false)
+  updatedAt          DateTime                  @default(now()) @updatedAt
+  sortOrder          Int                       @default(0)
   product            Product?                  @relation(fields: [productUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
   productUuid        String?
   plans              FeaturesOnPlans[]
   featureEnumOptions FeatureEnumOption[]
   pricingTables      FeaturesOnPricingTables[]
-  updatedAt          DateTime                  @default(now()) @updatedAt
-  licenses           FeaturesOnLicenses[]
-  sortOrder          Int                       @default(0)
+
+  name     String /// @deprecated
+  licenses FeaturesOnLicenses[] /// @deprecated
 
   @@index([productUuid])
 }
@@ -139,11 +143,12 @@ model FeaturesOnPlans {
   enumValue     FeatureEnumOption? @relation(fields: [enumValueUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
   enumValueUuid String?
   isUnlimited   Boolean            @default(false)
-  isUsage       Boolean            @default(false)
-  pricePerUnit  Float?
-  minUsage      Int?
-  maxUsage      Int?
   updatedAt     DateTime           @default(now()) @updatedAt
+
+  isUsage      Boolean @default(false) /// @deprecated
+  pricePerUnit Float? /// @deprecated
+  minUsage     Int? /// @deprecated
+  maxUsage     Int? /// @deprecated
 
   @@id([planUuid, featureUuid])
   @@index([planUuid])
@@ -166,20 +171,21 @@ model FeaturesOnPricingTables {
 
 model PricingTable {
   uuid             String                    @id @default(uuid())
-  name             String
   status           String                    @default("ACTIVE")
-  title            String?
-  text             String?                   @db.Text
-  theme            String                    @default("light")
   featureOrder     String                    @default("default")
   product          Product                   @relation(fields: [productUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
   productUuid      String
   plans            PlansOnPricingTables[]
   features         FeaturesOnPricingTables[]
-  customTheme      Json?
   featuredPlan     Plan?                     @relation(fields: [featuredPlanUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
   featuredPlanUuid String?                   @unique
   updatedAt        DateTime                  @default(now()) @updatedAt
+
+  name        String /// @deprecated
+  title       String? /// @deprecated
+  text        String? @db.Text /// @deprecated
+  theme       String  @default("light") /// @deprecated
+  customTheme Json? /// @deprecated
 
   @@index([productUuid])
 }
@@ -238,30 +244,31 @@ model Session {
 }
 
 model License {
-  uuid              String                 @id @default(uuid())
-  name              String?
-  email             String?
-  subscription      Subscription?          @relation(fields: [subscriptionUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
-  subscriptionUuid  String?
-  status            String
-  granteeId         String?
-  paymentService    String
-  purchaser         String
-  type              String
-  product           Product                @relation(fields: [productUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
-  productUuid       String
-  plan              Plan                   @relation(fields: [planUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
-  planUuid          String
-  capabilities      Json
-  metadata          Json?
-  startTime         DateTime               @default(now())
-  endTime           DateTime
-  updatedAt         DateTime               @default(now()) @updatedAt
+  uuid             String                 @id @default(uuid())
+  subscription     Subscription?          @relation(fields: [subscriptionUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  subscriptionUuid String?
+  status           String
+  granteeId        String?
+  paymentService   String
+  purchaser        String
+  type             String
+  product          Product                @relation(fields: [productUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  productUuid      String
+  plan             Plan                   @relation(fields: [planUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
+  planUuid         String
+  startTime        DateTime               @default(now())
+  endTime          DateTime
+  updatedAt        DateTime               @default(now()) @updatedAt
+  usage            LicensesUsageOnPlans[]
+  usageRecords     LicensesUsage[]
+  isTest           Boolean                @default(false)
+
+  name              String? /// @deprecated
+  email             String? /// @deprecated Use subscription `email` instead
+  cancelAtPeriodEnd Boolean              @default(false) /// @deprecated Use subscription `cancelAtPeriodEnd` instead.
   features          FeaturesOnLicenses[] /// @deprecated Use `usage` instead.
-  usage             LicensesUsageOnPlans[]
-  usageRecords      LicensesUsage[]
-  isTest            Boolean                @default(false)
-  cancelAtPeriodEnd Boolean                @default(false)
+  capabilities      Json /// @deprecated
+  metadata          Json? /// @deprecated
 
   @@index([status, paymentService])
   @@index([productUuid])
@@ -371,12 +378,13 @@ model OrganisationPaymentIntegration {
   products          Product[]
   webhooks          Webhook[]
   accountName       String
-  accountData       Json
   status            PaymentIntegrationStatus?
   accountId         String?
   updatedAt         DateTime                  @default(now()) @updatedAt
   isTest            Boolean                   @default(false)
   newPaymentEnabled Boolean                   @default(false)
+
+  accountData Json /// @deprecated
 
   @@index([accountId])
 }
@@ -436,6 +444,7 @@ model LicensesUsageOnPlans {
   @@index([planUuid])
 }
 
+/// @deprecated
 model FeaturesOnLicenses {
   license     License @relation(fields: [licenseUuid], references: [uuid], onUpdate: NoAction, onDelete: Cascade)
   licenseUuid String
