@@ -239,7 +239,7 @@ describe('Plans V3 Tests', () => {
       successUrl: 'https://www.salable.app',
       cancelUrl: 'https://www.salable.app',
       granteeId: 'granteeid@example.com',
-      owner: 'member-id',
+      owner: 'owner-id',
       allowPromoCode: true,
       customerEmail: 'customer@email.com',
       currency: 'GBP',
@@ -256,8 +256,9 @@ describe('Plans V3 Tests', () => {
       successUrl: 'https://www.salable.app',
       cancelUrl: 'https://www.salable.app',
       granteeId: 'granteeid@example.com',
-      owner: 'member-id',
+      owner: 'owner-id',
       customerId: stripeEnvs.customerId,
+      currency: 'GBP',
       cardPreFillBehaviour: 'none'
     });
 
