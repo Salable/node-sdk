@@ -29,6 +29,8 @@ model Product {
   pricingTables                      PricingTable[]
   licenses                           License[]
   subscriptions                      Subscription[]
+  successUrl                         String?                         @db.Text
+  cancelUrl                          String?                         @db.Text
   currencies                         CurrenciesOnProduct[]
   updatedAt                          DateTime                        @default(now()) @updatedAt
   archivedAt                         DateTime?
