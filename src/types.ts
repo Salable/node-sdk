@@ -505,6 +505,7 @@ export type GetPlanCheckoutOptionsV3 = {
   quantity?: string;
   changeQuantity?: string;
   requirePaymentMethod?: boolean;
+  cardPreFillBehaviour?: 'none' | 'choice' | 'always';
 };
 
 export type PlanFeature = {

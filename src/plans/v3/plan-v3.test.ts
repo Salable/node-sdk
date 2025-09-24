@@ -17,6 +17,7 @@ describe('Plans V3 Tests', () => {
   const apiKey = testUuids.devApiKeyV3;
   const salable = initSalable(apiKey, 'v3');
   const planUuid = testUuids.paidPlanUuid;
+  const stripeEnvs = JSON.parse(process.env.stripEnvs || '');
 
   describe('getAll for organisation', () => {
     const organisation = randomUUID();
@@ -238,13 +239,27 @@ describe('Plans V3 Tests', () => {
       successUrl: 'https://www.salable.app',
       cancelUrl: 'https://www.salable.app',
       granteeId: 'granteeid@example.com',
-      owner: 'member-id',
+      owner: 'owner-id',
       allowPromoCode: true,
       customerEmail: 'customer@email.com',
       currency: 'GBP',
       automaticTax: '',
       changeQuantity: '1',
       requirePaymentMethod: false,
+    });
+
+    expect(data).toEqual(PlanCheckoutLinkSchema);
+  });
+
+  it('getCheckoutLink (w / customerId and cardPreFillBehaviour): should successfully fetch checkout link for plan', async () => {
+    const data = await salable.plans.getCheckoutLink(planUuid, {
+      successUrl: 'https://www.salable.app',
+      cancelUrl: 'https://www.salable.app',
+      granteeId: 'granteeid@example.com',
+      owner: 'owner-id',
+      customerId: stripeEnvs.customerId,
+      currency: 'GBP',
+      cardPreFillBehaviour: 'none'
     });
 
     expect(data).toEqual(PlanCheckoutLinkSchema);
