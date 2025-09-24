@@ -21,6 +21,8 @@ model Product {
   organisationPaymentIntegration     OrganisationPaymentIntegration? @relation(fields: [organisationPaymentIntegrationUuid], references: [uuid], onUpdate: NoAction)
   organisationPaymentIntegrationUuid String                          @default("free")
   paymentIntegrationProductId        String?
+  successUrl                         String?                         @db.Text
+  cancelUrl                          String?                         @db.Text
   updatedAt                          DateTime                        @default(now()) @updatedAt
   isTest                             Boolean                         @default(false)
   archivedAt                         DateTime?
