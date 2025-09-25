@@ -1,64 +1,65 @@
-import Salable from '../..';
-import { Session, SessionScope, Version } from '../../types';
-import { testUuids } from '../../../test-utils/scripts/create-test-data';
+import { initSalable, TVersion, VersionedMethodsReturn } from '../..';
+import { SessionScope } from '../../types';
+import { testUuids } from '../../../test-utils/scripts/create-salable-test-data';
 import prismaClient from '../../../test-utils/prisma/prisma-client';
-import { v4 as uuidv4 } from 'uuid';
 import getEndTime from 'test-utils/helpers/get-end-time';
+import { randomUUID } from 'crypto';
+import { SessionSchema } from 'src/schemas/v2/schemas-v2';
 
-const stripeEnvs = JSON.parse(process.env.stripEnvs || '');
-
-const licenseUuid = uuidv4();
-const subscriptionUuid = uuidv4();
+const licenseUuid = randomUUID();
 const testGrantee = '123456';
-const owner = 'subscription-owner'
 
-describe('Sessions V2 Tests', () => {
-  const apiKey = testUuids.devApiKeyV2;
-  const version = Version.V2;
-
-  const salable = new Salable(apiKey, version);
-
+describe('Sessions Tests for v2, v3', () => {
+  const salableVersions = {} as Record<TVersion, VersionedMethodsReturn<TVersion>>
+  const versions: {version: TVersion; scopes: string[]}[] = [
+    { version: 'v2', scopes: ['sessions:write'] },
+    { version: 'v3', scopes: ['sessions:write'] }
+  ];
   beforeAll(async () => {
     await generateTestData();
+    for (const {version, scopes} of versions) {
+      const value = randomUUID()
+      await prismaClient.apiKey.create({
+        data: {
+          name: 'Sample API Key',
+          organisation: testUuids.organisationId,
+          value,
+          scopes: JSON.stringify(scopes),
+          status: 'ACTIVE',
+        },
+      });
+      salableVersions[version] = initSalable(value, version);
+    }
   });
 
-  it('createSession: Should successfully create a new session with PricingTable scope', async () => {
-    const data = await salable.sessions.create({
+  it.each(versions)('createSession: Should successfully create a new session with PricingTable scope', async ({ version }) => {
+    const data = await salableVersions[version].sessions.create({
       scope: SessionScope.PricingTable,
       metadata: {
         productUuid: testUuids.productUuid,
       },
     });
-
-    expect(data).toEqual(sessionSchema);
+    expect(data).toEqual(SessionSchema);
   });
-
-  it('createSession: Should successfully create a new session with Checkout scope', async () => {
-    const data = await salable.sessions.create({
+  it.each(versions)('createSession: Should successfully create a new session with Checkout scope', async ({ version }) => {
+    const data = await salableVersions[version].sessions.create({
       scope: SessionScope.Checkout,
       metadata: {
         planUuid: testUuids.paidPlanUuid,
       },
     });
-
-    expect(data).toEqual(sessionSchema);
+    expect(data).toEqual(SessionSchema);
   });
-
-  it('createSession: Should successfully create a new session with Invoice scope', async () => {
-    const data = await salable.sessions.create({
+  it.each(versions)('Should successfully create a new session with Invoice scope', async ({ version }) => {
+    const data = await salableVersions[version].sessions.create({
       scope: SessionScope.Invoice,
       metadata: {
-        subscriptionUuid: subscriptionUuid,
+        subscriptionUuid: testUuids.subscriptionWithInvoicesUuid,
       },
     });
-
-    expect(data).toEqual(sessionSchema);
+    expect(data).toEqual(SessionSchema);
   });
 });
-
-const sessionSchema: Session = {
-  sessionToken: expect.any(String),
-};
 
 const generateTestData = async () => {
   await prismaClient.license.create({
@@ -78,7 +79,7 @@ const generateTestData = async () => {
       capabilities: [
         {
           name: 'CapabilityOne',
-          uuid: uuidv4(),
+          uuid: randomUUID(),
           status: 'ACTIVE',
           updatedAt: '2022-10-17T11:41:11.626Z',
           description: null,
@@ -86,7 +87,7 @@ const generateTestData = async () => {
         },
         {
           name: 'CapabilityTwo',
-          uuid: uuidv4(),
+          uuid: randomUUID(),
           status: 'ACTIVE',
           updatedAt: '2022-10-17T11:41:11.626Z',
           description: null,
@@ -94,25 +95,6 @@ const generateTestData = async () => {
         },
       ],
       endTime: getEndTime(1, 'years'),
-    },
-  });
-
-  await prismaClient.subscription.create({
-    data: {
-      lineItemIds: [stripeEnvs.basicSubscriptionFourLineItemId],
-      paymentIntegrationSubscriptionId: stripeEnvs.basicSubscriptionFourId,
-      uuid: subscriptionUuid,
-      email: 'tester@testing.com',
-      type: 'salable',
-      status: 'ACTIVE',
-      organisation: testUuids.organisationId,
-      license: { connect: [{ uuid: licenseUuid }] },
-      product: { connect: { uuid: testUuids.productUuid } },
-      plan: { connect: { uuid: testUuids.paidPlanUuid } },
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      expiryDate: new Date(Date.now() + 31536000000),
-      owner,
     },
   });
 };

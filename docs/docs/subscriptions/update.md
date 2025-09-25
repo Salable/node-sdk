@@ -9,9 +9,9 @@ Update properties on a subscription.
 ## Code Sample
 
 ```typescript
-import { Salable } from '@salable/node-sdk';
+import { initSalable } from '@salable/node-sdk';
 
-const salable = new Salable('{{API_KEY}}', 'v2');
+const salable = initSalable('{{API_KEY}}', 'v3');
 
 await salable.subscriptions.update('17830730-3214-4dda-8306-9bb8ae0e3a11', { owner: 'orgId_2' });
 ```
@@ -34,4 +34,4 @@ _Type:_ `UpdateSubscriptionInput`
 
 ## Return Type
 
-For more information about this request see our API documentation on [Subscription update](https://docs.salable.app/api/v2#tag/Subscriptions/operation/updateSubscriptionByUuid)
+For more information about this request see our API documentation on [Subscription update](https://docs.salable.app/api/v3#tag/Subscriptions/operation/updateSubscriptionByUuid)

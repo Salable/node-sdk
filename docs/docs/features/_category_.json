@@ -1,0 +1,8 @@
+{
+  "label": "Features",
+  "position": 9,
+  "link": {
+    "type": "generated-index",
+    "description": "Contains methods for the Features resource"
+  }
+}

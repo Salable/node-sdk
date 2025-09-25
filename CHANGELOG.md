@@ -1,3 +1,69 @@
+# [5.0.0](https://github.com/Salable/node-sdk/compare/v4.11.0...v5.0.0) (2025-09-23)
+
+
+### Bug Fixes
+
+* created more global stripe and salable data to stop the test overwrtting each other ([aba2bfe](https://github.com/Salable/node-sdk/commit/aba2bfe1b3c80f2840761290f504523685e67fef))
+* fixed imports ([1b354ba](https://github.com/Salable/node-sdk/commit/1b354ba060d7e5b470d9ef8963c1cad1a8adcbe6))
+* moved v2 schemas into a single file ([b6ff867](https://github.com/Salable/node-sdk/commit/b6ff867ab42105f81937f1c6725bfb27c23f00db))
+* removed clean up from tests ([e8d5288](https://github.com/Salable/node-sdk/commit/e8d528883860f96f9669c72bef668190ab6df02f))
+* updated EntitlementsCheck return type ([273b14d](https://github.com/Salable/node-sdk/commit/273b14dcb3269fe4ad987499804065f2253e0051))
+
+
+### Features
+
+* cursor pagination on products endpoint ([7e9af6f](https://github.com/Salable/node-sdk/commit/7e9af6f81721705882336e1b91226beed26f4c07))
+* entitlements method ([887e8da](https://github.com/Salable/node-sdk/commit/887e8da7cd3b38909b2f7b14fda56f7ae69cf4f5))
+* paginate features and plans endpoints ([37e3357](https://github.com/Salable/node-sdk/commit/37e335710ba5f4e21c472b3b1000bfa742642334))
+* v3 of salable api added ([9c050b5](https://github.com/Salable/node-sdk/commit/9c050b53253ff5d053482264270108195ae44e0a))
+* wip v3 removed Salable class for initSalable function ([a72d4e1](https://github.com/Salable/node-sdk/commit/a72d4e1c5dc3098e4b9246375b32afed3f5f38f1))
+
+
+### Tests
+
+* updated feature schema to include featureEnumOptions ([2b143a0](https://github.com/Salable/node-sdk/commit/2b143a030bd9f87e0c93dba8ceeb60f661a474f1))
+
+
+### BREAKING CHANGES
+
+* methods will use v3 of the API. New initSalable function to replace Salable class.
+
+# [5.0.0-beta.2](https://github.com/Salable/node-sdk/compare/v5.0.0-beta.1...v5.0.0-beta.2) (2025-09-18)
+
+
+### Bug Fixes
+
+* updated EntitlementsCheck return type ([273b14d](https://github.com/Salable/node-sdk/commit/273b14dcb3269fe4ad987499804065f2253e0051))
+
+# [5.0.0-beta.1](https://github.com/Salable/node-sdk/compare/v4.11.0...v5.0.0-beta.1) (2025-09-18)
+
+
+### Bug Fixes
+
+* created more global stripe and salable data to stop the test overwrtting each other ([aba2bfe](https://github.com/Salable/node-sdk/commit/aba2bfe1b3c80f2840761290f504523685e67fef))
+* fixed imports ([1b354ba](https://github.com/Salable/node-sdk/commit/1b354ba060d7e5b470d9ef8963c1cad1a8adcbe6))
+* moved v2 schemas into a single file ([b6ff867](https://github.com/Salable/node-sdk/commit/b6ff867ab42105f81937f1c6725bfb27c23f00db))
+* removed clean up from tests ([e8d5288](https://github.com/Salable/node-sdk/commit/e8d528883860f96f9669c72bef668190ab6df02f))
+
+
+### Features
+
+* cursor pagination on products endpoint ([7e9af6f](https://github.com/Salable/node-sdk/commit/7e9af6f81721705882336e1b91226beed26f4c07))
+* entitlements method ([887e8da](https://github.com/Salable/node-sdk/commit/887e8da7cd3b38909b2f7b14fda56f7ae69cf4f5))
+* paginate features and plans endpoints ([37e3357](https://github.com/Salable/node-sdk/commit/37e335710ba5f4e21c472b3b1000bfa742642334))
+* v3 of salable api added ([9c050b5](https://github.com/Salable/node-sdk/commit/9c050b53253ff5d053482264270108195ae44e0a))
+* wip v3 removed Salable class for initSalable function ([a72d4e1](https://github.com/Salable/node-sdk/commit/a72d4e1c5dc3098e4b9246375b32afed3f5f38f1))
+
+
+### Tests
+
+* updated feature schema to include featureEnumOptions ([2b143a0](https://github.com/Salable/node-sdk/commit/2b143a030bd9f87e0c93dba8ceeb60f661a474f1))
+
+
+### BREAKING CHANGES
+
+* methods will use v3 of the API. New initSalable function to replace Salable class.
+
 # [4.11.0](https://github.com/Salable/node-sdk/compare/v4.10.0...v4.11.0) (2025-07-08)
 
 

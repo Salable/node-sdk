@@ -11,31 +11,11 @@ export const RESOURCE_NAMES = {
   PRICING_TABLES: 'pricing-tables',
   PRODUCTS: 'products',
   USAGE: 'usage',
+  FEATURES: 'features',
+  ENTITLEMENTS: 'entitlements',
   RBAC: {
     PERMISSIONS: 'rbac/permissions',
     ROLES: 'rbac/roles',
     USERS: 'rbac/users',
   },
 };
-
-export const allowedPlanCheckoutParams = [
-  'successUrl',
-  'cancelUrl',
-  'granteeId',
-  'member',
-  'customerCountry',
-  'customerEmail',
-  'customerPostcode',
-  'couponCode',
-  'promoCode',
-  'allowPromoCode',
-  'marketingConsent',
-  'vatCity',
-  'vatCompanyName',
-  'vatCountry',
-  'vatNumber',
-  'vatPostcode',
-  'vatState',
-  'vatStreet',
-  'customMessage',
-];

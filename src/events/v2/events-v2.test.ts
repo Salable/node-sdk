@@ -1,39 +1,38 @@
-import Salable from '../..';
-import { Event, EventTypeEnum, Version } from '../../types';
+import { initSalable, TVersion, Version, VersionedMethodsReturn } from '../..';
 import prismaClient from '../../../test-utils/prisma/prisma-client';
-import { testUuids } from '../../../test-utils/scripts/create-test-data';
-import { v4 as uuidv4 } from 'uuid';
-import { EventStatus } from '@prisma/client';
+import { testUuids } from '../../../test-utils/scripts/create-salable-test-data';
+import { randomUUID } from 'crypto';
+import { EventSchema } from '../../schemas/v2/schemas-v2';
 
-const version = Version.V2;
+const eventUuid = randomUUID();
 
-const eventUuid = uuidv4();
-
-describe('Events V2 Tests', () => {
-  const salable = new Salable(testUuids.devApiKeyV2, version);
-
+describe('Events Tests for v2, v3', () => {
+  const salableVersions = {} as Record<TVersion, VersionedMethodsReturn<TVersion>>
+  const versions: {version: TVersion; scopes: string[]}[] = [
+    { version: Version.V2, scopes: ['events:read'] },
+    { version: Version.V3, scopes: ['events:read'] }
+  ];
   beforeAll(async () => {
     await generateTestData();
+    for (const {version, scopes} of versions) {
+      const value = randomUUID()
+      await prismaClient.apiKey.create({
+        data: {
+          name: 'Sample API Key',
+          organisation: testUuids.organisationId,
+          value,
+          scopes: JSON.stringify(scopes),
+          status: 'ACTIVE',
+        },
+      });
+      salableVersions[version] = initSalable(value, version);
+    }
   });
-
-  it('getOne: Should successfully fetch the specified event', async () => {
-    const data = await salable.events.getOne(eventUuid);
-    expect(data).toEqual(eventSchema);
+  it.each(versions)('getOne: Should successfully fetch the specified event', async ({ version }) => {
+    const data = await salableVersions[version].events.getOne(eventUuid);
+    expect(data).toEqual(EventSchema);
   });
 });
-
-const eventSchema: Event = {
-  uuid: expect.any(String),
-  type: expect.toBeOneOf(Object.values(EventTypeEnum)) as EventTypeEnum,
-  organisation: expect.any(String),
-  status: expect.toBeOneOf(Object.values(EventStatus)) as EventStatus,
-  isTest: expect.any(Boolean),
-  retries: expect.any(Number),
-  errorMessage: expect.toBeOneOf([expect.any(String), null]),
-  errorCode: expect.toBeOneOf([expect.any(String), null]),
-  createdAt: expect.any(String),
-  updatedAt: expect.any(String),
-};
 
 const generateTestData = async () => {
   await prismaClient.event.create({

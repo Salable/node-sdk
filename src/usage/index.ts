@@ -1,12 +1,11 @@
-import { ApiRequest, TVersion, Version } from '..';
+import { TVersion, Version } from '..';
 import {
   CurrentUsageOptions,
   CurrentUsageRecord,
   GetUsageOptions,
   PaginatedUsageRecords,
   UpdateLicenseUsageOptions
-} from '../../src/types';
-import { v2UsageMethods } from './v2';
+} from '../types';
 
 export type UsageVersions = {
   [Version.V2]: {
@@ -41,15 +40,7 @@ export type UsageVersions = {
      */
     updateLicenseUsage: (params: UpdateLicenseUsageOptions) => Promise<void>;
   };
+  [Version.V3]: UsageVersions['v2']
 };
 
 export type UsageVersionedMethods<V extends TVersion> = V extends keyof UsageVersions ? UsageVersions[V] : never;
-
-export const usageInit = <V extends TVersion>(version: V, request: ApiRequest): UsageVersionedMethods<V> => {
-  switch (version) {
-    case Version.V2:
-      return v2UsageMethods(request) as UsageVersionedMethods<V>;
-    default:
-      throw new Error('Unsupported version');
-  }
-};
