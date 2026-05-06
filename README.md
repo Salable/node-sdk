@@ -1,3 +1,6 @@
+> [!CAUTION]
+> This SDK was made for Legacy Salable and isn't compatible with the latest version of the software.
+
 # Salable SDK for JavaScript
 
 The Salable SDK enables you to easily interact with the Salable ecosystem, accessing the Salable API, and other toolkit methods.
